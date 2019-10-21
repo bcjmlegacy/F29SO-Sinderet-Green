@@ -8,7 +8,12 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "angular": "^1.7.8",
+    "bootstrap": "^4.3.1",
     "core-js": "^3.1.2",
+    "jquery": "^3.4.1",
+    "node-sass": "^4.12.0",
+    "popper": "^1.0.1",
     "vue": "^2.6.10"
   },
   "devDependencies": {
