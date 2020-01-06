@@ -1,0 +1,14 @@
+{
+  "name": "hub-api",
+  "version": "1.0.0",
+  "description": "API Server for the Uplink Hub",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Ben CJ Milne",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
