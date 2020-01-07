@@ -31,6 +31,7 @@
                       id="input-password"
                       type="password"
                       required="required"
+                      placeholder="*********"
                       size="md"
                     >
                     </b-form-input>
