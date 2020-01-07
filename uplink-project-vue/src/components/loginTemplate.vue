@@ -3,7 +3,9 @@
     <b-row>
       <b-col sm="12">
         <b-container>
-          <b-card-text><h1 class="form-title">Login</h1></b-card-text>
+          <b-card-text>
+            <h1 class="form-title">Login</h1>
+          </b-card-text>
           <b-card-text>
             <div id="form">
               <b-form @submit="ss">
@@ -18,8 +20,8 @@
                       size="md"
                       required="required"
                       type="text"
-                    >
-                    </b-form-input>
+                      class="inputboxes"
+                    ></b-form-input>
                   </b-col>
                 </b-row>
                 <b-row class="rows">
@@ -33,8 +35,8 @@
                       required="required"
                       placeholder="*********"
                       size="md"
-                    >
-                    </b-form-input>
+                      class="inputboxes"
+                    ></b-form-input>
                   </b-col>
                 </b-row>
                 <b-row class="rows">
@@ -45,9 +47,7 @@
                       unchecked-value="not_saved"
                       name="check_Save"
                       class="check"
-                    >
-                      Remember Me
-                    </b-form-checkbox>
+                    >Remember Me</b-form-checkbox>
                   </b-col>
                 </b-row>
                 <b-row class="rows">
@@ -68,21 +68,24 @@
 
 <style>
 #loginCard {
-  padding-top: 300px;
+  padding: 20px 50px;
+  margin-top: 300px;
   margin-left: 30%;
   margin-right: 30%;
+
+  /* border: solid 1px #005872;*/
 }
 
 .form-title {
   text-align: center;
   font-size: 3.2em;
-  padding-top: 20px;
   padding-bottom: 10px;
 }
 
 .labels {
   float: right;
-  font-size: 1.3em !important;
+  color: #000;
+  font-size: 1.4em !important;
 }
 
 .rows {
@@ -94,16 +97,25 @@
   float: left !important;
 }
 
-.but-row {
-  float: left;
-}
-.but-left {
-  margin-left: 0;
-}
-
 .but {
   float: left;
   width: 100%;
+  font-size: 1.3em !important;
+  background-color: transparent !important;
+  color: #000 !important;
+  border: solid 1px #005872 !important;
+  border-radius: 30 !important;
+}
+
+.but:focus {
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+.inputboxes {
+  border: solid 1px #005872 !important;
+  border-radius: 40 !important;
+  outline: none !important;
 }
 
 @media screen and (max-width: 1024px) {
