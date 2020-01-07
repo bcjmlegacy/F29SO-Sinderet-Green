@@ -20,7 +20,7 @@ client.on('connect', function () {
 // This function will respond to and log messages
 client.on('message', function (topic, message) {
   
-  console.log(`Received message: ${topic}${message.toString()}`);
+  console.log(`Received message: ${topic} ${message.toString()}`);
   
 });
 
