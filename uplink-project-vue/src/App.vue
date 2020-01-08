@@ -1,21 +1,19 @@
 <template>
-  <div id="app">
-    <Login class="login" />
-  </div>
+	<div id="app">
+		<Register />
+	</div>
 </template>
 
-
-
 <script>
-import Login from "./components/loginTemplate";
+//import Login from "./components/loginTemplate";
+import Register from "./components/registerTemplate";
 
 export default {
-  name: "app",
-  components: {
-    Login
-  }
+	name: "app",
+	components: {
+		Register
+	}
 };
 </script>
 
-<style>
-</style>
+<style></style>
