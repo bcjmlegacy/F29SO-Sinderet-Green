@@ -27,7 +27,7 @@ NPM packages:
 
 - `mqtt`
 
-### `uplink-project-vue`
+## `uplink-project-vue`
 
 This directory contains the frontend of the project.
 
