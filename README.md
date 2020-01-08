@@ -29,14 +29,14 @@ NPM packages:
 
 ## `uplink-project-vue`
 
-This directory contains the frontend of the project.
+This directory contains the frontend of the application
 
 ### Requirements:
 
 NPM packages
 
 - `Vue.js`
-- `Bootsrap`
+- `Bootstrap`
 - `Bootstrap-vue`
 - `Vue-CLI`
 - `Angular.js`
