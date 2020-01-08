@@ -39,7 +39,7 @@ var light1 = { status: "on" };
 //
 
 function fFromInterval(min, max) {
-  return (Math.random() * (max - min + 1) + min).toFixed(2);
+  return (Math.random() * (max - min) + min).toFixed(2);
 }
 
 function update_time()  {
@@ -185,13 +185,70 @@ function b_t_sensor1()  {
 
 function l_h_sensor1()  {
   
+  var h = d.getHours();
+  var h_lower, h_upper = 0;
+  
+  if(h < 8 || h > 20) {
+    // If it's before 8am or after 8pm
+    h_lower = 0.3;
+    h_upper = 0.4;
+  } else if(h > 8 && h < 18)  {
+    // If it's after 8am and before 6pm
+    h_lower = 0.6;
+    h_upper = 0.7;
+  } else if(h > 18 && h < 20) {
+    // If it's after 6pm and before 8pm
+    h_lower = 0.5;
+    h_upper = 0.6;
+  }
+  
+  client.publish('/livingroom/humidity/sensor1', (fFromInterval(h_lower, h_upper)).toString());
+  
 }
 
 function k_h_sensor1()  {
   
+  var h = d.getHours();
+  var h_lower, h_upper = 0;
+  
+  if(h < 8 || h > 20) {
+    // If it's before 8am or after 8pm
+    h_lower = 0.3;
+    h_upper = 0.4;
+  } else if(h > 8 && h < 18)  {
+    // If it's after 8am and before 6pm
+    h_lower = 0.6;
+    h_upper = 0.7;
+  } else if(h > 18 && h < 20) {
+    // If it's after 6pm and before 8pm
+    h_lower = 0.5;
+    h_upper = 0.6;
+  }
+  
+  client.publish('/kitchen/humidity/sensor1', (fFromInterval(h_lower, h_upper)).toString());
+  
 }
 
 function b_h_sensor1()  {
+  
+  var h = d.getHours();
+  var h_lower, h_upper = 0;
+  
+  if(h < 8 || h > 20) {
+    // If it's before 8am or after 8pm
+    h_lower = 0.3;
+    h_upper = 0.4;
+  } else if(h > 8 && h < 18)  {
+    // If it's after 8am and before 6pm
+    h_lower = 0.6;
+    h_upper = 0.7;
+  } else if(h > 18 && h < 20) {
+    // If it's after 6pm and before 8pm
+    h_lower = 0.5;
+    h_upper = 0.6;
+  }
+  
+  client.publish('/bedroom/humidity/sensor1', (fFromInterval(h_lower, h_upper)).toString());
   
 }
 
@@ -201,6 +258,42 @@ function b_h_sensor1()  {
 
 function solar_controller()  {
   
+  var h = d.getHours();
+  var i_lower, i_upper, o_lower, o_upper = 0;
+  
+  if(h < 8 || h > 20) {
+    // If it's before 8am or after 8pm
+    i_lower = 3;
+    i_upper = 4;
+    o_lower = 2;
+    o_upper = 3;
+  } else if(h > 8 && h < 18)  {
+    // If it's after 8am and before 6pm
+    i_lower = 6;
+    i_upper = 7;
+    o_lower = 5;
+    o_upper = 6;
+  } else if(h > 18 && h < 20) {
+    // If it's after 6pm and before 8pm
+    i_lower = 5;
+    i_upper = 6;
+    o_lower = 4;
+    o_upper = 5;
+  }
+
+  if(heater1.status === "on") {
+    o_lower = o_lower + 0.5;
+    o_upper = o_upper + 0.5;
+  }
+
+  if(light1.status === "on") {
+    o_lower = o_lower + 0.2;
+    o_upper = o_upper + 0.2;
+  }
+
+  client.publish('/solar/controller1/input', (fFromInterval(i_lower, i_upper)).toString());
+  client.publish('/solar/controller1/output', (fFromInterval(o_lower, o_upper)).toString());
+
 }
 
 //
@@ -223,6 +316,8 @@ function l_light1() {
 
 function k_fridge() {
   
+  client.publish('/kitchen/fridge/temperature', (fFromInterval(1, 4)).toString());
+
 }
 
 //
@@ -248,6 +343,11 @@ client.on('connect', function () {
   setInterval(l_t_sensor2, 10200);
   setInterval(k_t_sensor1, 10200);
   setInterval(b_t_sensor1, 10200);
+  setInterval(l_h_sensor1, 10200);
+  setInterval(k_h_sensor1, 10200);
+  setInterval(b_h_sensor1, 10200);
+  setInterval(solar_controller, 10200);
+  setInterval(k_fridge, 10200);
   
 })
 
