@@ -1,8 +1,8 @@
-html {
-  background-image: url("../src/assets/loginBack1.jpg") !important;
-  background-attachment: fixed !important;
-  background-position: center !important;
-  background-repeat: no-repeat !important;
-  background-size: cover !important;
-  min-height: 100%;
+body {
+	background-image: url("../src/assets/loginBack1.jpg");
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	min-height: 100% !important;
+	height: auto;
 }
