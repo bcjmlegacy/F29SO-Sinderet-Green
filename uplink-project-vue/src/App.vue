@@ -1,7 +1,7 @@
 <template>
-	<div id="app">
-		<Register />
-	</div>
+  <div id="app">
+    <Register />
+  </div>
 </template>
 
 <script>
@@ -9,10 +9,10 @@
 import Register from "./components/registerTemplate";
 
 export default {
-	name: "app",
-	components: {
-		Register
-	}
+  name: "app",
+  components: {
+    Register
+  }
 };
 </script>
 
