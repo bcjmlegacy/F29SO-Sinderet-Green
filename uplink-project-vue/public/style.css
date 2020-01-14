@@ -1,0 +1,49 @@
+.form-title {
+	text-align: center;
+	font-size: 3.2em;
+	padding-bottom: 10px;
+}
+
+.labels {
+	float: right;
+	color: #000;
+	font-size: 1.2em !important;
+}
+
+.rows {
+	text-align: center;
+	padding-top: 10px;
+}
+
+.check {
+	float: left !important;
+}
+
+.but {
+	float: left;
+	width: 100%;
+	font-size: 1.3em !important;
+	background-color: transparent !important;
+	color: #000 !important;
+	border: solid 1px #005872 !important;
+	border-radius: 30 !important;
+}
+
+.but:focus {
+	box-shadow: none !important;
+	outline: none !important;
+}
+
+.but:hover {
+	border: solid 1px #0492bd !important;
+}
+
+.inputboxes {
+	border: solid 1px #005872 !important;
+	border-radius: 40 !important;
+	outline: none !important;
+}
+
+.links {
+	text-decoration: none !important;
+}
