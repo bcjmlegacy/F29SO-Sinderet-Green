@@ -16,11 +16,13 @@
           <Room />
         </b-row>
       </div>
-      <b-col sm="11">
-        <div class="dash-link">
-          <b-link href="#" class="links">View All Devices</b-link>
-        </div>
-      </b-col>
+      <b-row>
+        <b-col sm="11">
+          <div class="dash-link">
+            <b-link href="#" class="links">View All Devices</b-link>
+          </div>
+        </b-col>
+      </b-row>
     </b-container>
   </div>
 </template>
@@ -37,6 +39,13 @@ export default {
 <style>
 #dash {
   padding-top: 90px;
+}
+
+#summary {
+  margin-top: 20px;
+  margin-left: 30px;
+  margin-right: 20px;
+  margin-bottom: 30px;
 }
 
 #rooms {
