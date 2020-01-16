@@ -1,55 +1,42 @@
 <template>
   <div id="dash">
     <b-container>
-      <h1 class="title">Welcome Back ...</h1>
+      <div class="title-container">
+        <h1 class="title">Welcome Back ...</h1>
+      </div>
+      <div id="summary">
+        <Summary />
+      </div>
       <div id="rooms">
         <!--Dummy Rooms-->
-        <b-row>
-          <b-col sm="5">
-            <b-card>
-              <b-row class="cards">
-                <b-col sm="6">
-                  <div class="image-container">
-                    <img src="../assets/couchcolor.png" class="card-img" />
-                  </div>
-                </b-col>
-                <b-col sm="6">
-                  <div class="text-container">
-                    <h2 class="card-title">Livingroom</h2>
-                  </div>
-                </b-col>
-              </b-row>
-            </b-card>
-          </b-col>
-          <b-col sm="5">
-            <b-card>
-              <b-row class="cards">
-                <b-col sm="6">
-                  <div class="image-container">
-                    <img src="../assets/couchcolor.png" class="card-img" />
-                  </div>
-                </b-col>
-                <b-col sm="6">
-                  <div class="text-container">
-                    <h2 class="card-title">Livingroom</h2>
-                  </div>
-                </b-col>
-              </b-row>
-            </b-card>
-          </b-col>
+        <b-row id="current-rooms">
+          <Room />
+          <Room />
+          <Room />
+          <Room />
         </b-row>
       </div>
+      <b-col sm="11">
+        <div class="dash-link">
+          <b-link href="#" class="links">View All Devices</b-link>
+        </div>
+      </b-col>
     </b-container>
   </div>
 </template>
 
 <script>
-export default {};
+import Summary from "./summary";
+import Room from "./roomTemplate";
+export default {
+  name: "dashboard-components",
+  components: { Room, Summary }
+};
 </script>
 
 <style>
 #dash {
-  padding-top: 120px;
+  padding-top: 90px;
 }
 
 #rooms {
@@ -57,22 +44,24 @@ export default {};
 }
 
 .title {
-  font-size: 4em;
+  font-size: 3em;
+}
+.title-container {
+  margin-top: 30px;
+  margin-left: 30px;
+  margin-right: 30px;
+  margin-bottom: 0;
+}
+.rooms {
+  margin: 30px !important;
+  margin-top: 0 !important;
 }
 
-.cards {
-  border-radius: 30px !important;
-  width: 100%;
+.room-title {
+  font-size: 1.3em;
 }
-
-.card-title {
-  text-align: center;
-  font-size: 2em;
-}
-
 .image-container {
   text-align: center;
-  width: 100%;
 }
 
 .text-container {
@@ -82,6 +71,22 @@ export default {};
 }
 
 .card-img {
-  width: 50% !important;
+  width: 40% !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+.room-container {
+  border: solid 1px grey;
+  padding-top: 30px;
+  padding-bottom: 30px;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+  margin: 0 !important;
+  border-radius: 40px;
+}
+
+.dash-link {
+  text-align: center;
 }
 </style>
