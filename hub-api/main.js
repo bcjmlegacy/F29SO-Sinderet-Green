@@ -4,6 +4,10 @@ mqtt          = require('mqtt'),
 DBHandler     = require('./dbhandler.js'),
 app           = express();
 
+// So we can parse the req body for POST data
+app.use(express.json());
+app.use(express.urlencoded({extended: true}));
+
 const port    = 5552;
 var client    = mqtt.connect('mqtt://127.0.0.1')
 var db        = new DBHandler();
@@ -211,6 +215,166 @@ app.get('/getDeviceReadings', (req, res) => {
     res.send(rows);
   }, req.query.limit, req.query.offset)
 });
+
+/* #######################################
+
+Inserting auxiliary data.
+
+####################################### */
+
+app.get('/insertProperty', (req, res) => {
+  res.send( { "error": "Use POST instead!" } );
+});
+
+app.get('/insertAccountType', (req, res) => {
+  res.send( { "error": "Use POST instead!" } );
+});
+
+app.get('/insertSensorType', (req, res) => {
+  res.send( { "error": "Use POST instead!" } );
+});
+
+app.get('/insertRoom', (req, res) => {
+  res.send( { "error": "Use POST instead!" } );
+});
+
+app.get('/insertDeviceType', (req, res) => {
+  res.send( { "error": "Use POST instead!" } );
+});
+
+app.post('/insertProperty', (req, res) => {
+  if(req.body.name)  {
+    db.insertProperty(req.body.name, function(err, rowId) {
+      if(err) {
+        res.send( { "error": err } );
+      } else  {
+        res.send( { "rowId": rowId } );
+      }
+    })
+  } else  {
+    res.send( { "error": "No name parameter given!" } );
+  }
+});
+
+app.post('/insertAccountType', (req, res) => {
+  if(req.body.name)  {
+    db.insertAccountType(req.body.name, function(err, rowId) {
+      if(err) {
+        res.send( { "error": err } );
+      } else  {
+        res.send( { "rowId": rowId } );
+      }
+    })
+  } else  {
+    res.send( { "error": "No name parameter given!" } );
+  }
+});
+
+app.post('/insertSensorType', (req, res) => {
+  if(req.body.name)  {
+    db.insertSensorType(req.body.name, function(err, rowId) {
+      if(err) {
+        res.send( { "error": err } );
+      } else  {
+        res.send( { "rowId": rowId } );
+      }
+    })
+  } else  {
+    res.send( { "error": "No name parameter given!" } );
+  }
+});
+
+app.post('/insertRoom', (req, res) => {
+  if(req.body.name)  {
+    db.insertRoom(req.body.name, function(err, rowId) {
+      if(err) {
+        res.send( { "error": err } );
+      } else  {
+        res.send( { "rowId": rowId } );
+      }
+    })
+  } else  {
+    res.send( { "error": "No name parameter given!" } );
+  }
+});
+
+app.post('/insertDeviceType', (req, res) => {
+  if(req.body.name)  {
+    db.insertDeviceType(req.body.name, function(err, rowId) {
+      if(err) {
+        res.send( { "error": err } );
+      } else  {
+        res.send( { "rowId": rowId } );
+      }
+    })
+  } else  {
+    res.send( { "error": "No name parameter given!" } );
+  }
+});
+
+/* #######################################
+
+Inserting larger records.
+
+####################################### */
+
+app.get('/insertUser', (req, res) => {
+  res.send( { "error": "Use POST instead!" } );
+});
+
+app.get('/insertSensor', (req, res) => {
+  res.send( { "error": "Use POST instead!" } );
+});
+
+app.get('/insertDevice', (req, res) => {
+  res.send( { "error": "Use POST instead!" } );
+});
+
+app.post('/insertUser', (req, res) => {
+  if(req.body.account_type && req.body.username && req.body.password)  {
+    db.insertUser(req.body.account_type, req.body.username, req.body.password, function(err, rowId) {
+      if(err) {
+        res.send( { "error": err } );
+      } else  {
+        res.send( { "rowId": rowId } );
+      }
+    })
+  } else  {
+    res.send( { "error": "Missing parameter! Needs account_type, username and password" } );
+  }
+});
+
+app.post('/insertSensor', (req, res) => {
+  if(req.body.room && req.body.type && req.body.name)  {
+    db.insertSensor(req.body.room, req.body.type, req.body.name, function(err, rowId) {
+      if(err) {
+        res.send( { "error": err } );
+      } else  {
+        res.send( { "rowId": rowId } );
+      }
+    })
+  } else  {
+    res.send( { "error": "Missing parameter! Needs room, type and name" } );
+  }
+});
+
+app.post('/insertDevice', (req, res) => {
+  if(req.body.room && req.body.type && req.body.name)  {
+    db.insertDevice(req.body.room, req.body.type, req.body.name, function(err, rowId) {
+      if(err) {
+        res.send( { "error": err } );
+      } else  {
+        res.send( { "rowId": rowId } );
+      }
+    })
+  } else  {
+    res.send( { "error": "Missing parameter! Needs account_type, username and password" } );
+  }
+});
+
+//
+// Start the API
+//
 
 app.listen(port, () => {
   console.log(`> Uplink HUB API listening on port ${port}`)

@@ -122,6 +122,8 @@ INSERT INTO device_type     (device_type_name)  VALUES ("Solar Controller");
 INSERT INTO device_type     (device_type_name)  VALUES ("Light");
 INSERT INTO device_type     (device_type_name)  VALUES ("Door lock");
 
+INSERT INTO user (user_account_type, user_username, user_password) VALUES (1, "Test_user", "12345");
+
 INSERT INTO sensor (sensor_id, sensor_room, sensor_type, sensor_name) VALUES ("ABC123", 1, 1, "Livingroom temp sensor 1");
 INSERT INTO sensor (sensor_id, sensor_room, sensor_type, sensor_name) VALUES ("ABC456", 1, 1, "Livingroom temp sensor 2");
 INSERT INTO sensor (sensor_id, sensor_room, sensor_type, sensor_name) VALUES ("ABC789", 2, 1, "Kitchen temp sensor");
