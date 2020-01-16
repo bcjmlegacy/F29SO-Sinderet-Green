@@ -30,7 +30,6 @@
 <script>
 import Summary from "./summary";
 import Room from "./roomTemplate";
-
 export default {
 	name: "dashboard-components",
 	components: { Room, Summary }

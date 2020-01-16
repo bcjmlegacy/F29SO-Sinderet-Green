@@ -1,19 +1,19 @@
 <template>
-  <div id="app">
-    <Dash />
-  </div>
+	<div id="app">
+		<Login />
+	</div>
 </template>
 
 <script>
-//import Login from "./components/loginTemplate";
+import Login from "./components/loginTemplate";
 //import Register from "./components/registerTemplate";
-import Dash from "./components/dashboardTemplate";
+//import Dash from "./components/dashboardTemplate";
 
 export default {
-  name: "app",
-  components: {
-    Dash
-  }
+	name: "app",
+	components: {
+		Login
+	}
 };
 </script>
 
