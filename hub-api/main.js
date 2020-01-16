@@ -38,7 +38,7 @@ function parseTopic(topic, message) {
     if(thingId.length === 6)  {
       // Check if this is a sensor
       
-      db.isSensor(thingId, function(err, rows)  {
+      db.getSensorById(thingId, function(err, rows)  {
         if(err) {
           console.log("! Error looking up sensor");
           console.log(`! ${err}`);
@@ -52,7 +52,7 @@ function parseTopic(topic, message) {
     } else if(thingId.length === 9) {
       // Check if this is a device
       
-      db.isDevice(thingId, function(err, rows)  {
+      db.getDeviceById(thingId, function(err, rows)  {
         if(err) {
           console.log("! Error looking up device");
           console.log(`! ${err}`);
@@ -90,6 +90,126 @@ client.on('message', function (topic, message) {
 
 app.get('/', (req, res) => {
   res.send('Uplink HUB API running')
+});
+
+/* #######################################
+
+Get by ID.
+
+####################################### */
+
+app.get('/getAccountTypeById', (req, res) => {
+  db.getAccountTypeById(req.query.id, function(err, rows) {
+    res.send(rows);
+  })
+});
+
+app.get('/getSensorTypeById', (req, res) => {
+  db.getSensorTypeById(req.query.id, function(err, rows) {
+    res.send(rows);
+  })
+});
+
+app.get('/getRoomById', (req, res) => {
+  db.getRoomById(req.query.id, function(err, rows) {
+    res.send(rows);
+  })
+});
+
+app.get('/getDeviceTypeById', (req, res) => {
+  db.getDeviceTypeById(req.query.id, function(err, rows) {
+    res.send(rows);
+  })
+});
+
+app.get('/getSensorById', (req, res) => {
+  db.getSensorById(req.query.id, function(err, rows) {
+    res.send(rows);
+  })
+});
+
+app.get('/getDeviceById', (req, res) => {
+  db.getDeviceById(req.query.id, function(err, rows) {
+    res.send(rows);
+  })
+});
+
+/* #######################################
+
+Get by room.
+
+####################################### */
+
+app.get('/getSensorByRoom', (req, res) => {
+  db.getSensorByRoom(req.query.room, function(err, rows) {
+    res.send(rows);
+  })
+});
+
+app.get('/getDeviceByRoom', (req, res) => {
+  db.getDeviceByRoom(req.query.room, function(err, rows) {
+    res.send(rows);
+  })
+});
+
+/* #######################################
+
+Get all of something with limits.
+
+####################################### */
+
+app.get('/getAccountTypes', (req, res) => {
+  db.getAccountTypes(function(err, rows) {
+    res.send(rows);
+  }, req.query.limit, req.query.offset)
+});
+
+app.get('/getSensorTypes', (req, res) => {
+  db.getSensorTypes(function(err, rows) {
+    res.send(rows);
+  }, req.query.limit, req.query.offset)
+});
+
+app.get('/getRooms', (req, res) => {
+  db.getRooms(function(err, rows) {
+    res.send(rows);
+  }, req.query.limit, req.query.offset)
+});
+
+app.get('/getDeviceTypes', (req, res) => {
+  db.getDeviceTypes(function(err, rows) {
+    res.send(rows);
+  }, req.query.limit, req.query.offset)
+});
+
+app.get('/getSensors', (req, res) => {
+  db.getSensors(function(err, rows) {
+    res.send(rows);
+  }, req.query.limit, req.query.offset)
+});
+
+app.get('/getDevices', (req, res) => {
+  db.getDevices(function(err, rows) {
+    res.send(rows);
+  }, req.query.limit, req.query.offset)
+});
+
+app.get('/getUsers', (req, res) => {
+  db.getUsers(function(err, rows) {
+    res.send(rows);
+  }, req.query.limit, req.query.offset)
+});
+
+app.get('/getSensorReadings', (req, res) => {
+  db.getSensorReadings(function(err, rows) {
+    res.send(rows);
+  }, req.query.limit, req.query.offset)
+});
+
+app.get('/getDeviceReadings', (req, res) => {
+  db.getDeviceReadings(function(err, rows) {
+    res.send(rows);
+  }, req.query.limit, req.query.offset)
 });
 
 app.listen(port, () => {
