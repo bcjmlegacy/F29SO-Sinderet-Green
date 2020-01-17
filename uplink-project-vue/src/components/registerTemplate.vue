@@ -130,12 +130,13 @@
   </div>
 </template>
 <script>
-let url = "http://localhost:5552";
+let url = "http://localhost:5552/insertUser";
 
 export default {
   data() {
     return {
       form: {
+        accountType: "1",
         email: "",
         username: "",
         firstname: "",
@@ -148,7 +149,19 @@ export default {
   },
   methods: {
     go(evt) {
-      fetch(url, {})
+      fetch(url, {
+        mode: "cors",
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          account_type: this.form.accountType,
+          username: this.form.username,
+          password: this.form.password
+        })
+      })
         .then(function(response) {
           return response;
         })
@@ -164,6 +177,8 @@ export default {
       console.log(this.form);
       if (this.form.acceptTerms === "false") {
         console.log("Not Accepted");
+      } else {
+        console.log("accepted");
       }
     }
   }
