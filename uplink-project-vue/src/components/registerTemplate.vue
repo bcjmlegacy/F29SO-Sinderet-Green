@@ -90,7 +90,9 @@
           </b-row>
           <b-row class="rows">
             <b-col sm="3">
-              <label for="input-confirm-password" class="labels">Confirm Password</label>
+              <label for="input-confirm-password" class="labels"
+                >Confirm Password</label
+              >
             </b-col>
             <b-col sm="8">
               <b-form-input
@@ -113,7 +115,8 @@
                 name="acceptTerms"
                 class="check"
                 v-model="form.acceptTerms"
-              >Accept Terms and Conditions</b-form-checkbox>
+                >Accept Terms and Conditions</b-form-checkbox
+              >
             </b-col>
           </b-row>
           <b-row class="rows">
@@ -127,10 +130,13 @@
   </div>
 </template>
 <script>
+let url = "http://localhost:5552/insertUser";
+
 export default {
   data() {
     return {
       form: {
+        accountType: "1",
         email: "",
         username: "",
         firstname: "",
@@ -143,12 +149,36 @@ export default {
   },
   methods: {
     go(evt) {
+      fetch(url, {
+        mode: "cors",
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          account_type: this.form.accountType,
+          username: this.form.username,
+          password: this.form.password
+        })
+      })
+        .then(function(response) {
+          return response;
+        })
+        .then(function(text) {
+          console.log("Request successful", text);
+        })
+        .catch(function(error) {
+          console.log("Request failed", error);
+        });
       //Checks that the data entered is registered
       //Data entered is stored in a JSON Ready to be sent to the server
       evt.preventDefault();
       console.log(this.form);
       if (this.form.acceptTerms === "false") {
         console.log("Not Accepted");
+      } else {
+        console.log("accepted");
       }
     }
   }
