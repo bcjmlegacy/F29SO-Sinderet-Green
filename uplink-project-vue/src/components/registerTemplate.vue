@@ -90,9 +90,7 @@
           </b-row>
           <b-row class="rows">
             <b-col sm="3">
-              <label for="input-confirm-password" class="labels"
-                >Confirm Password</label
-              >
+              <label for="input-confirm-password" class="labels">Confirm Password</label>
             </b-col>
             <b-col sm="8">
               <b-form-input
@@ -115,8 +113,7 @@
                 name="acceptTerms"
                 class="check"
                 v-model="form.acceptTerms"
-                >Accept Terms and Conditions</b-form-checkbox
-              >
+              >Accept Terms and Conditions</b-form-checkbox>
             </b-col>
           </b-row>
           <b-row class="rows">
@@ -204,7 +201,7 @@ export default {
     margin-left: 1%;
     margin-right: 1%;
     padding: 10px 20px;
-    padding-top: 120px;
+    padding-top: 70px;
   }
 
   .labels {

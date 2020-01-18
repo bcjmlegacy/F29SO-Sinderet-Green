@@ -7,7 +7,7 @@ import "../public/style.css";
 
 Vue.use(BootstrapVue);
 Vue.config.productionTip = false;
-
+export const bus = new Vue();
 new Vue({
-	render: h => h(App)
+  render: h => h(App)
 }).$mount("#app");
