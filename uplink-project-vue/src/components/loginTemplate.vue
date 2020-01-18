@@ -49,7 +49,8 @@
                 name="check_Save"
                 class="check"
                 v-model="form.checked"
-              >Remember Me</b-form-checkbox>
+                >Remember Me</b-form-checkbox
+              >
             </b-col>
           </b-row>
           <b-row class="rows">
@@ -74,6 +75,8 @@
 </template>
 
 <script>
+let url = "http://localhost:5552/getUsers";
+let formData = null;
 export default {
   data() {
     return {
@@ -86,23 +89,43 @@ export default {
   },
   methods: {
     go(evt) {
-      fetch("http://localhost:5552", { mode: "no-cors" })
+      fetch(url, { mode: "cors", method: "GET" })
         .then(function(response) {
           return response.json();
         })
-        .then(function(text) {
-          console.log("Request successful", text);
+        .then(function(userData) {
+          if (check(userData));
+
+          console.log(userData);
         })
         .catch(function(error) {
           console.log("Request failed", error);
         });
-      //Checks that the data entered is registered
-      //Data entered is stored in a JSON Ready to be sent to the server
+
       evt.preventDefault();
-      console.log(this.form);
+      formData = this.form;
     }
   }
 };
+
+//todo ----- Make this look nicer
+
+function check(userData) {
+  let status = false;
+  for (let key in userData) {
+    if (
+      userData[key].user_username === formData.username &&
+      userData[key].user_password === formData.password
+    ) {
+      status = true;
+      console.log(status);
+      break;
+    } else {
+      console.log(status);
+    }
+  }
+  return status;
+}
 </script>
 
 <style>
