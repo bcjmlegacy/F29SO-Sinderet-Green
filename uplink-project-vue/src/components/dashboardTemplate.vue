@@ -5,19 +5,12 @@
         <h1 class="title">Welcome Back ...</h1>
       </div>
       <div class="summary-cont">
-        <b-row class="justify-content-center">
-          <div id="summary">
-            <Summary />
-          </div>
-        </b-row>
+        <Summary />
       </div>
 
       <div id="rooms">
-        <b-row>
-          <b-col sm="12">
-            <h1 class="sub-title">Rooms</h1>
-          </b-col>
-        </b-row>
+        <h1 class="sub-title">Rooms</h1>
+
         <!--Dummy Rooms-->
         <b-row id="current-rooms" class="justify-content-center">
           <Room />
@@ -26,13 +19,9 @@
           <AddRoom />
         </b-row>
       </div>
-      <b-row>
-        <b-col sm="12">
-          <div class="dash-link">
-            <b-link href="#" class="links">View All Devices</b-link>
-          </div>
-        </b-col>
-      </b-row>
+      <div class="dash-link">
+        <b-link href="#" class="links">View All Devices</b-link>
+      </div>
     </b-container>
   </div>
 </template>
@@ -74,11 +63,11 @@ function consume(roomData) {
 }
 
 .summary-cont {
-  margin-top: 30px;
+  margin-top: 40px;
 }
 
 #rooms {
-  margin-top: 60px;
+  margin-top: 90px;
   margin-bottom: 20px;
 }
 
@@ -94,7 +83,7 @@ function consume(roomData) {
 }
 .title-container {
   margin-top: 10px;
-  margin-bottom: 0;
+  margin-bottom: 20px;
 }
 
 .dash-link {

@@ -1,5 +1,5 @@
 <template>
-  <b-col xs="4">
+  <b-col sm="4">
     <b-card no-body class="overflow-hidden card-mod-room">
       <b-row>
         <b-col xs="8">
@@ -19,9 +19,11 @@
 <style>
 .img {
   width: 70% !important;
+  margin: 10px;
 }
 .card-title-room {
-  padding-top: 25px;
+  margin-left: 10px;
+  margin-top: 25px;
 }
 
 .card-mod-room {
@@ -29,6 +31,7 @@
   max-width: 310px !important;
   min-width: 310px !important;
   min-height: 120px !important;
+  max-height: 120px !important;
   border-radius: 20px !important;
   text-align: center;
 }
@@ -36,8 +39,6 @@
 .image-cont-room {
   text-align: left !important;
   width: 100% !important;
-  padding: 10px;
-  margin-top: 5px;
 }
 
 @media screen and (max-width: 812px) {
