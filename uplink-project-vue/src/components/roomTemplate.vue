@@ -1,52 +1,37 @@
 <template>
-  <b-col sm="4">
-    <b-card no-body class="overflow-hidden card-mod-room">
-      <b-row>
-        <b-col xs="8">
-          <b-card-body>
-            <h3 class="card-title-room">Livingroom</h3>
-          </b-card-body>
-        </b-col>
-        <b-col xs="4">
-          <div class="image-cont-room">
-            <img src="../assets/couchcolor.png" alt="livingroom" class="img" />
+  <div id="room-cards">
+    <b-col xs="4">
+      <div class="custom-cards-rooms">
+        <div class="img-cont">
+          <img src="../assets/couchcolor.png" alt="Livingroom" class="img-rooms" />
+          <div class="text-wrapper">
+            <h4 class="card-title">Livingroom</h4>
           </div>
-        </b-col>
-      </b-row>
-    </b-card>
-  </b-col>
+        </div>
+      </div>
+    </b-col>
+  </div>
 </template>
 <style>
-.img {
-  width: 70% !important;
+.img-rooms {
+  width: 40%;
   margin: 10px;
 }
-.card-title-room {
-  margin-left: 10px;
-  margin-top: 25px;
+
+#room-cards {
+  margin: 1%;
 }
 
-.card-mod-room {
-  margin: 10px 20px;
-  max-width: 310px !important;
-  min-width: 310px !important;
-  min-height: 120px !important;
-  max-height: 120px !important;
-  border-radius: 20px !important;
-  text-align: center;
+.custom-cards-rooms {
+  height: 150px;
+  width: 200px;
+  background-color: white;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 1px 8px rgba(0, 0, 0, 0.22);
+  transition: 0.2s ease-in-out all;
 }
 
-.image-cont-room {
-  text-align: left !important;
-  width: 100% !important;
-}
-
-@media screen and (max-width: 812px) {
-  .card-title-room {
-    padding-top: 30px;
-  }
-  .image-cont-room {
-    margin-top: 10px;
-  }
+.custom-cards-rooms:hover {
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22);
+  cursor: pointer;
 }
 </style>

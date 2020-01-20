@@ -1,107 +1,151 @@
 <template>
-  <div class="summary">
-    <h1 class="summary-title">Todays Usage</h1>
-    <div>
-      <b-row class="justify-content-center">
-        <b-col sm="4">
-          <b-card no-body class="overflow-hidden card-mod">
-            <b-row>
-              <b-col xs="7">
-                <b-card-body class="c-body">
-                  <h3 class="card-title">Energy Usage</h3>
-                  <b-card-text class="result">200 KWh</b-card-text>
-                </b-card-body>
-              </b-col>
-              <b-col xs="5" class="pic-col">
-                <div class="image-cont">
-                  <img src="../assets/idea.png" class="summary-img" />
-                </div>
-              </b-col>
-            </b-row>
-          </b-card>
+  <div id="stat-cards">
+    <h1 class="title">Welcome Back Euan</h1>
+    <div id="stats">
+      <b-row class="justify-content-md-center">
+        <b-col cols="3">
+          <div class="custom-cards">
+            <div class="img-cont">
+              <img src="../assets/idea.png" alt="Energy Usage" class="img" />
+              <div class="text-wrapper">
+                <h4 class="card-title">Energy Usage</h4>
+                <h5 class="sub-title">200 KWh</h5>
+              </div>
+            </div>
+          </div>
         </b-col>
-        <b-col sm="4">
-          <b-card no-body class="overflow-hidden card-mod">
-            <b-row>
-              <b-col xs="7">
-                <b-card-body class="c-body">
-                  <h3 class="card-title">Solar Stored</h3>
-                  <b-card-text class="result">200 KWh</b-card-text>
-                </b-card-body>
-              </b-col>
-              <b-col xs="5" class="pic-col">
-                <div class="image-cont">
-                  <img src="../assets/battery.png" class="summary-img" />
-                </div>
-              </b-col>
-            </b-row>
-          </b-card>
+        <b-col cols="3" class="custom-cols">
+          <div class="custom-cards">
+            <div class="img-cont">
+              <img src="../assets/battery.png" alt="Energy Usage" class="img" />
+              <div class="text-wrapper">
+                <h4 class="card-title">Energy Usage</h4>
+                <h5 class="sub-title">200 KWh</h5>
+              </div>
+            </div>
+          </div>
         </b-col>
-        <b-col sm="4">
-          <b-card no-body class="overflow-hidden card-mod">
-            <b-row>
-              <b-col xs="6">
-                <b-card-body class="c-body">
-                  <h3 class="card-title">Home Temperature</h3>
-                  <b-card-text class="result">200 KWh</b-card-text>
-                </b-card-body>
-              </b-col>
-              <b-col xs="6">
-                <div class="image-cont">
-                  <img src="../assets/sun.png" class="summary-img" />
-                </div>
-              </b-col>
-            </b-row>
-          </b-card>
+        <b-col cols="3">
+          <div class="custom-cards">
+            <div class="img-cont">
+              <img src="../assets/sun.png" alt="Energy Usage" class="img" />
+              <div class="text-wrapper">
+                <h4 class="card-title">Home Temperature</h4>
+                <h5 class="sub-title">200 KWh</h5>
+              </div>
+            </div>
+          </div>
         </b-col>
       </b-row>
     </div>
   </div>
 </template>
-<script>
-//let url = "http://localhost:5552/";
-
-export default {};
-</script>
 <style>
-.summary-title {
-  font-size: 2.2em;
-  text-align: center;
-  padding-bottom: 10px;
+#stat-cards {
+  margin-top: 100px;
+  margin-right: 10%;
+  margin-left: 10%;
 }
 
-.summary-img {
-  width: 100% !important;
+#stats {
+  padding: 20px;
+  margin: 20px;
+}
+
+.title {
+  font-size: 3.2em;
+  padding: 10px;
+  text-align: left;
+  margin-left: 14%;
+}
+
+.card-title {
+  font-size: 1.4em;
+}
+
+.sub-title {
+  font-size: 1.2em;
+}
+
+.img-cont {
+  text-align: center;
+}
+
+.img {
+  width: 35%;
   margin: 10px;
 }
 
-.image-cont {
-  text-align: left !important;
-  width: 100% !important;
+.text-wrapper {
+  margin-top: 4%;
 }
 
-.c-body {
-  margin-left: 5px;
-  margin-top: 5px;
+.custom-cols {
+  margin-left: 0%;
+  margin-right: 0%;
 }
 
-.card-mod {
-  margin: 10px 20px;
-  border-radius: 20px !important;
-  max-width: 310px !important;
-  min-width: 310px !important;
-  max-height: 120px !important;
-  min-height: 120px !important;
+.custom-cards {
+  height: 200px;
+  width: 200px;
+  background-color: white;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 1px 8px rgba(0, 0, 0, 0.22);
+  transition: 0.2s ease-in-out all;
 }
 
-.result {
-  font-size: 1.3em;
-  margin-bottom: 0 !important;
+.custom-cards:hover {
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22);
+  cursor: pointer;
+}
+
+@media screen and (max-width: 1025px) {
+  .custom-cols {
+    margin-left: 0%;
+    margin-right: 0%;
+  }
+  .card-title {
+    font-size: 1.1em;
+  }
+
+  .sub-title {
+    font-size: 1em;
+  }
+
+  .title {
+    font-size: 2.8em;
+    padding: 1px;
+    margin-left: 15%;
+  }
+
+  .custom-cards {
+    height: 170px;
+    width: 170px;
+  }
+  #stats {
+    margin: 0px;
+  }
+  #stat-cards {
+    margin-right: 0;
+    margin-left: 0;
+  }
 }
 
 @media screen and (max-width: 812px) {
-  .image-cont {
-    text-align: center !important;
+  .custom-cols {
+    margin-left: 6%;
+    margin-right: 6%;
+  }
+  .custom-cards {
+    height: 135px;
+    width: 100px;
+  }
+
+  .title {
+    margin-left: 5%;
+  }
+
+  #stats {
+    margin: 0px;
   }
 }
 </style>

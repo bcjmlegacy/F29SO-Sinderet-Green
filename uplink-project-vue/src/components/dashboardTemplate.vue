@@ -1,40 +1,29 @@
 <template>
-  <div id="dash">
-    <b-container>
-      <div class="title-container">
-        <h1 class="title">Welcome Back ...</h1>
-      </div>
-      <div class="summary-cont">
-        <Summary />
-      </div>
-
-      <div id="rooms">
-        <h1 class="sub-title">Rooms</h1>
-
-        <!--Dummy Rooms-->
-        <b-row id="current-rooms" class="justify-content-center">
-          <Room />
-          <Room />
-          <Room />
-          <AddRoom />
-        </b-row>
-      </div>
-      <div class="dash-link">
-        <b-link href="#" class="links">View All Devices</b-link>
-      </div>
-    </b-container>
+  <div>
+    <Summary />
+    <div id="room-title">
+      <h1 class="title">Rooms</h1>
+    </div>
+    <div id="rooms">
+      <b-row>
+        <Room />
+        <Room />
+        <Room />
+        <Room />
+      </b-row>
+    </div>
   </div>
 </template>
 
 <script>
 import Summary from "./summary";
 import Room from "./roomTemplate";
-import AddRoom from "./addRoomTemplate";
+//import AddRoom from "./addRoomTemplate";
 let url = "http://localhost:5552/getRooms";
 let rooms = [{}];
 export default {
   name: "dashboard-components",
-  components: { Room, Summary, AddRoom },
+  components: { Summary, Room },
 
   mounted: function() {
     fetch(url, { mode: "cors", method: "GET" })
@@ -58,41 +47,27 @@ function consume(roomData) {
 </script>
 
 <style>
-#dash {
-  padding-top: 90px;
-}
-
-.summary-cont {
-  margin-top: 40px;
+#room-title {
+  margin-top: 20px;
+  margin-right: 10%;
+  margin-left: 10%;
 }
 
 #rooms {
-  margin-top: 90px;
-  margin-bottom: 20px;
+  margin-left: 21%;
+  margin-right: 2%;
+  margin-bottom: 10%;
+  padding: 10px;
 }
 
-.title {
-  font-size: 3em;
-  text-align: center;
-}
-
-.sub-title {
-  text-align: center;
-  font-size: 2.2em;
-  padding-bottom: 10px;
-}
-.title-container {
-  margin-top: 10px;
-  margin-bottom: 20px;
-}
-
-.dash-link {
-  text-align: center;
-}
-
-@media screen and (max-width: 812px) {
-  #dash {
-    padding-top: 50px;
+@media screen and (max-width: 1025px) {
+  #room-title {
+    margin-right: 0;
+    margin-left: 0;
+  }
+  #rooms {
+    margin-left: 12%;
+    margin-right: 0;
   }
 }
 </style>
