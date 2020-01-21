@@ -372,6 +372,34 @@ app.post('/insertDevice', (req, res) => {
   }
 });
 
+/* #######################################
+
+Get certain things with filters.
+
+####################################### */
+
+app.get('/getSensorReadingsByTimeframe', (req, res) => {
+  console.log(req.query.id, req.query.start, req.query.end);
+  db.getSensorReadingsByTimeframe(req.query.id, req.query.start, req.query.end, function(err, rows) {
+    if(err) {
+      res.send( { "error": err } );
+    } else  {
+      res.send( rows );
+    }
+  });
+});
+
+app.get('/getDeviceReadingsByTimeframe', (req, res) => {
+  console.log(req.query.id, req.query.start, req.query.end);
+  db.getDeviceReadingsByTimeframe(req.query.id, req.query.start, req.query.end, function(err, rows) {
+    if(err) {
+      res.send( { "error": err } );
+    } else  {
+      res.send( rows );
+    }
+  });
+});
+
 //
 // Start the API
 //
