@@ -50,9 +50,19 @@ CREATE TABLE user (
     user_account_type   INTEGER,
     user_username       TEXT,
     user_password       TEXT,
-    user_created        DATETIME DEFAULT CURRENT_TIMESTAMP,
+    
+    user_created        INTEGER,
     user_last_active    TEXT,    
     FOREIGN KEY (user_account_type) REFERENCES account_type(account_type_id)
+);
+
+CREATE TABLE auth (
+    auth_id             INTEGER PRIMARY KEY AUTOINCREMENT,
+    auth_token          TEXT,
+    auth_user_id        INTEGER,
+    auth_created        INTEGER,
+    auth_expires        INTEGER,
+    FOREIGN KEY (auth_user_id) REFERENCES user(user_id)
 );
 
 CREATE TABLE sensor (
@@ -60,7 +70,7 @@ CREATE TABLE sensor (
     sensor_room     INTEGER,
     sensor_type     INTEGER,
     sensor_name     TEXT,
-    sensor_added    DATETIME DEFAULT CURRENT_TIMESTAMP,
+    sensor_added    INTEGER,
     FOREIGN KEY (sensor_room) REFERENCES room(room_id),
     FOREIGN KEY (sensor_type) REFERENCES sensor_type(sensor_type_id)
 );
@@ -70,7 +80,7 @@ CREATE TABLE device	(
     device_room     INTEGER,
     device_type     INTEGER,
     device_name     TEXT,
-    device_added    DATETIME DEFAULT CURRENT_TIMESTAMP,
+    device_added    INTEGER,
     FOREIGN KEY (device_type)   REFERENCES device_type(device_type_id),
     FOREIGN KEY (device_room)   REFERENCES room(room_id)
 );
@@ -85,7 +95,7 @@ CREATE TABLE sensor_reading	(
 	sensor_reading_id           INTEGER PRIMARY KEY AUTOINCREMENT,
     sensor_reading_sensor_id    INTEGER,
     sensor_reading_value        INTEGER,
-    sensor_reading_timestamp    DATETIME DEFAULT CURRENT_TIMESTAMP,
+    sensor_reading_timestamp    INTEGER,
     FOREIGN KEY (sensor_reading_sensor_id) REFERENCES sensor(sensor_id)
 );
 
@@ -94,7 +104,7 @@ CREATE TABLE device_reading	(
     device_reading_sensor_id    INTEGER,
     device_reading_type         TEXT,
     device_reading_value        INTEGER,
-    device_reading_timestamp    DATETIME DEFAULT CURRENT_TIMESTAMP,
+    device_reading_timestamp    INTEGER,
     FOREIGN KEY (device_reading_sensor_id) REFERENCES device(device_id)
 );
 
@@ -122,17 +132,17 @@ INSERT INTO device_type     (device_type_name)  VALUES ("Solar Controller");
 INSERT INTO device_type     (device_type_name)  VALUES ("Light");
 INSERT INTO device_type     (device_type_name)  VALUES ("Door lock");
 
-INSERT INTO user (user_account_type, user_username, user_password) VALUES (1, "Test_user", "12345");
+INSERT INTO user (user_account_type, user_username, user_password, user_created, user_last_active) VALUES (1, "Test_user", "b109f3bbbc244eb82441917ed06d618b9008dd09b3befd1b5e07394c706a8bb980b1d7785e5976ec049b46df5f1326af5a2ea6d103fd07c95385ffab0cacbc86", 1579521113, 1579521113);
 
-INSERT INTO sensor (sensor_id, sensor_room, sensor_type, sensor_name) VALUES ("ABC123", 1, 1, "Livingroom temp sensor 1");
-INSERT INTO sensor (sensor_id, sensor_room, sensor_type, sensor_name) VALUES ("ABC456", 1, 1, "Livingroom temp sensor 2");
-INSERT INTO sensor (sensor_id, sensor_room, sensor_type, sensor_name) VALUES ("ABC789", 2, 1, "Kitchen temp sensor");
-INSERT INTO sensor (sensor_id, sensor_room, sensor_type, sensor_name) VALUES ("DEF123", 3, 1, "Bedroom temp sensor");
-INSERT INTO sensor (sensor_id, sensor_room, sensor_type, sensor_name) VALUES ("DEF456", 1, 2, "Livingroom humidity sensor");
-INSERT INTO sensor (sensor_id, sensor_room, sensor_type, sensor_name) VALUES ("DEF789", 2, 2, "Kitchen humidity sensor");
-INSERT INTO sensor (sensor_id, sensor_room, sensor_type, sensor_name) VALUES ("HIG123", 3, 2, "Bedroom humidity sensor");
+INSERT INTO sensor (sensor_id, sensor_room, sensor_type, sensor_name, sensor_added) VALUES ("ABC123", 1, 1, "Livingroom temp sensor 1", 1579521113);
+INSERT INTO sensor (sensor_id, sensor_room, sensor_type, sensor_name, sensor_added) VALUES ("ABC456", 1, 1, "Livingroom temp sensor 2", 1579521113);
+INSERT INTO sensor (sensor_id, sensor_room, sensor_type, sensor_name, sensor_added) VALUES ("ABC789", 2, 1, "Kitchen temp sensor", 1579521113);
+INSERT INTO sensor (sensor_id, sensor_room, sensor_type, sensor_name, sensor_added) VALUES ("DEF123", 3, 1, "Bedroom temp sensor", 1579521113);
+INSERT INTO sensor (sensor_id, sensor_room, sensor_type, sensor_name, sensor_added) VALUES ("DEF456", 1, 2, "Livingroom humidity sensor", 1579521113);
+INSERT INTO sensor (sensor_id, sensor_room, sensor_type, sensor_name, sensor_added) VALUES ("DEF789", 2, 2, "Kitchen humidity sensor", 1579521113);
+INSERT INTO sensor (sensor_id, sensor_room, sensor_type, sensor_name, sensor_added) VALUES ("HIG123", 3, 2, "Bedroom humidity sensor", 1579521113);
 
-INSERT INTO device (device_id, device_room, device_type, device_name) VALUES ("123ABC123", 1, 1, "Livingroom heater");
-INSERT INTO device (device_id, device_room, device_type, device_name) VALUES ("456ABC123", 1, 4, "Livingroom light");
-INSERT INTO device (device_id, device_room, device_type, device_name) VALUES ("789ABC123", 2, 2, "Kitchen fridge");
-INSERT INTO device (device_id, device_room, device_type, device_name) VALUES ("123456ABC", 4, 3, "Solar controller");
+INSERT INTO device (device_id, device_room, device_type, device_name, device_added) VALUES ("123ABC123", 1, 1, "Livingroom heater", 1579521113);
+INSERT INTO device (device_id, device_room, device_type, device_name, device_added) VALUES ("456ABC123", 1, 4, "Livingroom light", 1579521113);
+INSERT INTO device (device_id, device_room, device_type, device_name, device_added) VALUES ("789ABC123", 2, 2, "Kitchen fridge", 1579521113);
+INSERT INTO device (device_id, device_room, device_type, device_name, device_added) VALUES ("123456ABC", 4, 3, "Solar controller", 1579521113);

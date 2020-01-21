@@ -32,6 +32,41 @@ class databasehandler    {
   
   /* #######################################
   
+  Login functions.
+  
+  ####################################### */
+
+  getUserByUsernameAndPassword(username, password, callback)  {
+    var q = (`SELECT * FROM user WHERE user_username = ? AND user_password = ?`);
+    
+    db.all(q, [username, password], function(err, rows) {
+      if(err || ( ! (rows) ) ) {
+        callback(err);
+      } else  {
+        callback(null, rows.user_id);  // Details are correct
+      }
+    });
+  }
+
+  insertNewAuthToken(user_id, token, expires, callback)  {
+    var q = (`INSERT INTO auth (auth_token, auth_user_id, auth_created, auth_expires) VALUES (?, ?, ?, ?)`);
+    
+    var created = new Date().valueOf();
+
+    db.run(q, [user_id, token, created, expires], function(err) {
+      if(err) {
+        console.log(`! Error inserting data record into ${table}:`);
+        console.log(`! ${err}`);
+        callback(err, null);
+      } else  {
+        console.log(`> Inserted new auth token: ${JSON.stringify(this.lastID)}`);
+        callback(null, JSON.stringify(this.lastID));
+      }
+    });
+  }
+
+  /* #######################################
+  
   Get by ID.
   
   ####################################### */
@@ -43,8 +78,6 @@ class databasehandler    {
     db.all(q, [id], function(err, rows) {
       if(err) {
         callback(err);
-      } else if(rows)  {
-        callback(null, rows);
       } else  {
         callback(null, rows);
       }
@@ -72,8 +105,6 @@ class databasehandler    {
     db.all(q, [roomId], function(err, rows) {
       if(err) {
         callback(err);
-      } else if(rows)  {
-        callback(null, rows);
       } else  {
         callback(null, rows);
       }
@@ -102,8 +133,6 @@ class databasehandler    {
     db.all(q, function(err, rows) {
       if(err) {
         callback(err);
-      } else if(rows)  {
-        callback(null, rows);
       } else  {
         callback(null, rows);
       }
@@ -121,6 +150,48 @@ class databasehandler    {
   getSensorReadings(callback, limit, offset)  { this.getMany("sensor_reading", callback, limit, offset); }
   getDeviceReadings(callback, limit, offset)  { this.getMany("device_reading", callback, limit, offset); }
   
+  /* #######################################
+  
+  Get sensor data by filters.
+  
+  ####################################### */
+  
+  getSensorReadingsByTimeframe(id, start, end, callback)
+  {
+    if( ! (end) ) {
+      end = new Date().valueOf();
+    }
+    var q = (`SELECT * FROM sensor_reading WHERE sensor_reading_sensor_id = ?
+              AND sensor_reading_timestamp > ?  
+              AND sensor_reading_timestamp < ? `);
+    
+    db.all(q, [id, start, end], function(err, rows) {
+      if(err) {
+        callback(err);
+      } else  {
+        callback(null, rows);
+      }
+    });
+  }
+
+  getDeviceReadingsByTimeframe(id, start, end, callback)
+  {
+    if( ! (end) ) {
+      end = new Date().valueOf();
+    }
+    var q = (`SELECT * FROM device_reading WHERE device_reading_sensor_id = ?
+              AND device_reading_timestamp > ?  
+              AND device_reading_timestamp < ? `);
+    
+    db.all(q, [id, start, end], function(err, rows) {
+      if(err) {
+        callback(err);
+      } else  {
+        callback(null, rows);
+      }
+    });
+  }
+
   /* #######################################
   
   Inserting auxiliary data.
@@ -155,11 +226,12 @@ class databasehandler    {
   
   ####################################### */
   
-  insertUser(account_type, username, password, callback)
+  insertUser(account_type, username, password, email, forename, surname, callback)
   {
-    var q = (`INSERT INTO user (user_account_type, user_username, user_password) VALUES (?, ?, ?)`);
+    var ts = new Date().valueOf();
+    var q = (`INSERT INTO user (user_account_type, user_username, user_email, user_forename, user_surname, user_password, user_created) VALUES (?, ?, ?, ?)`);
     
-    db.run(q, [account_type, username, password], function(err) {
+    db.run(q, [account_type, username, password, email, forename, surname, ts], function(err) {
       if(err) {
         console.log(`! Error inserting data record into user:`);
         console.log(`! ${err}`);
@@ -173,9 +245,10 @@ class databasehandler    {
   
   insertSensor(room, type, name, callback)
   {
-    var q = (`INSERT INTO sensor (sensor_room, sensor_type, sensor_name) VALUES (?, ?, ?)`);
+    var ts = new Date().valueOf();
+    var q = (`INSERT INTO sensor (sensor_room, sensor_type, sensor_name, sensor_added) VALUES (?, ?, ?, ?)`);
     
-    db.run(q, [room, type, name], function(err) {
+    db.run(q, [room, type, name, ts], function(err) {
       if(err) {
         console.log(`! Error inserting data record into sensor:`);
         console.log(`! ${err}`);
@@ -189,9 +262,10 @@ class databasehandler    {
   
   insertDevice(room, type, name, callback)
   {
-    var q = (`INSERT INTO device (device_room, device_type, device_name) VALUES (?, ?, ?)`);
+    var ts = new Date().valueOf();
+    var q = (`INSERT INTO device (device_room, device_type, device_name, device_added) VALUES (?, ?, ?, ?)`);
     
-    db.run(q, [room, type, name], function(err) {
+    db.run(q, [room, type, name, ts], function(err) {
       if(err) {
         console.log(`! Error inserting data record into device:`);
         console.log(`! ${err}`);
@@ -211,9 +285,10 @@ class databasehandler    {
   
   insertSensorReading(id, val)
   {
-    var q = (`INSERT INTO sensor_reading (sensor_reading_sensor_id, sensor_reading_value) VALUES (?, ?)`);
+    var ts = new Date().valueOf();
+    var q = (`INSERT INTO sensor_reading (sensor_reading_sensor_id, sensor_reading_value, sensor_reading_timestamp) VALUES (?, ?, ?)`);
     
-    db.run(q, [id, val], function(err) {
+    db.run(q, [id, val, ts], function(err) {
       if (err) {
         console.log(`! Error inserting data record for sensor ${id}:`);
         console.log(`! ${err}`);
@@ -224,10 +299,10 @@ class databasehandler    {
   
   insertDeviceReading(id, type, val)
   {
+    var ts = new Date().valueOf();
+    var q = (`INSERT INTO device_reading (device_reading_sensor_id, device_reading_type, device_reading_value, device_reading_timestamp) VALUES (?, ?, ?, ?)`);
     
-    var q = (`INSERT INTO device_reading (device_reading_sensor_id, device_reading_type, device_reading_value) VALUES (?, ?, ?)`);
-    
-    db.run(q, [id, type, val], function(err) {
+    db.run(q, [id, type, val, ts], function(err) {
       if (err) {
         console.log(`! Error inserting data record for device ${id}:`);
         console.log(`! ${err}`);
@@ -237,6 +312,5 @@ class databasehandler    {
   }
   
 }
-
 
 module.exports = databasehandler;
