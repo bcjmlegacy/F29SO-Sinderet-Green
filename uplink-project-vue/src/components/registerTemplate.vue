@@ -118,7 +118,7 @@
           </b-row>
           <b-row class="rows">
             <b-col sm="8" offset-sm="3">
-              <b-button class="but" type="submit">Submit</b-button>
+              <b-button class="but" type="submit">Register</b-button>
             </b-col>
           </b-row>
         </b-form>
@@ -127,10 +127,13 @@
   </div>
 </template>
 <script>
+let url = "http://localhost:5552/insertUser";
+
 export default {
   data() {
     return {
       form: {
+        accountType: "1",
         email: "",
         username: "",
         firstname: "",
@@ -143,12 +146,36 @@ export default {
   },
   methods: {
     go(evt) {
+      fetch(url, {
+        mode: "cors",
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          account_type: this.form.accountType,
+          username: this.form.username,
+          password: this.form.password
+        })
+      })
+        .then(function(response) {
+          return response;
+        })
+        .then(function(text) {
+          console.log("Request successful", text);
+        })
+        .catch(function(error) {
+          console.log("Request failed", error);
+        });
       //Checks that the data entered is registered
       //Data entered is stored in a JSON Ready to be sent to the server
       evt.preventDefault();
       console.log(this.form);
       if (this.form.acceptTerms === "false") {
         console.log("Not Accepted");
+      } else {
+        console.log("accepted");
       }
     }
   }
@@ -174,7 +201,7 @@ export default {
     margin-left: 1%;
     margin-right: 1%;
     padding: 10px 20px;
-    padding-top: 120px;
+    padding-top: 40px;
   }
 
   .labels {

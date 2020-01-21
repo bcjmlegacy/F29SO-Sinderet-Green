@@ -7,7 +7,7 @@
         </b-col>
       </b-row>
       <div id="form">
-        <b-form @submit="go">
+        <b-form @submit.prevent="go">
           <b-row class="rows">
             <b-col sm="2">
               <label for="input-username" class="labels">Username</label>
@@ -54,7 +54,7 @@
           </b-row>
           <b-row class="rows">
             <b-col sm="8" offset-sm="2">
-              <b-button class="but" type="submit">Submit</b-button>
+              <b-button class="but" type="submit" @click="validate('Dash')">Login</b-button>
             </b-col>
           </b-row>
         </b-form>
@@ -66,7 +66,7 @@
       </b-row>
       <b-row class="rows">
         <b-col sm="8" offset-sm="2">
-          <b-link href="#" class="links">Create Account</b-link>
+          <b-link href="#" class="links" @click="switchComp('Register')">Create Account</b-link>
         </b-col>
       </b-row>
     </b-container>
@@ -74,7 +74,12 @@
 </template>
 
 <script>
+let url = "http://localhost:5552/getUsers";
+let formData = null;
+let status = false;
+import { bus } from "../main";
 export default {
+  name: "login",
   data() {
     return {
       form: {
@@ -85,14 +90,50 @@ export default {
     };
   },
   methods: {
-    go(evt) {
-      //Checks that the data entered is registered
-      //Data entered is stored in a JSON Ready to be sent to the server
-      evt.preventDefault();
-      console.log(this.form);
+    go() {
+      fetch(url, { mode: "cors", method: "GET" })
+        .then(function(response) {
+          return response.json();
+        })
+        .then(function(userData) {
+          status = check(userData);
+          console.log(userData);
+        })
+        .catch(function(error) {
+          console.log("Request failed", error);
+        });
+
+      formData = this.form;
+    },
+    switchComp(comp) {
+      bus.$emit("switchComp", comp);
+    },
+    validate(comp) {
+      if (status === true) {
+        this.switchComp(comp);
+      }
     }
   }
 };
+
+//todo ----- Make this look nicer
+
+function check(userData) {
+  let status = false;
+  for (let key in userData) {
+    if (
+      userData[key].user_username === formData.username &&
+      userData[key].user_password === formData.password
+    ) {
+      status = true;
+      console.log(status);
+      break;
+    } else {
+      console.log(status);
+    }
+  }
+  return status;
+}
 </script>
 
 <style>
@@ -127,7 +168,7 @@ export default {
     padding-top: 120px;
   }
   .labels {
-    float: left;
+    float: left !important;
   }
   .but {
     float: none;
