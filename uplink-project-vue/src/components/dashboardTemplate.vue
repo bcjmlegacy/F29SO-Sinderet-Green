@@ -1,16 +1,20 @@
 <template>
   <div>
     <Summary />
-    <div id="room-title">
-      <h1 class="title">Rooms</h1>
-    </div>
-    <div id="rooms">
-      <b-row>
-        <Room />
-        <Room />
-        <Room />
-        <Room />
-      </b-row>
+    <div class="container justify-content-center">
+      <div id="rooms">
+        <h3 class="display-4">Rooms</h3>
+        <div class="r-grid">
+          <b-row>
+            <Room />
+            <Room />
+            <Room />
+            <Room />
+            <AddRoom />
+            <AllDevices />
+          </b-row>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -18,12 +22,13 @@
 <script>
 import Summary from "./summary";
 import Room from "./roomTemplate";
-//import AddRoom from "./addRoomTemplate";
+import AddRoom from "./addRoomTemplate";
+import AllDevices from "./allDevices";
 let url = "http://localhost:5552/getRooms";
 let rooms = [{}];
 export default {
   name: "dashboard-components",
-  components: { Summary, Room },
+  components: { Summary, Room, AddRoom, AllDevices },
 
   mounted: function() {
     fetch(url, { mode: "cors", method: "GET" })
@@ -47,27 +52,15 @@ function consume(roomData) {
 </script>
 
 <style>
-#room-title {
-  margin-top: 20px;
-  margin-right: 10%;
-  margin-left: 10%;
+#rooms {
+  margin-top: 50px;
+  margin-bottom: 50px;
 }
 
-#rooms {
-  margin-left: 21%;
-  margin-right: 2%;
-  margin-bottom: 10%;
-  padding: 10px;
+.r-grid {
+  margin-top: 20px;
 }
 
 @media screen and (max-width: 1025px) {
-  #room-title {
-    margin-right: 0;
-    margin-left: 0;
-  }
-  #rooms {
-    margin-left: 12%;
-    margin-right: 0;
-  }
 }
 </style>

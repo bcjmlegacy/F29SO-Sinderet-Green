@@ -8,7 +8,6 @@
 import Login from "./components/loginTemplate";
 import Register from "./components/registerTemplate";
 import Dash from "./components/dashboardTemplate";
-//import Dash from "./components/dashV2Template";
 import { bus } from "./main";
 export default {
   name: "app",
