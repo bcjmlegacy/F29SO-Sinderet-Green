@@ -1,37 +1,34 @@
 <template>
-  <div id="dash">
-    <b-container>
-      <div class="title-container">
-        <h1 class="title">Welcome Back ...</h1>
-      </div>
-      <div id="summary">
-        <Summary />
-      </div>
+  <div>
+    <Summary />
+    <div class="container justify-content-center">
       <div id="rooms">
-        <!--Dummy Rooms-->
-        <b-row id="current-rooms">
-          <Room />
-        </b-row>
+        <h3 class="display-4">Rooms</h3>
+        <div class="r-grid">
+          <b-row>
+            <Room />
+            <Room />
+            <Room />
+            <Room />
+            <AddRoom />
+            <AllDevices />
+          </b-row>
+        </div>
       </div>
-      <b-row>
-        <b-col sm="11">
-          <div class="dash-link">
-            <b-link href="#" class="links">View All Devices</b-link>
-          </div>
-        </b-col>
-      </b-row>
-    </b-container>
+    </div>
   </div>
 </template>
 
 <script>
 import Summary from "./summary";
 import Room from "./roomTemplate";
+import AddRoom from "./addRoomTemplate";
+import AllDevices from "./allDevices";
 let url = "http://localhost:5552/getRooms";
 let rooms = [{}];
 export default {
   name: "dashboard-components",
-  components: { Room, Summary },
+  components: { Summary, Room, AddRoom, AllDevices },
 
   mounted: function() {
     fetch(url, { mode: "cors", method: "GET" })
@@ -55,65 +52,15 @@ function consume(roomData) {
 </script>
 
 <style>
-#dash {
-  padding-top: 90px;
-}
-
-#summary {
-  margin-top: 20px;
-  margin-left: 30px;
-  margin-right: 20px;
-  margin-bottom: 30px;
-}
-
 #rooms {
-  margin-top: 60px;
+  margin-top: 50px;
+  margin-bottom: 50px;
 }
 
-.title {
-  font-size: 3em;
-}
-.title-container {
-  margin-top: 30px;
-  margin-left: 30px;
-  margin-right: 30px;
-  margin-bottom: 0;
-}
-.rooms {
-  margin: 30px !important;
-  margin-top: 0 !important;
+.r-grid {
+  margin-top: 20px;
 }
 
-.room-title {
-  font-size: 1.3em;
-}
-.image-container {
-  text-align: center;
-}
-
-.text-container {
-  text-align: center;
-  padding: 14%;
-  width: 100%;
-}
-
-.card-img {
-  width: 40% !important;
-  padding: 0 !important;
-  margin: 0 !important;
-}
-
-.room-container {
-  border: solid 1px grey;
-  padding-top: 30px;
-  padding-bottom: 30px;
-  padding-left: 0 !important;
-  padding-right: 0 !important;
-  margin: 0 !important;
-  border-radius: 40px;
-}
-
-.dash-link {
-  text-align: center;
+@media screen and (max-width: 1025px) {
 }
 </style>

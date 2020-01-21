@@ -1,10 +1,24 @@
 <template>
-	<b-col sm="3" class="rooms">
-		<div class="room-container">
-			<div class="image-container">
-				<img src="../assets/couchcolor.png" alt="livingroom" class="card-img" />
-				<h4 class="room-title">Livingroom</h4>
-			</div>
-		</div>
-	</b-col>
+  <div class="col-sm-4">
+    <div class="card custom-cards" style="width: 13rem; height: 15rem; padding: 20px">
+      <div class="img-cont">
+        <img class="card-img-top img" src="../assets/couchcolor.png" alt="Energy Usage" />
+      </div>
+      <div class="card-body">
+        <h5 class="card-title text-center">Livingroom</h5>
+      </div>
+    </div>
+  </div>
 </template>
+<style>
+.img-cont {
+  text-align: center;
+  padding-top: 20px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.card {
+  margin-bottom: 30px !important;
+}
+</style>

@@ -1,18 +1,30 @@
 <template>
   <div id="app">
-    <Dash />
+    <component :is="currentComponent"></component>
   </div>
 </template>
 
 <script>
-//import Login from "./components/loginTemplate";
-//import Register from "./components/registerTemplate";
+import Login from "./components/loginTemplate";
+import Register from "./components/registerTemplate";
 import Dash from "./components/dashboardTemplate";
-
+import { bus } from "./main";
 export default {
   name: "app",
   components: {
+    Login,
+    Register,
     Dash
+  },
+  data() {
+    return {
+      currentComponent: "Dash"
+    };
+  },
+  created() {
+    bus.$on("switchComp", comp => {
+      this.currentComponent = comp;
+    });
   }
 };
 </script>
