@@ -1,5 +1,6 @@
 <template>
   <div>
+    <NavTop class="top-show" />
     <Summary />
     <div class="container">
       <div id="rooms">
@@ -19,6 +20,7 @@
         </div>
       </div>
     </div>
+    <NavBottom class="bottom-show" />
   </div>
 </template>
 
@@ -27,11 +29,13 @@ import Summary from "./summary";
 import Room from "./roomTemplate";
 import AddRoom from "./addRoomTemplate";
 import AllDevices from "./allDevices";
+import NavTop from "./navbar-top";
+import NavBottom from "./navbar-bottom";
 let url = "http://localhost:5552/getRooms";
 let rooms = [{}];
 export default {
   name: "dashboard-components",
-  components: { Summary, Room, AddRoom, AllDevices },
+  components: { Summary, Room, AddRoom, AllDevices, NavTop, NavBottom },
 
   mounted: function() {
     fetch(url, { mode: "cors", method: "GET" })
@@ -74,9 +78,19 @@ function consume(roomData) {
   margin-top: 10px;
 }
 
+.bottom-show {
+  display: none !important;
+}
+
 @media screen and (max-width: 1025px) {
   .item {
     margin: 0;
+  }
+  .top-show {
+    display: none !important;
+  }
+  .bottom-show {
+    display: block !important;
   }
 }
 </style>

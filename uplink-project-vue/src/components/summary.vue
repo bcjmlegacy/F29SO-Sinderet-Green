@@ -57,7 +57,7 @@
 </template>
 <style>
 #stat-cards {
-  margin-top: 60px;
+  margin-top: 100px;
 }
 
 .img {
@@ -80,10 +80,6 @@
   margin-bottom: 30px;
 }
 
-.title-card {
-  padding: 20px;
-  width: 60rem;
-}
 .custom-cards {
   width: 13rem;
   height: 17rem;
@@ -99,8 +95,8 @@
 }
 
 @media screen and (max-width: 1025px) {
-}
-
-@media screen and (max-width: 812px) {
+  #stat-cards {
+    margin-top: 50px;
+  }
 }
 </style>
