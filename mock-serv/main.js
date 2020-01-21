@@ -71,7 +71,7 @@ function l_t_sensor1()  {
       // If it's after 8am and before 6pm
       t_lower = 12;
       t_upper = 15;
-    } else if(h > 18 && h < 20) {
+    } else if(h => 18 && h < 20) {
       // If it's after 6pm and before 8pm
       t_lower = 10;
       t_upper = 12;
@@ -88,7 +88,7 @@ function l_t_sensor1()  {
       // If it's after 8am and before 6pm
       t_lower = 14;
       t_upper = 17;
-    } else if(h > 18 && h < 20) {
+    } else if(h => 18 && h < 20) {
       // If it's after 6pm and before 8pm
       t_lower = 12;
       t_upper = 14;
@@ -115,7 +115,7 @@ function l_t_sensor2()  {
       // If it's after 8am and before 6pm
       t_lower = 11;
       t_upper = 15;
-    } else if(h > 18 && h < 20) {
+    } else if(h => 18 && h < 20) {
       // If it's after 6pm and before 8pm
       t_lower = 9;
       t_upper = 11;
@@ -130,7 +130,7 @@ function l_t_sensor2()  {
       // If it's after 8am and before 6pm
       t_lower = 13;
       t_upper = 17;
-    } else if(h > 18 && h < 20) {
+    } else if(h => 18 && h < 20) {
       // If it's after 6pm and before 8pm
       t_lower = 11;
       t_upper = 13;
@@ -154,7 +154,7 @@ function k_t_sensor1()  {
     // If it's after 8am and before 6pm
     t_lower = 10;
     t_upper = 13;
-  } else if(h > 18 && h < 20) {
+  } else if(h => 18 && h < 20) {
     // If it's after 6pm and before 8pm
     t_lower = 4;
     t_upper = 7;
@@ -177,7 +177,7 @@ function b_t_sensor1()  {
     // If it's after 8am and before 6pm
     t_lower = 10;
     t_upper = 13;
-  } else if(h > 18 && h < 20) {
+  } else if(h => 18 && h < 20) {
     // If it's after 6pm and before 8pm
     t_lower = 4;
     t_upper = 7;
@@ -204,7 +204,7 @@ function l_h_sensor1()  {
     // If it's after 8am and before 6pm
     h_lower = 0.6;
     h_upper = 0.7;
-  } else if(h > 18 && h < 20) {
+  } else if(h => 18 && h < 20) {
     // If it's after 6pm and before 8pm
     h_lower = 0.5;
     h_upper = 0.6;
@@ -227,7 +227,7 @@ function k_h_sensor1()  {
     // If it's after 8am and before 6pm
     h_lower = 0.6;
     h_upper = 0.7;
-  } else if(h > 18 && h < 20) {
+  } else if(h => 18 && h < 20) {
     // If it's after 6pm and before 8pm
     h_lower = 0.5;
     h_upper = 0.6;
@@ -250,7 +250,7 @@ function b_h_sensor1()  {
     // If it's after 8am and before 6pm
     h_lower = 0.6;
     h_upper = 0.7;
-  } else if(h > 18 && h < 20) {
+  } else if(h => 18 && h < 20) {
     // If it's after 6pm and before 8pm
     h_lower = 0.5;
     h_upper = 0.6;
@@ -281,7 +281,7 @@ function solar_controller()  {
     i_upper = 7;
     o_lower = 5;
     o_upper = 6;
-  } else if(h > 18 && h < 20) {
+  } else if(h => 18 && h < 20) {
     // If it's after 6pm and before 8pm
     i_lower = 5;
     i_upper = 6;
