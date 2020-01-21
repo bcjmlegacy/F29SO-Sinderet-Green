@@ -1,21 +1,26 @@
 <template>
   <div>
+    <NavTop class="top-show" />
     <Summary />
-    <div class="container justify-content-center">
+    <div class="container">
       <div id="rooms">
-        <h3 class="display-4">Rooms</h3>
-        <div class="r-grid">
-          <b-row>
-            <Room />
-            <Room />
-            <Room />
-            <Room />
-            <AddRoom />
-            <AllDevices />
-          </b-row>
+        <div class="sub-title-wrapper">
+          <h3 class="display-4 text-center">Rooms</h3>
+        </div>
+        <div class="flex-rooms">
+          <Room />
+          <Room />
+          <Room />
+          <Room />
+          <Room />
+          <Room />
+
+          <AddRoom />
+          <AllDevices />
         </div>
       </div>
     </div>
+    <NavBottom class="bottom-show" />
   </div>
 </template>
 
@@ -24,11 +29,13 @@ import Summary from "./summary";
 import Room from "./roomTemplate";
 import AddRoom from "./addRoomTemplate";
 import AllDevices from "./allDevices";
+import NavTop from "./navbar-top";
+import NavBottom from "./navbar-bottom";
 let url = "http://localhost:5552/getRooms";
 let rooms = [{}];
 export default {
   name: "dashboard-components",
-  components: { Summary, Room, AddRoom, AllDevices },
+  components: { Summary, Room, AddRoom, AllDevices, NavTop, NavBottom },
 
   mounted: function() {
     fetch(url, { mode: "cors", method: "GET" })
@@ -57,10 +64,33 @@ function consume(roomData) {
   margin-bottom: 50px;
 }
 
-.r-grid {
-  margin-top: 20px;
+.flex-rooms {
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: wrap !important;
+  justify-content: space-between !important;
+  align-items: flex-start !important;
+}
+
+.item {
+  margin-left: 50px;
+  margin-right: 50px;
+  margin-top: 10px;
+}
+
+.bottom-show {
+  display: none !important;
 }
 
 @media screen and (max-width: 1025px) {
+  .item {
+    margin: 0;
+  }
+  .top-show {
+    display: none !important;
+  }
+  .bottom-show {
+    display: block !important;
+  }
 }
 </style>
