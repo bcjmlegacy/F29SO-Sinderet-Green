@@ -1,53 +1,61 @@
 body {
-  background-color: #f5f5f5;
+	background-color: #f5f5f5;
 }
 
 .form-title {
-  text-align: center;
-  font-size: 3.2em;
-  padding-bottom: 10px;
+	text-align: center;
+	font-size: 3.2em;
+	padding-bottom: 10px;
 }
 
 .labels {
-  float: right;
-  color: #000;
-  font-size: 1.2em !important;
+	float: right;
+	color: #000;
+	font-size: 1.2em !important;
 }
 
 .rows {
-  text-align: center;
-  padding-top: 10px;
+	text-align: center;
+	padding-top: 10px;
 }
 
 .check {
-  float: left !important;
+	float: left !important;
 }
 
 .but {
-  float: left;
-  width: 100%;
-  font-size: 1.3em !important;
-  background-color: transparent !important;
-  color: #000 !important;
-  border: solid 1px #005872 !important;
-  border-radius: 30 !important;
+	float: left;
+	width: 100%;
+	font-size: 1.3em !important;
+	background-color: white !important;
+	color: #000 !important;
+	box-shadow: 0 0px 10px rgba(0, 0, 0, 0.3), 0 1px 6px rgba(0, 0, 0, 0.22);
+	border-radius: 30 !important;
+	border-color: transparent;
 }
 
 .but:focus {
-  box-shadow: none !important;
-  outline: none !important;
+	box-shadow: none !important;
+	outline: none !important;
+	border-color: transparent !important;
 }
 
 .but:hover {
-  border: solid 1px #0492bd !important;
+	border-color: transparent;
+	box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22);
 }
 
 .inputboxes {
-  border: solid 1px #005872 !important;
-  border-radius: 40 !important;
-  outline: none !important;
+	box-shadow: 0 0px 5px rgba(0, 0, 0, 0.3), 0 1px 6px rgba(0, 0, 0, 0.22);
+	border-color: transparent;
+	border-radius: 40 !important;
+	outline: none !important;
+}
+
+.inputboxes:focus {
+	box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22);
 }
 
 .links {
-  text-decoration: none !important;
+	text-decoration: none !important;
 }

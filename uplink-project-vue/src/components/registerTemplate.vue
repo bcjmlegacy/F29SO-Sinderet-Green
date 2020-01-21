@@ -118,7 +118,7 @@
           </b-row>
           <b-row class="rows">
             <b-col sm="8" offset-sm="3">
-              <b-button class="but" type="submit">Submit</b-button>
+              <b-button class="but" type="submit">Register</b-button>
             </b-col>
           </b-row>
         </b-form>
@@ -201,7 +201,7 @@ export default {
     margin-left: 1%;
     margin-right: 1%;
     padding: 10px 20px;
-    padding-top: 70px;
+    padding-top: 40px;
   }
 
   .labels {

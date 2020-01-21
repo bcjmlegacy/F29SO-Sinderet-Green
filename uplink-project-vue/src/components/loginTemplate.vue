@@ -54,7 +54,7 @@
           </b-row>
           <b-row class="rows">
             <b-col sm="8" offset-sm="2">
-              <b-button class="but" type="submit" @click="validate('Dash')">Submit</b-button>
+              <b-button class="but" type="submit" @click="validate('Dash')">Login</b-button>
             </b-col>
           </b-row>
         </b-form>
