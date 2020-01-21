@@ -50,9 +50,19 @@ CREATE TABLE user (
     user_account_type   INTEGER,
     user_username       TEXT,
     user_password       TEXT,
+    
     user_created        INTEGER,
     user_last_active    TEXT,    
     FOREIGN KEY (user_account_type) REFERENCES account_type(account_type_id)
+);
+
+CREATE TABLE auth (
+    auth_id             INTEGER PRIMARY KEY AUTOINCREMENT,
+    auth_token          TEXT,
+    auth_user_id        INTEGER,
+    auth_created        INTEGER,
+    auth_expires        INTEGER,
+    FOREIGN KEY (auth_user_id) REFERENCES user(user_id)
 );
 
 CREATE TABLE sensor (
@@ -122,7 +132,7 @@ INSERT INTO device_type     (device_type_name)  VALUES ("Solar Controller");
 INSERT INTO device_type     (device_type_name)  VALUES ("Light");
 INSERT INTO device_type     (device_type_name)  VALUES ("Door lock");
 
-INSERT INTO user (user_account_type, user_username, user_password, user_created, user_last_active) VALUES (1, "Test_user", "12345", 1579521113, 1579521113);
+INSERT INTO user (user_account_type, user_username, user_password, user_created, user_last_active) VALUES (1, "Test_user", "b109f3bbbc244eb82441917ed06d618b9008dd09b3befd1b5e07394c706a8bb980b1d7785e5976ec049b46df5f1326af5a2ea6d103fd07c95385ffab0cacbc86", 1579521113, 1579521113);
 
 INSERT INTO sensor (sensor_id, sensor_room, sensor_type, sensor_name, sensor_added) VALUES ("ABC123", 1, 1, "Livingroom temp sensor 1", 1579521113);
 INSERT INTO sensor (sensor_id, sensor_room, sensor_type, sensor_name, sensor_added) VALUES ("ABC456", 1, 1, "Livingroom temp sensor 2", 1579521113);

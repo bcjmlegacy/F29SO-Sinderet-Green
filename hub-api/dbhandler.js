@@ -32,6 +32,41 @@ class databasehandler    {
   
   /* #######################################
   
+  Login functions.
+  
+  ####################################### */
+
+  getUserByUsernameAndPassword(username, password, callback)  {
+    var q = (`SELECT * FROM user WHERE user_username = ? AND user_password = ?`);
+    
+    db.all(q, [username, password], function(err, rows) {
+      if(err || ( ! (rows) ) ) {
+        callback(err);
+      } else  {
+        callback(null, rows.user_id);  // Details are correct
+      }
+    });
+  }
+
+  insertNewAuthToken(user_id, token, expires, callback)  {
+    var q = (`INSERT INTO auth (auth_token, auth_user_id, auth_created, auth_expires) VALUES (?, ?, ?, ?)`);
+    
+    var created = new Date().valueOf();
+
+    db.run(q, [user_id, token, created, expires], function(err) {
+      if(err) {
+        console.log(`! Error inserting data record into ${table}:`);
+        console.log(`! ${err}`);
+        callback(err, null);
+      } else  {
+        console.log(`> Inserted new auth token: ${JSON.stringify(this.lastID)}`);
+        callback(null, JSON.stringify(this.lastID));
+      }
+    });
+  }
+
+  /* #######################################
+  
   Get by ID.
   
   ####################################### */
@@ -191,12 +226,12 @@ class databasehandler    {
   
   ####################################### */
   
-  insertUser(account_type, username, password, callback)
+  insertUser(account_type, username, password, email, forename, surname, callback)
   {
     var ts = new Date().valueOf();
-    var q = (`INSERT INTO user (user_account_type, user_username, user_password, user_created) VALUES (?, ?, ?, ?)`);
+    var q = (`INSERT INTO user (user_account_type, user_username, user_email, user_forename, user_surname, user_password, user_created) VALUES (?, ?, ?, ?)`);
     
-    db.run(q, [account_type, username, password, ts], function(err) {
+    db.run(q, [account_type, username, password, email, forename, surname, ts], function(err) {
       if(err) {
         console.log(`! Error inserting data record into user:`);
         console.log(`! ${err}`);

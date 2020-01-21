@@ -1,5 +1,5 @@
 const express = require('express'),
-fs            = require('fs'),
+crypto        = require('crypto'),
 mqtt          = require('mqtt'),
 DBHandler     = require('./dbhandler.js'),
 app           = express();
@@ -92,8 +92,79 @@ client.on('message', function (topic, message) {
 // Define API
 //
 
+function getNewToken() {
+  var id           = '',
+  idPiece          = '',
+  length           = 5,
+  characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789',
+  charactersLength = characters.length;
+  
+  for( var x = 0; x < length; x++)    {
+      idPiece = '';
+      for( var i = 0; i < length; i++ ) {
+          idPiece += characters.charAt(Math.floor(Math.random() * charactersLength));
+      }
+      if(x != 4)  {
+          id = id += idPiece;
+      }
+  }
+  
+  
+  id += `${Buffer.from(getWholeDate()).toString('base64')}`;
+  
+  return id;
+}
+
 app.get('/', (req, res) => {
   res.send('Uplink HUB API running')
+});
+
+app.get('/hash', (req, res) => {
+  
+  var str = req.query.str;
+
+  var hash      = crypto.createHash('sha512');
+  res.send(hash.update(str).digest('hex'));
+
+});
+
+/* #######################################
+
+Login functions.
+
+####################################### */
+
+app.post('/login', (req, res) => {
+  if(req.body.username && req.body.password)  {
+
+    var username = req.body.username;
+    var password = req.body.password;
+
+    var hash     = crypto.createHash('sha512');
+    var hpasswd  = hash.update(password).digest('hex');
+
+    db.getUserByUsernameAndPassword(username, hpasswd, function(err, user_id) {
+      if(err) {
+        res.send( { "error": "Error logging in" } );
+      } else if(user_id)  {
+
+        var token = getNewToken();
+
+        db.insertNewAuthToken(user_id, token, null, function(err) {
+          if(err) {
+            res.send( { "error": "Error creating auth token" } );
+          } else  {
+            res.send( { "token": token } );
+          }
+        })
+
+      } else  {
+      res.send( { "error": "Details incorrect" } );
+      }
+    })
+  } else  {
+    res.send( { "error": "Missing data!" } );
+  }
 });
 
 /* #######################################
@@ -331,8 +402,8 @@ app.get('/insertDevice', (req, res) => {
 });
 
 app.post('/insertUser', (req, res) => {
-  if(req.body.account_type && req.body.username && req.body.password)  {
-    db.insertUser(req.body.account_type, req.body.username, req.body.password, function(err, rowId) {
+  if(req.body.account_type && req.body.username && req.body.password && req.body.email && req.body.forename && req.body.surname)  {
+    db.insertUser(req.body.account_type, req.body.username, req.body.password, req.body.email, req.body.forename, req.body.surname, function(err, rowId) {
       if(err) {
         res.send( { "error": err } );
       } else  {
@@ -340,7 +411,7 @@ app.post('/insertUser', (req, res) => {
       }
     })
   } else  {
-    res.send( { "error": "Missing parameter! Needs account_type, username and password" } );
+    res.send( { "error": "Missing parameter! Needs account_type, username, password, email, forename and surname" } );
   }
 });
 
