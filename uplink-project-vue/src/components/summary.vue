@@ -25,7 +25,7 @@
               </div>
               <div class="card-body text-center">
                 <h5 class="card-title">Solar Stored</h5>
-                <p class="card-text">200 KWh</p>
+                <p class="card-text">1200 KWh</p>
               </div>
             </div>
           </div>
@@ -36,7 +36,7 @@
               </div>
               <div class="card-body text-center">
                 <h5 class="card-title">Home Temperature</h5>
-                <p class="card-text">200 KWh</p>
+                <p class="card-text">20&#x2103;</p>
               </div>
             </div>
           </div>

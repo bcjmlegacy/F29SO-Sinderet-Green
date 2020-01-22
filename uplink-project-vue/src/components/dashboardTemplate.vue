@@ -10,10 +10,6 @@
         <div class="flex-rooms">
           <Room />
           <Room />
-          <Room />
-          <Room />
-          <Room />
-          <Room />
 
           <AddRoom />
           <AllDevices />
