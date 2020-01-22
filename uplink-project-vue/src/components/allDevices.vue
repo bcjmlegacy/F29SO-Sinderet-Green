@@ -22,8 +22,8 @@
 }
 
 .custom-cards-menu {
-  width: 13rem;
-  height: 13rem;
+  width: 10rem;
+  height: 11rem;
   padding: 20px;
   background-color: white !important;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 1px 8px rgba(0, 0, 0, 0.22) !important;

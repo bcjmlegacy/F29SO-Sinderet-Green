@@ -24,9 +24,9 @@
 }
 
 .custom-cards-rooms {
-  width: 13rem;
-  height: 13rem;
-  padding: 20px;
+  width: 10rem;
+  height: 11rem;
+  padding: 1px;
   background-color: white !important;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 1px 8px rgba(0, 0, 0, 0.22) !important;
   transition: 0.2s ease-in-out all !important;

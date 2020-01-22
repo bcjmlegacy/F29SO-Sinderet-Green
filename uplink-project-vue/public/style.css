@@ -59,3 +59,11 @@ body {
 .links {
 	text-decoration: none !important;
 }
+
+.display-3 {
+	font-size: 3.5em !important;
+}
+
+.display-4 {
+	font-size: 3em !important;
+}

@@ -54,7 +54,7 @@
           </b-row>
           <b-row class="rows">
             <b-col sm="8" offset-sm="2">
-              <b-button class="but" type="submit" @click="validate('Dash')">Login</b-button>
+              <b-button class="but" type="submit">Login</b-button>
             </b-col>
           </b-row>
         </b-form>
@@ -74,9 +74,8 @@
 </template>
 
 <script>
-let url = "http://localhost:5552/getUsers";
-let formData = null;
-let status = false;
+let url = "http://localhost:5552/login";
+
 import { bus } from "../main";
 export default {
   name: "login",
@@ -91,49 +90,36 @@ export default {
   },
   methods: {
     go() {
-      fetch(url, { mode: "cors", method: "GET" })
+      console.log(this.form);
+      fetch(url, {
+        mode: "cors",
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          username: this.form.username,
+          password: this.form.password
+        })
+      })
         .then(function(response) {
           return response.json();
         })
-        .then(function(userData) {
-          status = check(userData);
-          console.log(userData);
+        .then(function(text) {
+          console.log(text);
         })
-        .catch(function(error) {
-          console.log("Request failed", error);
+        .catch(function(err) {
+          console.log(err);
         });
-
-      formData = this.form;
     },
     switchComp(comp) {
       bus.$emit("switchComp", comp);
-    },
-    validate(comp) {
-      if (status === true) {
-        this.switchComp(comp);
-      }
     }
   }
 };
 
 //todo ----- Make this look nicer
-
-function check(userData) {
-  let status = false;
-  for (let key in userData) {
-    if (
-      userData[key].user_username === formData.username &&
-      userData[key].user_password === formData.password
-    ) {
-      status = true;
-      console.log(status);
-      break;
-    } else {
-      console.log(status);
-    }
-  }
-  return status;
-}
 </script>
 
 <style>
