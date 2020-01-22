@@ -61,7 +61,7 @@
 }
 
 .img {
-  padding: 10px;
+  padding: 15px;
 }
 
 .flex-b {
@@ -81,9 +81,9 @@
 }
 
 .custom-cards {
-  width: 13rem;
-  height: 17rem;
-  padding: 5px;
+  width: 10rem;
+  height: 16rem;
+  padding: 1px;
   background-color: white !important;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 1px 8px rgba(0, 0, 0, 0.22) !important;
   transition: 0.2s ease-in-out all !important;

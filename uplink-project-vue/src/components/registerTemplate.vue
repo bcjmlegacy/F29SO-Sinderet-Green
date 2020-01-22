@@ -156,7 +156,10 @@ export default {
         body: JSON.stringify({
           account_type: this.form.accountType,
           username: this.form.username,
-          password: this.form.password
+          password: this.form.password,
+          email: this.form.email,
+          forename: this.form.firstname,
+          surname: this.form.surname
         })
       })
         .then(function(response) {
