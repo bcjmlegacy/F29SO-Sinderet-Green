@@ -9,6 +9,9 @@
           <img src="../assets/report.png" alt="profile" class="nav-image" />
         </div>
         <div class="image-cont-nav">
+          <h4 class="logo-small-top">uplink</h4>
+        </div>
+        <div class="image-cont-nav">
           <img src="../assets/exclamation.png" alt="profile" class="nav-image" />
         </div>
         <div class="image-cont-nav">
@@ -27,6 +30,13 @@
   justify-content: space-between !important;
 }
 
+.logo-small-top {
+  font-family: "Harlow-solid";
+  font-size: 2.2em;
+  padding-top: 2%;
+  margin: 0;
+}
+
 .nav-item {
   padding: 10px;
 }
@@ -38,7 +48,7 @@
 }
 
 .nav-image {
-  width: 25%;
+  width: 20%;
 }
 
 .image-cont-nav {

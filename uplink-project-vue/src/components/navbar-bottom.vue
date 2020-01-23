@@ -3,16 +3,19 @@
     <div class="container">
       <div class="flex-nav">
         <div class="image-cont-nav">
-          <img src="../assets/plus.png" alt="profile" class="nav-image" />
+          <img src="../assets/plus.png" alt="profile" class="nav-image-bottom" />
         </div>
         <div class="image-cont-nav">
-          <img src="../assets/report.png" alt="profile" class="nav-image" />
+          <img src="../assets/report.png" alt="profile" class="nav-image-bottom" />
         </div>
         <div class="image-cont-nav">
-          <img src="../assets/exclamation.png" alt="profile" class="nav-image" />
+          <h4 class="logo-small">uplink</h4>
         </div>
         <div class="image-cont-nav">
-          <img src="../assets/user.png" alt="profile" class="nav-image" />
+          <img src="../assets/exclamation.png" alt="profile" class="nav-image-bottom" />
+        </div>
+        <div class="image-cont-nav">
+          <img src="../assets/user.png" alt="profile" class="nav-image-bottom" />
         </div>
       </div>
     </div>
@@ -37,14 +40,21 @@
   box-shadow: 0 0px 25px rgba(0, 0, 0, 0.3) !important;
 }
 
-.nav-image {
-  width: 25%;
+.nav-image-bottom {
+  width: 70%;
 }
 
+.logo-small {
+  font-family: "Harlow-solid";
+  text-align: center;
+  font-size: 1.1em;
+  padding-top: 10%;
+  margin: 0;
+}
 .image-cont-nav {
   text-align: center;
-  width: 15%;
-  padding: 20px;
+  width: 20%;
+  padding: 15px;
   opacity: 0.5;
 }
 

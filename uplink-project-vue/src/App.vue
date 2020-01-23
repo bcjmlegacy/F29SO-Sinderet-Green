@@ -18,7 +18,7 @@ export default {
   },
   data() {
     return {
-      currentComponent: "Login"
+      currentComponent: "Dash"
     };
   },
   created() {
