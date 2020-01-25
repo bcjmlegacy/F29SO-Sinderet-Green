@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <component :is="currentComponent"></component>
+    <component :is="currentComponent" :roomName="currentRoom"></component>
   </div>
 </template>
 
@@ -20,12 +20,17 @@ export default {
   },
   data() {
     return {
-      currentComponent: "Dash"
+      currentComponent: "Dash",
+      currentRoom: ""
     };
   },
+  methods: {},
   created() {
     bus.$on("switchComp", comp => {
       this.currentComponent = comp;
+    });
+    bus.$on("updateRoom", room => {
+      this.currentRoom = room;
     });
   }
 };

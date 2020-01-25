@@ -1,6 +1,6 @@
 <template>
   <div class="item">
-    <div class="card custom-cards-rooms" @click="switchComp('Room')">
+    <div class="card custom-cards-rooms" @click="switchComp('Room'); updateRoom(roomName)">
       <div class="img-cont">
         <img class="card-img-top" :src="require(`../assets/${roomImage}.png`)" alt="Energy Usage" />
       </div>
@@ -18,6 +18,9 @@ export default {
   methods: {
     switchComp(comp) {
       bus.$emit("switchComp", comp);
+    },
+    updateRoom(room) {
+      bus.$emit("updateRoom", room);
     }
   }
 };

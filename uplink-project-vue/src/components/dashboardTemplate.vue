@@ -67,12 +67,10 @@ function pairImg(rooms) {
       return "kitchencolor";
     case "Bedroom":
       return "bedcolor";
-
     case "Outside":
       return "outsidecolor";
-
     default:
-      return null;
+      return "question";
   }
 }
 </script>
