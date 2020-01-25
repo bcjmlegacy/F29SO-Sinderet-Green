@@ -1,17 +1,19 @@
 <template>
   <div>
     <NavTop class="top-show" />
-    <Summary />
+    <Summary sumTitle="Home" energy="200" temperature="18" solar="1000" />
     <div class="container">
       <div id="rooms">
         <div class="sub-title-wrapper">
           <h3 class="display-4 text-center">Rooms</h3>
         </div>
         <div class="flex-rooms">
-          <Room />
-          <Room />
-
-          <AddRoom />
+          <div v-for="result in results" :key="result.room_id">
+            <Room :roomName="result.room_name" :roomImage="result.roomImage" />
+          </div>
+        </div>
+        <div class="flex-rooms">
+          <Add />
           <AllDevices />
         </div>
       </div>
@@ -23,34 +25,55 @@
 <script>
 import Summary from "./summary";
 import Room from "./roomTemplate";
-import AddRoom from "./addRoomTemplate";
+import Add from "./addCard";
 import AllDevices from "./allDevices";
 import NavTop from "./navbar-top";
 import NavBottom from "./navbar-bottom";
 let url = "http://localhost:5552/getRooms";
-let rooms = [{}];
+//let rooms = [];
 export default {
   name: "dashboard-components",
-  components: { Summary, Room, AddRoom, AllDevices, NavTop, NavBottom },
+  components: { Summary, Add, AllDevices, NavTop, NavBottom, Room },
+  data() {
+    return {
+      results: []
+    };
+  },
 
   mounted: function() {
     fetch(url, { mode: "cors", method: "GET" })
-      .then(function(response) {
+      .then(response => {
         return response.json();
       })
-      .then(function(roomData) {
-        consume(roomData);
+      .then(jsonData => {
+        let img = "";
+        for (let key in jsonData) {
+          img = pairImg(jsonData[key].room_name);
+          jsonData[key].roomImage = img;
+        }
+        this.results = jsonData;
       })
-      .catch(function(err) {
+      .catch(err => {
         console.log(err);
       });
   }
 };
-function consume(roomData) {
-  for (let key in roomData) {
-    rooms[key] = roomData[key];
+
+function pairImg(rooms) {
+  switch (rooms) {
+    case "Livingroom":
+      return "couchcolor";
+    case "Kitchen":
+      return "kitchencolor";
+    case "Bedroom":
+      return "bedcolor";
+
+    case "Outside":
+      return "outsidecolor";
+
+    default:
+      return null;
   }
-  console.log(rooms);
 }
 </script>
 

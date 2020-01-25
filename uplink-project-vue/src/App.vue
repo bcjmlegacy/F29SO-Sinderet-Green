@@ -8,13 +8,15 @@
 import Login from "./components/loginTemplate";
 import Register from "./components/registerTemplate";
 import Dash from "./components/dashboardTemplate";
+import Room from "./components/roomPageTemplate";
 import { bus } from "./main";
 export default {
   name: "app",
   components: {
     Login,
     Register,
-    Dash
+    Dash,
+    Room
   },
   data() {
     return {

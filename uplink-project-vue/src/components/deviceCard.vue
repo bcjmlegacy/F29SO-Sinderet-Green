@@ -1,11 +1,16 @@
 <template>
   <div class="item">
-    <div class="card custom-cards-rooms" @click="switchComp('Room')">
+    <div class="card custom-cards-devices" @click="switchComp('Room')">
       <div class="img-cont">
-        <img class="card-img-top" :src="require(`../assets/${roomImage}.png`)" alt="Energy Usage" />
+        <img
+          class="card-img-top img"
+          :src="require(`../assets/${deviceImage}.png`)"
+          alt="Energy Usage"
+        />
       </div>
-      <div class="card-body">
-        <h5 class="card-title text-center">{{roomName}}</h5>
+      <div class="card-body text-center">
+        <h5 class="card-title text-center">{{deviceName}}</h5>
+        <p class="card-text">{{deviceEnergy}}KWh</p>
       </div>
     </div>
   </div>
@@ -14,7 +19,7 @@
 import { bus } from "../main";
 export default {
   name: "roomCard",
-  props: ["roomName", "roomImage"],
+  props: ["deviceName", "deviceImage", "deviceEnergy"],
   methods: {
     switchComp(comp) {
       bus.$emit("switchComp", comp);
@@ -22,8 +27,6 @@ export default {
   }
 };
 </script>
-
-
 <style>
 .img-cont {
   text-align: center;
@@ -38,16 +41,16 @@ export default {
   user-select: none !important;
 }
 
-.custom-cards-rooms {
+.custom-cards-devices {
   width: 11rem;
-  height: 12rem;
+  height: 14rem;
   padding: 1px;
   background-color: white !important;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 1px 8px rgba(0, 0, 0, 0.22) !important;
   transition: 0.2s ease-in-out all !important;
 }
 
-.custom-cards-rooms:hover {
+.custom-cards-devices:hover {
   box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22) !important;
   cursor: pointer !important;
 }

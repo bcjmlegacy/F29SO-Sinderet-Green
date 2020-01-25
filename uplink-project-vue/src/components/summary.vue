@@ -4,7 +4,7 @@
       <h3 class="display-3 text-center">Welcome Back</h3>
       <div class="stats">
         <div class="sub-title-wrapper">
-          <h5 class="display-4 text-center">Todays Usage</h5>
+          <h5 class="display-4 text-center">Todays {{sumTitle}} Usage</h5>
         </div>
         <div class="flex-b">
           <div>
@@ -14,7 +14,7 @@
               </div>
               <div class="card-body text-center">
                 <h5 class="card-title">Energy Usage</h5>
-                <p class="card-text">200 KWh</p>
+                <p class="card-text">{{energy}} KWh</p>
               </div>
             </div>
           </div>
@@ -24,7 +24,7 @@
                 <img class="card-img-top img" src="../assets/battery.png" alt="Energy Usage" />
               </div>
               <div class="card-body text-center">
-                <h5 class="card-title">Solar Stored</h5>
+                <h5 class="card-title">{{solar}} Stored</h5>
                 <p class="card-text">1200 KWh</p>
               </div>
             </div>
@@ -35,8 +35,8 @@
                 <img class="card-img-top img" src="../assets/sun.png" alt="Energy Usage" />
               </div>
               <div class="card-body text-center">
-                <h5 class="card-title">Home Temperature</h5>
-                <p class="card-text">20&#x2103;</p>
+                <h5 class="card-title">Current Temperature</h5>
+                <p class="card-text">{{temperature}}&#x2103;</p>
               </div>
             </div>
           </div>
@@ -55,6 +55,14 @@
     </div>
   </div>
 </template>
+<script>
+export default {
+  name: "Summary",
+  props: ["sumTitle", "energy", "temperature", "solar"]
+};
+</script>
+
+
 <style>
 #stat-cards {
   margin-top: 100px;
@@ -81,7 +89,7 @@
 }
 
 .custom-cards {
-  width: 10rem;
+  width: 11rem;
   height: 16rem;
   padding: 1px;
   background-color: white !important;
