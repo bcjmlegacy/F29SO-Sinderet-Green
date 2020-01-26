@@ -1,4 +1,5 @@
 <template>
+  <!--Login Page-->
   <div id="loginCard">
     <b-container>
       <b-row>
@@ -15,6 +16,7 @@
               <label for="input-username" class="labels">Username</label>
             </b-col>
             <b-col sm="7">
+              <!--v-model allows you to store data thats typed or collected from form inputs-->
               <b-form-input
                 id="input-username"
                 placeholder="Cheerypal"
@@ -76,14 +78,17 @@
 </template>
 
 <script>
+//Post URL to API for login
 let url = "http://localhost:5552/login";
 
+//Bus to store current component
 import { bus } from "../main";
 export default {
   name: "login",
   data() {
     return {
       form: {
+        //form data thats collected goes here
         username: "",
         password: "",
         checked: ""
@@ -92,6 +97,7 @@ export default {
   },
   methods: {
     go() {
+      //onSubmit function that will trigger the server to send post request to login
       console.log(this.form);
       fetch(url, {
         mode: "cors",
@@ -101,6 +107,7 @@ export default {
           "Content-Type": "application/json"
         },
         body: JSON.stringify({
+          //Data that gets transfered
           username: this.form.username,
           password: this.form.password
         })
@@ -116,6 +123,7 @@ export default {
         });
     },
     switchComp(comp) {
+      //Switch component
       bus.$emit("switchComp", comp);
     }
   }
@@ -125,7 +133,8 @@ export default {
 </script>
 
 <style>
-/* Background image yet to be added to the template*/
+/**General Styles stored here. Most of the styles for the login page is in public/style.css  */
+/* Background image yet to be added to the template */
 #loginCard {
   padding: 20px 50px;
   padding-top: 300px;

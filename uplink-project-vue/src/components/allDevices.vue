@@ -1,4 +1,5 @@
 <template>
+  <!--All Devices Card -->
   <div class="item">
     <div class="card custom-cards-menu">
       <div class="img-cont-menu">

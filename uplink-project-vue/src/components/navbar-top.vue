@@ -1,4 +1,5 @@
 <template>
+  <!--Top navbar template for website version-->
   <nav class="navbar fixed-top">
     <div class="container">
       <div class="flex-nav">
@@ -22,6 +23,7 @@
   </nav>
 </template>
 <style>
+/**Top navbar style */
 .flex-nav {
   display: flex !important;
   flex-direction: row !important;

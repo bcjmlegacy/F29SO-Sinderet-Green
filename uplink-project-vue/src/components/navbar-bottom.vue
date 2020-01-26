@@ -1,4 +1,5 @@
 <template>
+  <!--bottom navbar template for mobile devices-->
   <nav class="navbar fixed-bottom">
     <div class="container">
       <div class="flex-nav">
@@ -22,6 +23,7 @@
   </nav>
 </template>
 <style>
+/** Navbar styling for bottom navbar */
 .flex-nav {
   display: flex !important;
   flex-direction: row !important;
