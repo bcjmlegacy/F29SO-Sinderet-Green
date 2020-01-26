@@ -1,4 +1,5 @@
 <template>
+  <!--All Devices Card -->
   <div class="item">
     <div class="card custom-cards-menu">
       <div class="img-cont-menu">
@@ -22,8 +23,8 @@
 }
 
 .custom-cards-menu {
-  width: 10rem;
-  height: 11rem;
+  width: 11rem;
+  height: 12rem;
   padding: 20px;
   background-color: white !important;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 1px 8px rgba(0, 0, 0, 0.22) !important;

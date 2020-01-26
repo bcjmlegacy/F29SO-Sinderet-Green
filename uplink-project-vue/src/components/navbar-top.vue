@@ -1,4 +1,5 @@
 <template>
+  <!--Top navbar template for website version-->
   <nav class="navbar fixed-top">
     <div class="container">
       <div class="flex-nav">
@@ -7,6 +8,9 @@
         </div>
         <div class="image-cont-nav">
           <img src="../assets/report.png" alt="profile" class="nav-image" />
+        </div>
+        <div class="image-cont-nav">
+          <h4 class="logo-small-top">uplink</h4>
         </div>
         <div class="image-cont-nav">
           <img src="../assets/exclamation.png" alt="profile" class="nav-image" />
@@ -19,12 +23,20 @@
   </nav>
 </template>
 <style>
+/**Top navbar style */
 .flex-nav {
   display: flex !important;
   flex-direction: row !important;
   flex-wrap: wrap !important;
   flex-flow: row wrap !important;
   justify-content: space-between !important;
+}
+
+.logo-small-top {
+  font-family: "Harlow-solid";
+  font-size: 2.2em;
+  padding-top: 2%;
+  margin: 0;
 }
 
 .nav-item {
@@ -38,7 +50,7 @@
 }
 
 .nav-image {
-  width: 25%;
+  width: 20%;
 }
 
 .image-cont-nav {

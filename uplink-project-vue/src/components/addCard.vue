@@ -1,4 +1,7 @@
 <template>
+  <!--Add card 
+    Takes custom-cards-menu class from allDevices.vue
+  -->
   <div class="item">
     <div class="card custom-cards-menu">
       <div class="img-cont-plus">
