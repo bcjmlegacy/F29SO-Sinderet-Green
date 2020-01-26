@@ -1,4 +1,5 @@
 <template>
+  <!--Register Page-->
   <div id="register">
     <b-container>
       <b-row>
@@ -13,6 +14,7 @@
               <label for="input-email" class="labels">Email</label>
             </b-col>
             <b-col sm="8">
+              <!--v-model is a vue.js thing that will store the value gained from the input-->
               <b-form-input
                 id="input-email"
                 placeholder="example@domain.com"
@@ -127,12 +129,14 @@
   </div>
 </template>
 <script>
+//API URL for POST request that will register a user.
 let url = "http://localhost:5552/insertUser";
 
 export default {
   data() {
     return {
       form: {
+        //Data from form is stored here.
         accountType: "1",
         email: "",
         username: "",
@@ -146,6 +150,7 @@ export default {
   },
   methods: {
     go(evt) {
+      //Fetch request to send the data to the API and Database for storing uses CORS
       fetch(url, {
         mode: "cors",
         method: "POST",
@@ -154,9 +159,13 @@ export default {
           "Content-Type": "application/json"
         },
         body: JSON.stringify({
+          //Data sent to the API goes here.
           account_type: this.form.accountType,
           username: this.form.username,
-          password: this.form.password
+          password: this.form.password,
+          email: this.form.email,
+          forename: this.form.firstname,
+          surname: this.form.surname
         })
       })
         .then(function(response) {
@@ -182,6 +191,7 @@ export default {
 };
 </script>
 <style>
+/**General Styles stored here. Most of the styles for the register page is in public/style.css  */
 #register {
   padding: 20px 50px;
   padding-top: 200px;
