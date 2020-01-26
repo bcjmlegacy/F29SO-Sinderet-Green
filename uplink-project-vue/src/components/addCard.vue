@@ -3,16 +3,28 @@
     Takes custom-cards-menu class from allDevices.vue
   -->
   <div class="item">
-    <div class="card custom-cards-menu">
+    <div class="card custom-cards-menu" @click="switchComp('AddItem')">
       <div class="img-cont-plus">
         <img class="card-img-top img-plus" src="../assets/plus.png" alt="Energy Usage" />
       </div>
       <div class="card-body">
-        <h5 class="card-title text-center">Add Rooms</h5>
+        <h5 class="card-title text-center">Add</h5>
       </div>
     </div>
   </div>
 </template>
+<script>
+import { bus } from "../main";
+export default {
+  name: "addCard",
+  methods: {
+    switchComp(comp) {
+      //Switch component
+      bus.$emit("switchComp", comp);
+    }
+  }
+};
+</script>
 <style>
 .img-plus {
   opacity: 0.4 !important;

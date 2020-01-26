@@ -3,7 +3,7 @@
   <nav class="navbar fixed-top">
     <div class="container">
       <div class="flex-nav">
-        <div class="image-cont-nav">
+        <div class="image-cont-nav" @click="switchComp('AddItem')">
           <img src="../assets/plus.png" alt="profile" class="nav-image" />
         </div>
         <div class="image-cont-nav">
@@ -22,6 +22,18 @@
     </div>
   </nav>
 </template>
+<script>
+import { bus } from "../main";
+export default {
+  name: "navbar-top",
+  methods: {
+    switchComp(comp) {
+      //Switch component
+      bus.$emit("switchComp", comp);
+    }
+  }
+};
+</script>
 <style>
 /**Top navbar style */
 .flex-nav {

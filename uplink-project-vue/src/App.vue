@@ -13,6 +13,7 @@ import Login from "./components/loginTemplate";
 import Register from "./components/registerTemplate";
 import Dash from "./components/dashboardTemplate";
 import Room from "./components/roomPageTemplate";
+import AddItem from "./components/addPage";
 import { bus } from "./main";
 export default {
   name: "app",
@@ -21,7 +22,8 @@ export default {
     Login,
     Register,
     Dash,
-    Room
+    Room,
+    AddItem
   },
   data() {
     return {

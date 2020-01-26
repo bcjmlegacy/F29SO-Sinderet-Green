@@ -125,7 +125,7 @@ function pairImg(device) {
   display: flex !important;
   flex-direction: row !important;
   flex-wrap: wrap !important;
-  justify-content: space-between !important;
+  justify-content: space-evenly !important;
   align-items: flex-start !important;
 }
 
@@ -148,6 +148,9 @@ function pairImg(device) {
   }
   .bottom-show {
     display: block !important;
+  }
+  .flex-rooms {
+    justify-content: space-between !important;
   }
 }
 </style>
