@@ -50,9 +50,14 @@ export default {
       results: [] //Array to store results gathered from database but also the icon for the room
     };
   },
+  props: ["userToken"],
 
   mounted: function() {
-    fetch(url, { mode: "cors", method: "GET" }) //Fetch Command to get data from API - CORS enabled.
+    fetch(url, {
+      mode: "cors",
+      method: "GET",
+      headers: { Authorization: this.userToken }
+    }) //Fetch Command to get data from API - CORS enabled.
       .then(response => {
         return response.json();
       })

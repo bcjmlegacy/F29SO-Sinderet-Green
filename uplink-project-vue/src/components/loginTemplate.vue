@@ -96,7 +96,14 @@ export default {
     };
   },
   methods: {
-    go() {
+    switchComp(comp) {
+      //Switch component
+      bus.$emit("switchComp", comp);
+    },
+    saveToken(token) {
+      bus.$emit("saveToken", token);
+    },
+    go(evt) {
       //onSubmit function that will trigger the server to send post request to login
       console.log(this.form);
       fetch(url, {
@@ -112,19 +119,16 @@ export default {
           password: this.form.password
         })
       })
-        .then(function(response) {
+        .then(response => {
           return response.json();
         })
-        .then(function(text) {
-          console.log(text);
-        })
-        .catch(function(err) {
-          console.log(err);
+        .then(jsonData => {
+          console.log(jsonData);
+          this.switchComp("Dash");
+          this.saveToken(jsonData.token);
         });
-    },
-    switchComp(comp) {
-      //Switch component
-      bus.$emit("switchComp", comp);
+
+      evt.preventDefault();
     }
   }
 };

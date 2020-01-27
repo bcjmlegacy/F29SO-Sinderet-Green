@@ -56,6 +56,7 @@ export default {
       }
     };
   },
+  props: ["userToken"],
   methods: {
     switchComp(comp) {
       //Switch component
@@ -67,7 +68,8 @@ export default {
         mode: "cors",
         headers: {
           Accept: "application/json",
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
+          Authorization: this.userToken
         },
         body: JSON.stringify({
           name: this.form.roomName

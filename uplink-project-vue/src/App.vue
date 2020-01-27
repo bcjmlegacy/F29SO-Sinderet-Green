@@ -4,7 +4,7 @@
     As roomName prop will match the roomName prop in the room page component (unique prop)
   -->
   <div id="app">
-    <component :is="currentComponent" :roomName="currentRoom"></component>
+    <component :is="currentComponent" :roomName="currentRoom" :userToken="userToken"></component>
   </div>
 </template>
 <script>
@@ -14,11 +14,15 @@ import Room from "./components/roomPageTemplate";
 import AddItem from "./components/addPage";
 import AddRoom from "./components/addRoom";
 import AddDevice from "./components/addDevice";
+import Login from "./components/loginTemplate";
+import Register from "./components/registerTemplate";
 import { bus } from "./main";
 export default {
   name: "app",
   components: {
     //Initialise pages.
+    Login,
+    Register,
     Dash,
     Room,
     AddItem,
@@ -27,8 +31,9 @@ export default {
   },
   data() {
     return {
-      currentComponent: "Dash", //set the current page to be the Dash. Dash will appear when project is loaded on browser.
-      currentRoom: ""
+      currentComponent: "Login", //set the current page to be the Dash. Dash will appear when project is loaded on browser.
+      currentRoom: "",
+      userToken: ""
     };
   },
   methods: {},
@@ -39,6 +44,9 @@ export default {
     }); //Controller function to control the room data that is displayed on the room page.
     bus.$on("updateRoom", room => {
       this.currentRoom = room;
+    });
+    bus.$on("saveToken", token => {
+      this.userToken = token;
     });
   }
 };
