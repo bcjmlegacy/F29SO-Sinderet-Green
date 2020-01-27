@@ -186,6 +186,9 @@ app.use(function(req, res, next) {
   
   Checking auth token.
   
+  ANYTHING AFTER THIS FUNCTION IS AUTHENTICATED.
+  AKA. It is blocked if it does not pass authentication.
+  
   ####################################### */
   
   app.use(function(req, res, next) {
@@ -519,7 +522,7 @@ app.use(function(req, res, next) {
                       
                       app.post("/insertDevice", (req, res) => {
                         if (req.body.room && req.body.type && req.body.name) {
-                          db.insertDevice(req.body.room, req.body.type, req.body.name, function(
+                          db.insertDevice(req.body.room, req.body.type, req.body.wattage, req.body.name, function(
                             err,
                             rowId
                             ) {
@@ -560,6 +563,26 @@ app.use(function(req, res, next) {
                               res.send( { "error": err } );
                             } else  {
                               res.send( rows );
+                            }
+                          });
+                        });
+                        
+                        /* #######################################
+                        
+                        Device command functions.
+                        
+                        ####################################### */
+                        
+                        app.get("/getCommandsByDevice", (req, res) => {
+                          db.getCommandsByDevice(req.query.id, function(err, rows) {
+                            res.send(rows);
+                          });
+                        });
+
+                        app.get("/executeCommand", (req, res) => {
+                          db.getCommandById(req.query.id, function(err, rows) {
+                            if(rows[0]) {
+                              
                             }
                           });
                         });
