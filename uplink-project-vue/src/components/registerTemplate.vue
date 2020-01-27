@@ -154,9 +154,11 @@ export default {
       fetch(url, {
         mode: "cors",
         method: "POST",
+
         headers: {
           Accept: "application/json",
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
+          Authorization: "MTpSMmM1blZkVlJZWTVKTWFPRlpiSQ=="
         },
         body: JSON.stringify({
           //Data sent to the API goes here.

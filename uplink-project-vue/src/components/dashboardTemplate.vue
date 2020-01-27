@@ -18,9 +18,10 @@
           </div>
         </div>
         <!--Additional Components-->
-        <div class="flex-rooms">
-          <Add />
-          <AllDevices />
+        <div class="additional">
+          <div class="flex-rooms">
+            <AllDevices />
+          </div>
         </div>
       </div>
     </div>
@@ -33,7 +34,7 @@
 //All the components needed for the dashboard
 import Summary from "./summary";
 import Room from "./roomTemplate";
-import Add from "./addCard";
+
 import AllDevices from "./allDevices";
 import NavTop from "./navbar-top";
 import NavBottom from "./navbar-bottom";
@@ -43,15 +44,20 @@ let url = "http://localhost:5552/getRooms";
 //Vue.js main class for data and template scripts.
 export default {
   name: "dashboard-components",
-  components: { Summary, Add, AllDevices, NavTop, NavBottom, Room }, //Initialise Components
+  components: { Summary, AllDevices, NavTop, NavBottom, Room }, //Initialise Components
   data() {
     return {
       results: [] //Array to store results gathered from database but also the icon for the room
     };
   },
+  props: ["userToken"],
 
   mounted: function() {
-    fetch(url, { mode: "cors", method: "GET" }) //Fetch Command to get data from API - CORS enabled.
+    fetch(url, {
+      mode: "cors",
+      method: "GET",
+      headers: { Authorization: this.userToken }
+    }) //Fetch Command to get data from API - CORS enabled.
       .then(response => {
         return response.json();
       })
@@ -81,6 +87,8 @@ function pairImg(rooms) {
       return "bedcolor";
     case "Outside":
       return "outsidecolor";
+    case "Bathroom":
+      return "bathtub";
     default:
       return "question";
   }
@@ -110,6 +118,10 @@ function pairImg(rooms) {
 
 .bottom-show {
   display: none !important;
+}
+
+.additional {
+  margin-top: 30px;
 }
 
 @media screen and (max-width: 1025px) {

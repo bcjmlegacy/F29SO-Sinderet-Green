@@ -22,9 +22,10 @@
           </div>
         </div>
         <!--Additional Components.-->
-        <div class="flex-rooms">
-          <Add />
-          <AllDevices />
+        <div class="additional">
+          <div class="flex-rooms">
+            <AllDevices />
+          </div>
         </div>
       </div>
     </div>
@@ -36,7 +37,6 @@
 //All the components that are needed for the roomPage
 import Summary from "./summary";
 import Device from "./deviceCard";
-import Add from "./addCard";
 import AllDevices from "./allDevices";
 import NavTop from "./navbar-top";
 import NavBottom from "./navbar-bottom";
@@ -51,12 +51,11 @@ export default {
     //Initialise the components
     Summary,
     Device,
-    Add,
     AllDevices,
     NavTop,
     NavBottom
   },
-  props: ["roomName"], //props to confirm the room the page is showing
+  props: ["roomName", "userToken"], //props to confirm the room the page is showing
   data() {
     return {
       devices: [], //all devices stored in the database
@@ -66,13 +65,21 @@ export default {
   },
 
   mounted: function() {
-    fetch(url, { mode: "cors", method: "GET" }) //first fetch gets all the devices and stores in devices array
+    fetch(url, {
+      mode: "cors",
+      method: "GET",
+      headers: { Authorization: this.userToken }
+    }) //first fetch gets all the devices and stores in devices array
       .then(response => {
         return response.json();
       })
       .then(jsonData => {
         this.devices = jsonData;
-        fetch(url1, { mode: "cors", method: "GET" }) //second fetch gets all the rooms and stored in rooms array
+        fetch(url1, {
+          mode: "cors",
+          method: "GET",
+          headers: { Authorization: this.userToken }
+        }) //second fetch gets all the rooms and stored in rooms array
           .then(response => {
             return response.json();
           })
@@ -125,7 +132,7 @@ function pairImg(device) {
   display: flex !important;
   flex-direction: row !important;
   flex-wrap: wrap !important;
-  justify-content: space-between !important;
+  justify-content: space-evenly !important;
   align-items: flex-start !important;
 }
 
@@ -148,6 +155,9 @@ function pairImg(device) {
   }
   .bottom-show {
     display: block !important;
+  }
+  .flex-rooms {
+    justify-content: space-between !important;
   }
 }
 </style>
