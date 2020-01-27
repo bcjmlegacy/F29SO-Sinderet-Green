@@ -8,25 +8,31 @@ var fs = require("fs"),
 // Make a temporary database in memory, NOT PERSISTENTLY TO DISK
 var db = new sqlite3.Database(":memory:");
 
+function getWholeDate() {
+  var d = new Date();
+  var dateString = `${d.getFullYear()}-${(d.getMonth() + 1)}-${d.getDate()} ${d.getHours()}:${d.getMinutes()}:${d.getSeconds()}`;
+  return dateString.padEnd(19, " ");
+}
+
 db.serialize(function() {
 	db.exec(schema, function(err) {
 		if (err) {
-			console.log(`! Error creating database!`);
-			console.log(`! ${err}`);
+			console.log(`[${getWholeDate()}] ! Error creating database!`);
+			console.log(`[${getWholeDate()}] ! ${err}`);
 		} else {
-			console.log("> Created database");
+			console.log(`[${getWholeDate()}] > Created database`);
 		}
 	});
 });
 
 db.on("error", function(error) {
-	console.log(error);
+	console.log(`[${getWholeDate()}] ! ${error}`);
 });
 
 class databasehandler    {
 
   constructor()    {
-    console.log("> DB connector created");
+    console.log(`[${getWholeDate()}] > DB connector created`);
   }
 
   /* #######################################
@@ -56,11 +62,11 @@ class databasehandler    {
 
     db.run(q, [token, user_id, created, expires], function(err) {
       if(err) {
-        console.log(`! Error inserting data record into ${table}:`);
-        console.log(`! ${err}`);
+        console.log(`[${getWholeDate()}] ! Error inserting data record into ${table}:`);
+        console.log(`[${getWholeDate()}] ! ${err}`);
         callback(err, null);
       } else  {
-        console.log(`> Inserted new auth token: ${JSON.stringify(this.lastID)}`);
+        console.log(`[${getWholeDate()}] > Inserted new auth token: ${JSON.stringify(this.lastID)}`);
         callback(null, JSON.stringify(this.lastID));
       }
     });
@@ -249,11 +255,11 @@ class databasehandler    {
 
     db.run(q, [account_type, username, password, email, forename, surname, ts], function(err) {
       if(err) {
-        console.log(`! Error inserting data record into user:`);
-        console.log(`! ${err}`);
+        console.log(`[${getWholeDate()}] ! Error inserting data record into user:`);
+        console.log(`[${getWholeDate()}] ! ${err}`);
         callback(err, null);
       } else  {
-        console.log(`> Inserted data record into user: ${JSON.stringify(this.lastID)}`);
+        console.log(`[${getWholeDate()}] > Inserted data record into user: ${JSON.stringify(this.lastID)}`);
         callback(null, JSON.stringify(this.lastID));
       }
     });
@@ -266,11 +272,11 @@ class databasehandler    {
 
     db.run(q, [room, type, name, ts], function(err) {
       if(err) {
-        console.log(`! Error inserting data record into sensor:`);
-        console.log(`! ${err}`);
+        console.log(`[${getWholeDate()}] ! Error inserting data record into sensor:`);
+        console.log(`[${getWholeDate()}] ! ${err}`);
         callback(err, null);
       } else  {
-        console.log(`> Inserted data record into sensor: ${JSON.stringify(this.lastID)}`);
+        console.log(`[${getWholeDate()}] > Inserted data record into sensor: ${JSON.stringify(this.lastID)}`);
         callback(null, JSON.stringify(this.lastID));
       }
     });
@@ -283,11 +289,11 @@ class databasehandler    {
 
     db.run(q, [room, type, name, ts], function(err) {
       if(err) {
-        console.log(`! Error inserting data record into device:`);
-        console.log(`! ${err}`);
+        console.log(`[${getWholeDate()}] ! Error inserting data record into device:`);
+        console.log(`[${getWholeDate()}] ! ${err}`);
         callback(err, null);
       } else  {
-        console.log(`> Inserted data record into device: ${JSON.stringify(this.lastID)}`);
+        console.log(`[${getWholeDate()}] > Inserted data record into device: ${JSON.stringify(this.lastID)}`);
         callback(null, JSON.stringify(this.lastID));
       }
     });
@@ -306,10 +312,10 @@ class databasehandler    {
 
     db.run(q, [id, val, ts], function(err) {
       if (err) {
-        console.log(`! Error inserting data record for sensor ${id}:`);
-        console.log(`! ${err}`);
+        console.log(`[${getWholeDate()}] ! Error inserting data record for sensor ${id}:`);
+        console.log(`[${getWholeDate()}] ! ${err}`);
       }
-      console.log(`> Inserted data record for sensor ${id}: ${JSON.stringify(this.lastID)}`);
+      console.log(`[${getWholeDate()}] > Inserted data record for sensor ${id}: ${JSON.stringify(this.lastID)}`);
     });
   }
 
@@ -320,10 +326,10 @@ class databasehandler    {
 
     db.run(q, [id, type, val, ts], function(err) {
       if (err) {
-        console.log(`! Error inserting data record for device ${id}:`);
-        console.log(`! ${err}`);
+        console.log(`[${getWholeDate()}] ! Error inserting data record for device ${id}:`);
+        console.log(`[${getWholeDate()}] ! ${err}`);
       }
-      console.log(`> Inserted data record for device ${id}: ${JSON.stringify(this.lastID)}`);
+      console.log(`[${getWholeDate()}] > Inserted data record for device ${id}: ${JSON.stringify(this.lastID)}`);
     });
   }
 

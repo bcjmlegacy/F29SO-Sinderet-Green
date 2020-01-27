@@ -1,9 +1,9 @@
 const express = require("express"),
-	crypto = require("crypto"),
-	mqtt = require("mqtt"),
-	DBHandler = require("./dbhandler.js"),
-	app = express(),
-	cors = require("cors");
+crypto = require("crypto"),
+mqtt = require("mqtt"),
+DBHandler = require("./dbhandler.js"),
+app = express(),
+cors = require("cors");
 
 // So we can parse the req body for POST data
 app.use(cors());
@@ -22,18 +22,24 @@ app.use(function(req, res, next) {
   var client = mqtt.connect("mqtt://127.0.0.1");
   var db = new DBHandler();
   
+  function getWholeDate() {
+    var d = new Date();
+    var dateString = `${d.getFullYear()}-${(d.getMonth() + 1)}-${d.getDate()} ${d.getHours()}:${d.getMinutes()}:${d.getSeconds()}`;
+    return dateString.padEnd(19, " ");
+  }
+  
   //
   // Setup MQTT
   //
   
   client.on("connect", function() {
-    console.log("> Connected to MQTT server");
+    console.log(`[${getWholeDate()}] > Connected to MQTT server`);
     
     client.subscribe("#", function(err) {
       if (err) {
-        console.log("! Unable to subscribe to topics");
+        console.log(`[${getWholeDate()}] ! Unable to subscribe to topics`);
       } else {
-        console.log("> Subscribed to all topics");
+        console.log(`[${getWholeDate()}] > Subscribed to all topics`);
       }
     });
   });
@@ -51,12 +57,12 @@ app.use(function(req, res, next) {
         
         db.getSensorById(thingId, function(err, rows) {
           if (err) {
-            console.log("! Error looking up sensor");
-            console.log(`! ${err}`);
+            console.log(`[${getWholeDate()}] ! Error looking up sensor`);
+            console.log(`[${getWholeDate()}] ! ${err}`);
           } else if (rows) {
             db.insertSensorReading(thingId, message);
           } else {
-            console.log(`! Sensor ${thingId} not found`);
+            console.log(`[${getWholeDate()}] ! Sensor ${thingId} not found`);
           }
         });
       } else if (thingId.length === 9) {
@@ -64,8 +70,8 @@ app.use(function(req, res, next) {
         
         db.getDeviceById(thingId, function(err, rows) {
           if (err) {
-            console.log("! Error looking up device");
-            console.log(`! ${err}`);
+            console.log(`[${getWholeDate()}] ! Error looking up device`);
+            console.log(`[${getWholeDate()}] ! ${err}`);
           } else if (rows) {
             var dataType = topicSplit[topicSplit.length - 2];
             db.insertDeviceReading(thingId, dataType, message);
@@ -75,17 +81,27 @@ app.use(function(req, res, next) {
         });
       }
     } catch (e) {
-      console.log(`! An error occured while parsing an MQTT message:`);
-      console.log(`! ${e}`);
+      console.log(`[${getWholeDate()}] ! An error occured while parsing an MQTT message:`);
+      console.log(`[${getWholeDate()}] ! ${e}`);
     }
   }
   
   // This function will respond to and log messages
   client.on("message", function(topic, message) {
-    console.log(`= Received message: ${topic} ${message.toString()}`);
+    console.log(`[${getWholeDate()}] = Received message: ${topic} ${message.toString()}`);
     
     parseTopic(topic, message.toString());
   });
+  
+  //
+  // Check timers
+  //
+  
+  function procTimersAndTriggers() {
+    console.log(`[${getWholeDate()}] > Checking timers and triggers`);
+  }
+  
+  setInterval(procTimersAndTriggers, 60000);
   
   //
   // Define API
@@ -109,7 +125,7 @@ app.use(function(req, res, next) {
     }
     
     id = user_id + ":" + id;
-
+    
     return Buffer.from(id).toString('base64');
   }
   
@@ -147,7 +163,7 @@ app.use(function(req, res, next) {
         } else if(user_id)  {
           
           var token = getNewToken(user_id);
-          console.log(`Generated token: ${token}`);
+          console.log(`[${getWholeDate()}] > Generated token: ${token}`);
           
           db.insertNewAuthToken(user_id, token, null, function(err) {
             if(err) {
@@ -171,32 +187,32 @@ app.use(function(req, res, next) {
   Checking auth token.
   
   ####################################### */
-
+  
   app.use(function(req, res, next) {
     if(!req.headers.authorization) {
       return res.status(403).json({ error: 'No credentials sent!' });
     } else  {
       
       try {
-
+        
         var auth = Buffer.from(req.headers.authorization, 'base64').toString('ascii').split(":");
-        console.log(`> Received request with auth: ${req.headers.authorization} (${auth})`);
+        console.log(`[${getWholeDate()}] > Received request with auth: ${req.headers.authorization}`);
         user_id = auth[0];
-
+        
         db.checkToken(user_id, req.headers.authorization, function(err) {
           if(err) {
-          console.log(`> Invalid header: ${err}`);
+            console.log(`[${getWholeDate()}] > Invalid header: ${err}`);
             res.status(403).json({ error: 'Invalid auth header' });
           } else  {
             next();
           }
         })
-
+        
       } catch(err)  {
-        console.log(`> Error while checking header: ${err}`);
+        console.log(`[${getWholeDate()}] > Error while checking header: ${err}`);
         return res.status(403).json({ error: 'Invalid auth header' });
       }
-
+      
     }
   });
   
@@ -553,6 +569,7 @@ app.use(function(req, res, next) {
                         //
                         
                         app.listen(port, () => {
-                          console.log(`> Uplink HUB API listening on port ${port}`);
+                          console.log(`[${getWholeDate()}] > Uplink HUB API listening on port ${port}`);
                         });
+                        
                         
