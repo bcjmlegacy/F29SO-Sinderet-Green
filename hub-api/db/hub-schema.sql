@@ -50,7 +50,9 @@ CREATE TABLE user (
     user_account_type   INTEGER,
     user_username       TEXT,
     user_password       TEXT,
-    
+    user_email          TEXT,
+    user_forename       TEXT,
+    user_surname        TEXT,
     user_created        INTEGER,
     user_last_active    TEXT,    
     FOREIGN KEY (user_account_type) REFERENCES account_type(account_type_id)

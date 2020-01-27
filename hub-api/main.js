@@ -1,9 +1,9 @@
-const express = require('express'),
-crypto        = require('crypto'),
-mqtt          = require('mqtt'),
-DBHandler     = require('./dbhandler.js'),
-app           = express(),
-cors          = require("cors");
+const express = require("express"),
+	crypto = require("crypto"),
+	mqtt = require("mqtt"),
+	DBHandler = require("./dbhandler.js"),
+	app = express(),
+	cors = require("cors");
 
 // So we can parse the req body for POST data
 app.use(cors());

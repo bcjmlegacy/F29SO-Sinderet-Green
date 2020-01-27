@@ -1,27 +1,26 @@
-var fs      = require('fs'),
-sqlite3       = require('sqlite3').verbose(),
-schemaFile    = `${__dirname}/db/hub-schema.sql`,
-schema        = fs.readFileSync(schemaFile, 'utf8');
+var fs = require("fs"),
+	sqlite3 = require("sqlite3").verbose(),
+	schemaFile = `${__dirname}/db/hub-schema.sql`,
+	schema = fs.readFileSync(schemaFile, "utf8");
 
 // var db = new sqlite3.Database(`${__dirname}/db/data`);
 
 // Make a temporary database in memory, NOT PERSISTENTLY TO DISK
-var db = new sqlite3.Database(':memory:');
+var db = new sqlite3.Database(":memory:");
 
-db.serialize(function()
-{
-  db.exec(schema, function(err)  {
-    if(err) {
-      console.log(`! Error creating database!`);
-      console.log(`! ${err}`);
-    } else  {
-      console.log("> Created database");
-    }
-  });
+db.serialize(function() {
+	db.exec(schema, function(err) {
+		if (err) {
+			console.log(`! Error creating database!`);
+			console.log(`! ${err}`);
+		} else {
+			console.log("> Created database");
+		}
+	});
 });
 
 db.on("error", function(error) {
-  console.log(error);
+	console.log(error);
 });
 
 class databasehandler    {

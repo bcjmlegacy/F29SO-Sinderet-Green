@@ -1,47 +1,87 @@
 <template>
+  <!--Summary section that shows energy, solar usage and temperature for the whole home/room-->
   <div id="stat-cards">
-    <div class="container justify-content-center">
-      <h3 class="display-3">Welcome Back</h3>
+    <div class="container">
+      <h3 class="display-3 text-center">Welcome Back</h3>
       <div class="stats">
         <div class="sub-title-wrapper">
-          <h5 class="display-4">Todays Usage</h5>
+          <!--summary title that will show the room name will be labeled home-->
+          <h5 class="display-4 text-center">Todays {{sumTitle}} Usage</h5>
         </div>
-        <b-row>
-          <div class="col-sm-4">
-            <div class="card custom-cards" style="width: 13rem; height: 20rem; padding: 20px">
-              <img class="card-img-top" src="../assets/idea.png" alt="Energy Usage" />
-              <div class="card-body">
+        <div class="flex-b">
+          <div>
+            <div class="card custom-cards">
+              <div class="img-cont">
+                <img class="card-img-top img" src="../assets/idea.png" alt="Energy Usage" />
+              </div>
+              <!--Energy usage per room or overall home usage-->
+              <div class="card-body text-center">
                 <h5 class="card-title">Energy Usage</h5>
-                <p class="card-text">200 KWh</p>
+                <p class="card-text">{{energy}} KWh</p>
               </div>
             </div>
           </div>
-          <div class="col-sm-4">
-            <div class="card custom-cards" style="width: 13rem; height: 20rem; padding: 20px;">
-              <img class="card-img-top" src="../assets/battery.png" alt="Energy Usage" />
-              <div class="card-body">
-                <h5 class="card-title">Solar Stored</h5>
-                <p class="card-text">200 KWh</p>
+          <div>
+            <div class="card custom-cards">
+              <div class="img-cont">
+                <img class="card-img-top img" src="../assets/battery.png" alt="Energy Usage" />
+              </div>
+              <!--Solar Energy Stored for whole home-->
+              <div class="card-body text-center">
+                <h5 class="card-title">{{solar}} Stored</h5>
+                <p class="card-text">1200 KWh</p>
               </div>
             </div>
           </div>
-          <div class="col-sm-4">
-            <div class="card custom-cards" style="width: 13rem; height: 20rem; padding: 20px;">
-              <img class="card-img-top img" src="../assets/sun.png" alt="Energy Usage" />
-              <div class="card-body">
-                <h5 class="card-title">Home Temperature</h5>
-                <p class="card-text">200 KWh</p>
+          <div>
+            <div class="card custom-cards">
+              <div class="img-cont">
+                <img class="card-img-top img" src="../assets/sun.png" alt="Energy Usage" />
+              </div>
+              <!--Temperature of the whole home or for each room-->
+              <div class="card-body text-center">
+                <h5 class="card-title">Current Temperature</h5>
+                <p class="card-text">{{temperature}}&#x2103;</p>
               </div>
             </div>
           </div>
-        </b-row>
+          <div>
+            <div class="card custom-cards">
+              <div class="img-cont">
+                <img class="card-img-top img-menu" src="../assets/report.png" alt="Energy Usage" />
+              </div>
+              <div class="card-body text-center">
+                <h5 class="card-title">Advanced Stats</h5>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </template>
+<script>
+export default {
+  name: "Summary",
+  props: ["sumTitle", "energy", "temperature", "solar"] //props/data for the summary section
+};
+</script>
 <style>
+/**Styling for the summary section */
 #stat-cards {
-  margin-top: 60px;
+  margin-top: 100px;
+}
+
+.img {
+  padding: 15px;
+}
+
+.flex-b {
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: wrap !important;
+  justify-content: space-between !important;
+  align-items: flex-start !important;
 }
 
 .stats {
@@ -49,15 +89,13 @@
 }
 
 .sub-title-wrapper {
-  text-align: left;
   margin-bottom: 30px;
 }
 
-.title-card {
-  padding: 20px;
-  width: 60rem;
-}
 .custom-cards {
+  width: 11rem;
+  height: 16rem;
+  padding: 1px;
   background-color: white !important;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 1px 8px rgba(0, 0, 0, 0.22) !important;
   transition: 0.2s ease-in-out all !important;
@@ -69,8 +107,8 @@
 }
 
 @media screen and (max-width: 1025px) {
-}
-
-@media screen and (max-width: 812px) {
+  #stat-cards {
+    margin-top: 50px;
+  }
 }
 </style>
