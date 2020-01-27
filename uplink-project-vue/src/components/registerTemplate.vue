@@ -2,128 +2,115 @@
   <!--Register Page-->
   <div id="register">
     <b-container>
-      <b-row>
-        <b-col sm="8" offset-sm="2">
+      <div class="flex-add">
+        <div class="card custom-cards-Register">
           <h1 class="form-title">Register</h1>
-        </b-col>
-      </b-row>
-      <div id="form">
-        <b-form @submit="go">
-          <b-row class="rows">
-            <b-col sm="3">
-              <label for="input-email" class="labels">Email</label>
-            </b-col>
-            <b-col sm="8">
+
+          <div id="form">
+            <b-form @submit="go">
+              <div class="col-sm-12">
+                <label for="input-email" class="label">Email</label>
+              </div>
               <!--v-model is a vue.js thing that will store the value gained from the input-->
-              <b-form-input
-                id="input-email"
-                placeholder="example@domain.com"
-                required="required"
-                v-model="form.email"
-                type="email"
-                class="inputboxes"
-                size="md"
-              />
-            </b-col>
-          </b-row>
-          <b-row class="rows">
-            <b-col sm="3">
-              <label for="input-username" class="labels">Username</label>
-            </b-col>
-            <b-col sm="8">
-              <b-form-input
-                id="input-username"
-                placeholder="MadLad123"
-                type="text"
-                size="md"
-                required="required"
-                class="inputboxes"
-                v-model="form.username"
-              />
-            </b-col>
-          </b-row>
-          <b-row class="rows">
-            <b-col sm="3">
-              <label for="input-firstname" class="labels">First Name</label>
-            </b-col>
-            <b-col sm="8">
-              <b-form-input
-                id="input-firstname"
-                class="inputboxes"
-                type="text"
-                size="md"
-                required="required"
-                placeholder="Euan"
-                v-model="form.firstname"
-              />
-            </b-col>
-          </b-row>
-          <b-row class="rows">
-            <b-col sm="3">
-              <label for="input-surname" class="labels">Surname</label>
-            </b-col>
-            <b-col sm="8">
-              <b-form-input
-                id="input-surname"
-                class="inputboxes"
-                type="text"
-                size="md"
-                required="required"
-                placeholder="Gordon"
-                v-model="form.surname"
-              />
-            </b-col>
-          </b-row>
-          <b-row class="rows">
-            <b-col sm="3">
-              <label for="input-password" class="labels">Password</label>
-            </b-col>
-            <b-col sm="8">
-              <b-form-input
-                id="input-password"
-                class="inputboxes"
-                type="password"
-                size="md"
-                required="required"
-                placeholder="******"
-                v-model="form.password"
-              />
-            </b-col>
-          </b-row>
-          <b-row class="rows">
-            <b-col sm="3">
-              <label for="input-confirm-password" class="labels">Confirm Password</label>
-            </b-col>
-            <b-col sm="8">
-              <b-form-input
-                id="input-confirm-password"
-                class="inputboxes"
-                type="password"
-                size="md"
-                required="required"
-                placeholder="******"
-                v-model="form.cPassword"
-              />
-            </b-col>
-          </b-row>
-          <b-row class="rows">
-            <b-col sm="8" offset-sm="3">
-              <b-form-checkbox
-                id="acceptTerms"
-                value="true"
-                unchecked-value="false"
-                name="acceptTerms"
-                class="check"
-                v-model="form.acceptTerms"
-              >Accept Terms and Conditions</b-form-checkbox>
-            </b-col>
-          </b-row>
-          <b-row class="rows">
-            <b-col sm="8" offset-sm="3">
-              <b-button class="but" type="submit">Register</b-button>
-            </b-col>
-          </b-row>
-        </b-form>
+              <div class="col-sm-12">
+                <input
+                  id="input-email"
+                  placeholder="example@domain.com"
+                  required="required"
+                  v-model="form.email"
+                  type="email"
+                  class="form-inputboxes"
+                  size="md"
+                />
+              </div>
+              <div class="form-rows">
+                <div class="col-sm-12">
+                  <label for="input-username" class="label">Username</label>
+                </div>
+                <div class="col-sm-12">
+                  <input
+                    id="input-username"
+                    placeholder="MadLad123"
+                    type="text"
+                    size="md"
+                    required="required"
+                    class="form-inputboxes"
+                    v-model="form.username"
+                  />
+                </div>
+              </div>
+              <div class="form-rows">
+                <div class="col-sm-12">
+                  <label for="input-firstname" class="label">First Name</label>
+                </div>
+                <div class="col-sm-12">
+                  <input
+                    id="input-firstname"
+                    class="form-inputboxes"
+                    type="text"
+                    size="md"
+                    required="required"
+                    placeholder="Euan"
+                    v-model="form.firstname"
+                  />
+                </div>
+              </div>
+              <div class="form-rows">
+                <div class="col-sm-12">
+                  <label for="input-surname" class="label">Surname</label>
+                </div>
+                <div class="col-sm-12">
+                  <input
+                    id="input-surname"
+                    class="form-inputboxes"
+                    type="text"
+                    size="md"
+                    required="required"
+                    placeholder="Gordon"
+                    v-model="form.surname"
+                  />
+                </div>
+              </div>
+              <div class="form-rows">
+                <div class="col-sm-12">
+                  <label for="input-password" class="label">Password</label>
+                </div>
+                <div class="col-sm-12">
+                  <input
+                    id="input-password"
+                    class="form-inputboxes"
+                    type="password"
+                    size="md"
+                    required="required"
+                    placeholder="******"
+                    v-model="form.password"
+                  />
+                </div>
+              </div>
+              <div class="form-rows">
+                <div class="col-sm-12">
+                  <label for="input-confirm-password" class="label">Confirm Password</label>
+                </div>
+                <div class="col-sm-12">
+                  <input
+                    id="input-confirm-password"
+                    class="form-inputboxes"
+                    type="password"
+                    size="md"
+                    required="required"
+                    placeholder="******"
+                    v-model="form.cPassword"
+                  />
+                </div>
+              </div>
+              <div class="form-rows">
+                <div class="col-sm-12">
+                  <button class="form-buttons" type="submit">Register</button>
+                </div>
+              </div>
+            </b-form>
+          </div>
+        </div>
       </div>
     </b-container>
   </div>
@@ -195,10 +182,20 @@ export default {
 <style>
 /**General Styles stored here. Most of the styles for the register page is in public/style.css  */
 #register {
-  padding: 20px 50px;
-  padding-top: 200px;
-  margin-left: 25%;
-  margin-right: 25%;
+  margin-top: 80px;
+}
+
+.custom-cards-Register {
+  width: 25rem;
+  height: 58rem;
+  padding: 20px;
+  background-color: white !important;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 1px 8px rgba(0, 0, 0, 0.22) !important;
+  transition: 0.2s ease-in-out all !important;
+}
+
+.custom-cards-Register:hover {
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22) !important;
 }
 
 @media screen and (max-width: 1024px) {
@@ -210,10 +207,7 @@ export default {
 
 @media screen and (max-width: 812px) {
   #register {
-    margin-left: 1%;
-    margin-right: 1%;
-    padding: 10px 20px;
-    padding-top: 40px;
+    margin-top: 30px;
   }
 
   .labels {
