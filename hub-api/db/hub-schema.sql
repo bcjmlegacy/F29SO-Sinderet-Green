@@ -39,6 +39,17 @@ CREATE TABLE device_type (
     device_type_name    TEXT
 );
 
+CREATE TABLE device_command    (
+    device_command_id           INTEGER PRIMARY KEY AUTOINCREMENT,
+    device_command_device_type  INTEGER,
+    device_command_name         TEXT,
+    device_command_mqtt         TEXT,
+    device_command_value        TEXT,
+    device_command_mqtt_res     TEXT,
+    device_command_value_res    TEXT,
+    FOREIGN KEY (device_command_device_type) REFERENCES device_type(device_type_id)
+);
+
 /* #######################################
 
 Object tables.
@@ -81,6 +92,7 @@ CREATE TABLE device	(
 	device_id       TEXT PRIMARY KEY,
     device_room     INTEGER,
     device_type     INTEGER,
+    device_wattage  INTEGER,
     device_name     TEXT,
     device_added    INTEGER,
     FOREIGN KEY (device_type)   REFERENCES device_type(device_type_id),
@@ -92,6 +104,29 @@ CREATE TABLE device	(
 Data tables.
 
 ####################################### */
+
+CREATE TABLE timer_repeat (
+    timer_repeat_id             INTEGER PRIMARY KEY AUTOINCREMENT,
+    timer_repeat_type           TEXT,
+    timer_repeat_month          INTEGER,
+    timer_repeat_day            INTEGER,
+    timer_repeat_hour           INTEGER,
+    timer_repeat_minute         INTEGER,
+    timer_repeat_device_id      INTEGER,
+    timer_repeat_command        INTEGER,
+    FOREIGN KEY (timer_repeat_device_id) REFERENCES device(device_id),
+    FOREIGN KEY (timer_repeat_command)   REFERENCES device_command(device_command_id)
+);
+
+CREATE TABLE timer_oneshot  (
+    timer_oneshot_id            INTEGER,
+    timer_oneshot_trigger       INTEGER,
+    timer_oneshot_device_id     INTEGER,
+    timer_oneshot_sensor_id     INTEGER,
+    timer_oneshot_command       INTEGER,
+    FOREIGN KEY (timer_oneshot_device_id) REFERENCES device(device_id),
+    FOREIGN KEY (timer_oneshot_command)   REFERENCES device_command(device_command_id)
+);
 
 CREATE TABLE sensor_reading	(
 	sensor_reading_id           INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -108,6 +143,18 @@ CREATE TABLE device_reading	(
     device_reading_value        INTEGER,
     device_reading_timestamp    INTEGER,
     FOREIGN KEY (device_reading_sensor_id) REFERENCES device(device_id)
+);
+
+CREATE TABLE device_triggers (
+    device_trigger_id           INTEGER PRIMARY KEY AUTOINCREMENT,
+    device_trigger_device_id    INTEGER,
+    device_trigger_sensor_id    INTEGER,
+    device_trigger_gt_lt        TEXT,
+    device_trigger_sensor_value INTEGER,
+    device_trigger_command      INT,
+    FOREIGN KEY (device_trigger_device_id) REFERENCES device(device_id),
+    FOREIGN KEY (device_trigger_sensor_id) REFERENCES sensor(sensor_id),
+    FOREIGN KEY (device_trigger_command)   REFERENCES device_command(device_command_id)
 );
 
 /* #######################################
@@ -134,17 +181,61 @@ INSERT INTO device_type     (device_type_name)  VALUES ("Solar Controller");
 INSERT INTO device_type     (device_type_name)  VALUES ("Light");
 INSERT INTO device_type     (device_type_name)  VALUES ("Door lock");
 
-INSERT INTO user (user_account_type, user_username, user_password, user_created, user_last_active) VALUES (1, "Test_user", "b109f3bbbc244eb82441917ed06d618b9008dd09b3befd1b5e07394c706a8bb980b1d7785e5976ec049b46df5f1326af5a2ea6d103fd07c95385ffab0cacbc86", 1579521113, 1579521113);
+INSERT INTO device_command  (device_command_device_type, device_command_name, device_command_mqtt, device_command_value, device_command_mqtt_res, device_command_value_res) VALUES (1, "Turn on",  "set_power", "on",  "status", "on");
+INSERT INTO device_command  (device_command_device_type, device_command_name, device_command_mqtt, device_command_value, device_command_mqtt_res, device_command_value_res) VALUES (1, "Turn off", "set_power", "off", "status", "off");
+INSERT INTO device_command  (device_command_device_type, device_command_name, device_command_mqtt, device_command_value, device_command_mqtt_res, device_command_value_res) VALUES (4, "Turn on",  "set_power", "on",  "status", "on");
+INSERT INTO device_command  (device_command_device_type, device_command_name, device_command_mqtt, device_command_value, device_command_mqtt_res, device_command_value_res) VALUES (4, "Turn off", "set_power", "off", "status", "off");
 
-INSERT INTO sensor (sensor_id, sensor_room, sensor_type, sensor_name, sensor_added) VALUES ("ABC123", 1, 1, "Livingroom temp sensor 1", 1579521113);
-INSERT INTO sensor (sensor_id, sensor_room, sensor_type, sensor_name, sensor_added) VALUES ("ABC456", 1, 1, "Livingroom temp sensor 2", 1579521113);
-INSERT INTO sensor (sensor_id, sensor_room, sensor_type, sensor_name, sensor_added) VALUES ("ABC789", 2, 1, "Kitchen temp sensor", 1579521113);
-INSERT INTO sensor (sensor_id, sensor_room, sensor_type, sensor_name, sensor_added) VALUES ("DEF123", 3, 1, "Bedroom temp sensor", 1579521113);
-INSERT INTO sensor (sensor_id, sensor_room, sensor_type, sensor_name, sensor_added) VALUES ("DEF456", 1, 2, "Livingroom humidity sensor", 1579521113);
-INSERT INTO sensor (sensor_id, sensor_room, sensor_type, sensor_name, sensor_added) VALUES ("DEF789", 2, 2, "Kitchen humidity sensor", 1579521113);
-INSERT INTO sensor (sensor_id, sensor_room, sensor_type, sensor_name, sensor_added) VALUES ("HIG123", 3, 2, "Bedroom humidity sensor", 1579521113);
+INSERT INTO user (user_account_type, user_username, user_password, user_created, user_last_active) 
+VALUES (1, 
+    "Test_user", 
+    "b109f3bbbc244eb82441917ed06d618b9008dd09b3befd1b5e07394c706a8bb980b1d7785e5976ec049b46df5f1326af5a2ea6d103fd07c95385ffab0cacbc86", 
+    1579521113, 
+    1579521113
+);
 
-INSERT INTO device (device_id, device_room, device_type, device_name, device_added) VALUES ("123ABC123", 1, 1, "Livingroom heater", 1579521113);
-INSERT INTO device (device_id, device_room, device_type, device_name, device_added) VALUES ("456ABC123", 1, 4, "Livingroom light", 1579521113);
-INSERT INTO device (device_id, device_room, device_type, device_name, device_added) VALUES ("789ABC123", 2, 2, "Kitchen fridge", 1579521113);
-INSERT INTO device (device_id, device_room, device_type, device_name, device_added) VALUES ("123456ABC", 4, 3, "Solar controller", 1579521113);
+INSERT INTO sensor (sensor_id, sensor_room, sensor_type, sensor_name, sensor_added) VALUES ("ABC123", 1, 1, "Livingroom temp sensor 1",     1579521113);
+INSERT INTO sensor (sensor_id, sensor_room, sensor_type, sensor_name, sensor_added) VALUES ("ABC456", 1, 1, "Livingroom temp sensor 2",     1579521113);
+INSERT INTO sensor (sensor_id, sensor_room, sensor_type, sensor_name, sensor_added) VALUES ("ABC789", 2, 1, "Kitchen temp sensor",          1579521113);
+INSERT INTO sensor (sensor_id, sensor_room, sensor_type, sensor_name, sensor_added) VALUES ("DEF123", 3, 1, "Bedroom temp sensor",          1579521113);
+INSERT INTO sensor (sensor_id, sensor_room, sensor_type, sensor_name, sensor_added) VALUES ("DEF456", 1, 2, "Livingroom humidity sensor",   1579521113);
+INSERT INTO sensor (sensor_id, sensor_room, sensor_type, sensor_name, sensor_added) VALUES ("DEF789", 2, 2, "Kitchen humidity sensor",      1579521113);
+INSERT INTO sensor (sensor_id, sensor_room, sensor_type, sensor_name, sensor_added) VALUES ("HIG123", 3, 2, "Bedroom humidity sensor",      1579521113);
+
+INSERT INTO device (device_id, device_room, device_type, device_wattage, device_name, device_added) VALUES ("123ABC123", 1, 1, 300, "Livingroom heater",    1579521113);
+INSERT INTO device (device_id, device_room, device_type, device_wattage, device_name, device_added) VALUES ("456ABC123", 1, 4, 40,  "Livingroom light",     1579521113);
+INSERT INTO device (device_id, device_room, device_type, device_wattage, device_name, device_added) VALUES ("789ABC123", 2, 2, 400, "Kitchen fridge",       1579521113);
+INSERT INTO device (device_id, device_room, device_type, device_wattage, device_name, device_added) VALUES ("123456ABC", 4, 3, 5,   "Solar controller",     1579521113);
+
+INSERT INTO timer_repeat (
+    timer_repeat_type,
+    timer_repeat_month,
+    timer_repeat_day,
+    timer_repeat_hour,
+    timer_repeat_minute,
+    timer_repeat_device_id,
+    timer_repeat_command
+)   
+VALUES  ("Day", 1, 1, 7, 1, 1, 1);
+
+INSERT INTO timer_repeat (
+    timer_repeat_type,
+    timer_repeat_month,
+    timer_repeat_day,
+    timer_repeat_hour,
+    timer_repeat_minute,
+    timer_repeat_device_id,
+    timer_repeat_command
+)   
+VALUES  ("Hour", 1, 1, 8, 1, 1, 2);
+
+INSERT INTO timer_repeat (
+    timer_repeat_type,
+    timer_repeat_month,
+    timer_repeat_day,
+    timer_repeat_hour,
+    timer_repeat_minute,
+    timer_repeat_device_id,
+    timer_repeat_command
+)   
+VALUES  ("Minute", 1, 1, 7, 1, 1, 3);
