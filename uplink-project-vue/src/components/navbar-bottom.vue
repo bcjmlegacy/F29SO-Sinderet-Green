@@ -1,6 +1,6 @@
 <template>
   <!--bottom navbar template for mobile devices-->
-  <nav class="navbar fixed-bottom">
+  <nav class="navbar-bottom fixed-bottom">
     <div class="container">
       <div class="flex-nav">
         <div class="image-cont-nav" @click="switchComp('AddItem')">
@@ -9,7 +9,7 @@
         <div class="image-cont-nav">
           <img src="../assets/report.png" alt="profile" class="nav-image-bottom" />
         </div>
-        <div class="image-cont-nav">
+        <div class="image-cont-nav" @click="switchComp('Dash')">
           <h4 class="logo-small">uplink</h4>
         </div>
         <div class="image-cont-nav">
@@ -48,10 +48,11 @@ export default {
   padding: 10px;
 }
 
-.navbar {
+.navbar-bottom {
   padding: 0 !important;
   background-color: white;
   box-shadow: 0 0px 25px rgba(0, 0, 0, 0.3) !important;
+  border-top: 1px solid #198fca;
 }
 
 .nav-image-bottom {

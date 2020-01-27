@@ -1,13 +1,13 @@
 <template>
   <div>
     <NavbarTop class="top-show" />
-    <div id="addRooms">
+    <div id="Add">
       <div class="container">
         <h3 class="display-3 text-center">Add Devices or Rooms</h3>
         <div class="flex-cont">
           <div class="flex-add">
             <div>
-              <div class="card custom-cards-rooms">
+              <div class="card custom-cards-rooms" @click="switchComp('AddRoom')">
                 <div class="img-cont">
                   <img class="card-img-top img-add" src="../assets/room.png" alt="Add Room" />
                 </div>
@@ -17,7 +17,7 @@
               </div>
             </div>
             <div>
-              <div class="card custom-cards-rooms">
+              <div class="card custom-cards-rooms" @click="switchComp('AddDevice')">
                 <div class="img-cont">
                   <img class="card-img-top img-add" src="../assets/light-bulb.png" alt="Add Room" />
                 </div>
@@ -36,16 +36,23 @@
 <script>
 import NavbarTop from "./navbar-top";
 import NavbarBottom from "./navbar-bottom";
+import { bus } from "../main";
 export default {
   name: "addPage",
   components: {
     NavbarTop,
     NavbarBottom
+  },
+  methods: {
+    switchComp(comp) {
+      //Switch component
+      bus.$emit("switchComp", comp);
+    }
   }
 };
 </script>
 <style>
-#addRooms {
+#Add {
   margin-top: 130px;
 }
 

@@ -22,9 +22,10 @@
           </div>
         </div>
         <!--Additional Components.-->
-        <div class="flex-rooms">
-          <Add />
-          <AllDevices />
+        <div class="additional">
+          <div class="flex-rooms">
+            <AllDevices />
+          </div>
         </div>
       </div>
     </div>
@@ -36,7 +37,6 @@
 //All the components that are needed for the roomPage
 import Summary from "./summary";
 import Device from "./deviceCard";
-import Add from "./addCard";
 import AllDevices from "./allDevices";
 import NavTop from "./navbar-top";
 import NavBottom from "./navbar-bottom";
@@ -51,7 +51,6 @@ export default {
     //Initialise the components
     Summary,
     Device,
-    Add,
     AllDevices,
     NavTop,
     NavBottom

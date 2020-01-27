@@ -9,21 +9,21 @@
 </template>
 <script>
 //All the MAIN PAGES that are needed for the app
-import Login from "./components/loginTemplate";
-import Register from "./components/registerTemplate";
 import Dash from "./components/dashboardTemplate";
 import Room from "./components/roomPageTemplate";
 import AddItem from "./components/addPage";
+import AddRoom from "./components/addRoom";
+import AddDevice from "./components/addDevice";
 import { bus } from "./main";
 export default {
   name: "app",
   components: {
     //Initialise pages.
-    Login,
-    Register,
     Dash,
     Room,
-    AddItem
+    AddItem,
+    AddRoom,
+    AddDevice
   },
   data() {
     return {
