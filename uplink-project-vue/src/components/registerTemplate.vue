@@ -4,7 +4,7 @@
     <b-container>
       <div class="flex-add">
         <div class="card custom-cards-Register">
-          <h1 class="form-title">Register</h1>
+          <h1 class="form-title">Sign Up</h1>
 
           <div id="form">
             <b-form @submit="go">
@@ -105,7 +105,7 @@
               </div>
               <div class="form-rows">
                 <div class="col-sm-12">
-                  <button class="form-buttons" type="submit">Register</button>
+                  <button class="form-buttons" type="submit">Sign Up</button>
                 </div>
               </div>
             </b-form>

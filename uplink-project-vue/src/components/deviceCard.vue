@@ -13,7 +13,7 @@
       <!--Device Name and Energy taken from prop passed to component - deviceName, deviceEnergy-->
       <div class="card-body text-center">
         <h5 class="card-title text-center">{{deviceName}}</h5>
-        <p class="card-text">{{deviceEnergy}}KWh</p>
+        <p class="card-text">{{deviceEnergy}} watt</p>
       </div>
     </div>
   </div>

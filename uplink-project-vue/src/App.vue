@@ -13,7 +13,7 @@ import Dash from "./components/dashboardTemplate";
 import Room from "./components/roomPageTemplate";
 import AddItem from "./components/addPage";
 import AddRoom from "./components/addRoom";
-import AddDevice from "./components/addDevice";
+import AddDevices from "./components/addDevices";
 import Login from "./components/loginTemplate";
 import Register from "./components/registerTemplate";
 import { bus } from "./main";
@@ -27,13 +27,13 @@ export default {
     Room,
     AddItem,
     AddRoom,
-    AddDevice
+    AddDevices
   },
   data() {
     return {
-      currentComponent: "Login", //set the current page to be the Dash. Dash will appear when project is loaded on browser.
+      currentComponent: "AddDevices", //set the current page to be the Dash. Dash will appear when project is loaded on browser.
       currentRoom: "",
-      userToken: ""
+      userToken: "" //user token for session
     };
   },
   methods: {},
