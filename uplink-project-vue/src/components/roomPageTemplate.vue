@@ -100,7 +100,7 @@ export default {
                 this.roomDevices.push({
                   //generate a JSON of the device name and icon and store in roomDevices array
                   deviceName: this.devices[key].device_name,
-                  deviceImage: pairImg(deviceN[1].toLowerCase())
+                  deviceImage: pairImg(deviceN[1])
                 });
               }
             }

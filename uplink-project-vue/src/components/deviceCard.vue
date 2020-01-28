@@ -1,7 +1,10 @@
 <template>
   <!--Device Card-->
   <div class="item">
-    <div class="card custom-cards-devices">
+    <div
+      class="card custom-cards-devices"
+      @click="deviceToAdd({deviceName: deviceName, 'deviceImage':deviceImage, deviceEnergy: deviceEnergy}); switchComp('AddDeviceMetrics')"
+    >
       <div class="img-cont">
         <!--Image name is taken from the prop called deviceImage-->
         <img
@@ -13,7 +16,7 @@
       <!--Device Name and Energy taken from prop passed to component - deviceName, deviceEnergy-->
       <div class="card-body text-center">
         <h5 class="card-title text-center">{{deviceName}}</h5>
-        <p class="card-text">{{deviceEnergy}}KWh</p>
+        <p class="card-text">{{deviceEnergy}} watt</p>
       </div>
     </div>
   </div>
@@ -28,6 +31,9 @@ export default {
     //Changes the component (not in use here yet)
     switchComp(comp) {
       bus.$emit("switchComp", comp);
+    },
+    deviceToAdd(device) {
+      bus.$emit("deviceToAdd", device);
     }
   }
 };

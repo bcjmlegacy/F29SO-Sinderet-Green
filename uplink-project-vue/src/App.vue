@@ -4,7 +4,12 @@
     As roomName prop will match the roomName prop in the room page component (unique prop)
   -->
   <div id="app">
-    <component :is="currentComponent" :roomName="currentRoom" :userToken="userToken"></component>
+    <component
+      :is="currentComponent"
+      :roomName="currentRoom"
+      :userToken="userToken"
+      :deviceToAdd="deviceToAdd"
+    ></component>
   </div>
 </template>
 <script>
@@ -13,9 +18,10 @@ import Dash from "./components/dashboardTemplate";
 import Room from "./components/roomPageTemplate";
 import AddItem from "./components/addPage";
 import AddRoom from "./components/addRoom";
-import AddDevice from "./components/addDevice";
+import AddDevices from "./components/addDevices";
 import Login from "./components/loginTemplate";
 import Register from "./components/registerTemplate";
+import AddDeviceMetrics from "./components/addDeviceMetrics";
 import { bus } from "./main";
 export default {
   name: "app",
@@ -27,13 +33,15 @@ export default {
     Room,
     AddItem,
     AddRoom,
-    AddDevice
+    AddDevices,
+    AddDeviceMetrics
   },
   data() {
     return {
-      currentComponent: "Login", //set the current page to be the Dash. Dash will appear when project is loaded on browser.
+      currentComponent: "AddDevices", //set the current page to be the Dash. Dash will appear when project is loaded on browser.
       currentRoom: "",
-      userToken: ""
+      userToken: "MTppTzJoWGtVdUFsN05nalJuOXlacA==", //user token for session
+      deviceToAdd: ""
     };
   },
   methods: {},
@@ -47,6 +55,9 @@ export default {
     });
     bus.$on("saveToken", token => {
       this.userToken = token;
+    });
+    bus.$on("deviceToAdd", device => {
+      this.deviceToAdd = device;
     });
   }
 };

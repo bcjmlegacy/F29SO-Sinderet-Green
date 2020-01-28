@@ -2,77 +2,74 @@
   <!--Login Page-->
   <div id="loginCard">
     <b-container>
-      <b-row>
-        <b-col sm="8" offset-sm="2">
+      <div class="flex-add">
+        <div class="card custom-cards-Login">
           <div class="logo-background">
-            <h1 class="logo">uplink</h1>
+            <h1 class="logo text-center">uplink</h1>
           </div>
-        </b-col>
-      </b-row>
-      <div id="form">
-        <b-form @submit.prevent="go">
-          <b-row class="rows">
-            <b-col sm="3">
-              <label for="input-username" class="labels">Username</label>
-            </b-col>
-            <b-col sm="7">
+          <div id="form">
+            <b-form @submit="go">
+              <div class="col-sm-12">
+                <label for="input-username" class="label">Username</label>
+              </div>
               <!--v-model allows you to store data thats typed or collected from form inputs-->
-              <b-form-input
-                id="input-username"
-                placeholder="Cheerypal"
-                size="md"
-                v-model="form.username"
-                required="required"
-                type="text"
-                class="inputboxes-login"
-              ></b-form-input>
-            </b-col>
-          </b-row>
-          <b-row class="rows">
-            <b-col sm="3">
-              <label for="input-password" class="labels">Password</label>
-            </b-col>
-            <b-col sm="7">
-              <b-form-input
-                id="input-password"
-                type="password"
-                v-model="form.password"
-                required="required"
-                placeholder="*********"
-                size="md"
-                class="inputboxes-login"
-              ></b-form-input>
-            </b-col>
-          </b-row>
-          <b-row class="rows">
-            <b-col sm="7" offset-sm="3">
-              <b-form-checkbox
-                id="check_Save"
-                value="saved"
-                unchecked-value="not_saved"
-                name="check_Save"
-                class="check"
-                v-model="form.checked"
-              >Remember Me</b-form-checkbox>
-            </b-col>
-          </b-row>
-          <b-row class="rows">
-            <b-col sm="7" offset-sm="3">
-              <b-button class="but" type="submit">Login</b-button>
-            </b-col>
-          </b-row>
-        </b-form>
+              <div class="col-sm-12">
+                <input
+                  id="input-username"
+                  placeholder="Cheerypal"
+                  size="md"
+                  v-model="form.username"
+                  required="required"
+                  type="text"
+                  class="form-inputboxes"
+                />
+              </div>
+              <div class="form-rows">
+                <div class="col-sm-12">
+                  <label for="input-password" class="label">Password</label>
+                </div>
+                <div class="col-sm-12">
+                  <input
+                    id="input-password"
+                    type="password"
+                    v-model="form.password"
+                    required="required"
+                    placeholder="*********"
+                    size="md"
+                    class="form-inputboxes"
+                  />
+                </div>
+              </div>
+
+              <div class="form-rows">
+                <div class="col-sm-12">
+                  <button class="form-buttons" type="submit">Login</button>
+                </div>
+              </div>
+            </b-form>
+          </div>
+          <div class="flex-add">
+            <div>
+              <div class="form-rows">
+                <div class="col-sm-12">
+                  <b-link href="#" class="links text-center">Forgot Password</b-link>
+                </div>
+              </div>
+            </div>
+            <div>
+              <div class="form-rows">
+                <div class="col-sm-12">
+                  <b-link
+                    href="#"
+                    class="links text-center"
+                    @click="switchComp('Register')"
+                  >Create Account</b-link>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-      <b-row class="rows">
-        <b-col sm="7" offset-sm="3">
-          <b-link href="#" class="links">Forgot Password</b-link>
-        </b-col>
-      </b-row>
-      <b-row class="rows">
-        <b-col sm="7" offset-sm="3">
-          <b-link href="#" class="links" @click="switchComp('Register')">Create Account</b-link>
-        </b-col>
-      </b-row>
     </b-container>
   </div>
 </template>
@@ -140,25 +137,65 @@ export default {
 /**General Styles stored here. Most of the styles for the login page is in public/style.css  */
 /* Background image yet to be added to the template */
 #loginCard {
-  padding: 20px 50px;
-  padding-top: 300px;
-  margin-left: 30%;
-  margin-right: 30%;
+  margin-top: 80px;
 
   /* border: solid 1px #005872;*/
 }
 
 #form {
-  padding-bottom: 50px;
+  margin-top: 10px;
 }
 
-.inputboxes-login {
-  border-bottom: 1px solid #ff9933 !important;
-  border-top: none !important;
-  border-left: none !important;
-  border-right: none !important;
-  outline: none !important;
-  border-radius: 0px !important;
+.flex-add {
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+  flex-wrap: wrap !important;
+  align-items: center !important;
+}
+
+.form-inputboxes {
+  width: 100%;
+  height: 3rem;
+  border-bottom: 1px solid #b8b8b8;
+  border-left: none;
+  border-top: none;
+  border-right: none;
+}
+
+.form-inputboxes:focus {
+  outline: none;
+  background-color: white;
+  border-bottom: 1px solid #198fca;
+}
+
+.form-buttons {
+  width: 100%;
+  height: 3rem;
+  border-radius: 30px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 1px 8px rgba(0, 0, 0, 0.22) !important;
+  border: none;
+  outline: none;
+  color: white;
+  background-color: #198fca;
+}
+
+.form-buttons:focus {
+  outline: none;
+  box-shadow: inset 0 1px 5px rgba(0, 0, 0, 0.3), 0 1px 5px rgba(0, 0, 0, 0.22) !important;
+}
+
+.custom-cards-Login {
+  width: 25rem;
+  height: 34rem;
+  padding: 20px;
+  background-color: white !important;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 1px 8px rgba(0, 0, 0, 0.22) !important;
+  transition: 0.2s ease-in-out all !important;
+}
+
+.custom-cards-Login:hover {
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22) !important;
 }
 
 .logo {
