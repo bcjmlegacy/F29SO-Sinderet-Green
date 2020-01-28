@@ -8,10 +8,15 @@
           <div class="flex-add">
             <div class="card custom-cards-addDevices">
               <div class="img-cont">
-                <img src="../assets/light-bulb.png" alt="device icon" class="device-img" />
+                <img
+                  :src="require(`../assets/${deviceImage}.png`)"
+                  alt="device icon"
+                  class="device-img"
+                />
               </div>
               <div class="text-wrapper">
-                <h5 class="card-title text-center">Phillips Hue Lights</h5>
+                <h5 class="card-title text-center">{{deviceDefaultName}}</h5>
+                <p class="card-text">{{deviceEnergy}}</p>
               </div>
               <div class="device-cont">
                 <b-form @submit="go">
@@ -67,6 +72,7 @@ export default {
     NavbarTop,
     NavbarBottom
   },
+  props: ["defaultDeviceName", "deviceEnergy", "deviceImage"],
   data() {
     return {
       form: {

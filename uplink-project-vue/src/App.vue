@@ -16,6 +16,7 @@ import AddRoom from "./components/addRoom";
 import AddDevices from "./components/addDevices";
 import Login from "./components/loginTemplate";
 import Register from "./components/registerTemplate";
+import AddDeviceMetrics from "./components/addDeviceMetrics";
 import { bus } from "./main";
 export default {
   name: "app",
@@ -27,13 +28,15 @@ export default {
     Room,
     AddItem,
     AddRoom,
-    AddDevices
+    AddDevices,
+    AddDeviceMetrics
   },
   data() {
     return {
-      currentComponent: "AddDevices", //set the current page to be the Dash. Dash will appear when project is loaded on browser.
+      currentComponent: "Login", //set the current page to be the Dash. Dash will appear when project is loaded on browser.
       currentRoom: "",
-      userToken: "" //user token for session
+      userToken: "", //user token for session
+      defaultDeviceName: ""
     };
   },
   methods: {},

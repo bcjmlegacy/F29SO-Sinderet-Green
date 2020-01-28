@@ -17,7 +17,7 @@
               </div>
             </div>
             <div>
-              <div class="card custom-cards-rooms" @click="switchComp('AddDeviceMetrics')">
+              <div class="card custom-cards-rooms" @click="switchComp('addDevices')">
                 <div class="img-cont">
                   <img class="card-img-top img-add" src="../assets/light-bulb.png" alt="Add Room" />
                 </div>

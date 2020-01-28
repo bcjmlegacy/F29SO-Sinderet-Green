@@ -1,7 +1,7 @@
 <template>
   <!--Device Card-->
   <div class="item">
-    <div class="card custom-cards-devices">
+    <div class="card custom-cards-devices" @click="switchComp('AddDeviceMetrics')">
       <div class="img-cont">
         <!--Image name is taken from the prop called deviceImage-->
         <img
