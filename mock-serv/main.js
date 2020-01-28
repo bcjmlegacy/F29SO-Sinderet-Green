@@ -82,16 +82,16 @@ function l_t_sensor1()  {
 
     if(h < 8 || h > 20) {
       // If it's before 8am or after 8pm
-      t_lower = 7;
-      t_upper = 9;
+      t_lower = 10;
+      t_upper = 12;
     } else if(h > 8 && h < 18)  {
       // If it's after 8am and before 6pm
-      t_lower = 14;
-      t_upper = 17;
+      t_lower = 16;
+      t_upper = 20;
     } else if(h => 18 && h < 20) {
       // If it's after 6pm and before 8pm
-      t_lower = 12;
-      t_upper = 14;
+      t_lower = 16;
+      t_upper = 18;
     }
   }
   
@@ -124,16 +124,16 @@ function l_t_sensor2()  {
     // If the heater is on
     if(h < 8 || h > 20) {
       // If it's before 8am or after 8pm
-      t_lower = 8;
-      t_upper = 9;
+      t_lower = 10;
+      t_upper = 12;
     } else if(h > 8 && h < 18)  {
       // If it's after 8am and before 6pm
-      t_lower = 13;
-      t_upper = 17;
+      t_lower = 16;
+      t_upper = 20;
     } else if(h => 18 && h < 20) {
       // If it's after 6pm and before 8pm
-      t_lower = 11;
-      t_upper = 13;
+      t_lower = 16;
+      t_upper = 18;
     }
   }
   
