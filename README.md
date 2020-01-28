@@ -14,7 +14,7 @@ NPM packages:
 - `mqtt`
 - `mysql`
 - `express`
-- 'cors'
+- `cors`
 
 ### Testing:
 
