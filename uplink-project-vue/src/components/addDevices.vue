@@ -7,30 +7,22 @@
           <h3 class="display-3 text-center">Connect a Device</h3>
         </div>
         <div class="flex-rooms">
+          <DeviceCard deviceName="Phillips Hue Bulb" deviceImage="light-bulb" deviceEnergy="10" />
+          <DeviceCard deviceName="Ring Door Bell" deviceImage="doorbell" deviceEnergy="10" />
           <DeviceCard
-            defaultDeviceName="Phillips Hue Bulb"
-            deviceImage="light-bulb"
-            deviceEnergy="10"
-          />
-          <DeviceCard defaultDeviceName="Ring Door Bell" deviceImage="doorbell" deviceEnergy="10" />
-          <DeviceCard
-            defaultDeviceName="Hive CCTV Camera"
+            deviceName="Hive CCTV Camera"
             deviceImage="security-camera"
             deviceEnergy="60"
           />
-          <DeviceCard defaultDeviceName="Smart Socket" deviceImage="plug" deviceEnergy="120" />
-          <DeviceCard defaultDeviceName="Smart Socket" deviceImage="plug" deviceEnergy="120" />
-          <DeviceCard defaultDeviceName="Smart Socket" deviceImage="plug" deviceEnergy="120" />
+          <DeviceCard deviceName="Smart Socket" deviceImage="plug" deviceEnergy="120" />
+          <DeviceCard deviceName="Smart Socket" deviceImage="plug" deviceEnergy="120" />
+          <DeviceCard deviceName="Smart Socket" deviceImage="plug" deviceEnergy="120" />
           <DeviceCard
-            defaultDeviceName="Hive CCTV Camera"
+            deviceName="Hive CCTV Camera"
             deviceImage="security-camera"
             deviceEnergy="60"
           />
-          <DeviceCard
-            defaultDeviceName="Phillips Hue Bulb"
-            deviceImage="light-bulb"
-            deviceEnergy="10"
-          />
+          <DeviceCard deviceName="Phillips Hue Bulb" deviceImage="light-bulb" deviceEnergy="10" />
         </div>
       </div>
     </div>
@@ -52,6 +44,9 @@ export default {
   methods: {
     switchComp(comp) {
       bus.$emit("switchComp", comp);
+    },
+    deviceToAdd(device) {
+      bus.$emit("deviceToAdd", device);
     }
   }
 };

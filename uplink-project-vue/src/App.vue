@@ -4,7 +4,12 @@
     As roomName prop will match the roomName prop in the room page component (unique prop)
   -->
   <div id="app">
-    <component :is="currentComponent" :roomName="currentRoom" :userToken="userToken"></component>
+    <component
+      :is="currentComponent"
+      :roomName="currentRoom"
+      :userToken="userToken"
+      :deviceToAdd="deviceToAdd"
+    ></component>
   </div>
 </template>
 <script>
@@ -33,10 +38,10 @@ export default {
   },
   data() {
     return {
-      currentComponent: "Login", //set the current page to be the Dash. Dash will appear when project is loaded on browser.
+      currentComponent: "AddDevices", //set the current page to be the Dash. Dash will appear when project is loaded on browser.
       currentRoom: "",
-      userToken: "", //user token for session
-      defaultDeviceName: ""
+      userToken: "MTppTzJoWGtVdUFsN05nalJuOXlacA==", //user token for session
+      deviceToAdd: ""
     };
   },
   methods: {},
@@ -50,6 +55,9 @@ export default {
     });
     bus.$on("saveToken", token => {
       this.userToken = token;
+    });
+    bus.$on("deviceToAdd", device => {
+      this.deviceToAdd = device;
     });
   }
 };

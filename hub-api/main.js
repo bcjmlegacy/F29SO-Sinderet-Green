@@ -521,7 +521,7 @@ app.use(function(req, res, next) {
                       });
                       
                       app.post("/insertDevice", (req, res) => {
-                        if (req.body.room && req.body.type && req.body.name) {
+                        if (req.body.room && req.body.type && req.body.name && req.body.wattage) {
                           db.insertDevice(req.body.room, req.body.type, req.body.wattage, req.body.name, function(
                             err,
                             rowId
