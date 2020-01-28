@@ -1,12 +1,14 @@
 var fs = require("fs"),
   sqlite3 = require("sqlite3").verbose(),
   schemaFile = `${__dirname}/db/hub-schema.sql`,
+  demoFile = `${__dirname}/db/demo-data.sql`,
   schema = fs.readFileSync(schemaFile, "utf8");
+  demo = fs.readFileSync(demoFile, "utf8");
 
-// var db = new sqlite3.Database(`${__dirname}/db/data`);
+var db = new sqlite3.Database(`${__dirname}/db/data.db`);
 
 // Make a temporary database in memory, NOT PERSISTENTLY TO DISK
-var db = new sqlite3.Database(":memory:");
+// var db = new sqlite3.Database(":memory:");
 
 function getWholeDate() {
   var d = new Date();
@@ -20,8 +22,17 @@ db.serialize(function() {
     if (err) {
       console.log(`[${getWholeDate()}] ! Error creating database!`);
       console.log(`[${getWholeDate()}] ! ${err}`);
+      console.log(`[${getWholeDate()}] ! Likely already created!`);
     } else {
       console.log(`[${getWholeDate()}] > Created database`);
+      db.exec(demo, function(err) {
+        if (err) {
+          console.log(`[${getWholeDate()}] ! Error created demo data!`);
+          console.log(`[${getWholeDate()}] ! ${err}`);
+        } else {
+          console.log(`[${getWholeDate()}] > Added demo data`);
+        }
+      });
     }
   });
 });
@@ -36,10 +47,10 @@ class databasehandler {
   }
 
   /* #######################################
-  
-  Login functions.
-  
-  ####################################### */
+    
+    Login functions.
+    
+    ####################################### */
 
   getUserByUsernameAndPassword(username, password, callback) {
     var q = `SELECT * FROM user WHERE user_username = ? AND user_password = ?`;
@@ -93,7 +104,7 @@ class databasehandler {
   }
 
   /* #######################################
-  
+          
   Get by ID.
   
   ####################################### */
@@ -133,8 +144,24 @@ class databasehandler {
     this.getById("device", id, callback);
   }
 
+  getRepeatTimerById(id, callback) {
+    this.getById("timer_repeat", id, callback);
+  }
+
+  getRepeatTimerByDeviceId(id, callback) {
+    var q = `SELECT * FROM timer_repeat WHERE timer_repeat_device_id = ?`;
+
+    db.all(q, [id], function(err, rows) {
+      if (err) {
+        callback(err);
+      } else {
+        callback(null, rows);
+      }
+    });
+  }
+
   /* #######################################
-  
+          
   Get by room.
   
   ####################################### */
@@ -159,7 +186,7 @@ class databasehandler {
   }
 
   /* #######################################
-  
+          
   Get all of something with limits.
   
   ####################################### */
@@ -204,6 +231,7 @@ class databasehandler {
   getUsers(callback, limit, offset) {
     this.getMany("user", callback, limit, offset);
   }
+
   getSensorReadings(callback, limit, offset) {
     this.getMany("sensor_reading", callback, limit, offset);
   }
@@ -211,8 +239,68 @@ class databasehandler {
     this.getMany("device_reading", callback, limit, offset);
   }
 
+  getRepeatTimers(callback) {
+    var q = `SELECT * FROM timer_repeat
+             INNER JOIN device         ON timer_repeat.timer_repeat_device_id = device.device_id
+             INNER JOIN device_type    ON device.device_type                  = device_type.device_type_id
+             INNER JOIN device_command ON timer_repeat.timer_repeat_command   = device_command.device_command_id
+             INNER JOIN room           ON device.device_room                  = room.room_id`;
+
+    db.all(q, function(err, rows) {
+      if (err) {
+        callback(err);
+      } else {
+        callback(null, rows);
+      }
+    });
+  }
+
+  updateRepeatTimerLastRun(last_run, id) {
+    var q = `UPDATE timer_repeat SET timer_repeat_last_run = ? WHERE timer_repeat_id = ?`;
+
+    db.all(q, [last_run, id], function(err, rows) {
+      if (err) {
+        console.log(err);
+      } else {
+        // console.log("Repeat timer updated");
+      }
+    });
+  }
+
+  getOneshotTimers(callback) {
+    var q = `SELECT * FROM timer_oneshot
+             INNER JOIN device         ON timer_oneshot.timer_oneshot_device_id = device.device_id
+             INNER JOIN device_type    ON device.device_type                    = device_type.device_type_id
+             INNER JOIN device_command ON timer_oneshot.timer_oneshot_command   = device_command.device_command_id
+             INNER JOIN room           ON device.device_room                    = room.room_id`;
+
+    // var q = `SELECT * FROM timer_oneshot
+    //          INNER JOIN device         ON timer_oneshot.timer_oneshot_device_id = device.device_id
+    //          INNER JOIN device_type    ON device.device_type                    = device_type.device_type_id`;
+
+    db.all(q, function(err, rows) {
+      if (err) {
+        callback(err);
+      } else {
+        callback(null, rows);
+      }
+    });
+  }
+
+  deleteOneshotTimer(id) {
+    var q = `DELETE FROM timer_oneshot WHERE timer_oneshot_id = ?`;
+
+    db.all(q, [id], function(err, rows) {
+      if (err) {
+        console.log(err);
+      } else {
+        // console.log("Oneshot timer deleted");
+      }
+    });
+  }
+
   /* #######################################
-  
+          
   Get sensor data by filters.
   
   ####################################### */
@@ -222,8 +310,8 @@ class databasehandler {
       end = new Date().valueOf();
     }
     var q = `SELECT * FROM sensor_reading WHERE sensor_reading_sensor_id = ?
-    AND sensor_reading_timestamp > ?
-    AND sensor_reading_timestamp < ? `;
+            AND sensor_reading_timestamp > ?
+            AND sensor_reading_timestamp < ? `;
 
     db.all(q, [id, start, end], function(err, rows) {
       if (err) {
@@ -239,8 +327,8 @@ class databasehandler {
       end = new Date().valueOf();
     }
     var q = `SELECT * FROM device_reading WHERE device_reading_sensor_id = ?
-    AND device_reading_timestamp > ?
-    AND device_reading_timestamp < ? `;
+            AND device_reading_timestamp > ?
+            AND device_reading_timestamp < ? `;
 
     db.all(q, [id, start, end], function(err, rows) {
       if (err) {
@@ -252,15 +340,15 @@ class databasehandler {
   }
 
   /* #######################################
-  
+          
   Device command functions.
   
   ####################################### */
 
   getCommandsByDevice(device_id, callback) {
     var q = `SELECT * FROM device_command
-              INNER JOIN device ON device.device_type = device_command.device_command_device_type
-              WHERE device.device_id = ?`;
+            INNER JOIN device ON device.device_type = device_command.device_command_device_type
+            WHERE device.device_id = ?`;
 
     db.all(q, [device_id], function(err, rows) {
       if (err) {
@@ -274,7 +362,7 @@ class databasehandler {
   executeCommand(command_id, callback) {}
 
   /* #######################################
-  
+          
   Inserting auxiliary data.
   
   ####################################### */
@@ -313,7 +401,7 @@ class databasehandler {
   }
 
   /* #######################################
-  
+            
   Inserting larger records.
   
   ####################################### */
@@ -332,7 +420,7 @@ class databasehandler {
 
     db.run(
       q,
-      [account_type, username, email, forename, username, password, ts],
+      [account_type, username, email, forename, surname, password, ts],
       function(err) {
         if (err) {
           console.log(
@@ -441,9 +529,9 @@ class databasehandler {
   }
 
   /* #######################################
-  
+                                    
   Inserting readings.
-  
+
   ####################################### */
 
   insertSensorReading(id, val) {
