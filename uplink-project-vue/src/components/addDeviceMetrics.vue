@@ -38,7 +38,7 @@
                       <label for="input-device-room" class="label">Device Room</label>
                     </div>
                     <div class="col-sm-12">
-                      <select v-model="form.room" class="form-dropdown">
+                      <select v-model="form.room" class="form-dropdown" required="required">
                         <option disabled value>Please Select A Room</option>
                         <option
                           v-for="r in rooms"
@@ -101,7 +101,7 @@ export default {
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
-          Authorization: "MTppTzJoWGtVdUFsN05nalJuOXlacA=="
+          Authorization: this.userToken
         },
         body: JSON.stringify({
           name: this.form.name,
@@ -178,6 +178,16 @@ export default {
 
 .form-dropdown {
   width: 100%;
-  border-bottom: solid 1px;
+  border-left: none;
+  border-top: none;
+  border-right: none;
+  border-bottom: solid 1px #b8b8b8;
+  outline: none;
+  height: 3rem;
+}
+
+.form-dropdown:focus {
+  outline: none;
+  border-bottom: solid 1px #198fca;
 }
 </style>

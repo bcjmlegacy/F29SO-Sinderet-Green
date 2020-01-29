@@ -7,22 +7,22 @@
           <h3 class="display-3 text-center">Connect a Device</h3>
         </div>
         <div class="flex-rooms">
-          <DeviceCard deviceName="Phillips Hue Bulb" deviceImage="light-bulb" deviceEnergy="10" />
-          <DeviceCard deviceName="Ring Door Bell" deviceImage="doorbell" deviceEnergy="10" />
-          <DeviceCard
+          <AddDeviceCard deviceName="Phillips Hue Bulb" deviceImage="light-bulb" deviceEnergy="10" />
+          <AddDeviceCard deviceName="Ring Door Bell" deviceImage="doorbell" deviceEnergy="10" />
+          <AddDeviceCard
             deviceName="Hive CCTV Camera"
             deviceImage="security-camera"
             deviceEnergy="60"
           />
-          <DeviceCard deviceName="Smart Socket" deviceImage="plug" deviceEnergy="120" />
-          <DeviceCard deviceName="Smart Socket" deviceImage="plug" deviceEnergy="120" />
-          <DeviceCard deviceName="Smart Socket" deviceImage="plug" deviceEnergy="120" />
-          <DeviceCard
+          <AddDeviceCard deviceName="Smart Socket" deviceImage="plug" deviceEnergy="120" />
+          <AddDeviceCard deviceName="Smart Socket" deviceImage="plug" deviceEnergy="120" />
+          <AddDeviceCard deviceName="Smart Socket" deviceImage="plug" deviceEnergy="120" />
+          <AddDeviceCard
             deviceName="Hive CCTV Camera"
             deviceImage="security-camera"
             deviceEnergy="60"
           />
-          <DeviceCard deviceName="Phillips Hue Bulb" deviceImage="light-bulb" deviceEnergy="10" />
+          <AddDeviceCard deviceName="Phillips Hue Bulb" deviceImage="light-bulb" deviceEnergy="10" />
         </div>
       </div>
     </div>
@@ -32,14 +32,14 @@
 <script>
 import NavbarTop from "../components/navbar-top";
 import NavbarBottom from "../components/navbar-bottom";
-import DeviceCard from "../components/deviceCard";
+import AddDeviceCard from "../components/addDeviceCard";
 import { bus } from "../main";
 export default {
   name: "devices",
   components: {
     NavbarTop,
     NavbarBottom,
-    DeviceCard
+    AddDeviceCard
   },
   methods: {
     switchComp(comp) {

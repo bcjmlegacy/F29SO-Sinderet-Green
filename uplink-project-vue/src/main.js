@@ -11,10 +11,19 @@ import "../public/style.css"; //css file
 Vue.use(BootstrapVue);
 Vue.config.productionTip = false;
 
+//cookies
+import VueCookies from "vue-cookies";
+Vue.use(VueCookies);
+Vue.$cookies.config(90);
+
+// set global cookie
+Vue.$cookies.set("theme", "default");
+Vue.$cookies.set("hover-time", "1s");
+
 //data controller variable.
 export const bus = new Vue();
 
 //mounts app to the html page - public/index.html
 new Vue({
-  render: h => h(App)
+	render: h => h(App)
 }).$mount("#app");
