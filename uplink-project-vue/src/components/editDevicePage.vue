@@ -41,7 +41,7 @@
                         <option
                           v-for="op in operations"
                           :key="op.device_command_id"
-                          :value="op.device_command_id"
+                          :value="op.device_command_value"
                         >{{ op.device_command_name }}</option>
                       </select>
                     </div>
@@ -90,7 +90,7 @@ export default {
     },
 
     go(evt) {
-      let url = "http://localhost:5552/insertOneshotTimer";
+      let url = "http://localhost:5552/insertRepeatTimer";
       console.log(this.form);
       fetch(url, {
         mode: "cors",
@@ -101,10 +101,13 @@ export default {
           Authorization: this.userToken
         },
         body: JSON.stringify({
-          name: this.form.name,
-          type: this.form.type,
-          wattage: this.form.wattage,
-          room: this.form.room
+          type: pairImg(this.deviceToAdd.deviceImage),
+          month: "1",
+          day: "1",
+          hour: "1",
+          minute: "1",
+          command: this.form.operation,
+          id: pairImg(this.deviceToAdd.deviceImage)
         })
       })
         .then(response => {
