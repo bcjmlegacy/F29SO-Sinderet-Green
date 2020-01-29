@@ -345,12 +345,12 @@ class databasehandler {
   
   ####################################### */
 
-  getCommandsByDevice(device_id, callback) {
+  getCommandsByDevice(device_type_id, callback) {
     var q = `SELECT * FROM device_command
-            INNER JOIN device ON device.device_type = device_command.device_command_device_type
-            WHERE device.device_id = ?`;
+            INNER JOIN device_type ON device_type.device_type_id = device_command.device_command_device_type
+            WHERE device_type.device_type_id = ?`;
 
-    db.all(q, [device_id], function(err, rows) {
+    db.all(q, [device_type_id], function(err, rows) {
       if (err) {
         callback(err);
       } else {
