@@ -8,7 +8,8 @@
             <h1 class="logo text-center">uplink</h1>
           </div>
           <div id="form">
-            <b-form @submit="go">
+            <div id="err">{{error}}</div>
+            <b-form @submit="go" id="loginForm">
               <div class="col-sm-12">
                 <label for="input-username" class="label">Username</label>
               </div>
@@ -62,7 +63,7 @@
                   <b-link
                     href="#"
                     class="links text-center"
-                    @click="switchComp('Register')"
+                    @click="switchComp('Register');"
                   >Create Account</b-link>
                 </div>
               </div>
@@ -87,9 +88,9 @@ export default {
       form: {
         //form data thats collected goes here
         username: "",
-        password: "",
-        checked: ""
-      }
+        password: ""
+      },
+      error: ""
     };
   },
   methods: {
@@ -99,6 +100,11 @@ export default {
     },
     saveToken(token) {
       bus.$emit("saveToken", token);
+    },
+    resetForm() {
+      console.log("Reseting the form");
+      this.form.username = "";
+      this.form.password = "";
     },
     go(evt) {
       //onSubmit function that will trigger the server to send post request to login
@@ -121,8 +127,13 @@ export default {
         })
         .then(jsonData => {
           console.log(jsonData);
-          this.switchComp("Dash");
-          this.saveToken(jsonData.token);
+          if (jsonData.error == "Error logging in") {
+            this.error = "Incorrect Username or Password";
+            this.resetForm();
+          } else {
+            this.switchComp("Dash");
+            this.saveToken(jsonData.token);
+          }
         });
 
       evt.preventDefault();
@@ -144,6 +155,11 @@ export default {
 
 #form {
   margin-top: 10px;
+}
+
+#err {
+  text-align: center;
+  color: #ff1e1e;
 }
 
 .flex-add {

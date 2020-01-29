@@ -38,9 +38,9 @@ export default {
   },
   data() {
     return {
-      currentComponent: "Dash", //set the current page to be the Dash. Dash will appear when project is loaded on browser.
+      currentComponent: "Login", //set the current page to be the Dash. Dash will appear when project is loaded on browser.
       currentRoom: "",
-      userToken: "MTpyeU85TFhSQlV1cWtvNmloZGtzTQ==", //user token for session
+      userToken: "MTpkclRRczFVd3AyQWhKUzlicHJ2MA==", //user token for session
       deviceToAdd: ""
     };
   },
