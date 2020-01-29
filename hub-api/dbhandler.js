@@ -3,7 +3,7 @@ var fs = require("fs"),
   schemaFile = `${__dirname}/db/hub-schema.sql`,
   demoFile = `${__dirname}/db/demo-data.sql`,
   schema = fs.readFileSync(schemaFile, "utf8");
-  demo = fs.readFileSync(demoFile, "utf8");
+demo = fs.readFileSync(demoFile, "utf8");
 
 var db = new sqlite3.Database(`${__dirname}/db/data.db`);
 
@@ -569,6 +569,81 @@ class databasehandler {
           this.lastID
         )}`
       );
+    });
+  }
+
+  insertRepeatTimer(
+    type,
+    month,
+    day,
+    hour,
+    minute,
+    device_id,
+    command,
+    callback
+  ) {
+    var ts = new Date().valueOf();
+    var q = `INSERT INTO timer_repeat (
+              timer_repeat_type,
+              timer_repeat_month,
+              timer_repeat_day,
+              timer_repeat_hour,
+              timer_repeat_minute,
+              timer_repeat_device_id,
+              timer_repeat_command,
+              timer_repeat_last_run) 
+             VALUES (?, ?, ?, ?, ?, ?, ?, 0)`;
+
+    db.run(q, [type, month, day, hour, minute, device_id, command], function(
+      err
+    ) {
+      if (err) {
+        console.log(
+          `[${getWholeDate()}] ! Error inserting repeat timer:`
+        );
+        console.log(`[${getWholeDate()}] ! ${err}`);
+        callback(err, null);
+      } else {
+        console.log(
+          `[${getWholeDate()}] > Inserted repeat timer: ${JSON.stringify(
+            this.lastID
+          )}`
+        );
+        callback(null, JSON.stringify(this.lastID));
+      }
+    });
+  }
+
+  insertOneshotTimer(
+    trigger,
+    device_id,
+    command,
+    callback
+  ) {
+    var ts = new Date().valueOf();
+    var q = `INSERT INTO timer_oneshot (
+              timer_oneshot_trigger,
+              timer_oneshot_device_id,
+              timer_oneshot_command)
+             VALUES (?, ?, ?)`;
+
+    db.run(q, [trigger, device_id, command], function(
+      err
+    ) {
+      if (err) {
+        console.log(
+          `[${getWholeDate()}] ! Error inserting oneshot timer:`
+        );
+        console.log(`[${getWholeDate()}] ! ${err}`);
+        callback(err, null);
+      } else {
+        console.log(
+          `[${getWholeDate()}] > Inserted oneshot timer: ${JSON.stringify(
+            this.lastID
+          )}`
+        );
+        callback(null, JSON.stringify(this.lastID));
+      }
     });
   }
 }

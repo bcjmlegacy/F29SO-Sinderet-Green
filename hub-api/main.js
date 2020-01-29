@@ -778,6 +778,44 @@ app.get("getRepeatTimers", (req, res) => {
   });
 });
 
+app.post("/insertRepeatTimer", (req, res) => {
+  if (req.body.type && req.body.month && req.body.day && req.body.hour && req.body.minute && req.body.device_id && req.body.command) {
+    db.insertRepeatTimer(req.body.type, req.body.month, req.body.day, req.body.hour, req.body.minute, req.body.device_id, req.body.command, function(
+      err,
+      rowId
+    ) {
+      if (err) {
+        res.send({ error: err });
+      } else {
+        res.send({ rowId: rowId });
+      }
+    });
+  } else {
+    res.send({
+      error: "Missing parameter! Needs type, month, day, hour, minute, device_id and command"
+    });
+  }
+});
+
+app.post("/insertOneshotTimer", (req, res) => {
+  if (req.body.trigger && req.body.device_id && req.body.command) {
+    db.insertOneshotTimer(req.body.trigger, req.body.device_id, req.body.command, function(
+      err,
+      rowId
+    ) {
+      if (err) {
+        res.send({ error: err });
+      } else {
+        res.send({ rowId: rowId });
+      }
+    });
+  } else {
+    res.send({
+      error: "Missing parameter! Needs trigger (UNIX TIME), device_id, command"
+    });
+  }
+});
+
 //
 // Start the API
 //
