@@ -14,7 +14,7 @@ Vue.config.productionTip = false;
 //cookies
 import VueCookies from "vue-cookies";
 Vue.use(VueCookies);
-Vue.$cookies.config(90);
+Vue.$cookies.config("7d");
 
 // set global cookie
 Vue.$cookies.set("theme", "default");
