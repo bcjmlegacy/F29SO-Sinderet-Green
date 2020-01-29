@@ -38,7 +38,7 @@
                       <label for="input-device-room" class="label">Device Room</label>
                     </div>
                     <div class="col-sm-12">
-                      <select v-model="form.room" class="form-dropdown">
+                      <select v-model="form.room" class="form-dropdown" required="required">
                         <option disabled value>Please Select A Room</option>
                         <option
                           v-for="r in rooms"

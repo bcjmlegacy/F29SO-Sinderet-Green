@@ -1,7 +1,10 @@
 <template>
   <!--Device Card-->
   <div class="item">
-    <div class="card custom-cards-devices">
+    <div
+      class="card custom-cards-devices"
+      @click="deviceToAdd({deviceName: deviceName, 'deviceImage':deviceImage, deviceEnergy: deviceEnergy}); switchComp('EditDevice')"
+    >
       <div class="img-cont">
         <!--Image name is taken from the prop called deviceImage-->
         <img
@@ -28,6 +31,9 @@ export default {
     //Changes the component (not in use here yet)
     switchComp(comp) {
       bus.$emit("switchComp", comp);
+    },
+    deviceToAdd(device) {
+      bus.$emit("deviceToAdd", device);
     }
   }
 };
