@@ -38,9 +38,9 @@ export default {
   },
   data() {
     return {
-      currentComponent: "AddDevices", //set the current page to be the Dash. Dash will appear when project is loaded on browser.
+      currentComponent: "Dash", //set the current page to be the Dash. Dash will appear when project is loaded on browser.
       currentRoom: "",
-      userToken: "MTppTzJoWGtVdUFsN05nalJuOXlacA==", //user token for session
+      userToken: "MTpyeU85TFhSQlV1cWtvNmloZGtzTQ==", //user token for session
       deviceToAdd: ""
     };
   },

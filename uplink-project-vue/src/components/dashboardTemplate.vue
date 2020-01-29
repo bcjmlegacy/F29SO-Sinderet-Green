@@ -78,19 +78,52 @@ export default {
 
 function pairImg(rooms) {
   //Pair icon with room name
-  switch (rooms) {
-    case "Livingroom":
-      return "couchcolor";
-    case "Kitchen":
-      return "kitchencolor";
-    case "Bedroom":
-      return "bedcolor";
-    case "Outside":
-      return "outsidecolor";
-    case "Bathroom":
-      return "bathtub";
-    default:
-      return "question";
+  if (
+    rooms.includes("Livingroom") ||
+    rooms.includes("livingroom") ||
+    rooms.includes("lounge") ||
+    rooms.includes("Lounge")
+  ) {
+    return "couchcolor";
+  } else if (
+    rooms.includes("Bathroom") ||
+    rooms.includes("bathroom") ||
+    rooms.includes("toilet") ||
+    rooms.includes("Toilet") ||
+    rooms.includes("restroom") ||
+    rooms.includes("Restroom") ||
+    rooms.includes("Wash") ||
+    rooms.includes("wash") ||
+    rooms.includes("shower") ||
+    rooms.includes("Shower")
+  ) {
+    return "bathtub";
+  } else if (
+    rooms.includes("Outside") ||
+    rooms.includes("outside") ||
+    rooms.includes("outdoors") ||
+    rooms.includes("Outdoors") ||
+    rooms.includes("Garden") ||
+    rooms.includes("garden") ||
+    rooms.includes("Roof") ||
+    rooms.includes("roof")
+  ) {
+    return "outsidecolor";
+  } else if (
+    rooms.includes("Kitchen") ||
+    rooms.includes("kitchen") ||
+    rooms.includes("pantry") ||
+    rooms.includes("Pantry")
+  ) {
+    return "kitchencolor";
+  } else if (
+    rooms.includes("Bedroom") ||
+    rooms.includes("bedroom") ||
+    rooms.includes("bed")
+  ) {
+    return "bedcolor";
+  } else {
+    return "room";
   }
 }
 </script>
