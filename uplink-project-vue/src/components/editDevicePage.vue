@@ -6,7 +6,7 @@
         <h3 class="display-3 text-center">Edit Device</h3>
         <div id="form-addDevice">
           <div class="flex-add">
-            <div class="card custom-cards-addDevices">
+            <div class="card custom-cards-editDevices">
               <div class="img-cont">
                 <img
                   :src="require(`../assets/${deviceToAdd.deviceImage}.png`)"
@@ -39,16 +39,6 @@
                       <label for="input-device-room" class="label">Set Timer Interval</label>
                     </div>
                     <div class="col-sm-12 text-center">
-                      <select
-                        v-model="form.month"
-                        class="form-dropdown time-width"
-                        required="required"
-                      >
-                        <option disabled value>Months</option>
-                        <option selected="selected" value="0">0</option>
-                        <option v-for="n in 12" :key="n" :value="n">{{n}}</option>
-                      </select>
-
                       <select
                         v-model="form.day"
                         class="form-dropdown time-width"
@@ -93,6 +83,7 @@
                       </select>
                     </div>
                   </div>
+                  <!--
                   <div class="newRowSwitch">
                     <p class="label-section text-center">Quick Actions</p>
                   </div>
@@ -103,11 +94,12 @@
                           v-model="form.checked"
                           name="check-button"
                           size="lg"
+                          value="on"
                           switch
                         >Turn On</b-form-checkbox>
                       </div>
                     </div>
-                  </div>
+                  </div>-->
                   <div class="newRowSwitch">
                     <div class="form-rows">
                       <div class="col-sm-12">
@@ -142,12 +134,12 @@ export default {
       form: {
         name: "",
         operation: "",
-        type: "1",
-        month: "",
+        type: "",
+        month: "0",
         day: "",
         hour: "",
         minute: "",
-        checked: "on"
+        checked: "off"
       },
       operations: []
     };
@@ -205,7 +197,6 @@ export default {
       })
       .then(jsonData => {
         this.operations = jsonData;
-        console.log(jsonData);
       });
   }
 };
@@ -263,11 +254,11 @@ function pairImg(img) {
 
 .time-width {
   width: 25% !important;
-  margin-left: 0%;
-  margin-right: 0%;
+  margin-left: 4%;
+  margin-right: 4%;
 }
 
-.custom-cards-addDevices {
+.custom-cards-editDevices {
   width: 25rem;
   height: 60rem;
   padding: 20px;
@@ -276,7 +267,7 @@ function pairImg(img) {
   transition: 0.2s ease-in-out all !important;
 }
 
-.custom-cards-addDevices:hover {
+.custom-cards-editDevices:hover {
   box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22) !important;
 }
 
