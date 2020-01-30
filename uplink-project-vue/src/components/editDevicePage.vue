@@ -15,7 +15,7 @@
                 />
               </div>
               <div class="text-wrapper">
-                <h5 class="card-title text-center">{{ deviceToAdd.deviceName }}</h5>
+                <h5 class="card-title text-center label-section">{{ deviceToAdd.deviceName }}</h5>
                 <p class="card-text text-center">{{ deviceToAdd.deviceEnergy }} Watts</p>
               </div>
               <div class="device-cont">
@@ -32,8 +32,55 @@
                     />
                   </div>
                   <div class="form-rows">
+                    <div class="newRows">
+                      <p class="label-section text-center">Timered Events</p>
+                    </div>
                     <div class="col-sm-12">
-                      <label for="input-device-room" class="label">Set Timer</label>
+                      <label for="input-device-room" class="label">Set Timer Interval</label>
+                    </div>
+                    <div class="col-sm-12 text-center">
+                      <select
+                        v-model="form.month"
+                        class="form-dropdown time-width"
+                        required="required"
+                      >
+                        <option disabled value>Months</option>
+                        <option selected="selected" value="0">0</option>
+                        <option v-for="n in 12" :key="n" :value="n">{{n}}</option>
+                      </select>
+
+                      <select
+                        v-model="form.day"
+                        class="form-dropdown time-width"
+                        required="required"
+                      >
+                        <option disabled value>Days</option>
+                        <option selected="selected" value="0">0</option>
+                        <option v-for="n in 30" :key="n" :value="n">{{n}}</option>
+                      </select>
+                      <select
+                        v-model="form.hour"
+                        class="form-dropdown time-width"
+                        required="required"
+                      >
+                        <option disabled value>Hours</option>
+                        <option selected="selected" value="0">0</option>
+                        <option v-for="n in 24" :key="n" :value="n">{{n}}</option>
+                      </select>
+                      <select
+                        v-model="form.minute"
+                        class="form-dropdown time-width"
+                        required="required"
+                      >
+                        <option disabled value>Minutes</option>
+                        <option selected="selected" alue="0">0</option>
+                        <option v-for="n in 60" :key="n" :value="n">{{n}}</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="form-rows">
+                    <div class="col-sm-12">
+                      <label for="input-device-room" class="label">Set Timer Operation</label>
                     </div>
                     <div class="col-sm-12">
                       <select v-model="form.operation" class="form-dropdown" required="required">
@@ -46,9 +93,26 @@
                       </select>
                     </div>
                   </div>
+                  <div class="newRowSwitch">
+                    <p class="label-section text-center">Quick Actions</p>
+                  </div>
                   <div class="form-rows">
                     <div class="col-sm-12">
-                      <button class="form-buttons" type="submit">Save Changes</button>
+                      <div class="text-center">
+                        <b-form-checkbox
+                          v-model="form.checked"
+                          name="check-button"
+                          size="lg"
+                          switch
+                        >Turn On</b-form-checkbox>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="newRowSwitch">
+                    <div class="form-rows">
+                      <div class="col-sm-12">
+                        <button class="form-buttons" type="submit">Save Changes</button>
+                      </div>
                     </div>
                   </div>
                 </b-form>
@@ -65,7 +129,6 @@
 import NavbarTop from "./navbar-top";
 import NavbarBottom from "./navbar-bottom";
 import { bus } from "../main";
-//let url = "http://localhost:5552/insertDevice";
 
 export default {
   name: "addDevice",
@@ -79,7 +142,12 @@ export default {
       form: {
         name: "",
         operation: "",
-        type: "1"
+        type: "1",
+        month: "",
+        day: "",
+        hour: "",
+        minute: "",
+        checked: "on"
       },
       operations: []
     };
@@ -102,12 +170,12 @@ export default {
         },
         body: JSON.stringify({
           type: pairImg(this.deviceToAdd.deviceImage),
-          month: "1",
-          day: "1",
-          hour: "1",
-          minute: "1",
+          month: this.form.month,
+          day: this.form.day,
+          hour: this.form.hour,
+          minute: this.form.minute,
           command: this.form.operation,
-          id: pairImg(this.deviceToAdd.deviceImage)
+          device_id: pairImg(this.deviceToAdd.deviceImage)
         })
       })
         .then(response => {
@@ -147,12 +215,18 @@ function pairImg(img) {
   switch (img) {
     case "fire":
       return "1";
+    case "fridgecolor":
+      return "2";
+    case "solarpanelcolor":
+      return "3";
     case "light-bulb":
       return "4";
   }
 }
 </script>
 <style>
+/**Styling for edit Device Page, very similar to AddDeviceMetrics pages */
+
 #addDevice {
   margin-top: 100px;
 }
@@ -160,6 +234,12 @@ function pairImg(img) {
 #form-addDevice {
   margin-top: 40px;
 }
+
+.newRows {
+  margin-top: 10%;
+  margin-bottom: 10%;
+}
+
 .device-cont {
   margin-top: 0.5rem;
 }
@@ -171,9 +251,25 @@ function pairImg(img) {
   font-size: 1.5rem;
 }
 
+.label-section {
+  font-size: 1.7em;
+  font-weight: 600;
+}
+
+.newRowSwitch {
+  margin-top: 10%;
+  margin-bottom: 5%;
+}
+
+.time-width {
+  width: 25% !important;
+  margin-left: 0%;
+  margin-right: 0%;
+}
+
 .custom-cards-addDevices {
   width: 25rem;
-  height: 40rem;
+  height: 60rem;
   padding: 20px;
   background-color: white !important;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 1px 8px rgba(0, 0, 0, 0.22) !important;
