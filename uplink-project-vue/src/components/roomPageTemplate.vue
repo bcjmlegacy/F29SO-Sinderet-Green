@@ -96,11 +96,10 @@ export default {
             for (let key in this.devices) {
               if (roomID === this.devices[key].device_room) {
                 //Loop to get the icon that matches the second half of the device name
-                let deviceN = this.devices[key].device_name.split(" ");
                 this.roomDevices.push({
                   //generate a JSON of the device name and icon and store in roomDevices array
                   deviceName: this.devices[key].device_name,
-                  deviceImage: pairImg(deviceN[1].toLowerCase())
+                  deviceImage: pairImg(this.devices[key].device_name)
                 });
               }
             }
@@ -111,18 +110,45 @@ export default {
 };
 
 //picks image name for a select device.
+//Messy Image selector - will iuse regex later on
 function pairImg(device) {
-  switch (device) {
-    case "heater":
-      return "fire";
-    case "light":
-      return "light-bulb";
-    case "fridge":
-      return "fridgecolor";
-    case "controller":
-      return "solarpanelcolor";
-    default:
-      return "question";
+  if (
+    device.includes("heater") ||
+    device.includes("Heater") ||
+    device.includes("heating")
+  ) {
+    return "fire";
+  } else if (device.includes("light") || device.includes("Light")) {
+    return "light-bulb";
+  } else if (device.includes("fridge") || device.includes("Fridge")) {
+    return "fridgecolor";
+  } else if (device.includes("Solar") || device.includes("solar")) {
+    return "solarpanelcolor";
+  } else if (
+    device.includes("camera") ||
+    device.includes("Camera") ||
+    device.includes("Security") ||
+    device.includes("security") ||
+    device.includes("CCTV") ||
+    device.includes("cctv")
+  ) {
+    return "security-camera";
+  } else if (
+    device.includes("Bell") ||
+    device.includes("door-bell") ||
+    device.includes("Door Bell") ||
+    device.includes("door bell")
+  ) {
+    return "doorbell";
+  } else if (
+    device.includes("socket") ||
+    device.includes("plug") ||
+    device.includes("Plug") ||
+    device.includes("Socket")
+  ) {
+    return "plug";
+  } else {
+    return "question";
   }
 }
 </script>

@@ -625,7 +625,7 @@ app.post("/insertDeviceType", (req, res) => {
 });
 
 /* #######################################
-                    
+                   
 Inserting larger records.
 
 ####################################### */

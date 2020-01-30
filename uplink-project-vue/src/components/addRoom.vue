@@ -8,7 +8,7 @@
           <div class="flex-add">
             <div class="card custom-cards-addRooms">
               <div class="img-cont">
-                <img src="../assets/room.png" alt="device icon" class="device-img" />
+                <img src="../assets/room.png" alt="device icon" class="room-img" />
               </div>
               <div class="cont">
                 <b-form @submit="go">
@@ -93,6 +93,11 @@ export default {
 }
 #form {
   margin-top: 30px;
+}
+
+.room-img {
+  width: 50%;
+  padding: 10px;
 }
 
 .cont {
