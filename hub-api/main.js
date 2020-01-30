@@ -772,7 +772,7 @@ app.get("/executeCommand", (req, res) => {
   });
 });
 
-app.get("getRepeatTimers", (req, res) => {
+app.get("/getRepeatTimers", (req, res) => {
   db.getRepeatTimers(req.query.id, function(err, rows) {
     res.send(rows);
   });
