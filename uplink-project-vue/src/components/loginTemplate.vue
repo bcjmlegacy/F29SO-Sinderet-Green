@@ -57,17 +57,6 @@
                 </div>
               </div>
             </div>
-            <div>
-              <div class="form-rows">
-                <div class="col-sm-12">
-                  <b-link
-                    href="#"
-                    class="links text-center"
-                    @click="switchComp('Register')"
-                  >Create Account</b-link>
-                </div>
-              </div>
-            </div>
           </div>
         </div>
       </div>
@@ -141,105 +130,5 @@ export default {
     }
   }
 };
-
-//todo ----- Make this look nicer
 </script>
 
-<style>
-/**General Styles stored here. Most of the styles for the login page is in public/style.css  */
-/* Background image yet to be added to the template */
-#loginCard {
-  margin-top: 80px;
-
-  /* border: solid 1px #005872;*/
-}
-
-#form {
-  margin-top: 10px;
-}
-
-#err {
-  text-align: center;
-  color: #ff1e1e;
-}
-
-.flex-add {
-  display: flex !important;
-  flex-direction: column !important;
-  justify-content: center !important;
-  flex-wrap: wrap !important;
-  align-items: center !important;
-}
-
-.form-inputboxes {
-  width: 100%;
-  height: 3rem;
-  border-bottom: 1px solid #b8b8b8;
-  border-left: none;
-  border-top: none;
-  border-right: none;
-}
-
-.form-inputboxes:focus {
-  outline: none;
-  background-color: white;
-  border-bottom: 1px solid #198fca;
-}
-
-.form-buttons {
-  width: 100%;
-  height: 3rem;
-  border-radius: 30px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 1px 8px rgba(0, 0, 0, 0.22) !important;
-  border: none;
-  outline: none;
-  color: white;
-  background-color: #198fca;
-}
-
-.form-buttons:focus {
-  outline: none;
-  box-shadow: inset 0 1px 5px rgba(0, 0, 0, 0.3), 0 1px 5px rgba(0, 0, 0, 0.22) !important;
-}
-
-.custom-cards-Login {
-  width: 25rem;
-  height: 34rem;
-  padding: 20px;
-  background-color: white !important;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 1px 8px rgba(0, 0, 0, 0.22) !important;
-  transition: 0.2s ease-in-out all !important;
-}
-
-.custom-cards-Login:hover {
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22) !important;
-}
-
-.logo {
-  font-family: "Harlow-solid";
-  text-align: center;
-  font-size: 3.5em;
-  color: #000;
-  margin-bottom: 10px;
-}
-
-/* Responsive CSS Queries */
-
-@media screen and (max-width: 1024px) {
-  #loginCard {
-    margin-top: 120px;
-  }
-  .custom-cards-Login {
-    width: 20rem;
-  }
-}
-
-@media screen and (max-width: 812px) {
-  .labels {
-    float: left !important;
-  }
-  .but {
-    float: none;
-  }
-}
-</style>

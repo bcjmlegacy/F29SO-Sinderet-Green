@@ -153,39 +153,4 @@ function pairImg(device) {
   }
 }
 </script>
-<style>
-/**Styling for the room page*/
-#room {
-  margin-left: 30%;
-  margin-right: 30%;
-}
 
-.item {
-  margin-left: 50px;
-  margin-right: 50px;
-  margin-top: 10px;
-}
-
-.bottom-show {
-  display: none !important;
-}
-
-@media screen and (max-width: 1025px) {
-  #room {
-    margin-left: 0%;
-    margin-right: 0%;
-  }
-  .item {
-    margin: 0;
-  }
-  .top-show {
-    display: none !important;
-  }
-  .bottom-show {
-    display: block !important;
-  }
-  .flex-rooms {
-    justify-content: space-evenly !important;
-  }
-}
-</style>

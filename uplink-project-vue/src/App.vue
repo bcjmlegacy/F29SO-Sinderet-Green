@@ -1,3 +1,7 @@
+<!--
+Main controller for the website
+Euan Gordon
+-->
 <template>
   <!--Displays the current component on screen
     if the component is the room page then the room that was selected will be stored. 
@@ -15,6 +19,7 @@
 </template>
 <script>
 //All the MAIN PAGES that are needed for the app
+//Small components like room/device cards and navbars are generated on their respective pages.
 import Dash from "./components/dashboardTemplate";
 import Room from "./components/roomPageTemplate";
 import AddItem from "./components/addPage";
@@ -72,6 +77,7 @@ export default {
     });
   },
   mounted: function() {
+    //mounted function thats called on component load. Checks for cookie. If cookie exists then set the token to the cookie value
     if (this.$cookies.isKey("token")) {
       this.userToken = this.$cookies.get("token");
       this.currentComponent = "Dash";
@@ -81,5 +87,3 @@ export default {
   }
 };
 </script>
-
-<style></style>

@@ -153,39 +153,3 @@ function swap(command) {
   }
 }
 </script>
-<style>
-#deviceDetails {
-  margin-top: 140px;
-}
-
-.device-img {
-  width: 60%;
-  padding: 10px;
-}
-.label {
-  font-size: 1.5rem;
-}
-
-.custom-cards-devicesDetails {
-  width: 23rem;
-  height: 34rem;
-  padding: 20px;
-  background-color: white !important;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 1px 8px rgba(0, 0, 0, 0.22) !important;
-  transition: 0.2s ease-in-out all !important;
-}
-
-.custom-cards-devicesDetails:hover {
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22) !important;
-}
-
-.text-wrapper {
-  margin-top: 20px;
-  margin-bottom: 20px;
-}
-@media screen and (max-width: 1025px) {
-  .custom-cards-devicesDetails {
-    width: 20rem;
-  }
-}
-</style>
