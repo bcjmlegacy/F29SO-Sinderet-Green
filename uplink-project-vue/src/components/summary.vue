@@ -28,8 +28,8 @@
               </div>
               <!--Solar Energy Stored for whole home-->
               <div class="card-body text-center">
-                <h5 class="card-title">{{solar}} Stored</h5>
-                <p class="card-text">1200 KWh</p>
+                <h5 class="card-title">Solar Energy Stored</h5>
+                <p class="card-text">{{solar}} KWh</p>
               </div>
             </div>
           </div>

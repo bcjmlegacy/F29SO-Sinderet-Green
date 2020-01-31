@@ -1,7 +1,7 @@
 <template>
   <div>
     <NavbarTop class="top-show" />
-    <div id="addDevice">
+    <div id="editDevice">
       <div class="container">
         <h3 class="display-3 text-center">Edit Device</h3>
         <div id="form-addDevice">
@@ -33,21 +33,12 @@
                   </div>
                   <div class="form-rows">
                     <div class="newRows">
-                      <p class="label-section text-center">Timered Events</p>
+                      <p class="label-section text-center">Scheduled Events</p>
                     </div>
                     <div class="col-sm-12">
-                      <label for="input-device-room" class="label">Set Timer Interval</label>
+                      <label for="input-device-room" class="label">Set Time</label>
                     </div>
-                    <div class="col-sm-12 text-center">
-                      <select
-                        v-model="form.day"
-                        class="form-dropdown time-width"
-                        required="required"
-                      >
-                        <option disabled value>Days</option>
-                        <option selected="selected" value="0">0</option>
-                        <option v-for="n in 30" :key="n" :value="n">{{n}}</option>
-                      </select>
+                    <div class="col-sm-12">
                       <select
                         v-model="form.hour"
                         class="form-dropdown time-width"
@@ -70,7 +61,7 @@
                   </div>
                   <div class="form-rows">
                     <div class="col-sm-12">
-                      <label for="input-device-room" class="label">Set Timer Operation</label>
+                      <label for="input-device-room" class="label">Set Operation</label>
                     </div>
                     <div class="col-sm-12">
                       <select v-model="form.operation" class="form-dropdown" required="required">
@@ -134,14 +125,14 @@ export default {
       form: {
         name: "",
         operation: "",
-        type: "",
         month: "0",
-        day: "",
+        day: "0",
         hour: "",
         minute: "",
         checked: "off"
       },
-      operations: []
+      operations: [],
+      device: ""
     };
   },
   methods: {
@@ -161,13 +152,13 @@ export default {
           Authorization: this.userToken
         },
         body: JSON.stringify({
-          type: pairImg(this.deviceToAdd.deviceImage),
+          type: "Day",
           month: this.form.month,
           day: this.form.day,
           hour: this.form.hour,
           minute: this.form.minute,
           command: this.form.operation,
-          device_id: pairImg(this.deviceToAdd.deviceImage)
+          device_id: this.device
         })
       })
         .then(response => {
@@ -175,13 +166,14 @@ export default {
         })
         .then(jsonData => {
           console.log(jsonData);
-          this.switchComp("Dash");
+          this.switchComp("deviceDetails");
         });
 
       evt.preventDefault();
     }
   },
   mounted: function() {
+    //Get command for device via icon thats displayed
     let url = "http://localhost:5552/getCommandsByDevice?id=";
     let id = pairImg(this.deviceToAdd.deviceImage);
     let urlComplete = url + id;
@@ -196,7 +188,31 @@ export default {
         return response.json();
       })
       .then(jsonData => {
-        this.operations = jsonData;
+        this.operations = jsonData; //after we get commands find device ID
+        let url1 = "http://localhost:5552/getDevices";
+        fetch(url1, {
+          mode: "cors",
+          method: "GET",
+          headers: {
+            Authorization: this.userToken
+          }
+        })
+          .then(response => {
+            return response.json();
+          })
+          .then(jsonData => {
+            console.log(jsonData);
+            for (let device in jsonData) {
+              if (
+                jsonData[device].device_name === this.deviceToAdd.deviceName &&
+                jsonData[device].device_wattage ===
+                  this.deviceToAdd.deviceEnergy
+              ) {
+                this.device = jsonData[device].device_id;
+                console.log(this.device);
+              }
+            }
+          });
       });
   }
 };
@@ -218,8 +234,9 @@ function pairImg(img) {
 <style>
 /**Styling for edit Device Page, very similar to AddDeviceMetrics pages */
 
-#addDevice {
-  margin-top: 100px;
+#editDevice {
+  margin-top: 80px;
+  margin-bottom: 50px;
 }
 
 #form-addDevice {
@@ -253,14 +270,14 @@ function pairImg(img) {
 }
 
 .time-width {
-  width: 25% !important;
-  margin-left: 4%;
-  margin-right: 4%;
+  width: 29% !important;
+  margin-left: 2%;
+  margin-right: 2%;
 }
 
 .custom-cards-editDevices {
   width: 25rem;
-  height: 60rem;
+  height: 55rem;
   padding: 20px;
   background-color: white !important;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 1px 8px rgba(0, 0, 0, 0.22) !important;
@@ -289,5 +306,11 @@ function pairImg(img) {
 .form-dropdown:focus {
   outline: none;
   border-bottom: solid 1px #198fca;
+}
+
+@media screen and (max-width: 1025px) {
+  #editDevice {
+    margin-top: 10%;
+  }
 }
 </style>
