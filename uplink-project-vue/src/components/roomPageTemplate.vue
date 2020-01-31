@@ -2,7 +2,7 @@
   <!--Room Page - similar to the Dash-->
   <div id="room">
     <!--Top Navbar (Website)-->
-    <NavTop class="top-show" />
+    <NavTop class="top-show" :back="this.back" />
     <!--Take the roomName from props and store as title for the room page - demo data is also entered-->
     <Summary :sumTitle="roomName" energy="100" solar="1000" temperature="21" />
     <div class="container">
@@ -30,7 +30,7 @@
       </div>
     </div>
     <!--Bottom Navbar (Mobile and Tablet)-->
-    <NavBottom class="bottom-show" />
+    <NavBottom class="bottom-show" :back="this.back" />
   </div>
 </template>
 <script>
@@ -55,7 +55,7 @@ export default {
     NavTop,
     NavBottom
   },
-  props: ["roomName", "userToken"], //props to confirm the room the page is showing
+  props: ["roomName", "userToken", "back"], //props to confirm the room the page is showing
   data() {
     return {
       devices: [], //all devices stored in the database
@@ -153,39 +153,4 @@ function pairImg(device) {
   }
 }
 </script>
-<style>
-/**Styling for the room page*/
-#room {
-  margin-left: 30%;
-  margin-right: 30%;
-}
 
-.item {
-  margin-left: 50px;
-  margin-right: 50px;
-  margin-top: 10px;
-}
-
-.bottom-show {
-  display: none !important;
-}
-
-@media screen and (max-width: 1025px) {
-  #room {
-    margin-left: 0%;
-    margin-right: 0%;
-  }
-  .item {
-    margin: 0;
-  }
-  .top-show {
-    display: none !important;
-  }
-  .bottom-show {
-    display: block !important;
-  }
-  .flex-rooms {
-    justify-content: space-between !important;
-  }
-}
-</style>

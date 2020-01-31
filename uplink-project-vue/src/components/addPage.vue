@@ -1,6 +1,6 @@
 <template>
   <div>
-    <NavbarTop class="top-show" />
+    <NavbarTop class="top-show" :back="back" />
     <div id="Add">
       <div class="container">
         <h3 class="display-3 text-center">Add Devices or Rooms</h3>
@@ -30,7 +30,7 @@
         </div>
       </div>
     </div>
-    <NavbarBottom class="bottom-show" />
+    <NavbarBottom class="bottom-show" :back="back" />
   </div>
 </template>
 <script>
@@ -39,6 +39,7 @@ import NavbarBottom from "./navbar-bottom";
 import { bus } from "../main";
 export default {
   name: "addPage",
+  props: ["back"],
   components: {
     NavbarTop,
     NavbarBottom
@@ -51,24 +52,3 @@ export default {
   }
 };
 </script>
-<style>
-#Add {
-  margin-top: 130px;
-}
-
-.flex-cont {
-  margin-top: 80px;
-}
-
-.flex-add {
-  display: flex !important;
-  flex-direction: column !important;
-  justify-content: center !important;
-  flex-wrap: wrap !important;
-  align-items: center !important;
-}
-
-.img-add {
-  padding: 10px;
-}
-</style>

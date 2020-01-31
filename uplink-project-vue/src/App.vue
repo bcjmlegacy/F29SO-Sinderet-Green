@@ -1,3 +1,7 @@
+<!--
+Main controller for the website
+Euan Gordon
+-->
 <template>
   <!--Displays the current component on screen
     if the component is the room page then the room that was selected will be stored. 
@@ -9,11 +13,13 @@
       :roomName="currentRoom"
       :userToken="userToken"
       :deviceToAdd="deviceToAdd"
+      :back="previousPage"
     ></component>
   </div>
 </template>
 <script>
 //All the MAIN PAGES that are needed for the app
+//Small components like room/device cards and navbars are generated on their respective pages.
 import Dash from "./components/dashboardTemplate";
 import Room from "./components/roomPageTemplate";
 import AddItem from "./components/addPage";
@@ -25,6 +31,7 @@ import AddDeviceMetrics from "./components/addDeviceMetrics";
 import EditDevice from "./components/editDevicePage";
 import deviceDetails from "./components/deviceDetails";
 import { bus } from "./main";
+
 export default {
   name: "app",
   components: {
@@ -45,13 +52,15 @@ export default {
       currentComponent: "Login", //set the current page to be the Dash. Dash will appear when project is loaded on browser.
       currentRoom: "",
       userToken: "", //user token for session
-      deviceToAdd: ""
+      deviceToAdd: "",
+      previousPage: ""
     };
   },
   methods: {},
   created() {
     //Controller function to control the component and/or page that is seen on the browser.
     bus.$on("switchComp", comp => {
+      this.previousPage = this.currentComponent;
       this.currentComponent = comp;
     }); //Controller function to control the room data that is displayed on the room page.
     bus.$on("updateRoom", room => {
@@ -63,8 +72,12 @@ export default {
     bus.$on("deviceToAdd", device => {
       this.deviceToAdd = device;
     });
+    bus.$on("prev", prev => {
+      this.currentComponent = prev;
+    });
   },
   mounted: function() {
+    //mounted function thats called on component load. Checks for cookie. If cookie exists then set the token to the cookie value
     if (this.$cookies.isKey("token")) {
       this.userToken = this.$cookies.get("token");
       this.currentComponent = "Dash";
@@ -74,5 +87,3 @@ export default {
   }
 };
 </script>
-
-<style></style>

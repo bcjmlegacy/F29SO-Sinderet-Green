@@ -11,28 +11,3 @@
     </div>
   </div>
 </template>
-<style>
-.img-menu {
-  opacity: 0.4 !important;
-  padding: 10px;
-}
-.img-cont-menu {
-  padding-left: 20px;
-  padding-right: 20px;
-  padding-bottom: 0;
-}
-
-.custom-cards-menu {
-  width: 11rem;
-  height: 12rem;
-  padding: 20px;
-  background-color: white !important;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 1px 8px rgba(0, 0, 0, 0.22) !important;
-  transition: 0.2s ease-in-out all !important;
-}
-
-.custom-cards-menu:hover {
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22) !important;
-  cursor: pointer !important;
-}
-</style>

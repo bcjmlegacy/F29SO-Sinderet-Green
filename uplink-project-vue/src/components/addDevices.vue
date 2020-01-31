@@ -1,6 +1,6 @@
 <template>
   <div>
-    <NavbarTop class="top-show" />
+    <NavbarTop class="top-show" :back="back" />
     <div class="container">
       <div id="devices">
         <div class="sub-title-wrapper">
@@ -26,7 +26,7 @@
         </div>
       </div>
     </div>
-    <NavbarBottom class="bottom-show" />
+    <NavbarBottom class="bottom-show" :back="back" />
   </div>
 </template>
 <script>
@@ -36,6 +36,7 @@ import AddDeviceCard from "../components/addDeviceCard";
 import { bus } from "../main";
 export default {
   name: "devices",
+  props: ["back"],
   components: {
     NavbarTop,
     NavbarBottom,
@@ -51,15 +52,3 @@ export default {
   }
 };
 </script>
-<style>
-#devices {
-  margin-top: 100px;
-}
-
-@media screen and (max-width: 1025px) {
-  #devices {
-    margin-top: 80px;
-    margin-bottom: 100px;
-  }
-}
-</style>

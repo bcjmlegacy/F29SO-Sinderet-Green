@@ -2,7 +2,7 @@
   <!--Dashboard - main screen/page -->
   <div id="dash">
     <!--Navbar top *web view*-->
-    <NavTop class="top-show" />
+    <NavTop class="top-show" :back="back" />
     <!--Summary Component with the props shown as attributes below-->
     <Summary sumTitle="Home" energy="200" temperature="18" solar="1000" />
     <div class="container">
@@ -26,7 +26,7 @@
       </div>
     </div>
     <!--Navbar bottom *mobile and tablet view*-->
-    <NavBottom class="bottom-show" />
+    <NavBottom class="bottom-show" :back="back" />
   </div>
 </template>
 
@@ -50,7 +50,7 @@ export default {
       results: [] //Array to store results gathered from database but also the icon for the room
     };
   },
-  props: ["userToken"],
+  props: ["userToken", "back"],
 
   mounted: function() {
     fetch(url, {
@@ -127,54 +127,3 @@ function pairImg(rooms) {
   }
 }
 </script>
-
-<style>
-/**Dash Styling*/
-#dash {
-  margin-left: 30%;
-  margin-right: 30%;
-}
-
-#rooms {
-  margin-top: 50px;
-  margin-bottom: 50px;
-}
-
-.flex-rooms {
-  display: flex !important;
-  flex-direction: row !important;
-  flex-wrap: wrap !important;
-  justify-content: space-around !important;
-  align-items: flex-start !important;
-}
-
-.item {
-  margin-left: 50px;
-  margin-right: 50px;
-  margin-top: 10px;
-}
-
-.bottom-show {
-  display: none !important;
-}
-
-.additional {
-  margin-top: 30px;
-}
-
-@media screen and (max-width: 1025px) {
-  #dash {
-    margin-left: 0;
-    margin-right: 0;
-  }
-  .item {
-    margin: 0;
-  }
-  .top-show {
-    display: none !important;
-  }
-  .bottom-show {
-    display: block !important;
-  }
-}
-</style>

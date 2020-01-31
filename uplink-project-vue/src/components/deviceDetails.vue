@@ -1,6 +1,6 @@
 <template>
   <div>
-    <NavbarTop class="top-show" />
+    <NavbarTop class="top-show" :back="back" />
     <div id="deviceDetails">
       <div class="container">
         <div class="flex-add">
@@ -13,41 +13,38 @@
               />
             </div>
             <div class="text-wrapper">
-              <h5 class="card-title text-center label-section">{{deviceToAdd.deviceName}}</h5>
-              <p class="card-text text-center">{{deviceToAdd.deviceEnergy}} Watts</p>
-              <p
-                class="card-text text-center"
-              >Device will go {{lastTime.command}} at {{lastTime.hour}}:{{lastTime.minutes}} everyday</p>
+              <h5 class="card-title text-center label-section">{{ deviceToAdd.deviceName }}</h5>
+              <p class="card-text text-center">{{ deviceToAdd.deviceEnergy }} Watts</p>
+              <div class="form-rows" />
+              <h5 class="text-center">Most Recent Timer Logged</h5>
+              <p class="card-text text-center">
+                Device will go {{ lastTime.command }} at {{ lastTime.hour }}:{{
+                lastTime.minutes
+                }}
+                everyday
+              </p>
             </div>
 
-            <div class="col-sm-12">
-              <div class="text-center">
-                <b-form-checkbox
-                  v-model="form.checked"
-                  name="check-button"
-                  size="lg"
-                  value="off"
-                  unchecked-value="on"
-                  switch
-                  @input="turnOn()"
-                >Turn {{form.checked}}</b-form-checkbox>
-              </div>
+            <div class="text-center">
+              <b-form-checkbox
+                v-model="form.checked"
+                name="check-button"
+                size="lg"
+                value="off"
+                unchecked-value="on"
+                switch
+                @input="turnOn()"
+              >Turn {{ form.checked }}</b-form-checkbox>
             </div>
 
             <div class="form-rows">
-              <div class="col-sm-12">
-                <button
-                  class="form-buttons"
-                  type="button"
-                  @click="switchComp('editDevice')"
-                >Advanced</button>
-              </div>
+              <button class="form-buttons" type="button" @click="switchComp('editDevice')">Advanced</button>
             </div>
           </div>
         </div>
       </div>
     </div>
-    <NavbarBottom class="bottom-show" />
+    <NavbarBottom class="bottom-show" :back="back" />
   </div>
 </template>
 <script>
@@ -69,7 +66,7 @@ export default {
       lastTime: ""
     };
   },
-  props: ["deviceToAdd", "userToken"],
+  props: ["deviceToAdd", "userToken", "back"],
   methods: {
     switchComp(comp) {
       bus.$emit("switchComp", comp);
@@ -156,49 +153,3 @@ function swap(command) {
   }
 }
 </script>
-<style>
-#deviceDetails {
-  margin-top: 140px;
-}
-
-.device-img {
-  width: 50%;
-  padding: 10px;
-}
-.label {
-  font-size: 1.5rem;
-}
-
-.custom-cards-devicesDetails {
-  width: 25rem;
-  height: 30rem;
-  padding: 20px;
-  background-color: white !important;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 1px 8px rgba(0, 0, 0, 0.22) !important;
-  transition: 0.2s ease-in-out all !important;
-}
-
-.custom-cards-devicesDetails:hover {
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22) !important;
-}
-
-.text-wrapper {
-  margin-top: 20px;
-  margin-bottom: 20px;
-}
-
-.form-dropdown {
-  width: 100%;
-  border-left: none;
-  border-top: none;
-  border-right: none;
-  border-bottom: solid 1px #b8b8b8;
-  outline: none;
-  height: 3rem;
-}
-
-.form-dropdown:focus {
-  outline: none;
-  border-bottom: solid 1px #198fca;
-}
-</style>
