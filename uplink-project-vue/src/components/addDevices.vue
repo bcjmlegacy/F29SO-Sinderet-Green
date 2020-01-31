@@ -58,6 +58,7 @@ export default {
 
 @media screen and (max-width: 1025px) {
   #devices {
+    margin-top: 80px;
     margin-bottom: 100px;
   }
 }

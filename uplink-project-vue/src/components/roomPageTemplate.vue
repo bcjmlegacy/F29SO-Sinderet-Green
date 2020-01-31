@@ -1,6 +1,6 @@
 <template>
   <!--Room Page - similar to the Dash-->
-  <div>
+  <div id="room">
     <!--Top Navbar (Website)-->
     <NavTop class="top-show" />
     <!--Take the roomName from props and store as title for the room page - demo data is also entered-->
@@ -17,7 +17,7 @@
             <Device
               :deviceName="device.deviceName"
               :deviceImage="device.deviceImage"
-              deviceEnergy="20"
+              :deviceEnergy="device.deviceWattage"
             />
           </div>
         </div>
@@ -99,7 +99,8 @@ export default {
                 this.roomDevices.push({
                   //generate a JSON of the device name and icon and store in roomDevices array
                   deviceName: this.devices[key].device_name,
-                  deviceImage: pairImg(this.devices[key].device_name)
+                  deviceImage: pairImg(this.devices[key].device_name),
+                  deviceWattage: this.devices[key].device_wattage
                 });
               }
             }
@@ -154,12 +155,9 @@ function pairImg(device) {
 </script>
 <style>
 /**Styling for the room page*/
-.flex-rooms {
-  display: flex !important;
-  flex-direction: row !important;
-  flex-wrap: wrap !important;
-  justify-content: space-evenly !important;
-  align-items: flex-start !important;
+#room {
+  margin-left: 30%;
+  margin-right: 30%;
 }
 
 .item {
@@ -173,6 +171,10 @@ function pairImg(device) {
 }
 
 @media screen and (max-width: 1025px) {
+  #room {
+    margin-left: 0%;
+    margin-right: 0%;
+  }
   .item {
     margin: 0;
   }

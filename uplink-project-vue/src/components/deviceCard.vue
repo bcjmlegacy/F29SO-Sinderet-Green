@@ -3,7 +3,7 @@
   <div class="item">
     <div
       class="card custom-cards-devices"
-      @click="deviceToAdd({deviceName: deviceName, 'deviceImage':deviceImage, deviceEnergy: deviceEnergy}); switchComp('EditDevice')"
+      @click="deviceToAdd({deviceName: deviceName, 'deviceImage':deviceImage, deviceEnergy: deviceEnergy}); switchComp('deviceDetails')"
     >
       <div class="img-cont">
         <!--Image name is taken from the prop called deviceImage-->

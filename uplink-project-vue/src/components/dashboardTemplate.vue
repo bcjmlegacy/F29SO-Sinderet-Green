@@ -1,6 +1,6 @@
 <template>
   <!--Dashboard - main screen/page -->
-  <div>
+  <div id="dash">
     <!--Navbar top *web view*-->
     <NavTop class="top-show" />
     <!--Summary Component with the props shown as attributes below-->
@@ -130,6 +130,11 @@ function pairImg(rooms) {
 
 <style>
 /**Dash Styling*/
+#dash {
+  margin-left: 30%;
+  margin-right: 30%;
+}
+
 #rooms {
   margin-top: 50px;
   margin-bottom: 50px;
@@ -139,7 +144,7 @@ function pairImg(rooms) {
   display: flex !important;
   flex-direction: row !important;
   flex-wrap: wrap !important;
-  justify-content: space-between !important;
+  justify-content: space-around !important;
   align-items: flex-start !important;
 }
 
@@ -158,6 +163,10 @@ function pairImg(rooms) {
 }
 
 @media screen and (max-width: 1025px) {
+  #dash {
+    margin-left: 0;
+    margin-right: 0;
+  }
   .item {
     margin: 0;
   }
