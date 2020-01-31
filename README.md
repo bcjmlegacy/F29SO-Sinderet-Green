@@ -46,11 +46,11 @@ This directory contains the frontend of the application
 
 NPM packages
 
-- `Vue.js`
-- `Bootstrap`
-- `Bootstrap-vue`
-- `Vue-CLI`
-- `Angular.js`
+- `vue.js`
+- `bootstrap`
+- `bootstrap-vue`
+- `vue-cli`
+- `vue-cookies`
 
 To run the frontend using Vue-CLI, type:
 

@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="14.3.0">
+  <zoom_level>7</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>385</x>
+      <y>441</y>
+      <w>175</w>
+      <h>210</h>
+    </coordinates>
+    <panel_attributes>*Interface Server*
+--
+Language:
+
+NodeJS, MQTT connector
+
+Purpose:
+
+Provide Web GUI and handle user
+input / commands
+bg=orange</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>686</x>
+      <y>441</y>
+      <w>175</w>
+      <h>210</h>
+    </coordinates>
+    <panel_attributes>*MQTT Logger and API Service*
+--
+Language:
+
+NodeJS, MQTT connector
+
+Purpose:
+
+Listen and log messages
+sent over MQTT.
+
+Serve data from database as 
+JSON.
+
+Send data upstream.
+bg=orange</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>553</x>
+      <y>525</y>
+      <w>147</w>
+      <h>28</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+&lt;&lt; Spawns Process &gt;&gt;</panel_attributes>
+    <additional_attributes>190.0;20.0;10.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1001</x>
+      <y>637</y>
+      <w>175</w>
+      <h>210</h>
+    </coordinates>
+    <panel_attributes>*MQTT Sender Service*
+--
+Language:
+
+Embedded: C, MQTT connector
+ARM, x86, x64: NodeJS, 
+MQTT connector
+
+Purpose:
+
+Format data from smart device
+and send to MQTT broker
+bg=red</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>742</x>
+      <y>644</y>
+      <w>84</w>
+      <h>105</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+&lt;&lt; Listens to &gt;&gt;</panel_attributes>
+    <additional_attributes>10.0;130.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLObject</id>
+    <coordinates>
+      <x>980</x>
+      <y>602</y>
+      <w>217</w>
+      <h>266</h>
+    </coordinates>
+    <panel_attributes>Smart Device
+e.g. Solar Battery
+valign=top</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>686</x>
+      <y>735</y>
+      <w>175</w>
+      <h>112</h>
+    </coordinates>
+    <panel_attributes>*MQTT Broker*
+--
+Purpose:
+
+Relays messages sent over MQTT
+
+Recommended: Mosquitto
+bg=green</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLObject</id>
+    <coordinates>
+      <x>364</x>
+      <y>420</y>
+      <w>518</w>
+      <h>448</h>
+    </coordinates>
+    <panel_attributes>Hub
+valign=top</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>854</x>
+      <y>784</y>
+      <w>161</w>
+      <h>28</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+&lt;&lt; Sends data to &gt;&gt;</panel_attributes>
+    <additional_attributes>10.0;20.0;210.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLNote</id>
+    <coordinates>
+      <x>980</x>
+      <y>420</y>
+      <w>217</w>
+      <h>112</h>
+    </coordinates>
+    <panel_attributes>valign=center
+halign=left
+Uplink
+Basic Technical Diagram
+
+Revision: 2
+Date: 11/05/2019
+Author: BM
+bg=orange</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>385</x>
+      <y>105</y>
+      <w>175</w>
+      <h>210</h>
+    </coordinates>
+    <panel_attributes>*Interface Server*
+--
+Language:
+
+NodeJS, MQTT connector
+
+Purpose:
+
+Provide Web GUI and handle user
+input / commands
+bg=red</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>686</x>
+      <y>105</y>
+      <w>175</w>
+      <h>210</h>
+    </coordinates>
+    <panel_attributes>*Logging and API Service*
+--
+Language:
+
+NodeJS
+
+Purpose:
+
+Listen and log messages
+sent over HTTPS as JSON.
+
+Serve data from databases as 
+JSON.
+bg=red</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLObject</id>
+    <coordinates>
+      <x>364</x>
+      <y>84</y>
+      <w>518</w>
+      <h>252</h>
+    </coordinates>
+    <panel_attributes>Manager's Hub
+valign=top</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>553</x>
+      <y>189</y>
+      <w>147</w>
+      <h>28</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+&lt;&lt; Spawns Process &gt;&gt;</panel_attributes>
+    <additional_attributes>190.0;20.0;10.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>742</x>
+      <y>308</y>
+      <w>105</w>
+      <h>147</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+&lt;&lt; Sends data to &gt;&gt;</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;190.0</additional_attributes>
+  </element>
+</diagram>
