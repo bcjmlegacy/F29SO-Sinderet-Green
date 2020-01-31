@@ -80,7 +80,7 @@ export default {
   display: flex !important;
   flex-direction: row !important;
   flex-wrap: wrap !important;
-  justify-content: space-between !important;
+  justify-content: space-evenly !important;
   align-items: flex-start !important;
 }
 
@@ -109,6 +109,9 @@ export default {
 @media screen and (max-width: 1025px) {
   #stat-cards {
     margin-top: 50px;
+  }
+  .custom-cards {
+    width: 10rem;
   }
 }
 </style>

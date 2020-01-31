@@ -200,16 +200,14 @@ export default {
 
 @media screen and (max-width: 1024px) {
   #register {
-    margin-left: 5%;
-    margin-right: 5%;
+    margin-top: 70px;
+  }
+  .custom-cards-Register {
+    width: 20rem;
   }
 }
 
 @media screen and (max-width: 812px) {
-  #register {
-    margin-top: 30px;
-  }
-
   .labels {
     float: left !important;
   }

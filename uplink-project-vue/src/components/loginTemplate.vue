@@ -227,18 +227,14 @@ export default {
 
 @media screen and (max-width: 1024px) {
   #loginCard {
-    margin-left: 5%;
-    margin-right: 5%;
+    margin-top: 120px;
+  }
+  .custom-cards-Login {
+    width: 20rem;
   }
 }
 
 @media screen and (max-width: 812px) {
-  #loginCard {
-    margin-left: 1%;
-    margin-right: 1%;
-    padding: 10px 20px;
-    padding-top: 120px;
-  }
   .labels {
     float: left !important;
   }

@@ -66,4 +66,10 @@ export default {
   box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22) !important;
   cursor: pointer !important;
 }
+
+@media screen and (max-width: 1025px) {
+  .custom-cards-devices {
+    width: 10rem;
+  }
+}
 </style>

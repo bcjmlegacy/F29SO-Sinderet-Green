@@ -25,7 +25,7 @@
 .custom-cards-menu {
   width: 11rem;
   height: 12rem;
-  padding: 20px;
+  padding: 10px;
   background-color: white !important;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 1px 8px rgba(0, 0, 0, 0.22) !important;
   transition: 0.2s ease-in-out all !important;
@@ -34,5 +34,11 @@
 .custom-cards-menu:hover {
   box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22) !important;
   cursor: pointer !important;
+}
+
+@media screen and (max-width: 1025px) {
+  .custom-cards-menu {
+    width: 10rem;
+  }
 }
 </style>
