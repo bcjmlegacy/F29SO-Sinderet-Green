@@ -14,6 +14,17 @@ NPM packages:
 - `mqtt`
 - `mysql`
 - `express`
+- `cors`
+
+### Testing:
+
+To test login / generate a token with `curl`:
+
+`curl --data "username=Test_user&password=password" http://localhost:5552/login`
+
+To use the token, use the command:
+
+`curl -H "Authorization: <TOKEN>" http://localhost:5552/<QUERY>`
 
 ## `mock-serv`
 
@@ -35,11 +46,11 @@ This directory contains the frontend of the application
 
 NPM packages
 
-- `Vue.js`
-- `Bootstrap`
-- `Bootstrap-vue`
-- `Vue-CLI`
-- `Angular.js`
+- `vue.js`
+- `bootstrap`
+- `bootstrap-vue`
+- `vue-cli`
+- `vue-cookies`
 
 To run the frontend using Vue-CLI, type:
 

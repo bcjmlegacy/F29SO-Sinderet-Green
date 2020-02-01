@@ -1,49 +1,963 @@
+/*
+Holds All the CSS for the Current Project
+Duplicate CSS my be present
+
+*Please Do Not Delete Duplicate Code*
+
+Euan Gordon
+
+
+
+To find styling for a component or page please search the page using CTRL+F
+*/
+
+/*====================================================================================================================================*/
+/*CORE CSS*/
+/*====================================================================================================================================*/
+
+@font-face {
+  font-family: "Harlow-solid";
+  src: url("../src/assets/harlowsolidplain.otf");
+}
+
+body {
+  background-color: #f5f5f5;
+}
+
 .form-title {
-	text-align: center;
-	font-size: 3.2em;
-	padding-bottom: 10px;
-}
-
-.labels {
-	float: right;
-	color: #000;
-	font-size: 1.2em !important;
-}
-
-.rows {
-	text-align: center;
-	padding-top: 10px;
-}
-
-.check {
-	float: left !important;
-}
-
-.but {
-	float: left;
-	width: 100%;
-	font-size: 1.3em !important;
-	background-color: transparent !important;
-	color: #000 !important;
-	border: solid 1px #005872 !important;
-	border-radius: 30 !important;
-}
-
-.but:focus {
-	box-shadow: none !important;
-	outline: none !important;
-}
-
-.but:hover {
-	border: solid 1px #0492bd !important;
-}
-
-.inputboxes {
-	border: solid 1px #005872 !important;
-	border-radius: 40 !important;
-	outline: none !important;
+  text-align: center;
+  font-size: 3.2em;
+  padding-bottom: 10px;
 }
 
 .links {
-	text-decoration: none !important;
+  text-decoration: none !important;
+}
+
+.display-3 {
+  font-size: 3.5em !important;
+}
+
+.display-4 {
+  font-size: 3em !important;
+}
+
+/*====================================================================================================================================*/
+/*Main Pages CSS*/
+/*====================================================================================================================================*/
+
+/*############################################################*/
+/*Dashsboard CSS*/
+/*############################################################*/
+
+#dash {
+  margin-left: 30%;
+  margin-right: 30%;
+}
+
+#rooms {
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+
+.flex-rooms {
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: wrap !important;
+  justify-content: space-evenly !important;
+  align-items: flex-start !important;
+}
+
+.item {
+  margin-left: 50px;
+  margin-right: 50px;
+  margin-top: 10px;
+}
+
+.bottom-show {
+  display: none !important;
+}
+
+.additional {
+  margin-top: 30px;
+}
+
+@media screen and (max-width: 1025px) {
+  #dash {
+    margin-left: 0;
+    margin-right: 0;
+  }
+  .item {
+    margin: 0;
+  }
+  .top-show {
+    display: none !important;
+  }
+  .bottom-show {
+    display: block !important;
+  }
+  .flex-rooms {
+    justify-content: space-evenly !important;
+  }
+}
+
+/*############################################################*/
+/*Room Page CSS*/
+/*############################################################*/
+
+#room {
+  margin-left: 30%;
+  margin-right: 30%;
+}
+
+.item {
+  margin-left: 50px;
+  margin-right: 50px;
+  margin-top: 10px;
+}
+
+.bottom-show {
+  display: none !important;
+}
+
+@media screen and (max-width: 1025px) {
+  #room {
+    margin-left: 0%;
+    margin-right: 0%;
+  }
+  .item {
+    margin: 0;
+  }
+  .top-show {
+    display: none !important;
+  }
+  .bottom-show {
+    display: block !important;
+  }
+}
+
+/*############################################################*/
+/*Add Page CSS*/
+/*############################################################*/
+
+#Add {
+  margin-top: 130px;
+}
+
+.flex-cont {
+  margin-top: 80px;
+}
+
+.flex-add {
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+  flex-wrap: wrap !important;
+  align-items: center !important;
+}
+
+.img-add {
+  padding: 10px;
+}
+
+@media screen and (max-width: 1025px) {
+  #Add {
+    margin-top: 70px;
+  }
+}
+
+/*############################################################*/
+/*Add Devices CSS*/
+/*############################################################*/
+
+#devices {
+  margin-top: 100px;
+}
+
+@media screen and (max-width: 1025px) {
+  #devices {
+    margin-top: 80px;
+    margin-bottom: 100px;
+  }
+}
+
+/*############################################################*/
+/*Add Rooms CSS*/
+/*############################################################*/
+
+#addRooms {
+  margin-top: 170px;
+}
+#form {
+  margin-top: 30px;
+}
+
+.room-img {
+  width: 60%;
+  padding: 10px;
+}
+
+.cont {
+  margin-top: 2rem;
+}
+
+.form-rows {
+  margin-top: 20px;
+}
+
+.form-inputboxes {
+  width: 100%;
+  height: 3rem;
+  border-bottom: 1px solid #b8b8b8;
+  border-left: none;
+  border-top: none;
+  border-right: none;
+}
+
+.form-inputboxes:focus {
+  outline: none;
+  background-color: white;
+  border-bottom: 1px solid #198fca;
+}
+
+.form-buttons {
+  width: 100%;
+  height: 3rem;
+  border-radius: 30px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 1px 8px rgba(0, 0, 0, 0.22) !important;
+  border: none;
+  outline: none;
+  color: white;
+  background-color: #198fca;
+}
+
+.form-buttons:focus {
+  outline: none;
+  box-shadow: inset 0 1px 5px rgba(0, 0, 0, 0.3), 0 1px 5px rgba(0, 0, 0, 0.22) !important;
+}
+
+.custom-cards-addRooms {
+  width: 23rem;
+  height: 28rem;
+  padding: 20px;
+  background-color: white !important;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 1px 8px rgba(0, 0, 0, 0.22) !important;
+  transition: 0.2s ease-in-out all !important;
+}
+
+.custom-cards-addRooms:hover {
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22) !important;
+}
+
+@media screen and (max-width: 1025px) {
+  #addRooms {
+    margin-top: 100px;
+  }
+  .custom-cards-addRooms {
+    width: 20rem;
+  }
+}
+
+/*====================================================================================================================================*/
+/*DEVICE CSS*/
+/*====================================================================================================================================*/
+
+/*############################################################*/
+/*Add Device Metrics CSS*/
+/*############################################################*/
+
+#addDevice {
+  margin-top: 100px;
+}
+
+#form-addDevice {
+  margin-top: 40px;
+}
+.device-cont {
+  margin-top: 0.5rem;
+}
+.device-img {
+  width: 50%;
+  padding: 10px;
+}
+.label {
+  font-size: 1.5rem;
+}
+
+.custom-cards-addDevices {
+  width: 22rem;
+  height: 40rem;
+  padding: 20px;
+  background-color: white !important;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 1px 8px rgba(0, 0, 0, 0.22) !important;
+  transition: 0.2s ease-in-out all !important;
+}
+
+.custom-cards-addDevices:hover {
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22) !important;
+}
+
+.text-wrapper {
+  margin-top: 20px;
+  margin-bottom: 30px;
+}
+
+.form-dropdown {
+  width: 100%;
+  border-left: none;
+  border-top: none;
+  border-right: none;
+  border-bottom: solid 1px #b8b8b8;
+  outline: none;
+  height: 3rem;
+}
+
+.form-dropdown:focus {
+  outline: none;
+  border-bottom: solid 1px #198fca;
+}
+
+@media screen and (max-width: 1025px) {
+  #addDevice {
+    margin-top: 90px;
+  }
+  .custom-cards-addDevices {
+    width: 20rem;
+  }
+}
+
+/*############################################################*/
+/*Edit Device Metrics CSS*/
+/*############################################################*/
+
+#editDevice {
+  margin-top: 80px;
+  margin-bottom: 50px;
+}
+
+#form-addDevice {
+  margin-top: 40px;
+}
+
+.newRows {
+  margin-top: 15%;
+  margin-bottom: 10%;
+}
+
+.device-cont {
+  margin-top: 0.5rem;
+}
+.device-img {
+  width: 50%;
+  padding: 10px;
+}
+.label {
+  font-size: 1.5rem;
+}
+
+.label-section {
+  font-size: 1.7em;
+  font-weight: 600;
+}
+
+.newRowSwitch {
+  margin-top: 10%;
+  margin-bottom: 5%;
+}
+
+.time-width {
+  width: 40% !important;
+  margin-left: 2%;
+  margin-right: 2%;
+}
+
+.custom-cards-editDevices {
+  width: 23rem;
+  height: 55rem;
+  padding: 20px;
+  background-color: white !important;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 1px 8px rgba(0, 0, 0, 0.22) !important;
+  transition: 0.2s ease-in-out all !important;
+}
+
+.custom-cards-editDevices:hover {
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22) !important;
+}
+
+.text-wrapper {
+  margin-top: 20px;
+  margin-bottom: 30px;
+}
+
+.form-dropdown {
+  width: 100%;
+  border-left: none;
+  border-top: none;
+  border-right: none;
+  border-bottom: solid 1px #b8b8b8;
+  outline: none;
+  height: 3rem;
+}
+
+.form-dropdown:focus {
+  outline: none;
+  border-bottom: solid 1px #198fca;
+}
+
+@media screen and (max-width: 1025px) {
+  #editDevice {
+    margin-top: 10%;
+  }
+  .custom-cards-editDevices {
+    width: 20rem;
+  }
+}
+
+/*############################################################*/
+/*Device Details CSS*/
+/*############################################################*/
+
+#deviceDetails {
+  margin-top: 140px;
+}
+
+.device-img {
+  width: 60%;
+  padding: 10px;
+}
+.label {
+  font-size: 1.5rem;
+}
+
+.custom-cards-devicesDetails {
+  width: 23rem;
+  height: 34rem;
+  padding: 20px;
+  background-color: white !important;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 1px 8px rgba(0, 0, 0, 0.22) !important;
+  transition: 0.2s ease-in-out all !important;
+}
+
+.custom-cards-devicesDetails:hover {
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22) !important;
+}
+
+.text-wrapper {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+@media screen and (max-width: 1025px) {
+  .custom-cards-devicesDetails {
+    width: 20rem;
+  }
+}
+
+/*====================================================================================================================================*/
+/*Sub-pages - LOGIN - REGISTER - CSS*/
+/*====================================================================================================================================*/
+
+/*############################################################*/
+/*Login Template CSS*/
+/*############################################################*/
+
+#loginCard {
+  margin-top: 80px;
+
+  /* border: solid 1px #005872;*/
+}
+
+#form {
+  margin-top: 10px;
+}
+
+#err {
+  text-align: center;
+  color: #ff1e1e;
+}
+
+.flex-add {
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+  flex-wrap: wrap !important;
+  align-items: center !important;
+}
+
+.form-inputboxes {
+  width: 100%;
+  height: 3rem;
+  border-bottom: 1px solid #b8b8b8;
+  border-left: none;
+  border-top: none;
+  border-right: none;
+}
+
+.form-inputboxes:focus {
+  outline: none;
+  background-color: white;
+  border-bottom: 1px solid #198fca;
+}
+
+.form-buttons {
+  width: 100%;
+  height: 3rem;
+  border-radius: 30px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 1px 8px rgba(0, 0, 0, 0.22) !important;
+  border: none;
+  outline: none;
+  color: white;
+  background-color: #198fca;
+}
+
+.form-buttons:focus {
+  outline: none;
+  box-shadow: inset 0 1px 5px rgba(0, 0, 0, 0.3), 0 1px 5px rgba(0, 0, 0, 0.22) !important;
+}
+
+.custom-cards-Login {
+  width: 25rem;
+  height: 34rem;
+  padding: 20px;
+  background-color: white !important;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 1px 8px rgba(0, 0, 0, 0.22) !important;
+  transition: 0.2s ease-in-out all !important;
+}
+
+.custom-cards-Login:hover {
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22) !important;
+}
+
+.logo {
+  font-family: "Harlow-solid";
+  text-align: center;
+  font-size: 3.5em;
+  color: #000;
+  margin-bottom: 10px;
+}
+
+/* Responsive CSS Queries */
+
+@media screen and (max-width: 1024px) {
+  #loginCard {
+    margin-top: 120px;
+  }
+  .custom-cards-Login {
+    width: 20rem;
+  }
+}
+
+@media screen and (max-width: 812px) {
+  .labels {
+    float: left !important;
+  }
+  .but {
+    float: none;
+  }
+}
+
+/*############################################################*/
+/*Register Template CSS*/
+/*############################################################*/
+
+#register {
+  margin-top: 80px;
+}
+
+.custom-cards-Register {
+  width: 25rem;
+  height: 58rem;
+  padding: 20px;
+  background-color: white !important;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 1px 8px rgba(0, 0, 0, 0.22) !important;
+  transition: 0.2s ease-in-out all !important;
+}
+
+.custom-cards-Register:hover {
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22) !important;
+}
+
+@media screen and (max-width: 1024px) {
+  #register {
+    margin-top: 70px;
+  }
+  .custom-cards-Register {
+    width: 20rem;
+  }
+}
+
+@media screen and (max-width: 812px) {
+  .labels {
+    float: left !important;
+  }
+
+  .but {
+    float: none;
+  }
+}
+
+/*====================================================================================================================================*/
+/*Page Components - NAVBARS - ROOM,DEVICE,SUMMARY CARDS CSS*/
+/*====================================================================================================================================*/
+
+/*############################################################*/
+/*Summary Component CSS*/
+/*############################################################*/
+
+#stat-cards {
+  margin-top: 100px;
+}
+
+.img {
+  padding: 15px;
+}
+
+.flex-b {
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: wrap !important;
+  justify-content: space-evenly !important;
+  align-items: flex-start !important;
+}
+
+.stats {
+  margin-top: 50px;
+}
+
+.sub-title-wrapper {
+  margin-bottom: 30px;
+}
+
+.custom-cards {
+  width: 11rem;
+  height: 16rem;
+  padding: 1px;
+  background-color: white !important;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 1px 8px rgba(0, 0, 0, 0.22) !important;
+  transition: 0.2s ease-in-out all !important;
+}
+
+.custom-cards:hover {
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22) !important;
+  cursor: pointer !important;
+}
+
+@media screen and (max-width: 1025px) {
+  #stat-cards {
+    margin-top: 50px;
+  }
+  .custom-cards {
+    width: 10.1rem;
+  }
+}
+
+/*############################################################*/
+/*NAVBARS - TOP Component CSS*/
+/*############################################################*/
+
+.flex-nav {
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: wrap !important;
+  flex-flow: row wrap !important;
+  justify-content: space-between !important;
+}
+
+.logo-small-top {
+  font-family: "Harlow-solid";
+  font-size: 2.2em;
+  padding-top: 2%;
+  margin: 0;
+}
+
+.nav-item {
+  padding: 10px;
+}
+
+.navbar-top {
+  padding: 0 !important;
+  background-color: white;
+  box-shadow: 0 0px 25px rgba(0, 0, 0, 0.3) !important;
+  border-bottom: 1px solid #198fca !important;
+  border-top: none !important;
+  border-left: none !important;
+  border-right: none !important;
+}
+
+.nav-image {
+  width: 15%;
+}
+
+.image-cont-nav {
+  text-align: center;
+  width: 15%;
+  padding: 20px;
+  opacity: 0.5;
+}
+
+.image-cont-nav:hover {
+  background-color: #f5f5f5;
+  opacity: 1;
+  cursor: pointer;
+  box-shadow: 0 12px 10px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22) !important;
+}
+
+.flex-nav {
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: wrap !important;
+  flex-flow: row wrap !important;
+  justify-content: space-between !important;
+}
+
+.nav-item {
+  padding: 10px;
+}
+
+.navbar-bottom {
+  padding: 0 !important;
+  background-color: white;
+  box-shadow: 0 0px 25px rgba(0, 0, 0, 0.3) !important;
+  border-top: 1px solid #198fca;
+}
+
+.nav-image-bottom {
+  width: 50%;
+}
+
+.logo-small {
+  font-family: "Harlow-solid";
+  text-align: center;
+  font-size: 1.1em;
+  padding-top: 10%;
+  margin: 0;
+}
+.image-cont-nav {
+  text-align: center;
+  width: 20%;
+  padding: 15px;
+  opacity: 0.5;
+}
+
+.image-cont-nav:hover {
+  background-color: #f5f5f5;
+  opacity: 1;
+  cursor: pointer;
+  box-shadow: 0 12px 10px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22) !important;
+}
+
+@media screen and (max-width: 1025px) {
+  .image-cont-nav {
+    width: 20%;
+  }
+}
+
+@media screen and (max-width: 812px) {
+  .nav-image {
+    width: 80%;
+  }
+}
+
+/*############################################################*/
+/*NAVBARS - Bottom Component CSS*/
+/*############################################################*/
+
+.flex-nav {
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: wrap !important;
+  flex-flow: row wrap !important;
+  justify-content: space-between !important;
+}
+
+.nav-item {
+  padding: 10px;
+}
+
+.navbar-bottom {
+  padding: 0 !important;
+  background-color: white;
+  box-shadow: 0 0px 25px rgba(0, 0, 0, 0.3) !important;
+  border-top: 1px solid #198fca;
+}
+
+.nav-image-bottom {
+  width: 50%;
+}
+
+.logo-small {
+  font-family: "Harlow-solid";
+  text-align: center;
+  font-size: 1.1em;
+  padding-top: 10%;
+  margin: 0;
+}
+.image-cont-nav {
+  text-align: center;
+  width: 20%;
+  padding: 15px;
+  opacity: 0.5;
+}
+
+.image-cont-nav:hover {
+  background-color: #f5f5f5;
+  opacity: 1;
+  cursor: pointer;
+  box-shadow: 0 12px 10px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22) !important;
+}
+
+@media screen and (max-width: 1025px) {
+  .image-cont-nav {
+    width: 20%;
+  }
+}
+
+@media screen and (max-width: 812px) {
+  .nav-image {
+    width: 80%;
+  }
+}
+
+/*############################################################*/
+/*CARDS - addDeviceCard Component CSS*/
+/*############################################################*/
+
+.img-cont {
+  text-align: center;
+  padding-top: 0px;
+  padding-bottom: 0px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.card {
+  margin-bottom: 30px !important;
+  user-select: none !important;
+}
+
+.custom-cards-devices {
+  width: 11rem;
+  height: 15rem;
+  padding: 1px;
+  background-color: white !important;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 1px 8px rgba(0, 0, 0, 0.22) !important;
+  transition: 0.2s ease-in-out all !important;
+}
+
+.custom-cards-devices:hover {
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22) !important;
+  cursor: pointer !important;
+}
+
+@media screen and (max-width: 1025px) {
+  .custom-cards-devices {
+    width: 10rem;
+  }
+}
+
+/*############################################################*/
+/*CARDS - allDevices Component CSS*/
+/*############################################################*/
+
+.img-menu {
+  opacity: 0.4 !important;
+  padding: 10px;
+}
+.img-cont-menu {
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-bottom: 0;
+}
+
+.custom-cards-menu {
+  width: 11rem;
+  height: 12rem;
+  padding: 10px;
+  background-color: white !important;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 1px 8px rgba(0, 0, 0, 0.22) !important;
+  transition: 0.2s ease-in-out all !important;
+}
+
+.custom-cards-menu:hover {
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22) !important;
+  cursor: pointer !important;
+}
+
+@media screen and (max-width: 1025px) {
+  .custom-cards-menu {
+    width: 10rem;
+  }
+}
+
+/*############################################################*/
+/*CARDS - deviceCard Component CSS*/
+/*############################################################*/
+
+.img-cont {
+  text-align: center;
+  padding-top: 0px;
+  padding-bottom: 0px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.card {
+  margin-bottom: 30px !important;
+  user-select: none !important;
+}
+
+.custom-cards-devices {
+  width: 11rem;
+  height: 15rem;
+  padding: 1px;
+  background-color: white !important;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 1px 8px rgba(0, 0, 0, 0.22) !important;
+  transition: 0.2s ease-in-out all !important;
+}
+
+.custom-cards-devices:hover {
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22) !important;
+  cursor: pointer !important;
+}
+
+@media screen and (max-width: 1025px) {
+  .custom-cards-devices {
+    width: 10rem;
+  }
+}
+
+/*############################################################*/
+/*CARDS - roomTemplate (room cards on dash) Component CSS*/
+/*############################################################*/
+
+.img-cont {
+  text-align: center;
+  padding-top: 0px;
+  padding-bottom: 0px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.card {
+  margin-bottom: 30px !important;
+  user-select: none !important;
+}
+
+.custom-cards-rooms {
+  width: 11rem;
+  height: 12rem;
+  padding: 1px;
+  background-color: white !important;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 1px 8px rgba(0, 0, 0, 0.22) !important;
+  transition: 0.2s ease-in-out all !important;
+}
+
+.custom-cards-rooms:hover {
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22) !important;
+  cursor: pointer !important;
+}
+
+@media screen and (max-width: 1025px) {
+  .custom-cards-rooms {
+    width: 10rem;
+  }
 }
