@@ -3,7 +3,7 @@
     <NavbarTop class="top-show" :back="back" />
     <div id="editDevice">
       <div class="container">
-        <h3 class="display-3 text-center">Edit Device</h3>
+        <h3 class="display-3 text-center">Edit Schedule</h3>
         <div id="form-addDevice">
           <div class="flex-add">
             <div class="card custom-cards-editDevices">
@@ -20,17 +20,6 @@
               </div>
               <div class="device-cont">
                 <b-form @submit="go">
-                  <div class="col-sm-12">
-                    <label for="input-device-name" class="label">Change Device Name</label>
-                  </div>
-                  <div class="col-sm-12">
-                    <input
-                      type="text"
-                      id="input-device-name"
-                      placeholder="Hue Lights"
-                      class="form-inputboxes"
-                    />
-                  </div>
                   <div class="form-rows">
                     <div class="newRows">
                       <p class="label-section text-center">Scheduled Events</p>

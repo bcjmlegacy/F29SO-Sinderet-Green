@@ -373,7 +373,7 @@ body {
 
 .custom-cards-editDevices {
   width: 23rem;
-  height: 55rem;
+  height: 48rem;
   padding: 20px;
   background-color: white !important;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 1px 8px rgba(0, 0, 0, 0.22) !important;
@@ -419,6 +419,7 @@ body {
 
 #deviceDetails {
   margin-top: 140px;
+  margin-bottom: 80px;
 }
 
 .device-img {
@@ -429,9 +430,47 @@ body {
   font-size: 1.5rem;
 }
 
+.item-deviceDetails {
+  margin-left: 50px;
+  margin-right: 50px;
+}
+
+.scheduleItem:before {
+  background-color: #198fca;
+  width: 2px;
+  content: "";
+  position: absolute;
+  top: 0px;
+  bottom: 0px;
+  left: 5px;
+}
+
+ul {
+  list-style: none;
+}
+
+.scheduleItem::after {
+  content: "";
+  position: absolute;
+  padding: 5px;
+  background-color: #198fca;
+  border-radius: 10px;
+  left: 0;
+  top: 5px;
+  width: 12px;
+  height: 12px;
+}
+
+.scheduleItem {
+  position: relative;
+  margin: 0;
+  padding-bottom: 1em;
+  padding-left: 20px;
+}
+
 .custom-cards-devicesDetails {
   width: 23rem;
-  height: 34rem;
+  height: 30rem;
   padding: 20px;
   background-color: white !important;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 1px 8px rgba(0, 0, 0, 0.22) !important;
@@ -442,12 +481,41 @@ body {
   box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22) !important;
 }
 
+.custom-cards-devicesDetails-schedule {
+  width: 23rem;
+  min-height: 30rem;
+  max-height: 50rem;
+  padding: 30px;
+  background-color: white !important;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 1px 8px rgba(0, 0, 0, 0.22) !important;
+  transition: 0.2s ease-in-out all !important;
+}
+
+.custom-cards-devicesDetails-schedule:hover {
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22) !important;
+}
+
 .text-wrapper {
   margin-top: 20px;
   margin-bottom: 20px;
 }
+
+.flex-deviceDetails {
+  display: flex !important;
+  flex-direction: row !important;
+  justify-content: center !important;
+  flex-wrap: wrap !important;
+  align-items: center !important;
+}
+
 @media screen and (max-width: 1025px) {
+  #deviceDetails {
+    margin-top: 80px;
+  }
   .custom-cards-devicesDetails {
+    width: 20rem;
+  }
+  .custom-cards-devicesDetails-schedule {
     width: 20rem;
   }
 }
