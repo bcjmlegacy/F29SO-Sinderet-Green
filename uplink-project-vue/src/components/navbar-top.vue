@@ -15,7 +15,7 @@
         <div class="image-cont-nav">
           <img src="../assets/exclamation.png" alt="warnings" class="nav-image" />
         </div>
-        <div class="image-cont-nav">
+        <div class="image-cont-nav" @click="switchComp('Settings')">
           <img src="../assets/user.png" alt="Profile" class="nav-image" />
         </div>
       </div>

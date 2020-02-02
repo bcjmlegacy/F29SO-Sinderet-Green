@@ -30,6 +30,7 @@ import Register from "./components/registerTemplate";
 import AddDeviceMetrics from "./components/addDeviceMetrics";
 import EditDevice from "./components/editDevicePage";
 import deviceDetails from "./components/deviceDetails";
+import Settings from "./components/settingsTemplate";
 import { bus } from "./main";
 
 export default {
@@ -45,7 +46,8 @@ export default {
     AddDevices,
     AddDeviceMetrics,
     EditDevice,
-    deviceDetails
+    deviceDetails,
+    Settings
   },
   data() {
     return {
