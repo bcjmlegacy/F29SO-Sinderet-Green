@@ -3,7 +3,7 @@
     <NavbarTop class="top-show" :back="back" />
     <div id="editDevice">
       <div class="container">
-        <h3 class="display-3 text-center">Edit Device</h3>
+        <h3 class="display-3 text-center">Edit Schedule</h3>
         <div id="form-addDevice">
           <div class="flex-add">
             <div class="card custom-cards-editDevices">
@@ -20,53 +20,40 @@
               </div>
               <div class="device-cont">
                 <b-form @submit="go">
+                  <p class="label-section text-center">Scheduled Events</p>
+
                   <div class="col-sm-12">
-                    <label for="input-device-name" class="label">Change Device Name</label>
+                    <label for="input-device-room" class="label">Set Time</label>
                   </div>
                   <div class="col-sm-12">
-                    <input
-                      type="text"
-                      id="input-device-name"
-                      placeholder="Hue Lights"
-                      class="form-inputboxes"
-                    />
+                    <select
+                      v-model="form.hour"
+                      class="form-dropdown time-width"
+                      required="required"
+                    >
+                      <option disabled value>Hours</option>
+                      <option selected="selected" value="0">0</option>
+                      <option v-for="n in 24" :key="n" :value="n">
+                        {{
+                        n
+                        }}
+                      </option>
+                    </select>
+                    <select
+                      v-model="form.minute"
+                      class="form-dropdown time-width"
+                      required="required"
+                    >
+                      <option disabled value>Minutes</option>
+                      <option selected="selected" alue="0">0</option>
+                      <option v-for="n in 60" :key="n" :value="n">
+                        {{
+                        n
+                        }}
+                      </option>
+                    </select>
                   </div>
-                  <div class="form-rows">
-                    <div class="newRows">
-                      <p class="label-section text-center">Scheduled Events</p>
-                    </div>
-                    <div class="col-sm-12">
-                      <label for="input-device-room" class="label">Set Time</label>
-                    </div>
-                    <div class="col-sm-12">
-                      <select
-                        v-model="form.hour"
-                        class="form-dropdown time-width"
-                        required="required"
-                      >
-                        <option disabled value>Hours</option>
-                        <option selected="selected" value="0">0</option>
-                        <option v-for="n in 24" :key="n" :value="n">
-                          {{
-                          n
-                          }}
-                        </option>
-                      </select>
-                      <select
-                        v-model="form.minute"
-                        class="form-dropdown time-width"
-                        required="required"
-                      >
-                        <option disabled value>Minutes</option>
-                        <option selected="selected" alue="0">0</option>
-                        <option v-for="n in 60" :key="n" :value="n">
-                          {{
-                          n
-                          }}
-                        </option>
-                      </select>
-                    </div>
-                  </div>
+
                   <div class="form-rows">
                     <div class="col-sm-12">
                       <label for="input-device-room" class="label">Set Operation</label>
