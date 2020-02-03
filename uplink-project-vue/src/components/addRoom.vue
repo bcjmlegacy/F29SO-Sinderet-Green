@@ -1,6 +1,6 @@
 <template>
   <div>
-    <NavbarTop class="top-show" />
+    <NavbarTop class="top-show" :back="back" />
     <div id="addRooms">
       <div class="container">
         <h3 class="display-3 text-center">Add Room</h3>
@@ -37,7 +37,7 @@
         </div>
       </div>
     </div>
-    <NavbarBottom class="bottom-show" />
+    <NavbarBottom class="bottom-show" :back="back" />
   </div>
 </template>
 <script>
@@ -56,7 +56,7 @@ export default {
       }
     };
   },
-  props: ["userToken"],
+  props: ["userToken", "back"],
   methods: {
     switchComp(comp) {
       //Switch component
@@ -87,68 +87,4 @@ export default {
   }
 };
 </script>
-<style>
-#addRooms {
-  margin-top: 170px;
-}
-#form {
-  margin-top: 30px;
-}
 
-.room-img {
-  width: 50%;
-  padding: 10px;
-}
-
-.cont {
-  margin-top: 2rem;
-}
-
-.form-rows {
-  margin-top: 20px;
-}
-
-.form-inputboxes {
-  width: 100%;
-  height: 3rem;
-  border-bottom: 1px solid #b8b8b8;
-  border-left: none;
-  border-top: none;
-  border-right: none;
-}
-
-.form-inputboxes:focus {
-  outline: none;
-  background-color: white;
-  border-bottom: 1px solid #198fca;
-}
-
-.form-buttons {
-  width: 100%;
-  height: 3rem;
-  border-radius: 30px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 1px 8px rgba(0, 0, 0, 0.22) !important;
-  border: none;
-  outline: none;
-  color: white;
-  background-color: #198fca;
-}
-
-.form-buttons:focus {
-  outline: none;
-  box-shadow: inset 0 1px 5px rgba(0, 0, 0, 0.3), 0 1px 5px rgba(0, 0, 0, 0.22) !important;
-}
-
-.custom-cards-addRooms {
-  width: 25rem;
-  height: 27rem;
-  padding: 20px;
-  background-color: white !important;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 1px 8px rgba(0, 0, 0, 0.22) !important;
-  transition: 0.2s ease-in-out all !important;
-}
-
-.custom-cards-addRooms:hover {
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22) !important;
-}
-</style>

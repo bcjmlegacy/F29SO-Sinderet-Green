@@ -1,8 +1,8 @@
 <template>
   <!--Room Page - similar to the Dash-->
-  <div>
+  <div id="room">
     <!--Top Navbar (Website)-->
-    <NavTop class="top-show" />
+    <NavTop class="top-show" :back="this.back" />
     <!--Take the roomName from props and store as title for the room page - demo data is also entered-->
     <Summary :sumTitle="roomName" energy="100" solar="1000" temperature="21" />
     <div class="container">
@@ -17,7 +17,7 @@
             <Device
               :deviceName="device.deviceName"
               :deviceImage="device.deviceImage"
-              deviceEnergy="20"
+              :deviceEnergy="device.deviceWattage"
             />
           </div>
         </div>
@@ -30,7 +30,7 @@
       </div>
     </div>
     <!--Bottom Navbar (Mobile and Tablet)-->
-    <NavBottom class="bottom-show" />
+    <NavBottom class="bottom-show" :back="this.back" />
   </div>
 </template>
 <script>
@@ -55,7 +55,7 @@ export default {
     NavTop,
     NavBottom
   },
-  props: ["roomName", "userToken"], //props to confirm the room the page is showing
+  props: ["roomName", "userToken", "back"], //props to confirm the room the page is showing
   data() {
     return {
       devices: [], //all devices stored in the database
@@ -99,7 +99,8 @@ export default {
                 this.roomDevices.push({
                   //generate a JSON of the device name and icon and store in roomDevices array
                   deviceName: this.devices[key].device_name,
-                  deviceImage: pairImg(this.devices[key].device_name)
+                  deviceImage: pairImg(this.devices[key].device_name),
+                  deviceWattage: this.devices[key].device_wattage
                 });
               }
             }
@@ -152,38 +153,4 @@ function pairImg(device) {
   }
 }
 </script>
-<style>
-/**Styling for the room page*/
-.flex-rooms {
-  display: flex !important;
-  flex-direction: row !important;
-  flex-wrap: wrap !important;
-  justify-content: space-evenly !important;
-  align-items: flex-start !important;
-}
 
-.item {
-  margin-left: 50px;
-  margin-right: 50px;
-  margin-top: 10px;
-}
-
-.bottom-show {
-  display: none !important;
-}
-
-@media screen and (max-width: 1025px) {
-  .item {
-    margin: 0;
-  }
-  .top-show {
-    display: none !important;
-  }
-  .bottom-show {
-    display: block !important;
-  }
-  .flex-rooms {
-    justify-content: space-between !important;
-  }
-}
-</style>

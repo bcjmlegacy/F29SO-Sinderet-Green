@@ -1,6 +1,6 @@
 <template>
   <div>
-    <NavbarTop class="top-show" />
+    <NavbarTop class="top-show" :back="back" />
     <div id="addDevice">
       <div class="container">
         <h3 class="display-3 text-center">Add Device</h3>
@@ -15,8 +15,8 @@
                 />
               </div>
               <div class="text-wrapper">
-                <h5 class="card-title text-center">{{deviceToAdd.deviceName}}</h5>
-                <p class="card-text text-center">{{deviceToAdd.deviceEnergy}} Watts</p>
+                <h5 class="card-title text-center">{{ deviceToAdd.deviceName }}</h5>
+                <p class="card-text text-center">{{ deviceToAdd.deviceEnergy }} Watts</p>
               </div>
               <div class="device-cont">
                 <b-form @submit="go">
@@ -44,7 +44,7 @@
                           v-for="r in rooms"
                           :key="r.room_id"
                           :value="r.room_id"
-                        >{{r.room_name}}</option>
+                        >{{ r.room_name }}</option>
                       </select>
                     </div>
                   </div>
@@ -60,7 +60,7 @@
         </div>
       </div>
     </div>
-    <NavbarBottom class="bottom-show" />
+    <NavbarBottom class="bottom-show" :back="back" />
   </div>
 </template>
 <script>
@@ -76,7 +76,7 @@ export default {
     NavbarTop,
     NavbarBottom
   },
-  props: ["deviceToAdd", "userToken"],
+  props: ["deviceToAdd", "userToken", "back"],
   data() {
     return {
       form: {
@@ -139,55 +139,3 @@ export default {
   }
 };
 </script>
-<style>
-#addDevice {
-  margin-top: 100px;
-}
-
-#form-addDevice {
-  margin-top: 40px;
-}
-.device-cont {
-  margin-top: 0.5rem;
-}
-.device-img {
-  width: 50%;
-  padding: 10px;
-}
-.label {
-  font-size: 1.5rem;
-}
-
-.custom-cards-addDevices {
-  width: 25rem;
-  height: 40rem;
-  padding: 20px;
-  background-color: white !important;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 1px 8px rgba(0, 0, 0, 0.22) !important;
-  transition: 0.2s ease-in-out all !important;
-}
-
-.custom-cards-addDevices:hover {
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22) !important;
-}
-
-.text-wrapper {
-  margin-top: 20px;
-  margin-bottom: 30px;
-}
-
-.form-dropdown {
-  width: 100%;
-  border-left: none;
-  border-top: none;
-  border-right: none;
-  border-bottom: solid 1px #b8b8b8;
-  outline: none;
-  height: 3rem;
-}
-
-.form-dropdown:focus {
-  outline: none;
-  border-bottom: solid 1px #198fca;
-}
-</style>
