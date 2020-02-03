@@ -7,6 +7,7 @@
 			<div class="flex-add">
 				<div class="custom-card-settings">
 					<h4 class="display3 text-center">Profile</h4>
+					<img id="profilepic" src="../assets/user.png" alt="Profile" class="nav-image" />
 					<button type="button" 
 						class="btn btn-light" 
 						v-on:click="configure"
@@ -177,6 +178,13 @@ export default {
 <style>
 #settings {
 	margin-top: 80px;
+}
+
+#profilepic {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	width: 10%;
 }
 
 #savebuttons {
