@@ -63,10 +63,10 @@
 								v-model="email"
 								type="email"
 							></b-form-input>
-						</b-form-group>
+						</b-form-group>``
 						<b-form-group
 							id="forename-input"
-							labl="Forename:"
+							label="Forename:"
 							label-for="input-forename"
 						>
 							<b-form-input
@@ -139,7 +139,10 @@ export default {
 			bus.$emit("prev", previous);
 		},
 		configure(event) {
-			this.edit = true;
+			if (this.edit === false)
+			{
+				this.edit = true;
+			}
 			event.preventDefault();
 		},
 	},
