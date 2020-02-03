@@ -7,7 +7,10 @@
 			<div class="flex-add">
 				<div class="custom-card-settings">
 					<h4 class="display3 text-center">Profile</h4>
-					<button type="button" class="btn btn-light" v-on:click="configure">Edit</button>
+					<button type="button" 
+						class="btn btn-light" 
+						v-on:click="configure"
+						v-show="!edit">Edit</button>
 					<div class="userDetails">
 						<b-form-group
 							id="username-input"
@@ -63,7 +66,7 @@
 								v-model="email"
 								type="email"
 							></b-form-input>
-						</b-form-group>``
+						</b-form-group>
 						<b-form-group
 							id="forename-input"
 							label="Forename:"
@@ -98,6 +101,15 @@
 								v-model="surname"
 							></b-form-input>
 						</b-form-group>
+						<b-button-toolbar 
+							id="savebuttons"
+							v-show="edit" 
+							aria-label="Save/Cancel buttons">
+							<b-button-group size="sm">
+								<b-button  class="btn btn-light">Save</b-button>
+								<b-button  class="btn btn-light">Cancel</b-button>
+							</b-button-group>
+						</b-button-toolbar>
 					</div>
 				</div>
 				<!--Navbar bottom *mobile and tablet view*-->
@@ -165,6 +177,10 @@ export default {
 <style>
 #settings {
 	margin-top: 80px;
+}
+
+#savebuttons {
+	width: 100%;
 }
 
 .labels {
