@@ -1,0 +1,165 @@
+<template>
+	<div>
+		<!--Navbar top *web view*-->
+		<NavTop class="top-show" :back="back" />
+		<!--Settings - shows user profile and options for editing -->
+		<div id="settings">
+			<div class="flex-add">
+				<div class="custom-card-settings">
+					<h4 class="display3 text-center">Profile</h4>
+					<button type="button" class="btn btn-light">Edit</button>
+					<div class="userDetails">
+						<b-form-group
+							id="username-input"
+							label="Username:"
+							label-for="input-username"
+						>
+							<b-form-input
+								id="input-username"
+								v-model="username"
+							></b-form-input>
+						</b-form-group>
+						<b-form-group
+							id="password-input"
+							label="Password:"
+							label-for="input-password"
+						>
+							<b-form-input
+								id="input-password"
+								v-model="password"
+								type="password"
+							></b-form-input>
+						</b-form-group>
+						<b-form-group
+							id="email-input"
+							label="Email:"
+							label-for="input-email"
+						>
+							<b-form-input
+								id="input-email"
+								v-model="email"
+								type="email"
+							></b-form-input>
+						</b-form-group>
+						<b-form-group
+							id="forename-input"
+							label="Forename:"
+							label-for="input-forename"
+						>
+							<b-form-input
+								id="input-forename"
+								v-model="forename"
+							></b-form-input>
+						</b-form-group>
+						<b-form-group
+							id="surname-input"
+							label="Surname:"
+							label-for="input-surname"
+						>
+							<b-form-input
+								id="input-surname"
+								v-model="surname"
+							></b-form-input>
+						</b-form-group>
+					</div>
+				</div>
+				<!--Navbar bottom *mobile and tablet view*-->
+				<NavBottom class="bottom-show" :back="back" />
+			</div>
+	</div>
+</div>
+</template>
+
+<script>
+
+import NavTop from "./navbar-top";
+import NavBottom from "./navbar-bottom";
+import { bus } from "../main";
+
+let url = "http://localhost:5552/getUsers";
+
+export default {
+	name: "settings-components",
+	components: { NavTop, NavBottom },
+	data() {
+		return {
+			username: '',
+			password: '********',
+			email: 'test@test.com',
+			forename: 'test_forename',
+			surname: 'test_surname'
+		}
+	},
+	props: ["userToken", "back"],
+	methods: {
+		switchComp(comp) {
+			//Switch component
+			bus.$emit("switchComp", comp);
+		},
+		prev(previous) {
+			bus.$emit("prev", previous);
+		}
+	},
+	mounted: function() {
+		fetch(url, {
+			mode: "cors",
+			method: "GET",
+			headers: { Authorization: this.userToken }
+		}) //Fetch Command to get data from API - CORS enabled.
+		.then(response => {
+			return response.json();
+		})
+		.then(jsonData => {
+			console.log(jsonData);
+			this.username = jsonData[0].user_username;
+			// this.email = jsonData[0].user_email;
+			// this.forename = jsonData[0].user_forename;
+			// this.surname = jsonData[0].user_surname;
+
+		})
+	}
+};
+</script>
+<style>
+#settings {
+	margin-top: 80px;
+}
+
+.labels {
+	text-align: center;
+}
+
+.userDetails {
+	margin-top: 1em;
+	margin-left: 3em;
+	margin-right: 3em;
+}
+
+.custom-card-settings {
+	width: 50em;
+	height: 40em;
+	padding: 20px;
+	background-color: white !important;
+	box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 1px 8px rgba(0, 0, 0, 0.22) !important;
+	transition: 0.2s ease-in-out all !important;
+}
+
+.siblings {
+	float:left;
+	display: inline;
+	width: 49%;
+}
+
+.custom-card-settings:hover {
+	box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3), 0 1px 8px rgba(0, 0, 0, 0.22) !important;
+}
+
+@media screen and (max-width: 1025px) {
+	#settings {
+		margin-top: 2%;
+	}
+	.custom-cards-settings {
+		width: 20em;
+	}
+}
+</style>

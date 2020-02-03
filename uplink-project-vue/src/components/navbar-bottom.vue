@@ -20,8 +20,12 @@
         <div class="image-cont-nav">
           <img src="../assets/exclamation.png" alt="Warnings" class="nav-image-bottom" />
         </div>
-        <div class="image-cont-nav">
-          <img src="../assets/user.png" alt="Profile" class="nav-image-bottom" />
+        <div class="image-cont-nav" @click="switchComp('Settings')" >
+          <img 
+            src="../assets/user.png" 
+            alt="Profile" 
+            class="nav-image-bottom"
+            />
         </div>
       </div>
     </div>
