@@ -7,11 +7,12 @@
 			<div class="flex-add">
 				<div class="custom-card-settings">
 					<h4 class="display3 text-center">Profile</h4>
-					<img id="profilepic" src="../assets/user.png" alt="Profile" class="nav-image" />
+					<hr>
 					<button type="button" 
 						class="btn btn-light" 
 						v-on:click="configure"
 						v-show="!edit">Edit</button>
+						<img id="profilepic" src="../assets/user.png" alt="Profile" class="nav-image" />
 					<div class="userDetails">
 						<b-form-group
 							id="username-input"
@@ -185,6 +186,7 @@ export default {
 	margin-left: auto;
 	margin-right: auto;
 	width: 10%;
+	margin-top: 1em;
 }
 
 #savebuttons {
@@ -203,7 +205,7 @@ export default {
 
 .custom-card-settings {
 	width: 50em;
-	height: 40em;
+	height: 45em;
 	padding: 20px;
 	background-color: white !important;
 	box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 1px 8px rgba(0, 0, 0, 0.22) !important;
