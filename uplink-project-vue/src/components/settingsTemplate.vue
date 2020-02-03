@@ -7,7 +7,7 @@
 			<div class="flex-add">
 				<div class="custom-card-settings">
 					<h4 class="display3 text-center">Profile</h4>
-					<button type="button" class="btn btn-light">Edit</button>
+					<button type="button" class="btn btn-light" v-on:click="configure">Edit</button>
 					<div class="userDetails">
 						<b-form-group
 							id="username-input"
@@ -15,6 +15,13 @@
 							label-for="input-username"
 						>
 							<b-form-input
+								v-if="!edit"
+								id="input-username"
+								v-model="username"
+								plaintext
+							></b-form-input>
+							<b-form-input
+								v-if="edit"
 								id="input-username"
 								v-model="username"
 							></b-form-input>
@@ -25,6 +32,14 @@
 							label-for="input-password"
 						>
 							<b-form-input
+								v-if="!edit"
+								id="input-password"
+								v-model="password"
+								type="password"
+								plaintext
+							></b-form-input>
+							<b-form-input
+								v-if="edit"
 								id="input-password"
 								v-model="password"
 								type="password"
@@ -36,6 +51,14 @@
 							label-for="input-email"
 						>
 							<b-form-input
+								v-if="!edit"
+								id="input-email"
+								v-model="email"
+								type="email"
+								plaintext
+							></b-form-input>
+							<b-form-input
+								v-if="edit"
 								id="input-email"
 								v-model="email"
 								type="email"
@@ -43,10 +66,17 @@
 						</b-form-group>
 						<b-form-group
 							id="forename-input"
-							label="Forename:"
+							labl="Forename:"
 							label-for="input-forename"
 						>
 							<b-form-input
+								v-if="!edit"
+								id="input-forename"
+								v-model="forename"
+								plaintext
+							></b-form-input>
+							<b-form-input
+								v-if="edit"
 								id="input-forename"
 								v-model="forename"
 							></b-form-input>
@@ -57,6 +87,13 @@
 							label-for="input-surname"
 						>
 							<b-form-input
+								v-if="!edit"
+								id="input-surname"
+								v-model="surname"
+								plaintext
+							></b-form-input>
+							<b-form-input
+								v-if="edit"
 								id="input-surname"
 								v-model="surname"
 							></b-form-input>
@@ -78,6 +115,7 @@ import { bus } from "../main";
 
 let url = "http://localhost:5552/getUsers";
 
+
 export default {
 	name: "settings-components",
 	components: { NavTop, NavBottom },
@@ -87,7 +125,8 @@ export default {
 			password: '********',
 			email: 'test@test.com',
 			forename: 'test_forename',
-			surname: 'test_surname'
+			surname: 'test_surname',
+			edit: false
 		}
 	},
 	props: ["userToken", "back"],
@@ -98,7 +137,11 @@ export default {
 		},
 		prev(previous) {
 			bus.$emit("prev", previous);
-		}
+		},
+		configure(event) {
+			this.edit = true;
+			event.preventDefault();
+		},
 	},
 	mounted: function() {
 		fetch(url, {
@@ -110,12 +153,8 @@ export default {
 			return response.json();
 		})
 		.then(jsonData => {
-			console.log(jsonData);
 			this.username = jsonData[0].user_username;
-			// this.email = jsonData[0].user_email;
-			// this.forename = jsonData[0].user_forename;
-			// this.surname = jsonData[0].user_surname;
-
+			console.log(jsonData[0].user_username);
 		})
 	}
 };
