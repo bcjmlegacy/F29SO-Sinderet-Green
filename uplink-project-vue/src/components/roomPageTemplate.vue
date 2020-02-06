@@ -55,9 +55,10 @@ export default {
     NavTop,
     NavBottom
   },
-  props: ["roomName", "userToken", "back"], //props to confirm the room the page is showing
+  props: ["userToken", "back"], //props to confirm the room the page is showing
   data() {
     return {
+      roomName: this.$route.params.name,
       devices: [], //all devices stored in the database
       rooms: [], //all rooms stored in the database
       roomDevices: [] //finished array containing the device for the room and the device icon

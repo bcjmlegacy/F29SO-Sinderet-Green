@@ -76,7 +76,7 @@ export default {
       scheduledCommands: []
     };
   },
-  props: ["deviceToAdd", "userToken", "back"],
+  props: ["deviceName", "deviceImage", "deviceEnergy", "userToken", "back"],
   methods: {
     switchComp(comp) {
       bus.$emit("switchComp", comp);

@@ -1,11 +1,14 @@
 //dependencies.
 import Vue from "vue";
 import App from "./App.vue";
+
 import BootstrapVue from "bootstrap-vue";
 import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap-vue/dist/bootstrap-vue.css";
 import "../public/style.css"; //css file
+
 import VueRouter from "vue-router";
+
 import Dash from "./components/dashboardTemplate";
 import Room from "./components/roomPageTemplate";
 import AddItem from "./components/addPage";
@@ -50,17 +53,18 @@ const router = new VueRouter({
 		},
 		{
 			name: "room",
-			path: "/room",
+			path: "/room/:name",
 			component: Room,
 			props: true,
 			children: [
 				{
-					path: "deviceDetails",
+					path: "deviceDetails/",
+					name: "device",
 					component: deviceDetails,
-					children: [
-						{ path: "editDevice", component: EditDevice, props: true }
-					],
-					props: true
+					props(route) {
+						return route.query || {};
+					},
+					children: [{ path: "editDevice", component: EditDevice, props: true }]
 				}
 			]
 		},
