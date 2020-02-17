@@ -38,57 +38,135 @@ export const bus = new Vue();
 
 Vue.use(VueRouter);
 const router = new VueRouter({
-	mode: "history",
-	routes: [
-		{
-			name: "dashboard",
-			path: "/",
-			component: Dash,
-			props: true
-		},
-		{
-			name: "login",
-			path: "/login",
-			component: Login
-		},
-		{
-			name: "room",
-			path: "/room/:name",
-			component: Room,
-			props: true,
-			children: [
-				{
-					path: "deviceDetails/",
-					name: "device",
-					component: deviceDetails,
-					props(route) {
-						return route.query || {};
-					},
-					children: [{ path: "editDevice", component: EditDevice, props: true }]
-				}
-			]
-		},
-		{
-			name: "add",
-			path: "/add",
-			component: AddItem,
-			props: true,
-			children: [
-				{ path: "room", component: AddRoom, props: true },
-				{
-					path: "device",
-					component: AddDevices,
-					children: [
-						{ path: "AddData", component: AddDeviceMetrics, props: true }
-					]
-				}
-			]
-		}
-	]
+  mode: "history",
+  routes: [
+    {
+      name: "dashboard",
+      path: "/",
+      component: Dash,
+      props: true,
+      beforeEnter: (to, from, next) => {
+        let token = Vue.$cookies.get("token");
+        if (token == null) {
+          next({ name: "login" });
+        } else {
+          next();
+        }
+      }
+    },
+    {
+      name: "login",
+      path: "/login",
+      component: Login
+    },
+    {
+      name: "room",
+      path: "/room/:name",
+      component: Room,
+      props: true,
+      beforeEnter: (to, from, next) => {
+        let token = Vue.$cookies.get("token");
+        if (token == null) {
+          next({ name: "login" });
+        } else {
+          next();
+        }
+      },
+      children: [
+        {
+          path: "deviceDetails/",
+          name: "device",
+          component: deviceDetails,
+          beforeEnter: (to, from, next) => {
+            let token = Vue.$cookies.get("token");
+            if (token == null) {
+              next({ name: "login" });
+            } else {
+              next();
+            }
+          },
+          props(route) {
+            return route.query || {};
+          },
+          children: [
+            {
+              path: "editDevice",
+              component: EditDevice,
+              props: true,
+              beforeEnter: (to, from, next) => {
+                let token = Vue.$cookies.get("token");
+                if (token == null) {
+                  next({ name: "login" });
+                } else {
+                  next();
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      name: "add",
+      path: "/add",
+      component: AddItem,
+      props: true,
+      beforeEnter: (to, from, next) => {
+        let token = Vue.$cookies.get("token");
+        if (token == null) {
+          next({ name: "login" });
+        } else {
+          next();
+        }
+      },
+      children: [
+        {
+          path: "room",
+          component: AddRoom,
+          props: true,
+          beforeEnter: (to, from, next) => {
+            let token = Vue.$cookies.get("token");
+            if (token == null) {
+              next({ name: "login" });
+            } else {
+              next();
+            }
+          }
+        },
+        {
+          path: "device",
+          component: AddDevices,
+          beforeEnter: (to, from, next) => {
+            let token = Vue.$cookies.get("token");
+            if (token == null) {
+              next({ name: "login" });
+            } else {
+              next();
+            }
+          },
+          children: [
+            {
+              path: "AddData",
+              component: AddDeviceMetrics,
+              props: true,
+              beforeEnter: (to, from, next) => {
+                let token = Vue.$cookies.get("token");
+                if (token == null) {
+                  next({ name: "login" });
+                } else {
+                  next();
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
 });
 
 //mounts app to the html page - public/index.html
 new Vue({
-	router,
-	render: h => h(App)
+  router,
+  render: h => h(App)
 }).$mount("#app");

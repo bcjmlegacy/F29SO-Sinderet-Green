@@ -120,9 +120,9 @@ export default {
             this.error = "Incorrect Username or Password";
             this.resetForm();
           } else {
-            this.switchComp("Dash");
             this.saveToken(jsonData.token);
             this.$cookies.set("token", jsonData.token);
+            this.$router.push({ name: "dashboard" });
           }
         });
 
