@@ -23,9 +23,6 @@ export default {
   name: "roomCard",
   props: ["roomName", "roomImage"], //props/data required for this card
   methods: {
-    switchComp(comp) {
-      bus.$emit("switchComp", comp);
-    },
     updateRoom(room) {
       bus.$emit("updateRoom", room);
     }

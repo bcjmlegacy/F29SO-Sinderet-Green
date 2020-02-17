@@ -9,14 +9,14 @@
             <div class="card custom-cards-editDevices">
               <div class="img-cont">
                 <img
-                  :src="require(`../assets/${deviceToAdd.deviceImage}.png`)"
+                  :src="require(`../assets/${deviceImage}.png`)"
                   alt="device icon"
                   class="device-img"
                 />
               </div>
               <div class="text-wrapper">
-                <h5 class="card-title text-center label-section">{{ deviceToAdd.deviceName }}</h5>
-                <p class="card-text text-center">{{ deviceToAdd.deviceEnergy }} Watts</p>
+                <h5 class="card-title text-center label-section">{{ deviceName }}</h5>
+                <p class="card-text text-center">{{ deviceEnergy }} Watts</p>
               </div>
               <div class="device-cont">
                 <b-form @submit="go">
@@ -89,7 +89,6 @@
 <script>
 import NavbarTop from "./navbar-top";
 import NavbarBottom from "./navbar-bottom";
-import { bus } from "../main";
 
 export default {
   name: "addDevice",
@@ -97,7 +96,7 @@ export default {
     NavbarTop,
     NavbarBottom
   },
-  props: ["deviceToAdd", "userToken", "back"],
+  props: ["deviceName", "deviceImage", "deviceEnergy", "userToken", "back"],
   data() {
     return {
       form: {
@@ -114,10 +113,6 @@ export default {
     };
   },
   methods: {
-    switchComp(comp) {
-      bus.$emit("switchComp", comp);
-    },
-
     go(evt) {
       let url = "http://localhost:5552/insertRepeatTimer";
       console.log(this.form);
@@ -144,7 +139,14 @@ export default {
         })
         .then(jsonData => {
           console.log(jsonData);
-          this.switchComp("deviceDetails");
+          this.$router.push({
+            name: "device",
+            query: {
+              deviceName: this.deviceName,
+              deviceImage: this.deviceImage,
+              deviceEnergy: this.deviceEnergy
+            }
+          });
         });
 
       evt.preventDefault();
@@ -153,7 +155,7 @@ export default {
   mounted: function() {
     //Get command for device via icon thats displayed
     let url = "http://localhost:5552/getCommandsByDevice?id=";
-    let id = pairImg(this.deviceToAdd.deviceImage);
+    let id = pairImg(this.deviceImage);
     let urlComplete = url + id;
     fetch(urlComplete, {
       mode: "cors",
@@ -182,9 +184,8 @@ export default {
             console.log(jsonData);
             for (let device in jsonData) {
               if (
-                jsonData[device].device_name === this.deviceToAdd.deviceName &&
-                jsonData[device].device_wattage ===
-                  this.deviceToAdd.deviceEnergy
+                jsonData[device].device_name === this.deviceName &&
+                jsonData[device].device_wattage === this.deviceEnergy
               ) {
                 this.device = jsonData[device].device_id;
                 console.log(this.device);

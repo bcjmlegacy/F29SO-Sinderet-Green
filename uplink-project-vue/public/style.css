@@ -727,7 +727,7 @@ ul {
   flex-direction: row !important;
   flex-wrap: wrap !important;
   flex-flow: row wrap !important;
-  justify-content: space-between !important;
+  justify-content: space-evenly !important;
 }
 
 .logo-small-top {

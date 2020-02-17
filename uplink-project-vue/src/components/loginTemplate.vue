@@ -83,10 +83,6 @@ export default {
     };
   },
   methods: {
-    switchComp(comp) {
-      //Switch component
-      bus.$emit("switchComp", comp);
-    },
     saveToken(token) {
       bus.$emit("saveToken", token);
     },

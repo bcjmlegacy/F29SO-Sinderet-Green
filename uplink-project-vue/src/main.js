@@ -71,40 +71,39 @@ const router = new VueRouter({
         } else {
           next();
         }
-      },
-      children: [
-        {
-          path: "deviceDetails/",
-          name: "device",
-          component: deviceDetails,
-          beforeEnter: (to, from, next) => {
-            let token = Vue.$cookies.get("token");
-            if (token == null) {
-              next({ name: "login" });
-            } else {
-              next();
-            }
-          },
-          props(route) {
-            return route.query || {};
-          },
-          children: [
-            {
-              path: "editDevice",
-              component: EditDevice,
-              props: true,
-              beforeEnter: (to, from, next) => {
-                let token = Vue.$cookies.get("token");
-                if (token == null) {
-                  next({ name: "login" });
-                } else {
-                  next();
-                }
-              }
-            }
-          ]
+      }
+    },
+    {
+      path: "/editDevice",
+      name: "editDevice",
+      component: EditDevice,
+      beforeEnter: (to, from, next) => {
+        let token = Vue.$cookies.get("token");
+        if (token == null) {
+          next({ name: "login" });
+        } else {
+          next();
         }
-      ]
+      },
+      props(route) {
+        return route.query || {};
+      }
+    },
+    {
+      path: "/deviceDetails",
+      name: "device",
+      component: deviceDetails,
+      beforeEnter: (to, from, next) => {
+        let token = Vue.$cookies.get("token");
+        if (token == null) {
+          next({ name: "login" });
+        } else {
+          next();
+        }
+      },
+      props(route) {
+        return route.query || {};
+      }
     },
     {
       name: "add",
@@ -118,49 +117,50 @@ const router = new VueRouter({
         } else {
           next();
         }
-      },
-      children: [
-        {
-          path: "room",
-          component: AddRoom,
-          props: true,
-          beforeEnter: (to, from, next) => {
-            let token = Vue.$cookies.get("token");
-            if (token == null) {
-              next({ name: "login" });
-            } else {
-              next();
-            }
-          }
-        },
-        {
-          path: "device",
-          component: AddDevices,
-          beforeEnter: (to, from, next) => {
-            let token = Vue.$cookies.get("token");
-            if (token == null) {
-              next({ name: "login" });
-            } else {
-              next();
-            }
-          },
-          children: [
-            {
-              path: "AddData",
-              component: AddDeviceMetrics,
-              props: true,
-              beforeEnter: (to, from, next) => {
-                let token = Vue.$cookies.get("token");
-                if (token == null) {
-                  next({ name: "login" });
-                } else {
-                  next();
-                }
-              }
-            }
-          ]
+      }
+    },
+    {
+      name: "addDevice",
+      path: "/addDevice",
+      component: AddDevices,
+      beforeEnter: (to, from, next) => {
+        let token = Vue.$cookies.get("token");
+        if (token == null) {
+          next({ name: "login" });
+        } else {
+          next();
         }
-      ]
+      }
+    },
+    {
+      name: "addRoom",
+      path: "/addroom",
+      component: AddRoom,
+      props: true,
+      beforeEnter: (to, from, next) => {
+        let token = Vue.$cookies.get("token");
+        if (token == null) {
+          next({ name: "login" });
+        } else {
+          next();
+        }
+      }
+    },
+    {
+      name: "addDeviceData",
+      path: "/addData",
+      component: AddDeviceMetrics,
+      props(route) {
+        return route.query || {};
+      },
+      beforeEnter: (to, from, next) => {
+        let token = Vue.$cookies.get("token");
+        if (token == null) {
+          next({ name: "login" });
+        } else {
+          next();
+        }
+      }
     }
   ]
 });

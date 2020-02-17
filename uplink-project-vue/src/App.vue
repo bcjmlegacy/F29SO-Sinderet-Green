@@ -34,7 +34,6 @@ export default {
     return {
       currentRoom: "",
       userToken: "", //user token for session
-      deviceToAdd: "",
       previousPage: ""
     };
   },
@@ -46,9 +45,6 @@ export default {
     });
     bus.$on("saveToken", token => {
       this.userToken = token;
-    });
-    bus.$on("deviceToAdd", device => {
-      this.deviceToAdd = device;
     });
   },
   mounted: function() {

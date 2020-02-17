@@ -2,7 +2,7 @@
   <!--Room Page - similar to the Dash-->
   <div id="room">
     <!--Top Navbar (Website)-->
-    <NavTop class="top-show" :back="this.back" />
+    <NavTop class="top-show" />
     <!--Take the roomName from props and store as title for the room page - demo data is also entered-->
     <Summary :sumTitle="roomName" energy="100" solar="1000" temperature="21" />
     <div class="container">
@@ -30,7 +30,7 @@
       </div>
     </div>
     <!--Bottom Navbar (Mobile and Tablet)-->
-    <NavBottom class="bottom-show" :back="this.back" />
+    <NavBottom class="bottom-show" />
   </div>
 </template>
 <script>
