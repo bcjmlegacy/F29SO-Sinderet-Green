@@ -1,6 +1,6 @@
 <template>
   <div>
-    <NavbarTop class="top-show" :back="back" />
+    <NavbarTop class="top-show" />
     <div id="deviceDetails">
       <div class="container">
         <div class="flex-deviceDetails">
@@ -8,14 +8,14 @@
             <div class="card custom-cards-devicesDetails">
               <div class="img-cont">
                 <img
-                  :src="require(`../assets/${deviceToAdd.deviceImage}.png`)"
+                  :src="require(`../assets/${deviceImage}.png`)"
                   alt="device icon"
                   class="device-img"
                 />
               </div>
               <div class="text-wrapper">
-                <h5 class="card-title text-center label-section">{{ deviceToAdd.deviceName }}</h5>
-                <p class="card-text text-center">{{ deviceToAdd.deviceEnergy }} Watts</p>
+                <h5 class="card-title text-center label-section">{{ deviceName }}</h5>
+                <p class="card-text text-center">{{ deviceEnergy }} Watts</p>
               </div>
 
               <div class="text-center">
@@ -47,7 +47,11 @@
                 >{{command.command}} at {{command.hour}}:{{command.minutes}}</li>
               </ul>
               <div class="form-rows">
-                <button class="form-buttons" type="button" @click="switchComp('editDevice')">Edit</button>
+                <router-link
+                  :to="{name: 'editDevice', query:{deviceName:deviceName, 'deviceImage': deviceImage, deviceEnergy:deviceEnergy}}"
+                >
+                  <button class="form-buttons" type="button">Edit</button>
+                </router-link>
               </div>
             </div>
           </div>
@@ -60,7 +64,6 @@
 <script>
 import NavbarTop from "./navbar-top";
 import NavbarBottom from "./navbar-bottom";
-import { bus } from "../main";
 export default {
   name: "addDevice",
   components: {
@@ -76,11 +79,8 @@ export default {
       scheduledCommands: []
     };
   },
-  props: ["deviceToAdd", "userToken", "back"],
+  props: ["deviceName", "deviceImage", "deviceEnergy", "userToken", "back"],
   methods: {
-    switchComp(comp) {
-      bus.$emit("switchComp", comp);
-    },
     async turnOn() {
       await this.$nextTick();
       let url = "http://localhost:5552/insertOneshotTimer";
@@ -104,6 +104,10 @@ export default {
         .then(jsonData => {
           console.log(jsonData);
         });
+    },
+    loadOnce: function() {
+      location.reload();
+      console.log("reloaded");
     }
   },
   mounted: function() {
@@ -121,12 +125,13 @@ export default {
       })
       .then(jsonData => {
         console.log(jsonData);
-        for (let device in jsonData) {
+        let deviceNo = 0;
+        for (deviceNo in jsonData) {
           if (
-            jsonData[device].device_name === this.deviceToAdd.deviceName &&
-            jsonData[device].device_wattage === this.deviceToAdd.deviceEnergy
+            jsonData[deviceNo].device_name === this.deviceName &&
+            jsonData[deviceNo].device_wattage === this.deviceEnergy
           ) {
-            this.device = jsonData[device].device_id;
+            this.device = jsonData[deviceNo].device_id;
             console.log(this.device);
           }
         }
@@ -143,6 +148,7 @@ export default {
             return response.json();
           })
           .then(jsonData => {
+            console.log("nn");
             for (let key in jsonData) {
               if (
                 jsonData[key].timer_repeat_command === 1 ||

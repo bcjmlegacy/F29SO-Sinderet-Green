@@ -33,7 +33,7 @@
 import NavbarTop from "../components/navbar-top";
 import NavbarBottom from "../components/navbar-bottom";
 import AddDeviceCard from "../components/addDeviceCard";
-import { bus } from "../main";
+
 export default {
   name: "devices",
   props: ["back"],
@@ -41,14 +41,6 @@ export default {
     NavbarTop,
     NavbarBottom,
     AddDeviceCard
-  },
-  methods: {
-    switchComp(comp) {
-      bus.$emit("switchComp", comp);
-    },
-    deviceToAdd(device) {
-      bus.$emit("deviceToAdd", device);
-    }
   }
 };
 </script>

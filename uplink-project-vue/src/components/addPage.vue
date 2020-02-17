@@ -7,24 +7,28 @@
         <div class="flex-cont">
           <div class="flex-add">
             <div>
-              <div class="card custom-cards-rooms" @click="switchComp('AddRoom')">
-                <div class="img-cont">
-                  <img class="card-img-top img-add" src="../assets/room.png" alt="Add Room" />
+              <router-link :to="{name:'addRoom'}">
+                <div class="card custom-cards-rooms">
+                  <div class="img-cont">
+                    <img class="card-img-top img-add" src="../assets/room.png" alt="Add Room" />
+                  </div>
+                  <div class="card-body">
+                    <h5 class="card-title text-center">Add Room</h5>
+                  </div>
                 </div>
-                <div class="card-body">
-                  <h5 class="card-title text-center">Add Room</h5>
-                </div>
-              </div>
+              </router-link>
             </div>
             <div>
-              <div class="card custom-cards-rooms" @click="switchComp('addDevices')">
-                <div class="img-cont">
-                  <img class="card-img-top img-add" src="../assets/light-bulb.png" alt="Add Room" />
+              <router-link :to="{name:'addDevice'}">
+                <div class="card custom-cards-rooms" @click="switchComp('addDevices')">
+                  <div class="img-cont">
+                    <img class="card-img-top img-add" src="../assets/light-bulb.png" alt="Add Room" />
+                  </div>
+                  <div class="card-body">
+                    <h5 class="card-title text-center">Add Device</h5>
+                  </div>
                 </div>
-                <div class="card-body">
-                  <h5 class="card-title text-center">Add Device</h5>
-                </div>
-              </div>
+              </router-link>
             </div>
           </div>
         </div>
@@ -36,19 +40,13 @@
 <script>
 import NavbarTop from "./navbar-top";
 import NavbarBottom from "./navbar-bottom";
-import { bus } from "../main";
+
 export default {
   name: "addPage",
   props: ["back"],
   components: {
     NavbarTop,
     NavbarBottom
-  },
-  methods: {
-    switchComp(comp) {
-      //Switch component
-      bus.$emit("switchComp", comp);
-    }
   }
 };
 </script>

@@ -9,14 +9,14 @@
             <div class="card custom-cards-addDevices">
               <div class="img-cont">
                 <img
-                  :src="require(`../assets/${deviceToAdd.deviceImage}.png`)"
+                  :src="require(`../assets/${deviceImage}.png`)"
                   alt="device icon"
                   class="device-img"
                 />
               </div>
               <div class="text-wrapper">
-                <h5 class="card-title text-center">{{ deviceToAdd.deviceName }}</h5>
-                <p class="card-text text-center">{{ deviceToAdd.deviceEnergy }} Watts</p>
+                <h5 class="card-title text-center">{{ deviceName }}</h5>
+                <p class="card-text text-center">{{ deviceEnergy }} Watts</p>
               </div>
               <div class="device-cont">
                 <b-form @submit="go">
@@ -66,7 +66,7 @@
 <script>
 import NavbarTop from "./navbar-top";
 import NavbarBottom from "./navbar-bottom";
-import { bus } from "../main";
+
 let url = "http://localhost:5552/insertDevice";
 let url1 = "http://localhost:5552/getRooms";
 
@@ -76,23 +76,19 @@ export default {
     NavbarTop,
     NavbarBottom
   },
-  props: ["deviceToAdd", "userToken", "back"],
+  props: ["deviceName", "deviceImage", "deviceEnergy", "userToken", "back"],
   data() {
     return {
       form: {
         name: "",
         room: "",
-        wattage: this.deviceToAdd.deviceEnergy,
+        wattage: this.deviceEnergy,
         type: "1"
       },
       rooms: []
     };
   },
   methods: {
-    switchComp(comp) {
-      bus.$emit("switchComp", comp);
-    },
-
     go(evt) {
       console.log(this.form);
       fetch(url, {
@@ -115,7 +111,7 @@ export default {
         })
         .then(jsonData => {
           console.log(jsonData);
-          this.switchComp("Dash");
+          this.$router.push({ name: "dashboard" });
         });
 
       evt.preventDefault();
