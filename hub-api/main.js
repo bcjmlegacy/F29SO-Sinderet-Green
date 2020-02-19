@@ -244,9 +244,9 @@ function procTimersAndTriggers() {
             rows[x]["device_command_value_res"]
           );
 
-          db.deleteOneshotTimer(rows[x]["timer_oneshot_id"]), function(err, res)  {
-            
-          };
+          db.deleteOneshotTimer(rows[x]["timer_oneshot_id"], function(err, res)  {
+          
+          });
         }
       }
     }
