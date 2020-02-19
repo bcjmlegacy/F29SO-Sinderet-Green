@@ -833,6 +833,218 @@ app.post("/insertOneshotTimer", (req, res) => {
   }
 });
 
+/* #######################################
+  
+  Delete functions.
+  
+####################################### */
+
+app.get("/deleteProperty", (req, res) => {
+  db.deleteProperty(req.query.id, function(err, res) {
+    if(err) {
+      res.send({ "error": err })
+    } else  {
+      res.send({ "status": "success" });
+    }
+  });
+});
+
+app.get("/deleteAccountType", (req, res) => {
+  db.deleteAccountType(req.query.id, function(err, res) {
+    if(err) {
+      res.send({ "error": err })
+    } else  {
+      res.send({ "status": "success" });
+    }
+  });
+});
+
+app.get("/deleteSensorType", (req, res) => {
+  db.deleteSensorType(req.query.id, function(err, res) {
+    if(err) {
+      res.send({ "error": err })
+    } else  {
+      res.send({ "status": "success" });
+    }
+  });
+});
+
+app.get("/deleteRoom", (req, res) => {
+  db.deleteRoom(req.query.id, function(err, res) {
+    if(err) {
+      res.send({ "error": err })
+    } else  {
+      res.send({ "status": "success" });
+    }
+  });
+});
+
+app.get("/deleteDeviceType", (req, res) => {
+  db.deleteDeviceType(req.query.id, function(err, res) {
+    if(err) {
+      res.send({ "error": err })
+    } else  {
+      res.send({ "status": "success" });
+    }
+  });
+});
+
+app.get("/deleteDeviceCommand", (req, res) => {
+  db.deleteDeviceCommand(req.query.id, function(err, res) {
+    if(err) {
+      res.send({ "error": err })
+    } else  {
+      res.send({ "status": "success" });
+    }
+  });
+});
+
+app.get("/deleteUser", (req, res) => {
+  db.deleteUser(req.query.id, function(err, res) {
+    if(err) {
+      res.send({ "error": err })
+    } else  {
+      res.send({ "status": "success" });
+    }
+  });
+});
+
+app.get("/deleteAuth", (req, res) => {
+  db.deleteAuth(req.query.id, function(err, res) {
+    if(err) {
+      res.send({ "error": err })
+    } else  {
+      res.send({ "status": "success" });
+    }
+  });
+});
+
+app.get("/deleteSensor", (req, res) => {
+
+  db.deleteSensor(req.query.id, function(err, res) {
+    if(err) {
+      res.send({ "error": err })
+    } else  {
+      db.deleteTriggerBySensorId(req.query.id, function(err, res) {
+        if(err) {
+          res.send({ "error": err })
+        } else  {
+
+          if(req.query.data == "true")  {
+    
+            db.deleteSensorReadingBySensorId(req.query.id, function(err, res) {
+              if(err) {
+                res.send({ "error": err })
+              } else  {
+                res.send({ "status": "success" });
+              }
+            });
+        
+          } else  {
+            res.send({ "status": "success" });
+          }
+
+        }
+      });
+    }
+  });
+
+});
+
+app.get("/deleteDevice", (req, res) => {
+
+  db.deleteDevice(req.query.id, function(err, res) {
+    if(err) {
+      res.send({ "error": err })
+    } else  {
+      db.deleteRepeatTimerByDeviceId(req.query.id, function(err, res) {
+        if(err) {
+          res.send({ "error": err })
+        } else  {
+          db.deleteOneshotTimerByDeviceId(req.query.id, function(err, res) {
+            if(err) {
+              res.send({ "error": err })
+            } else  {
+              db.deleteTriggerByDeviceId(req.query.id, function(err, res) {
+                if(err) {
+                  res.send({ "error": err })
+                } else  {
+
+                  if(req.query.data == "true")  {
+    
+                    db.deleteDeviceReading(req.query.id, function(err, res) {
+                      if(err) {
+                        res.send({ "error": err })
+                      } else  {
+                        res.send({ "status": "success" });
+                      }
+                    });
+                
+                  } else  {
+                    res.send({ "status": "success" });
+                  }
+
+                }
+              });
+            }
+          });
+        }
+      });
+    }
+  });
+
+});
+
+app.get("/deleteRepeatTimer", (req, res) => {
+  db.deleteRepeatTimer(req.query.id, function(err, res) {
+    if(err) {
+      res.send({ "error": err })
+    } else  {
+      res.send({ "status": "success" });
+    }
+  });
+});
+
+app.get("/deleteOneshotTimer", (req, res) => {
+  db.deleteOneshotTimer(req.query.id, function(err, res) {
+    if(err) {
+      res.send({ "error": err })
+    } else  {
+      res.send({ "status": "success" });
+    }
+  });
+});
+
+app.get("/deleteSensorReading", (req, res) => {
+  db.deleteSensorReading(req.query.id, function(err, res) {
+    if(err) {
+      res.send({ "error": err })
+    } else  {
+      res.send({ "status": "success" });
+    }
+  });
+});
+
+app.get("/deleteDeviceReading", (req, res) => {
+  db.deleteDeviceReading(req.query.id, function(err, res) {
+    if(err) {
+      res.send({ "error": err })
+    } else  {
+      res.send({ "status": "success" });
+    }
+  });
+});
+
+app.get("/deleteDeviceTrigger", (req, res) => {
+  db.deleteDeviceTrigger(req.query.id, function(err, res) {
+    if(err) {
+      res.send({ "error": err })
+    } else  {
+      res.send({ "status": "success" });
+    }
+  });
+});
+
 //
 // Start the API
 //
