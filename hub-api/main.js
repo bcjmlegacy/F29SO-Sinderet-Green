@@ -441,6 +441,33 @@ app.use(function(req, res, next) {
 
 /* #######################################
  
+Execute command.
+ 
+####################################### */
+
+app.get("/execute", (req, res) => {
+  db.getCommandById(req.query.commandId, function(err, command) {
+
+    db.getDeviceById(req.query.deviceId, function(err, device) {
+
+      db.getRoomById(deviceRows["device_room"], function(err, room) {
+
+        sendCommand(
+          `/${room[0]["room_name"]}/${command[0]["device_command_mqtt"]}/${deviceId}`,
+          command[0]["device_command_value"],
+          command[0]["device_command_mqtt_res"],
+          command[0]["device_command_value_res"]
+        );
+
+      });
+
+    });
+
+  });
+});
+
+/* #######################################
+ 
 Get by ID.
  
 ####################################### */
