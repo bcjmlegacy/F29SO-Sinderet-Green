@@ -249,6 +249,40 @@ function procTimersAndTriggers() {
       }
     }
   });
+
+  db.getDeviceTriggers(function(err, rows) {
+    if (err) {
+      console.log(`[${getWholeDate()}] ! Error while checking device triggers:`);
+      console.log(`[${getWholeDate()}] ! ${err}`);
+    } else if (rows[0]) {
+      for (x in rows) {
+
+        db.getSensorReadings(
+          function(err, rows) {
+            
+            
+
+
+          }, 1, 0
+        );
+
+        rows[x]["device_trigger_sensor_id"]
+
+
+        if (getUnixTime() >= rows[x]["timer_oneshot_trigger"]) {
+          // console.log("Running oneshot timer...");
+          sendCommand(
+            `/${rows[x]["room_name"]}/${rows[x]["device_command_mqtt"]}/${rows[x]["device_id"]}`,
+            rows[x]["device_command_value"],
+            rows[x]["device_command_mqtt_res"],
+            rows[x]["device_command_value_res"]
+          );
+
+          db.deleteOneshotTimer(rows[x]["timer_oneshot_id"]);
+        }
+      }
+    }
+  });
 }
 
 setInterval(procTimersAndTriggers, 60000);

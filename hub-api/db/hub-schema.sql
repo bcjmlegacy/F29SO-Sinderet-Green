@@ -149,7 +149,7 @@ CREATE TABLE device_trigger (
     device_trigger_id           INTEGER PRIMARY KEY AUTOINCREMENT,
     device_trigger_device_id    TEXT,
     device_trigger_sensor_id    TEXT,
-    device_trigger_gt_lt        TEXT,
+    device_trigger_gt_lt_eq     TEXT,
     device_trigger_sensor_value INTEGER,
     device_trigger_command      INT,
     FOREIGN KEY (device_trigger_device_id) REFERENCES device(device_id),

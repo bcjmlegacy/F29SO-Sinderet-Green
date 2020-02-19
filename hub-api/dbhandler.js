@@ -232,11 +232,48 @@ class databasehandler {
     this.getMany("user", callback, limit, offset);
   }
 
-  getSensorReadings(callback, limit, offset) {
-    this.getMany("sensor_reading", callback, limit, offset);
+  getSensorReadings(callback, limit, offset, id) {
+    if ( limit && offset && id )  {
+      var q = `SELECT * FROM sensor_reading WHERE sensor_reading_id = ${id} LIMIT ${limit} OFFSET ${offset}`;
+    } else if ( limit && id ) {
+      var q = `SELECT * FROM sensor_reading WHERE sensor_reading_id = ${id} LIMIT ${limit}`;
+    } else if ( limit && offset ) {
+      var q = `SELECT * FROM sensor_reading LIMIT ${limit} OFFSET ${offset}`;
+    } else if ( limit ) {
+      var q = `SELECT * FROM sensor_reading LIMIT ${limit}`;
+    } else {
+      var q = `SELECT * FROM sensor_reading`;
+    }
+
+    db.all(q, function(err, rows) {
+      if (err) {
+        callback(err);
+      } else {
+        callback(null, rows);
+      }
+    });
   }
-  getDeviceReadings(callback, limit, offset) {
-    this.getMany("device_reading", callback, limit, offset);
+
+  getDeviceReadings(callback, limit, offset, id) {
+    if ( limit && offset && id )  {
+      var q = `SELECT * FROM device_reading WHERE device_reading_id = ${id} LIMIT ${limit} OFFSET ${offset}`;
+    } else if ( limit && id ) {
+      var q = `SELECT * FROM device_reading WHERE device_reading_id = ${id} LIMIT ${limit}`;
+    } else if ( limit && offset ) {
+      var q = `SELECT * FROM device_reading LIMIT ${limit} OFFSET ${offset}`;
+    } else if ( limit ) {
+      var q = `SELECT * FROM device_reading LIMIT ${limit}`;
+    } else {
+      var q = `SELECT * FROM device_reading`;
+    }
+
+    db.all(q, function(err, rows) {
+      if (err) {
+        callback(err);
+      } else {
+        callback(null, rows);
+      }
+    });
   }
 
   getRepeatTimers(callback) {
@@ -287,14 +324,23 @@ class databasehandler {
     });
   }
 
-  deleteOneshotTimer(id) {
-    var q = `DELETE FROM timer_oneshot WHERE timer_oneshot_id = ?`;
+  getDeviceTriggers(callback) {
+    var q = `SELECT * FROM device_trigger
+             INNER JOIN device         ON device_trigger.device_trigger_device_id = device.device_id
+             INNER JOIN sensor         ON device_trigger.device_trigger_sensor_id = sensor.sensor_id
+             INNER JOIN device_type    ON device.device_type                      = device_type.device_type_id
+             INNER JOIN device_command ON device_trigger.device_trigger_command   = device_command.device_command_id
+             INNER JOIN room           ON device.device_room                      = room.room_id`;
 
-    db.all(q, [id], function(err, rows) {
+    // var q = `SELECT * FROM timer_oneshot
+    //          INNER JOIN device         ON timer_oneshot.timer_oneshot_device_id = device.device_id
+    //          INNER JOIN device_type    ON device.device_type                    = device_type.device_type_id`;
+
+    db.all(q, function(err, rows) {
       if (err) {
-        console.log(err);
+        callback(err);
       } else {
-        // console.log("Oneshot timer deleted");
+        callback(null, rows);
       }
     });
   }

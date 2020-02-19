@@ -90,3 +90,14 @@ INSERT INTO timer_oneshot (
     timer_oneshot_command
 )
 VALUES  (1, "456ABC123", 3);
+
+-- Turn the heater on if the livingroom temp is below 20
+
+INSERT INTO device_trigger (
+    device_trigger_device_id,
+    device_trigger_sensor_id,
+    device_trigger_gt_lt_eq,
+    device_trigger_sensor_value,
+    device_trigger_command
+)
+VALUES  ("123ABC123", "ABC123", "<", 20, 1);
