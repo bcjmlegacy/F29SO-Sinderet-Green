@@ -234,9 +234,9 @@ class databasehandler {
 
   getSensorReadings(callback, limit, offset, id) {
     if ( limit && offset && id )  {
-      var q = `SELECT * FROM sensor_reading WHERE sensor_reading_id = ${id} LIMIT ${limit} OFFSET ${offset}`;
+      var q = `SELECT * FROM sensor_reading WHERE sensor_reading_id = '${id}' LIMIT ${limit} OFFSET ${offset}`;
     } else if ( limit && id ) {
-      var q = `SELECT * FROM sensor_reading WHERE sensor_reading_id = ${id} LIMIT ${limit}`;
+      var q = `SELECT * FROM sensor_reading WHERE sensor_reading_id = '${id}' LIMIT ${limit}`;
     } else if ( limit && offset ) {
       var q = `SELECT * FROM sensor_reading LIMIT ${limit} OFFSET ${offset}`;
     } else if ( limit ) {
@@ -404,8 +404,6 @@ class databasehandler {
       }
     });
   }
-
-  executeCommand(command_id, callback) {}
 
   /* #######################################
           
@@ -601,7 +599,7 @@ class databasehandler {
 
   insertDeviceReading(id, type, val) {
     var ts = new Date().valueOf();
-    var q = `INSERT INTO device_reading (device_reading_sensor_id, device_reading_type, device_reading_value, device_reading_timestamp) VALUES (?, ?, ?, ?)`;
+    var q = `INSERT INTO device_reading (device_reading_device_id, device_reading_type, device_reading_value, device_reading_timestamp) VALUES (?, ?, ?, ?)`;
 
     db.run(q, [id, type, val, ts], function(err) {
       if (err) {
