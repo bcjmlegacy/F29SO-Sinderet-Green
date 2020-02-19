@@ -43,7 +43,6 @@
 <script>
 import NavbarTop from "./navbar-top";
 import NavbarBottom from "./navbar-bottom";
-import { bus } from "../main";
 
 let url = "http://localhost:5552/insertRoom";
 export default {
@@ -58,10 +57,6 @@ export default {
   },
   props: ["userToken", "back"],
   methods: {
-    switchComp(comp) {
-      //Switch component
-      bus.$emit("switchComp", comp);
-    },
     go(evt) {
       fetch(url, {
         method: "POST",
@@ -80,7 +75,7 @@ export default {
         })
         .then(responseText => {
           console.log(responseText);
-          this.switchComp("Dash");
+          this.$router.push({ name: "dashboard" });
         });
       evt.preventDefault();
     }
