@@ -7,7 +7,7 @@
         <div class="flex-cont">
           <div class="flex-add">
             <div>
-              <router-link :to="{name:'addRoom'}">
+              <router-link class="links" :to="{name:'addRoom'}">
                 <div class="card custom-cards-rooms">
                   <div class="img-cont">
                     <img class="card-img-top img-add" src="../assets/room.png" alt="Add Room" />
@@ -19,8 +19,8 @@
               </router-link>
             </div>
             <div>
-              <router-link :to="{name:'addDevice'}">
-                <div class="card custom-cards-rooms" @click="switchComp('addDevices')">
+              <router-link class="links" :to="{name:'addDevice'}">
+                <div class="card custom-cards-rooms">
                   <div class="img-cont">
                     <img class="card-img-top img-add" src="../assets/light-bulb.png" alt="Add Room" />
                   </div>

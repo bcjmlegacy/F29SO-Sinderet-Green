@@ -34,6 +34,10 @@ body {
   text-decoration: none !important;
 }
 
+.display-2 {
+  font-size: 4em !important;
+}
+
 .display-3 {
   font-size: 3.5em !important;
 }
@@ -42,6 +46,13 @@ body {
   font-size: 3em !important;
 }
 
+.links {
+  text-decoration: none !important;
+  color: rgb(68, 68, 68);
+}
+.links:hover {
+  color: #000;
+}
 /*====================================================================================================================================*/
 /*Main Pages CSS*/
 /*====================================================================================================================================*/
@@ -56,8 +67,8 @@ body {
 }
 
 #rooms {
-  margin-top: 50px;
-  margin-bottom: 50px;
+  margin-top: 40px;
+  margin-bottom: 80px;
 }
 
 .flex-rooms {
@@ -83,6 +94,9 @@ body {
 }
 
 @media screen and (max-width: 1025px) {
+  .text-area {
+    margin-top: 50px;
+  }
   #dash {
     margin-left: 0;
     margin-right: 0;
@@ -141,7 +155,7 @@ body {
 /*############################################################*/
 
 #Add {
-  margin-top: 130px;
+  margin-top: 170px;
 }
 
 .flex-cont {
@@ -171,7 +185,7 @@ body {
 /*############################################################*/
 
 #devices {
-  margin-top: 100px;
+  margin-top: 150px;
 }
 
 @media screen and (max-width: 1025px) {
@@ -240,6 +254,7 @@ body {
   width: 23rem;
   height: 28rem;
   padding: 20px;
+  border-radius: 20px;
   background-color: white !important;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 1px 8px rgba(0, 0, 0, 0.22) !important;
   transition: 0.2s ease-in-out all !important;
@@ -267,7 +282,7 @@ body {
 /*############################################################*/
 
 #addDevice {
-  margin-top: 100px;
+  margin-top: 140px;
 }
 
 #form-addDevice {
@@ -288,6 +303,7 @@ body {
   width: 22rem;
   height: 40rem;
   padding: 20px;
+  border-radius: 20px;
   background-color: white !important;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 1px 8px rgba(0, 0, 0, 0.22) !important;
   transition: 0.2s ease-in-out all !important;
@@ -331,7 +347,7 @@ body {
 /*############################################################*/
 
 #editDevice {
-  margin-top: 80px;
+  margin-top: 120px;
   margin-bottom: 50px;
 }
 
@@ -375,6 +391,7 @@ body {
   width: 23rem;
   height: 46rem;
   padding: 20px;
+  border-radius: 20px;
   background-color: white !important;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 1px 8px rgba(0, 0, 0, 0.22) !important;
   transition: 0.2s ease-in-out all !important;
@@ -472,6 +489,7 @@ ul {
   width: 23rem;
   height: 30rem;
   padding: 20px;
+  border-radius: 20px;
   background-color: white !important;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 1px 8px rgba(0, 0, 0, 0.22) !important;
   transition: 0.2s ease-in-out all !important;
@@ -486,6 +504,7 @@ ul {
   min-height: 30rem;
   max-height: 50rem;
   padding: 30px;
+  border-radius: 20px;
   background-color: white !important;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 1px 8px rgba(0, 0, 0, 0.22) !important;
   transition: 0.2s ease-in-out all !important;
@@ -529,7 +548,7 @@ ul {
 /*############################################################*/
 
 #loginCard {
-  margin-top: 80px;
+  margin-top: 120px;
 
   /* border: solid 1px #005872;*/
 }
@@ -586,6 +605,7 @@ ul {
   width: 25rem;
   height: 34rem;
   padding: 20px;
+  border-radius: 20px;
   background-color: white !important;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 1px 8px rgba(0, 0, 0, 0.22) !important;
   transition: 0.2s ease-in-out all !important;
@@ -672,7 +692,8 @@ ul {
 /*############################################################*/
 
 #stat-cards {
-  margin-top: 100px;
+  margin-top: 150px;
+  background-color: none;
 }
 
 .img {
@@ -699,6 +720,7 @@ ul {
   width: 11rem;
   height: 16rem;
   padding: 1px;
+  border-radius: 20px;
   background-color: white !important;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 1px 8px rgba(0, 0, 0, 0.22) !important;
   transition: 0.2s ease-in-out all !important;
@@ -722,14 +744,6 @@ ul {
 /*NAVBARS - TOP Component CSS*/
 /*############################################################*/
 
-.flex-nav {
-  display: flex !important;
-  flex-direction: row !important;
-  flex-wrap: wrap !important;
-  flex-flow: row wrap !important;
-  justify-content: space-evenly !important;
-}
-
 .logo-small-top {
   font-family: "Harlow-solid";
   font-size: 2.2em;
@@ -738,144 +752,66 @@ ul {
 }
 
 .nav-item {
-  padding: 10px;
+  padding: 0px;
 }
 
 .navbar-top {
-  padding: 0 !important;
-  background-color: white;
-  box-shadow: 0 0px 25px rgba(0, 0, 0, 0.3) !important;
-  border-bottom: 1px solid #198fca !important;
+  padding: 10px !important;
+  background-color: #f5f5f5;
+  border: none;
   border-top: none !important;
   border-left: none !important;
   border-right: none !important;
+  box-shadow: 0 0px 7px rgba(0, 0, 0, 0.3) !important;
 }
 
 .nav-image {
-  width: 15%;
+  width: 35%;
+}
+
+.flex-nav {
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: wrap !important;
+  flex-flow: row wrap !important;
+  justify-content: space-evenly !important;
+}
+
+.navbar-bottom {
+  padding: 10px !important;
+  background-color: #f5f5f5;
+  box-shadow: 0 0px 10px rgba(0, 0, 0, 0.3) !important;
+}
+
+.nav-image-bottom {
+  width: 80%;
 }
 
 .image-cont-nav {
   text-align: center;
-  width: 15%;
+  width: 9rem;
   padding: 20px;
   opacity: 0.5;
+  border-radius: 10px;
+
+  background: #ffffff;
+  box-shadow: 15px 15px 30px #c4c4c4, -15px -15px 30px #ffffff;
 }
 
 .image-cont-nav:hover {
   background-color: #f5f5f5;
   opacity: 1;
   cursor: pointer;
-  box-shadow: 0 12px 10px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22) !important;
-}
-
-.flex-nav {
-  display: flex !important;
-  flex-direction: row !important;
-  flex-wrap: wrap !important;
-  flex-flow: row wrap !important;
-  justify-content: space-between !important;
-}
-
-.nav-item {
-  padding: 10px;
-}
-
-.navbar-bottom {
-  padding: 0 !important;
-  background-color: white;
-  box-shadow: 0 0px 25px rgba(0, 0, 0, 0.3) !important;
-  border-top: 1px solid #198fca;
-}
-
-.nav-image-bottom {
-  width: 50%;
-}
-
-.logo-small {
-  font-family: "Harlow-solid";
-  text-align: center;
-  font-size: 1.1em;
-  padding-top: 10%;
-  margin: 0;
-}
-.image-cont-nav {
-  text-align: center;
-  width: 20%;
-  padding: 15px;
-  opacity: 0.5;
-}
-
-.image-cont-nav:hover {
-  background-color: #f5f5f5;
-  opacity: 1;
-  cursor: pointer;
-  box-shadow: 0 12px 10px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22) !important;
+  background: linear-gradient(145deg, #ffffff, #e6e6e6);
+  box-shadow: 15px 15px 30px #c4c4c4, -15px -15px 30px #ffffff;
 }
 
 @media screen and (max-width: 1025px) {
   .image-cont-nav {
     width: 20%;
   }
-}
-
-@media screen and (max-width: 812px) {
-  .nav-image {
-    width: 80%;
-  }
-}
-
-/*############################################################*/
-/*NAVBARS - Bottom Component CSS*/
-/*############################################################*/
-
-.flex-nav {
-  display: flex !important;
-  flex-direction: row !important;
-  flex-wrap: wrap !important;
-  flex-flow: row wrap !important;
-  justify-content: space-between !important;
-}
-
-.nav-item {
-  padding: 10px;
-}
-
-.navbar-bottom {
-  padding: 0 !important;
-  background-color: white;
-  box-shadow: 0 0px 25px rgba(0, 0, 0, 0.3) !important;
-  border-top: 1px solid #198fca;
-}
-
-.nav-image-bottom {
-  width: 50%;
-}
-
-.logo-small {
-  font-family: "Harlow-solid";
-  text-align: center;
-  font-size: 1.1em;
-  padding-top: 10%;
-  margin: 0;
-}
-.image-cont-nav {
-  text-align: center;
-  width: 20%;
-  padding: 15px;
-  opacity: 0.5;
-}
-
-.image-cont-nav:hover {
-  background-color: #f5f5f5;
-  opacity: 1;
-  cursor: pointer;
-  box-shadow: 0 12px 10px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22) !important;
-}
-
-@media screen and (max-width: 1025px) {
-  .image-cont-nav {
-    width: 20%;
+  .flex-nav {
+    justify-content: space-between !important;
   }
 }
 
@@ -906,6 +842,7 @@ ul {
   width: 11rem;
   height: 15rem;
   padding: 1px;
+  border-radius: 20px;
   background-color: white !important;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 1px 8px rgba(0, 0, 0, 0.22) !important;
   transition: 0.2s ease-in-out all !important;
@@ -940,6 +877,7 @@ ul {
   width: 11rem;
   height: 12rem;
   padding: 10px;
+  border-radius: 20px;
   background-color: white !important;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 1px 8px rgba(0, 0, 0, 0.22) !important;
   transition: 0.2s ease-in-out all !important;
@@ -1008,19 +946,30 @@ ul {
 .card {
   margin-bottom: 30px !important;
   user-select: none !important;
+  border-color: none !important;
 }
 
 .custom-cards-rooms {
+  border: none;
   width: 11rem;
   height: 12rem;
   padding: 1px;
   background-color: white !important;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 1px 8px rgba(0, 0, 0, 0.22) !important;
+  border-radius: 20px;
+  /*
+  background: #ffffff;
+  box-shadow: 12px 12px 34px #cfcfcf, -12px -12px 34px #ffffff;
+  */
   transition: 0.2s ease-in-out all !important;
 }
 
 .custom-cards-rooms:hover {
   box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22) !important;
+  /*border-radius: 20px;
+  background: #ffffff;
+  box-shadow: inset 5px 5px 28px #d6d6d6, inset -5px -5px 28px #ffffff;
+  */
   cursor: pointer !important;
 }
 

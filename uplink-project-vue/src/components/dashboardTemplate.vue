@@ -8,7 +8,7 @@
     <div class="container">
       <div id="rooms">
         <div class="sub-title-wrapper">
-          <h3 class="display-4 text-center">Rooms</h3>
+          <h3 class="display-3 text-center">Rooms</h3>
         </div>
         <div class="flex-rooms">
           <!--Vue.js for loop to loop through all rooms gathered from database with their respective icons-->
