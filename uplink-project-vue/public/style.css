@@ -419,7 +419,8 @@ body {
 
 @media screen and (max-width: 1025px) {
   #editDevice {
-    margin-top: 10%;
+    margin-top: 70px;
+    margin-bottom: 50px;
   }
   .custom-cards-editDevices {
     width: 20rem;
@@ -444,8 +445,8 @@ body {
 }
 
 .item-deviceDetails {
-  margin-left: 50px;
-  margin-right: 50px;
+  margin-left: 20px;
+  margin-right: 20px;
 }
 
 .scheduleItem:before {
@@ -510,6 +511,21 @@ ul {
   box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22) !important;
 }
 
+.custom-cards-devicesDetails-graph {
+  width: 76rem;
+  min-height: 35rem;
+  max-height: 50rem;
+  padding: 30px;
+  border-radius: 20px;
+  background-color: white !important;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 1px 8px rgba(0, 0, 0, 0.22) !important;
+  transition: 0.2s ease-in-out all !important;
+}
+
+.custom-cards-devicesDetails-graph:hover {
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22) !important;
+}
+
 .text-wrapper {
   margin-top: 20px;
   margin-bottom: 20px;
@@ -531,6 +547,10 @@ ul {
     width: 20rem;
   }
   .custom-cards-devicesDetails-schedule {
+    width: 20rem;
+  }
+
+  .custom-cards-devicesDetails-graph {
     width: 20rem;
   }
 }

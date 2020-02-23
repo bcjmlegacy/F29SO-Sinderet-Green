@@ -17,7 +17,7 @@ import AddDevices from "./components/addDevices";
 import Login from "./components/loginTemplate";
 //import Register from "./components/registerTemplate";
 import AddDeviceMetrics from "./components/addDeviceMetrics";
-import EditDevice from "./components/editDevicePage";
+import EditSchedule from "./components/editDevicePage";
 import deviceDetails from "./components/deviceDetails";
 
 //bootstrap vue tags can be used
@@ -74,9 +74,9 @@ const router = new VueRouter({
       }
     },
     {
-      path: "/editDevice",
-      name: "editDevice",
-      component: EditDevice,
+      path: "/editSchedule",
+      name: "editSchedule",
+      component: EditSchedule,
       beforeEnter: (to, from, next) => {
         let token = Vue.$cookies.get("token");
         if (token == null) {

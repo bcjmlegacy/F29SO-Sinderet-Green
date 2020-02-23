@@ -55,10 +55,34 @@
               </ul>
               <div class="form-rows">
                 <router-link
-                  :to="{name: 'editDevice', query:{deviceName:deviceName, 'deviceImage': deviceImage, deviceEnergy:deviceEnergy}}"
+                  :to="{name: 'editSchedule', query:{deviceName:deviceName, 'deviceImage': deviceImage, deviceEnergy:deviceEnergy}}"
                 >
                   <button class="form-buttons" type="button">Edit</button>
                 </router-link>
+              </div>
+            </div>
+          </div>
+          <div class="item-deviceDetails">
+            <div class="card custom-cards-devicesDetails-schedule">
+              <h5 class="card-title text-center label-section">Automated Tasks</h5>
+              <div class="form-rows" />
+              <ul class="list-schedule">
+                <!--List all the automated tasks that were set up like how the schedule looks
+                -->
+              </ul>
+              <div class="form-rows">
+                <router-link
+                  :to="{name: '#', query:{deviceName:deviceName, 'deviceImage': deviceImage, deviceEnergy:deviceEnergy}}"
+                >
+                  <button class="form-buttons" type="button">Edit</button>
+                </router-link>
+              </div>
+            </div>
+          </div>
+          <div class="item-deviceDetails">
+            <div class="card custom-cards-devicesDetails-graph">
+              <div class="text-center">
+                <h1>Device Graph</h1>
               </div>
             </div>
           </div>
