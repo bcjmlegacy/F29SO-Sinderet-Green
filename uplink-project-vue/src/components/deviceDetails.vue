@@ -1,6 +1,13 @@
 <template>
   <div>
     <NavbarTop class="top-show" />
+    <div class="bottom-show">
+      <div class="logo-back fixed-top">
+        <h5 class="logo">
+          <router-link class="links" :to="{name: 'dashboard'}">uplink</router-link>
+        </h5>
+      </div>
+    </div>
     <div id="deviceDetails">
       <div class="container">
         <div class="flex-deviceDetails">
@@ -17,7 +24,6 @@
                 <h5 class="card-title text-center label-section">{{ deviceName }}</h5>
                 <p class="card-text text-center">{{ deviceEnergy }} Watts</p>
               </div>
-
               <div class="text-center">
                 <b-form-checkbox
                   v-model="form.checked"
@@ -29,9 +35,12 @@
                   @input="turnOn()"
                 >Turn {{ form.checked }}</b-form-checkbox>
               </div>
-
               <div class="form-rows">
-                <button class="form-buttons" type="button">Advanced</button>
+                <router-link
+                  :to="{name: 'editDevice', query:{deviceName:deviceName, 'deviceImage': deviceImage, deviceEnergy:deviceEnergy}}"
+                >
+                  <button class="form-buttons" type="button">Edit</button>
+                </router-link>
               </div>
             </div>
           </div>
@@ -48,10 +57,34 @@
               </ul>
               <div class="form-rows">
                 <router-link
-                  :to="{name: 'editDevice', query:{deviceName:deviceName, 'deviceImage': deviceImage, deviceEnergy:deviceEnergy}}"
+                  :to="{name: 'editSchedule', query:{deviceName:deviceName, 'deviceImage': deviceImage, deviceEnergy:deviceEnergy}}"
                 >
                   <button class="form-buttons" type="button">Edit</button>
                 </router-link>
+              </div>
+            </div>
+          </div>
+          <div class="item-deviceDetails">
+            <div class="card custom-cards-devicesDetails-schedule">
+              <h5 class="card-title text-center label-section">Automated Tasks</h5>
+              <div class="form-rows" />
+              <ul class="list-schedule">
+                <!--List all the automated tasks that were set up like how the schedule looks
+                -->
+              </ul>
+              <div class="form-rows">
+                <router-link
+                  :to="{name: '', query:{deviceName:deviceName, 'deviceImage': deviceImage, deviceEnergy:deviceEnergy}}"
+                >
+                  <button class="form-buttons" type="button">Edit</button>
+                </router-link>
+              </div>
+            </div>
+          </div>
+          <div class="item-deviceDetails">
+            <div class="card custom-cards-devicesDetails-graph">
+              <div class="text-center">
+                <h1>Device Graph</h1>
               </div>
             </div>
           </div>

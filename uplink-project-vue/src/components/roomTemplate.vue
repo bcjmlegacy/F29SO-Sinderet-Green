@@ -2,7 +2,7 @@
   <!--Room Card-->
   <div class="item">
     <!--Switch to the room page and also set the current room to the roomName said on the card clicked-->
-    <router-link :to="{name: 'room', params:{name: roomName}}">
+    <router-link class="links" :to="{name: 'room', params:{name: roomName}}">
       <div class="card custom-cards-rooms">
         <div class="img-cont">
           <!--Image of the room from prop roomImage-->

@@ -3,32 +3,26 @@
   <nav class="navbar-bottom fixed-bottom">
     <div class="container">
       <div class="flex-nav">
-        <router-link to="#" class="image-cont-nav">
-          <div>
-            <img src="../assets/arrow.png" alt="Back" class="nav-image" />
-          </div>
-        </router-link>
-
         <router-link :to="{name:'add'}" class="image-cont-nav">
           <div>
-            <img src="../assets/plus.png" alt="Add" class="nav-image" />
+            <img src="../assets/plus.png" alt="Add" class="nav-image-bottom" />
           </div>
         </router-link>
 
         <router-link :to="{name:'dashboard'}" class="image-cont-nav">
           <div>
-            <img src="../assets/home-run.png" alt="Home" class="nav-image" />
+            <img src="../assets/home-run.png" alt="Home" class="nav-image-bottom" />
           </div>
         </router-link>
 
         <router-link to="#" class="image-cont-nav">
           <div>
-            <img src="../assets/exclamation.png" alt="warnings" class="nav-image" />
+            <img src="../assets/exclamation.png" alt="warnings" class="nav-image-bottom" />
           </div>
         </router-link>
         <router-link to="#" class="image-cont-nav">
           <div>
-            <img src="../assets/user.png" alt="Profile" class="nav-image" />
+            <img src="../assets/user.png" alt="Profile" class="nav-image-bottom" />
           </div>
         </router-link>
       </div>

@@ -1,6 +1,13 @@
 <template>
   <div>
     <NavbarTop class="top-show" :back="back" />
+    <div class="bottom-show">
+      <div class="logo-back fixed-top">
+        <h5 class="logo">
+          <router-link class="links" :to="{name: 'dashboard'}">uplink</router-link>
+        </h5>
+      </div>
+    </div>
     <div id="addRooms">
       <div class="container">
         <h3 class="display-3 text-center">Add Room</h3>

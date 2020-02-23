@@ -1,6 +1,6 @@
 <template>
   <div>
-    <NavbarTop class="top-show" :back="back" />
+    <NavbarTop class="top-show" />
     <div class="bottom-show">
       <div class="logo-back fixed-top">
         <h5 class="logo">
@@ -8,12 +8,12 @@
         </h5>
       </div>
     </div>
-    <div id="addDevice">
+    <div id="editDevice">
       <div class="container">
-        <h3 class="display-3 text-center">Add Device</h3>
+        <h3 class="display-3 text-center">Edit Device</h3>
         <div id="form-addDevice">
           <div class="flex-add">
-            <div class="card custom-cards-addDevices">
+            <div class="card custom-cards-editDevices-adv">
               <div class="img-cont">
                 <img
                   :src="require(`../assets/${deviceImage}.png`)"
@@ -22,30 +22,32 @@
                 />
               </div>
               <div class="text-wrapper">
-                <h5 class="card-title text-center">{{ deviceName }}</h5>
+                <h5 class="card-title text-center label-section">{{ deviceName }}</h5>
                 <p class="card-text text-center">{{ deviceEnergy }} Watts</p>
               </div>
               <div class="device-cont">
-                <b-form @submit="go">
+                <b-form>
+                  <p class="label-section text-center"></p>
                   <div class="col-sm-12">
-                    <label for="input-device-name" class="label">Device Name</label>
+                    <label for="input-device-name" class="label">Rename Device</label>
                   </div>
                   <div class="col-sm-12">
                     <input
-                      type="text"
                       id="input-device-name"
-                      required="required"
-                      placeholder="Hue Lights"
+                      type="text"
                       class="form-inputboxes"
+                      :placeholder="deviceName"
                       v-model="form.name"
+                      size="md"
                     />
                   </div>
                   <div class="form-rows">
                     <div class="col-sm-12">
-                      <label for="input-device-room" class="label">Device Room</label>
+                      <label for="input-device-room" class="label">Change Device Room</label>
                     </div>
+
                     <div class="col-sm-12">
-                      <select v-model="form.room" class="form-dropdown" required="required">
+                      <select id="input-device-room" v-model="form.room" class="form-dropdown">
                         <option disabled value>Please Select A Room</option>
                         <option
                           v-for="r in rooms"
@@ -55,9 +57,27 @@
                       </select>
                     </div>
                   </div>
-                  <div class="form-rows">
-                    <div class="col-sm-12">
-                      <button class="form-buttons" type="submit">Add Device</button>
+                  <div class="newRowSwitch">
+                    <div class="form-rows">
+                      <div class="col-sm-12">
+                        <button class="form-buttons" type="submit">Save Changes</button>
+                      </div>
+                    </div>
+                    <div class="form-rows">
+                      <div class="col-sm-12">
+                        <router-link
+                          :to="{name: 'device',query:{deviceName:deviceName, 'deviceImage': deviceImage, deviceEnergy:deviceEnergy} }"
+                        >
+                          <button class="form-buttons" type="submit">Cancel</button>
+                        </router-link>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="newRowSwitch-delete">
+                    <div class="form-rows">
+                      <div class="col-sm-12">
+                        <button class="form-buttons-delete" type="submit">Delete Device</button>
+                      </div>
                     </div>
                   </div>
                 </b-form>
@@ -67,65 +87,33 @@
         </div>
       </div>
     </div>
-    <NavbarBottom class="bottom-show" :back="back" />
+    <NavbarBottom class="bottom-show" />
   </div>
 </template>
 <script>
 import NavbarTop from "./navbar-top";
 import NavbarBottom from "./navbar-bottom";
 
-let url = "http://localhost:5552/insertDevice";
-let url1 = "http://localhost:5552/getRooms";
-
+let url = "http://localhost:5552/getRooms";
 export default {
   name: "addDevice",
   components: {
     NavbarTop,
     NavbarBottom
   },
-  props: ["deviceName", "deviceImage", "deviceEnergy", "userToken", "back"],
   data() {
     return {
       form: {
         name: "",
-        room: "",
-        wattage: this.deviceEnergy,
-        type: "1"
+        room: ""
       },
       rooms: []
     };
   },
-  methods: {
-    go(evt) {
-      console.log(this.form);
-      fetch(url, {
-        mode: "cors",
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          Authorization: this.userToken
-        },
-        body: JSON.stringify({
-          name: this.form.name,
-          type: this.form.type,
-          wattage: this.form.wattage,
-          room: this.form.room
-        })
-      })
-        .then(response => {
-          return response.json();
-        })
-        .then(jsonData => {
-          console.log(jsonData);
-          this.$router.push({ name: "dashboard" });
-        });
-
-      evt.preventDefault();
-    }
-  },
+  props: ["deviceName", "deviceImage", "deviceEnergy", "userToken"],
+  methods: {},
   mounted: function() {
-    fetch(url1, {
+    fetch(url, {
       mode: "cors",
       method: "GET",
       headers: {
@@ -142,3 +130,6 @@ export default {
   }
 };
 </script>
+
+<style>
+</style>
