@@ -107,8 +107,7 @@ export default {
         name: "",
         room: ""
       },
-      rooms: [],
-      device: ""
+      rooms: []
     };
   },
   props: ["deviceName", "deviceImage", "deviceEnergy", "userToken"],

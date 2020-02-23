@@ -30,10 +30,6 @@ body {
   padding-bottom: 10px;
 }
 
-.links {
-  text-decoration: none !important;
-}
-
 .display-2 {
   font-size: 4em !important;
 }
@@ -52,6 +48,10 @@ body {
 }
 .links:hover {
   color: #000;
+}
+
+.advanced-links {
+  font-size: 1.3em;
 }
 /*====================================================================================================================================*/
 /*Main Pages CSS*/

@@ -89,6 +89,9 @@
             </div>
           </div>
         </div>
+        <div class="text-center">
+          <router-link class="advanced-links text-center links" to="#">See Advanced Stats</router-link>
+        </div>
       </div>
     </div>
   </div>
