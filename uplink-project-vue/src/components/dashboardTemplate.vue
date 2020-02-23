@@ -11,11 +11,19 @@
       </div>
     </div>
     <!--Summary Component with the props shown as attributes below-->
-    <Summary sumTitle="Home" energy="200" temperature="18" solar="1000" />
+    <Summary
+      :userToken="this.userToken"
+      sumTitle="Home"
+      energy="200"
+      temperature="18"
+      solar="1000"
+    />
     <div class="container">
       <div id="rooms">
-        <div class="sub-title-wrapper">
-          <h3 class="display-3 text-center">Rooms</h3>
+        <div style="padding-bottom: 20px;">
+          <div class="sub-title-wrapper">
+            <h3 class="display-3 text-center">Rooms</h3>
+          </div>
         </div>
         <div class="flex-rooms">
           <!--Vue.js for loop to loop through all rooms gathered from database with their respective icons-->
@@ -23,13 +31,9 @@
             <!--Props filled for Room Card Component *This tag is looped until there are no more rooms in the database* -->
             <Room :roomName="result.room_name" :roomImage="result.roomImage" />
           </div>
+          <AllDevices />
         </div>
         <!--Additional Components-->
-        <div class="additional">
-          <div class="flex-rooms">
-            <AllDevices />
-          </div>
-        </div>
       </div>
     </div>
     <!--Navbar bottom *mobile and tablet view*-->

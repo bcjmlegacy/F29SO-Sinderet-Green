@@ -11,7 +11,13 @@
       </div>
     </div>
     <!--Take the roomName from props and store as title for the room page - demo data is also entered-->
-
+    <Summary
+      :userToken="this.userToken"
+      sumTitle="Home"
+      energy="200"
+      temperature="18"
+      solar="1000"
+    />
     <div class="container">
       <div id="rooms">
         <div class="sub-title-wrapper">
@@ -42,7 +48,7 @@
 </template>
 <script>
 //All the components that are needed for the roomPage
-//import Summary from "./summary";
+import Summary from "./roomSummary";
 import Device from "./deviceCard";
 import AllDevices from "./allDevices";
 import NavTop from "./navbar-top";
@@ -56,7 +62,7 @@ export default {
   name: "Room",
   components: {
     //Initialise the components
-
+    Summary,
     Device,
     AllDevices,
     NavTop,

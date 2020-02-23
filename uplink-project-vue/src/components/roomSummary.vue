@@ -34,33 +34,7 @@
               </div>
             </div>
           </div>
-          <div>
-            <div class="card custom-cards">
-              <div>
-                <div class="flex-cards">
-                  <div>
-                    <div class="col-width">
-                      <div class="img-cont-summary">
-                        <img src="../assets/battery.png" class="img-summary" alt="Energy Usage" />
-                      </div>
-                      <div class="card-body text-center">
-                        <h5 class="card-title">Solar Stored Today</h5>
-                        <h4 class="card-text">{{solar}}KWh</h4>
-                      </div>
-                    </div>
-                  </div>
-                  <div>
-                    <div class="col-width">
-                      <div class="card-body text-center">
-                        <h4 class="display-2">60%</h4>
-                        <h5 class="card-text">Charged</h5>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+
           <div>
             <div class="card custom-cards">
               <div class="flex-cards">

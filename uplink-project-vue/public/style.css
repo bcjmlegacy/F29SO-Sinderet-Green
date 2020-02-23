@@ -708,6 +708,92 @@ ul {
 /*Summary Component CSS*/
 /*############################################################*/
 
+#stat-cards {
+  padding-top: 100px;
+  padding-bottom: 30px;
+  background-color: #e7e7e7;
+}
+
+.img-summary {
+  padding: 15px;
+  width: 80%;
+  text-align: center;
+}
+
+.img-cont-summary {
+  text-align: center;
+  width: 100%;
+}
+
+.col-width {
+  width: 12rem;
+}
+
+.slide {
+  transition: all ease-in-out 1s;
+}
+
+.flex-b {
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: wrap !important;
+  justify-content: space-between !important;
+  align-items: flex-start !important;
+}
+
+.stats {
+  margin-top: 50px;
+}
+
+.sub-title-wrapper {
+  margin-bottom: 30px;
+}
+
+.flex-cards {
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: wrap !important;
+  justify-content: center !important;
+  align-items: center !important;
+}
+
+.custom-cards {
+  width: 28rem;
+  height: 20rem;
+  padding: 1px;
+  margin: 5px;
+  border-radius: 20px;
+  background-color: white !important;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 1px 8px rgba(0, 0, 0, 0.22) !important;
+  transition: 0.2s ease-in-out all !important;
+}
+
+.custom-cards:hover {
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22) !important;
+  cursor: pointer !important;
+}
+
+@media screen and (max-width: 1025px) {
+  #stat-cards {
+    padding-top: 50px;
+    padding-bottom: 20px;
+  }
+  .custom-cards {
+    width: 24rem;
+    height: 18rem;
+    margin: 1px;
+  }
+  .flex-b {
+    justify-content: space-evenly !important;
+  }
+  .col-width {
+    width: 11rem;
+  }
+  .img {
+    width: 100%;
+  }
+}
+
 /*############################################################*/
 /*NAVBARS - TOP Component CSS*/
 /*############################################################*/
