@@ -13,6 +13,9 @@
             <img src="../assets/plus.png" alt="Add" class="nav-image" />
           </div>
         </router-link>
+        <h5 class="logo-top">
+          <router-link class="links" :to="{name: 'dashboard'}">uplink</router-link>
+        </h5>
         <router-link to="#" class="image-cont-nav">
           <div>
             <img src="../assets/exclamation.png" alt="warnings" class="nav-image" />

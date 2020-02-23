@@ -3,6 +3,13 @@
   <div id="dash">
     <!--Navbar top *web view*-->
     <NavTop class="top-show" :back="back" />
+    <div class="bottom-show">
+      <div class="logo-back fixed-top">
+        <h5 class="logo">
+          <router-link class="links" :to="{name: 'dashboard'}">uplink</router-link>
+        </h5>
+      </div>
+    </div>
     <!--Summary Component with the props shown as attributes below-->
     <Summary sumTitle="Home" energy="200" temperature="18" solar="1000" />
     <div class="container">

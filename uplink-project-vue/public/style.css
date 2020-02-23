@@ -61,21 +61,18 @@ body {
 /*Dashsboard CSS*/
 /*############################################################*/
 
-#dash {
-  margin-left: 30%;
-  margin-right: 30%;
-}
-
 #rooms {
   margin-top: 40px;
   margin-bottom: 80px;
+  margin-left: 15%;
+  margin-right: 15%;
 }
 
 .flex-rooms {
   display: flex !important;
   flex-direction: row !important;
   flex-wrap: wrap !important;
-  justify-content: space-evenly !important;
+  justify-content: space-around !important;
   align-items: flex-start !important;
 }
 
@@ -101,6 +98,10 @@ body {
     margin-left: 0;
     margin-right: 0;
   }
+  #rooms {
+    margin-left: 0;
+    margin-right: 0;
+  }
   .item {
     margin: 0;
   }
@@ -118,11 +119,6 @@ body {
 /*############################################################*/
 /*Room Page CSS*/
 /*############################################################*/
-
-#room {
-  margin-left: 30%;
-  margin-right: 30%;
-}
 
 .item {
   margin-left: 50px;
@@ -618,11 +614,32 @@ ul {
 .logo {
   font-family: "Harlow-solid";
   text-align: center;
-  font-size: 3.5em;
+  font-size: 2.8em;
+  opacity: 0.5;
   color: #000;
-  margin-bottom: 10px;
+  padding: 5px;
+  margin-top: 2px;
+  margin-bottom: 2px;
 }
 
+.logo-top {
+  font-family: "Harlow-solid";
+  text-align: center;
+  font-size: 2.5em;
+  opacity: 0.5;
+  color: #000;
+  margin-top: 3px;
+  padding: 10px;
+}
+
+.logo-back {
+  background-color: white;
+  box-shadow: 0 0px 10px rgba(0, 0, 0, 0.3) !important;
+}
+
+.logo-top:hover {
+  opacity: 1;
+}
 /* Responsive CSS Queries */
 
 @media screen and (max-width: 1024px) {
@@ -691,55 +708,6 @@ ul {
 /*Summary Component CSS*/
 /*############################################################*/
 
-#stat-cards {
-  margin-top: 150px;
-  background-color: none;
-}
-
-.img {
-  padding: 15px;
-}
-
-.flex-b {
-  display: flex !important;
-  flex-direction: row !important;
-  flex-wrap: wrap !important;
-  justify-content: space-evenly !important;
-  align-items: flex-start !important;
-}
-
-.stats {
-  margin-top: 50px;
-}
-
-.sub-title-wrapper {
-  margin-bottom: 30px;
-}
-
-.custom-cards {
-  width: 11rem;
-  height: 16rem;
-  padding: 1px;
-  border-radius: 20px;
-  background-color: white !important;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 1px 8px rgba(0, 0, 0, 0.22) !important;
-  transition: 0.2s ease-in-out all !important;
-}
-
-.custom-cards:hover {
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22) !important;
-  cursor: pointer !important;
-}
-
-@media screen and (max-width: 1025px) {
-  #stat-cards {
-    margin-top: 50px;
-  }
-  .custom-cards {
-    width: 10.1rem;
-  }
-}
-
 /*############################################################*/
 /*NAVBARS - TOP Component CSS*/
 /*############################################################*/
@@ -757,7 +725,7 @@ ul {
 
 .navbar-top {
   padding: 10px !important;
-  background-color: #f5f5f5;
+  background-color: #ffffff !important;
   border: none;
   border-top: none !important;
   border-left: none !important;
@@ -779,7 +747,7 @@ ul {
 
 .navbar-bottom {
   padding: 10px !important;
-  background-color: #f5f5f5;
+  background-color: #ffffff !important;
   box-shadow: 0 0px 10px rgba(0, 0, 0, 0.3) !important;
 }
 
