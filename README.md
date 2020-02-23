@@ -51,6 +51,7 @@ NPM packages
 - `bootstrap-vue`
 - `vue-cli`
 - `vue-cookies`
+- `vue-router`
 
 To run the frontend using Vue-CLI, type:
 
