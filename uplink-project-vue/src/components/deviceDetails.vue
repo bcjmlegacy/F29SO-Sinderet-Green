@@ -24,7 +24,6 @@
                 <h5 class="card-title text-center label-section">{{ deviceName }}</h5>
                 <p class="card-text text-center">{{ deviceEnergy }} Watts</p>
               </div>
-
               <div class="text-center">
                 <b-form-checkbox
                   v-model="form.checked"
@@ -36,9 +35,12 @@
                   @input="turnOn()"
                 >Turn {{ form.checked }}</b-form-checkbox>
               </div>
-
               <div class="form-rows">
-                <button class="form-buttons" type="button">Advanced</button>
+                <router-link
+                  :to="{name: 'editDevice', query:{deviceName:deviceName, 'deviceImage': deviceImage, deviceEnergy:deviceEnergy}}"
+                >
+                  <button class="form-buttons" type="button">Edit</button>
+                </router-link>
               </div>
             </div>
           </div>
@@ -72,7 +74,7 @@
               </ul>
               <div class="form-rows">
                 <router-link
-                  :to="{name: '#', query:{deviceName:deviceName, 'deviceImage': deviceImage, deviceEnergy:deviceEnergy}}"
+                  :to="{name: '', query:{deviceName:deviceName, 'deviceImage': deviceImage, deviceEnergy:deviceEnergy}}"
                 >
                   <button class="form-buttons" type="button">Edit</button>
                 </router-link>

@@ -19,7 +19,7 @@ import Login from "./components/loginTemplate";
 import AddDeviceMetrics from "./components/addDeviceMetrics";
 import EditSchedule from "./components/editDevicePage";
 import deviceDetails from "./components/deviceDetails";
-
+import advancedEdit from "./components/advancedDeviceSettings.vue";
 //bootstrap vue tags can be used
 Vue.use(BootstrapVue);
 Vue.config.productionTip = false;
@@ -150,6 +150,22 @@ const router = new VueRouter({
       name: "addDeviceData",
       path: "/addData",
       component: AddDeviceMetrics,
+      props(route) {
+        return route.query || {};
+      },
+      beforeEnter: (to, from, next) => {
+        let token = Vue.$cookies.get("token");
+        if (token == null) {
+          next({ name: "login" });
+        } else {
+          next();
+        }
+      }
+    },
+    {
+      name: "editDevice",
+      path: "/edit",
+      component: advancedEdit,
       props(route) {
         return route.query || {};
       },

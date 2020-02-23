@@ -1,0 +1,136 @@
+<template>
+  <div>
+    <NavbarTop class="top-show" />
+    <div class="bottom-show">
+      <div class="logo-back fixed-top">
+        <h5 class="logo">
+          <router-link class="links" :to="{name: 'dashboard'}">uplink</router-link>
+        </h5>
+      </div>
+    </div>
+    <div id="editDevice">
+      <div class="container">
+        <h3 class="display-3 text-center">Edit Device</h3>
+        <div id="form-addDevice">
+          <div class="flex-add">
+            <div class="card custom-cards-editDevices-adv">
+              <div class="img-cont">
+                <img
+                  :src="require(`../assets/${deviceImage}.png`)"
+                  alt="device icon"
+                  class="device-img"
+                />
+              </div>
+              <div class="text-wrapper">
+                <h5 class="card-title text-center label-section">{{ deviceName }}</h5>
+                <p class="card-text text-center">{{ deviceEnergy }} Watts</p>
+              </div>
+              <div class="device-cont">
+                <b-form>
+                  <p class="label-section text-center"></p>
+                  <div class="col-sm-12">
+                    <label for="input-device-name" class="label">Rename Device</label>
+                  </div>
+                  <div class="col-sm-12">
+                    <input
+                      id="input-device-name"
+                      type="text"
+                      class="form-inputboxes"
+                      :placeholder="deviceName"
+                      v-model="form.name"
+                      size="md"
+                    />
+                  </div>
+                  <div class="form-rows">
+                    <div class="col-sm-12">
+                      <label for="input-device-room" class="label">Change Device Room</label>
+                    </div>
+
+                    <div class="col-sm-12">
+                      <select id="input-device-room" v-model="form.room" class="form-dropdown">
+                        <option disabled value>Please Select A Room</option>
+                        <option
+                          v-for="r in rooms"
+                          :key="r.room_id"
+                          :value="r.room_id"
+                        >{{ r.room_name }}</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="newRowSwitch">
+                    <div class="form-rows">
+                      <div class="col-sm-12">
+                        <button class="form-buttons" type="submit">Save Changes</button>
+                      </div>
+                    </div>
+                    <div class="form-rows">
+                      <div class="col-sm-12">
+                        <router-link
+                          :to="{name: 'device',query:{deviceName:deviceName, 'deviceImage': deviceImage, deviceEnergy:deviceEnergy} }"
+                        >
+                          <button class="form-buttons" type="submit">Cancel</button>
+                        </router-link>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="newRowSwitch-delete">
+                    <div class="form-rows">
+                      <div class="col-sm-12">
+                        <button class="form-buttons-delete" type="submit">Delete Device</button>
+                      </div>
+                    </div>
+                  </div>
+                </b-form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <NavbarBottom class="bottom-show" />
+  </div>
+</template>
+<script>
+import NavbarTop from "./navbar-top";
+import NavbarBottom from "./navbar-bottom";
+
+let url = "http://localhost:5552/getRooms";
+export default {
+  name: "addDevice",
+  components: {
+    NavbarTop,
+    NavbarBottom
+  },
+  data() {
+    return {
+      form: {
+        name: "",
+        room: ""
+      },
+      rooms: [],
+      device: ""
+    };
+  },
+  props: ["deviceName", "deviceImage", "deviceEnergy", "userToken"],
+  methods: {},
+  mounted: function() {
+    fetch(url, {
+      mode: "cors",
+      method: "GET",
+      headers: {
+        Authorization: this.userToken
+      }
+    })
+      .then(response => {
+        return response.json();
+      })
+      .then(jsonData => {
+        this.rooms = jsonData;
+        console.log(this.rooms);
+      });
+  }
+};
+</script>
+
+<style>
+</style>

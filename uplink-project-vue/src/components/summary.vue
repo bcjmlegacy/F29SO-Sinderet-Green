@@ -147,7 +147,7 @@ export default {
     }*/
   },
   mounted: function() {
-    fetch("https://dark-sky.p.rapidapi.com/55.9716,3.6026?lang=en&units=auto", {
+    fetch("https://dark-sky.p.rapidapi.com/55.9533,3.1883?lang=en&units=auto", {
       method: "GET",
       headers: {
         "x-rapidapi-host": "dark-sky.p.rapidapi.com",
