@@ -13,7 +13,7 @@
     <!--Take the roomName from props and store as title for the room page - demo data is also entered-->
     <Summary
       :userToken="this.userToken"
-      sumTitle="Home"
+      :sumTitle="roomName"
       energy="200"
       temperature="18"
       solar="1000"
