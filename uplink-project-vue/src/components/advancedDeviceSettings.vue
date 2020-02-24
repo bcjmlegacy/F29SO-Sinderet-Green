@@ -117,7 +117,9 @@ export default {
   props: ["deviceID", "deviceName", "deviceImage", "deviceEnergy", "userToken"],
   methods: {
     deleteDevice() {
-      confirm("Do really want to delete " + this.deviceName + "?");
+      if (!confirm("Do really want to delete " + this.deviceName + "?")) {
+        return false;
+      }
       let url = "http://192.168.0.11:5552/deleteDevice?id=" + this.deviceID;
       fetch(url, {
         mode: "cors",
@@ -131,6 +133,7 @@ export default {
         })
         .then(jsonData => {
           console.log(jsonData);
+          this.$router.push({ name: "dashboard" });
         });
     }
   },
