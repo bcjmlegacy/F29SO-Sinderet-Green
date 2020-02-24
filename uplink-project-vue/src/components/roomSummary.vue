@@ -54,7 +54,6 @@
                     <div class="card-body text-center slide">
                       <h5 class="card-text">Outside it's</h5>
                       <h4 class="display-2">{{temperatures.temp}}&#x2103;</h4>
-                      <p class="card-text">and</p>
                       <h5 class="card-text">{{temperatures.currentDescription}}</h5>
                     </div>
                   </div>
