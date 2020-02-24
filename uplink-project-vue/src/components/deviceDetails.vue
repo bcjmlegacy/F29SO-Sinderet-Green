@@ -144,10 +144,6 @@ export default {
         .then(jsonData => {
           console.log(jsonData);
         });
-    },
-    loadOnce: function() {
-      location.reload();
-      console.log("reloaded");
     }
   },
   mounted: function() {
@@ -164,6 +160,7 @@ export default {
         return response.json();
       })
       .then(jsonData => {
+        //Some formating for finding on and off commands
         for (let key in jsonData) {
           if (
             jsonData[key].timer_repeat_command === 1 ||
@@ -176,6 +173,7 @@ export default {
           ) {
             jsonData[key].timer_repeat_command = "off";
           }
+          //creates a json for the scheduled item and pushes to the schedule array
           this.scheduledCommands.push({
             id: jsonData[key].timer_repeat_id,
             hour: formatTime(jsonData[key].timer_repeat_hour),
@@ -196,6 +194,7 @@ export default {
   }
 };
 
+//formatting for the schedule.
 function capitalize(text) {
   return text.charAt(0).toUpperCase() + text.slice(1);
 }
