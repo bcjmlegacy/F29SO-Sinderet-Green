@@ -35,34 +35,7 @@
               </div>
             </div>
           </div>
-          <div>
-            <div class="card custom-cards">
-              <div>
-                <div class="flex-cards">
-                  <div>
-                    <div class="col-width">
-                      <div class="img-cont-summary">
-                        <img src="../assets/battery.png" class="img-summary" alt="Energy Usage" />
-                      </div>
-                      <!--Solar battery card area for data-->
-                      <div class="card-body text-center">
-                        <h5 class="card-title">Solar Stored Today</h5>
-                        <h4 class="card-text">{{solar}}KWh</h4>
-                      </div>
-                    </div>
-                  </div>
-                  <div>
-                    <div class="col-width">
-                      <div class="card-body text-center">
-                        <h4 class="display-2">60%</h4>
-                        <h5 class="card-text">Charged</h5>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+
           <div>
             <div class="card custom-cards">
               <div class="flex-cards">
@@ -121,13 +94,12 @@ export default {
         })
         .then(jsonData => {
           console.log(jsonData);
-          for (let room in jsonData) {
-            this.temperatures.push({
-              temp: Math.floor(Math.random() * (25 - 16 + 1)) + 16,
-              currentDescription: "",
-              loc: jsonData[room].room_name
-            });
-          }
+
+          this.temperatures = {
+            temp: Math.floor(Math.random() * (25 - 16 + 1)) + 16,
+            currentDescription: "",
+            loc: jsonData[0].room_name
+          };
         });
     }
     
@@ -152,7 +124,7 @@ export default {
   },
   mounted: function() {
     //Dark sky api to get data for outside weather. Set to Edinburgh
-    fetch("https://dark-sky.p.rapidapi.com/55.9533,3.1883?lang=en&units=auto", {
+    fetch("https://dark-sky.p.rapidapi.com/55.9716,3.6026?lang=en&units=auto", {
       method: "GET",
       headers: {
         "x-rapidapi-host": "dark-sky.p.rapidapi.com",

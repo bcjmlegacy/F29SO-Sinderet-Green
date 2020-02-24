@@ -21,6 +21,7 @@ INSERT INTO device_type     (device_type_name)  VALUES ("Fridge");
 INSERT INTO device_type     (device_type_name)  VALUES ("Solar Controller");
 INSERT INTO device_type     (device_type_name)  VALUES ("Light");
 INSERT INTO device_type     (device_type_name)  VALUES ("Door lock");
+INSERT INTO device_type     (device_type_name)  VALUES ("Solar Battery");
 
 INSERT INTO device_command  (device_command_device_type, device_command_name, device_command_mqtt, device_command_value, device_command_mqtt_res, device_command_value_res) VALUES (1, "Turn on",  "set_power", "on",  "status", "on");
 INSERT INTO device_command  (device_command_device_type, device_command_name, device_command_mqtt, device_command_value, device_command_mqtt_res, device_command_value_res) VALUES (1, "Turn off", "set_power", "off", "status", "off");
@@ -47,6 +48,8 @@ INSERT INTO device (device_id, device_room, device_type, device_wattage, device_
 INSERT INTO device (device_id, device_room, device_type, device_wattage, device_name, device_added) VALUES ("456ABC123", 1, 4, 40,  "Livingroom light",     1579521113);
 INSERT INTO device (device_id, device_room, device_type, device_wattage, device_name, device_added) VALUES ("789ABC123", 2, 2, 400, "Kitchen fridge",       1579521113);
 INSERT INTO device (device_id, device_room, device_type, device_wattage, device_name, device_added) VALUES ("123456ABC", 4, 3, 5,   "Solar controller",     1579521113);
+INSERT INTO device (device_id, device_room, device_type, device_wattage, device_name, device_added) VALUES ("738JWD836", 4, 6, 0,   "Solar battery 1",      1579521113);
+INSERT INTO device (device_id, device_room, device_type, device_wattage, device_name, device_added) VALUES ("629IDK856", 4, 6, 0,   "Solar battery 2",      1579521113);
 
 INSERT INTO timer_repeat (
     timer_repeat_type,
@@ -90,3 +93,14 @@ INSERT INTO timer_oneshot (
     timer_oneshot_command
 )
 VALUES  (1, "456ABC123", 3);
+
+-- Turn the heater on if the livingroom temp is below 20
+
+INSERT INTO device_trigger (
+    device_trigger_device_id,
+    device_trigger_sensor_id,
+    device_trigger_gt_lt_eq,
+    device_trigger_sensor_value,
+    device_trigger_command
+)
+VALUES  ("123ABC123", "ABC123", "<", 20, 1);

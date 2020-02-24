@@ -66,7 +66,7 @@
 
 <script>
 //Post URL to API for login
-let url = "http://localhost:5552/login";
+let url = "http://192.168.0.11:5552/login";
 
 //Bus to store current component
 import { bus } from "../main";
@@ -83,10 +83,6 @@ export default {
     };
   },
   methods: {
-    switchComp(comp) {
-      //Switch component
-      bus.$emit("switchComp", comp);
-    },
     saveToken(token) {
       bus.$emit("saveToken", token);
     },
@@ -120,9 +116,9 @@ export default {
             this.error = "Incorrect Username or Password";
             this.resetForm();
           } else {
-            this.switchComp("Dash");
             this.saveToken(jsonData.token);
             this.$cookies.set("token", jsonData.token);
+            this.$router.push({ name: "dashboard" });
           }
         });
 

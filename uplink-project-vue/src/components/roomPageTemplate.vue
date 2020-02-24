@@ -2,9 +2,22 @@
   <!--Room Page - similar to the Dash-->
   <div id="room">
     <!--Top Navbar (Website)-->
-    <NavTop class="top-show" :back="this.back" />
+    <NavTop class="top-show" />
+    <div class="bottom-show">
+      <div class="logo-back fixed-top">
+        <h5 class="logo">
+          <router-link class="links" :to="{name: 'dashboard'}">uplink</router-link>
+        </h5>
+      </div>
+    </div>
     <!--Take the roomName from props and store as title for the room page - demo data is also entered-->
-    <Summary :sumTitle="roomName" energy="100" solar="1000" temperature="21" />
+    <Summary
+      :userToken="this.userToken"
+      :sumTitle="roomName"
+      energy="200"
+      temperature="18"
+      solar="1000"
+    />
     <div class="container">
       <div id="rooms">
         <div class="sub-title-wrapper">
@@ -15,6 +28,7 @@
           <div v-for="device in roomDevices" :key="device.deviceName">
             <!--Data that the Device component uses to show the card.-->
             <Device
+              :deviceID="device.deviceID"
               :deviceName="device.deviceName"
               :deviceImage="device.deviceImage"
               :deviceEnergy="device.deviceWattage"
@@ -30,21 +44,21 @@
       </div>
     </div>
     <!--Bottom Navbar (Mobile and Tablet)-->
-    <NavBottom class="bottom-show" :back="this.back" />
+    <NavBottom class="bottom-show" />
   </div>
 </template>
 <script>
 //All the components that are needed for the roomPage
-import Summary from "./summary";
+import Summary from "./roomSummary";
 import Device from "./deviceCard";
 import AllDevices from "./allDevices";
 import NavTop from "./navbar-top";
 import NavBottom from "./navbar-bottom";
 
 //URL for getting all the devices
-let url = "http://localhost:5552/getDevices";
+let url = "http://192.168.0.11:5552/getDevices";
 //URL for getting all rooms
-let url1 = "http://localhost:5552/getRooms";
+let url1 = "http://192.168.0.11:5552/getRooms";
 export default {
   name: "Room",
   components: {
@@ -55,9 +69,10 @@ export default {
     NavTop,
     NavBottom
   },
-  props: ["roomName", "userToken", "back"], //props to confirm the room the page is showing
+  props: ["userToken", "back"], //props to confirm the room the page is showing
   data() {
     return {
+      roomName: this.$route.params.name,
       devices: [], //all devices stored in the database
       rooms: [], //all rooms stored in the database
       roomDevices: [] //finished array containing the device for the room and the device icon
@@ -98,6 +113,7 @@ export default {
                 //Loop to get the icon that matches the second half of the device name
                 this.roomDevices.push({
                   //generate a JSON of the device name and icon and store in roomDevices array
+                  deviceID: this.devices[key].device_id,
                   deviceName: this.devices[key].device_name,
                   deviceImage: pairImg(this.devices[key].device_name),
                   deviceWattage: this.devices[key].device_wattage
@@ -136,9 +152,9 @@ function pairImg(device) {
     return "security-camera";
   } else if (
     device.includes("Bell") ||
-    device.includes("door-bell") ||
-    device.includes("Door Bell") ||
-    device.includes("door bell")
+    device.includes("bell") ||
+    device.includes("Door") ||
+    device.includes("door")
   ) {
     return "doorbell";
   } else if (
