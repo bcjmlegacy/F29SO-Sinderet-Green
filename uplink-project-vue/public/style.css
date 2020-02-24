@@ -461,6 +461,12 @@ body {
 	background-color: #e30000;
 }
 
+@media screen and (max-width: 1025px) {
+	.custom-cards-editDevices-adv {
+		width: 20rem;
+	}
+}
+
 /*############################################################*/
 /*Device Details CSS*/
 /*############################################################*/
@@ -834,6 +840,9 @@ ul {
 	}
 	.display-2 {
 		font-size: 3em !important;
+	}
+	.display-3 {
+		font-size: 2.6em !important;
 	}
 	.custom-cards {
 		width: 21rem;
