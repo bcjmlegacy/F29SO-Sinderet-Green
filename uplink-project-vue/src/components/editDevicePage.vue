@@ -85,7 +85,7 @@
                     <div class="form-rows">
                       <div class="col-sm-12">
                         <router-link
-                          :to="{name: 'device',query:{deviceName:deviceName, 'deviceImage': deviceImage, deviceEnergy:deviceEnergy} }"
+                          :to="{name: 'device',query:{deviceID:deviceID, deviceName:deviceName, 'deviceImage': deviceImage, deviceEnergy:deviceEnergy} }"
                         >
                           <button class="form-buttons" type="submit">Cancel</button>
                         </router-link>
@@ -112,7 +112,7 @@ export default {
     NavbarTop,
     NavbarBottom
   },
-  props: ["deviceName", "deviceImage", "deviceEnergy", "userToken"],
+  props: ["deviceID", "deviceName", "deviceImage", "deviceEnergy", "userToken"],
   data() {
     return {
       form: {
@@ -130,7 +130,7 @@ export default {
   },
   methods: {
     go(evt) {
-      let url = "http://localhost:5552/insertRepeatTimer";
+      let url = "http://192.168.0.11:5552/insertRepeatTimer";
       console.log(this.form);
       fetch(url, {
         mode: "cors",
@@ -147,7 +147,7 @@ export default {
           hour: this.form.hour,
           minute: this.form.minute,
           command: this.form.operation,
-          device_id: this.device
+          device_id: this.deviceID
         })
       })
         .then(response => {
@@ -158,6 +158,7 @@ export default {
           this.$router.push({
             name: "device",
             query: {
+              deviceID: this.deviceID,
               deviceName: this.deviceName,
               deviceImage: this.deviceImage,
               deviceEnergy: this.deviceEnergy
@@ -170,7 +171,7 @@ export default {
   },
   mounted: function() {
     //Get command for device via icon thats displayed
-    let url = "http://localhost:5552/getCommandsByDevice?id=";
+    let url = "http://192.168.0.11:5552/getCommandsByDevice?id=";
     let id = pairImg(this.deviceImage);
     let urlComplete = url + id;
     fetch(urlComplete, {
@@ -185,7 +186,7 @@ export default {
       })
       .then(jsonData => {
         this.operations = jsonData; //after we get commands find device ID
-        let url1 = "http://localhost:5552/getDevices";
+        let url1 = "http://192.168.0.11:5552/getDevices";
         fetch(url1, {
           mode: "cors",
           method: "GET",

@@ -152,6 +152,7 @@ body {
 
 #Add {
   margin-top: 170px;
+  margin-bottom: 50px;
 }
 
 .flex-cont {
@@ -459,6 +460,12 @@ body {
   outline: none;
   color: white;
   background-color: #e30000;
+}
+
+@media screen and (max-width: 1025px) {
+  .custom-cards-editDevices-adv {
+    width: 20rem;
+  }
 }
 
 /*############################################################*/
@@ -832,8 +839,14 @@ ul {
     padding-top: 50px;
     padding-bottom: 20px;
   }
+  .display-2 {
+    font-size: 3em !important;
+  }
+  .display-3 {
+    font-size: 2.6em !important;
+  }
   .custom-cards {
-    width: 24rem;
+    width: 21rem;
     height: 18rem;
     margin: 1px;
   }
@@ -841,7 +854,7 @@ ul {
     justify-content: space-evenly !important;
   }
   .col-width {
-    width: 11rem;
+    width: 10rem;
   }
   .img {
     width: 100%;

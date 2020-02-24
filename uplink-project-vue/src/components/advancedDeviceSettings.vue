@@ -66,7 +66,7 @@
                     <div class="form-rows">
                       <div class="col-sm-12">
                         <router-link
-                          :to="{name: 'device',query:{deviceName:deviceName, 'deviceImage': deviceImage, deviceEnergy:deviceEnergy} }"
+                          :to="{name: 'device',query:{deviceID:deviceID, deviceName:deviceName, 'deviceImage': deviceImage, deviceEnergy:deviceEnergy} }"
                         >
                           <button class="form-buttons" type="submit">Cancel</button>
                         </router-link>
@@ -76,7 +76,11 @@
                   <div class="newRowSwitch-delete">
                     <div class="form-rows">
                       <div class="col-sm-12">
-                        <button class="form-buttons-delete" type="submit">Delete Device</button>
+                        <button
+                          class="form-buttons-delete"
+                          type="button"
+                          @click="deleteDevice"
+                        >Delete Device</button>
                       </div>
                     </div>
                   </div>
@@ -94,7 +98,7 @@
 import NavbarTop from "./navbar-top";
 import NavbarBottom from "./navbar-bottom";
 
-let url = "http://localhost:5552/getRooms";
+let url = "http://192.168.0.11:5552/getRooms";
 export default {
   name: "addDevice",
   components: {
@@ -110,8 +114,29 @@ export default {
       rooms: []
     };
   },
-  props: ["deviceName", "deviceImage", "deviceEnergy", "userToken"],
-  methods: {},
+  props: ["deviceID", "deviceName", "deviceImage", "deviceEnergy", "userToken"],
+  methods: {
+    deleteDevice() {
+      if (!confirm("Do really want to delete " + this.deviceName + "?")) {
+        return false;
+      }
+      let url = "http://192.168.0.11:5552/deleteDevice?id=" + this.deviceID;
+      fetch(url, {
+        mode: "cors",
+        method: "GET",
+        headers: {
+          Authorization: this.userToken
+        }
+      })
+        .then(response => {
+          return response.json();
+        })
+        .then(jsonData => {
+          console.log(jsonData);
+          this.$router.push({ name: "dashboard" });
+        });
+    }
+  },
   mounted: function() {
     fetch(url, {
       mode: "cors",

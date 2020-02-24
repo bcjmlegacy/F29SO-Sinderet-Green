@@ -28,6 +28,7 @@
           <div v-for="device in roomDevices" :key="device.deviceName">
             <!--Data that the Device component uses to show the card.-->
             <Device
+              :deviceID="device.deviceID"
               :deviceName="device.deviceName"
               :deviceImage="device.deviceImage"
               :deviceEnergy="device.deviceWattage"
@@ -55,9 +56,9 @@ import NavTop from "./navbar-top";
 import NavBottom from "./navbar-bottom";
 
 //URL for getting all the devices
-let url = "http://localhost:5552/getDevices";
+let url = "http://192.168.0.11:5552/getDevices";
 //URL for getting all rooms
-let url1 = "http://localhost:5552/getRooms";
+let url1 = "http://192.168.0.11:5552/getRooms";
 export default {
   name: "Room",
   components: {
@@ -112,6 +113,7 @@ export default {
                 //Loop to get the icon that matches the second half of the device name
                 this.roomDevices.push({
                   //generate a JSON of the device name and icon and store in roomDevices array
+                  deviceID: this.devices[key].device_id,
                   deviceName: this.devices[key].device_name,
                   deviceImage: pairImg(this.devices[key].device_name),
                   deviceWattage: this.devices[key].device_wattage
@@ -150,9 +152,9 @@ function pairImg(device) {
     return "security-camera";
   } else if (
     device.includes("Bell") ||
-    device.includes("door-bell") ||
-    device.includes("Door Bell") ||
-    device.includes("door bell")
+    device.includes("bell") ||
+    device.includes("Door") ||
+    device.includes("door")
   ) {
     return "doorbell";
   } else if (

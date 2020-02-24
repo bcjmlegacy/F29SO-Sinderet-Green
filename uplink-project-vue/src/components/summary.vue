@@ -78,10 +78,10 @@
                 <div>
                   <div class="col-width">
                     <div class="card-body text-center slide">
-                      <h5 class="card-text">{{temperatures[0].loc}} it's</h5>
-                      <h4 class="display-2">{{temperatures[0].temp}}&#x2103;</h4>
+                      <h5 class="card-text">Outside it's</h5>
+                      <h4 class="display-2">{{temperatures.temp}}&#x2103;</h4>
                       <p class="card-text">and</p>
-                      <h5 class="card-text">{{temperatures[0].currentDescription}}</h5>
+                      <h5 class="card-text">{{temperatures.currentDescription}}</h5>
                     </div>
                   </div>
                 </div>
@@ -101,13 +101,12 @@ export default {
   name: "Summary",
   data() {
     return {
-      temperatures: [],
-      currentTemp: ""
+      temperatures: ""
     };
   },
   props: ["userToken", "sumTitle", "energy", "temperature", "solar"],
   methods: {
-    findRooms() {
+    /*findRooms() {
       fetch("http://localhost:5552/getRooms", {
         method: "GET",
         mode: "cors",
@@ -129,7 +128,7 @@ export default {
           }
         });
     }
-    /*
+    
     let i = 0;
     startInterval: function(temp) {
       
@@ -162,13 +161,13 @@ export default {
       })
       .then(jsonData => {
         console.log(jsonData);
-        this.temperatures.push({
+        this.temperatures = {
           currentDescription: jsonData.currently.summary,
           temp: Math.round(jsonData.currently.temperature),
           loc: "Outside"
-        });
+        };
 
-        this.findRooms();
+        //this.findRooms();
         //this.startInterval(this.temperatures.length);
         console.log(this.temperatures);
       })
