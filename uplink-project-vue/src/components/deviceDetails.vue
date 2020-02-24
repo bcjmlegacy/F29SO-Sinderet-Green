@@ -123,7 +123,7 @@ export default {
   methods: {
     async turnOn() {
       await this.$nextTick();
-      let url = "http://localhost:5552/insertOneshotTimer";
+      let url = "http://192.168.0.11:5552/insertOneshotTimer";
       fetch(url, {
         mode: "cors",
         method: "POST",
@@ -151,7 +151,7 @@ export default {
     }
   },
   mounted: function() {
-    let url = "http://localhost:5552/getRepeatTimers?id=" + this.deviceID;
+    let url = "http://192.168.0.11:5552/getRepeatTimers?id=" + this.deviceID;
 
     fetch(url, {
       mode: "cors",

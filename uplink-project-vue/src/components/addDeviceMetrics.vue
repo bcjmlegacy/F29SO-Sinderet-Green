@@ -74,8 +74,8 @@
 import NavbarTop from "./navbar-top";
 import NavbarBottom from "./navbar-bottom";
 
-let url = "http://localhost:5552/insertDevice";
-let url1 = "http://localhost:5552/getRooms";
+let url = "http://192.168.0.11:5552/insertDevice";
+let url1 = "http://192.168.0.11:5552/getRooms";
 
 export default {
   name: "addDevice",
