@@ -66,7 +66,7 @@
                     <div class="form-rows">
                       <div class="col-sm-12">
                         <router-link
-                          :to="{name: 'device',query:{deviceName:deviceName, 'deviceImage': deviceImage, deviceEnergy:deviceEnergy} }"
+                          :to="{name: 'device',query:{deviceID:deviceID, deviceName:deviceName, 'deviceImage': deviceImage, deviceEnergy:deviceEnergy} }"
                         >
                           <button class="form-buttons" type="submit">Cancel</button>
                         </router-link>
@@ -110,7 +110,7 @@ export default {
       rooms: []
     };
   },
-  props: ["deviceName", "deviceImage", "deviceEnergy", "userToken"],
+  props: ["deviceID", "deviceName", "deviceImage", "deviceEnergy", "userToken"],
   methods: {},
   mounted: function() {
     fetch(url, {

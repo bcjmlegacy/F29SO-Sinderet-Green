@@ -83,7 +83,14 @@ export default {
     NavbarTop,
     NavbarBottom
   },
-  props: ["deviceName", "deviceImage", "deviceEnergy", "userToken", "back"],
+  props: [
+    "deviceID",
+    "deviceName",
+    "deviceImage",
+    "deviceEnergy",
+    "userToken",
+    "back"
+  ],
   data() {
     return {
       form: {

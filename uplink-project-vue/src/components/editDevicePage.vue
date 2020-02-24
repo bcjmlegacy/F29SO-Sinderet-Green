@@ -85,7 +85,7 @@
                     <div class="form-rows">
                       <div class="col-sm-12">
                         <router-link
-                          :to="{name: 'device',query:{deviceName:deviceName, 'deviceImage': deviceImage, deviceEnergy:deviceEnergy} }"
+                          :to="{name: 'device',query:{deviceID:deviceID, deviceName:deviceName, 'deviceImage': deviceImage, deviceEnergy:deviceEnergy} }"
                         >
                           <button class="form-buttons" type="submit">Cancel</button>
                         </router-link>
@@ -112,7 +112,7 @@ export default {
     NavbarTop,
     NavbarBottom
   },
-  props: ["deviceName", "deviceImage", "deviceEnergy", "userToken"],
+  props: ["deviceID", "deviceName", "deviceImage", "deviceEnergy", "userToken"],
   data() {
     return {
       form: {
@@ -147,7 +147,7 @@ export default {
           hour: this.form.hour,
           minute: this.form.minute,
           command: this.form.operation,
-          device_id: this.device
+          device_id: this.deviceID
         })
       })
         .then(response => {
@@ -158,6 +158,7 @@ export default {
           this.$router.push({
             name: "device",
             query: {
+              deviceID: this.deviceID,
               deviceName: this.deviceName,
               deviceImage: this.deviceImage,
               deviceEnergy: this.deviceEnergy

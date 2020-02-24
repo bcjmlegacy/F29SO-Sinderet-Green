@@ -3,7 +3,7 @@
   <div class="item">
     <router-link
       class="links"
-      :to="{name: 'addDeviceData',query:{deviceName:deviceName, 'deviceImage': deviceImage, deviceEnergy:deviceEnergy} }"
+      :to="{name: 'addDeviceData',query:{deviceID:deviceID, deviceName:deviceName, 'deviceImage': deviceImage, deviceEnergy:deviceEnergy} }"
     >
       <div class="card custom-cards-devices">
         <div class="img-cont">
@@ -27,6 +27,6 @@
 //Bus to transfer data between component and main app.vue component
 export default {
   name: "roomCard",
-  props: ["deviceName", "deviceImage", "deviceEnergy"] //props - data transfered to the component
+  props: ["deviceID", "deviceName", "deviceImage", "deviceEnergy"] //props - data transfered to the component
 };
 </script>
