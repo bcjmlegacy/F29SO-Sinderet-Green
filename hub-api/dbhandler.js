@@ -232,11 +232,48 @@ class databasehandler {
     this.getMany("user", callback, limit, offset);
   }
 
-  getSensorReadings(callback, limit, offset) {
-    this.getMany("sensor_reading", callback, limit, offset);
+  getSensorReadings(callback, limit, offset, id) {
+    if ( limit && offset && id )  {
+      var q = `SELECT * FROM sensor_reading WHERE sensor_reading_id = '${id}' LIMIT ${limit} OFFSET ${offset}`;
+    } else if ( limit && id ) {
+      var q = `SELECT * FROM sensor_reading WHERE sensor_reading_id = '${id}' LIMIT ${limit}`;
+    } else if ( limit && offset ) {
+      var q = `SELECT * FROM sensor_reading LIMIT ${limit} OFFSET ${offset}`;
+    } else if ( limit ) {
+      var q = `SELECT * FROM sensor_reading LIMIT ${limit}`;
+    } else {
+      var q = `SELECT * FROM sensor_reading`;
+    }
+
+    db.all(q, function(err, rows) {
+      if (err) {
+        callback(err);
+      } else {
+        callback(null, rows);
+      }
+    });
   }
-  getDeviceReadings(callback, limit, offset) {
-    this.getMany("device_reading", callback, limit, offset);
+
+  getDeviceReadings(callback, limit, offset, id) {
+    if ( limit && offset && id )  {
+      var q = `SELECT * FROM device_reading WHERE device_reading_id = ${id} LIMIT ${limit} OFFSET ${offset}`;
+    } else if ( limit && id ) {
+      var q = `SELECT * FROM device_reading WHERE device_reading_id = ${id} LIMIT ${limit}`;
+    } else if ( limit && offset ) {
+      var q = `SELECT * FROM device_reading LIMIT ${limit} OFFSET ${offset}`;
+    } else if ( limit ) {
+      var q = `SELECT * FROM device_reading LIMIT ${limit}`;
+    } else {
+      var q = `SELECT * FROM device_reading`;
+    }
+
+    db.all(q, function(err, rows) {
+      if (err) {
+        callback(err);
+      } else {
+        callback(null, rows);
+      }
+    });
   }
 
   getRepeatTimers(callback) {
@@ -287,14 +324,23 @@ class databasehandler {
     });
   }
 
-  deleteOneshotTimer(id) {
-    var q = `DELETE FROM timer_oneshot WHERE timer_oneshot_id = ?`;
+  getDeviceTriggers(callback) {
+    var q = `SELECT * FROM device_trigger
+             INNER JOIN device         ON device_trigger.device_trigger_device_id = device.device_id
+             INNER JOIN sensor         ON device_trigger.device_trigger_sensor_id = sensor.sensor_id
+             INNER JOIN device_type    ON device.device_type                      = device_type.device_type_id
+             INNER JOIN device_command ON device_trigger.device_trigger_command   = device_command.device_command_id
+             INNER JOIN room           ON device.device_room                      = room.room_id`;
 
-    db.all(q, [id], function(err, rows) {
+    // var q = `SELECT * FROM timer_oneshot
+    //          INNER JOIN device         ON timer_oneshot.timer_oneshot_device_id = device.device_id
+    //          INNER JOIN device_type    ON device.device_type                    = device_type.device_type_id`;
+
+    db.all(q, function(err, rows) {
       if (err) {
-        console.log(err);
+        callback(err);
       } else {
-        // console.log("Oneshot timer deleted");
+        callback(null, rows);
       }
     });
   }
@@ -358,8 +404,6 @@ class databasehandler {
       }
     });
   }
-
-  executeCommand(command_id, callback) {}
 
   /* #######################################
           
@@ -555,7 +599,7 @@ class databasehandler {
 
   insertDeviceReading(id, type, val) {
     var ts = new Date().valueOf();
-    var q = `INSERT INTO device_reading (device_reading_sensor_id, device_reading_type, device_reading_value, device_reading_timestamp) VALUES (?, ?, ?, ?)`;
+    var q = `INSERT INTO device_reading (device_reading_device_id, device_reading_type, device_reading_value, device_reading_timestamp) VALUES (?, ?, ?, ?)`;
 
     db.run(q, [id, type, val, ts], function(err) {
       if (err) {
@@ -646,6 +690,178 @@ class databasehandler {
       }
     });
   }
+
+  /* #######################################
+                                    
+  Deleting things.
+
+  ####################################### */
+
+  deleteById(table, id, callback) {
+    var q = `DELETE FROM ${table} WHERE ${table}_id = ?`;
+
+    db.run(q, [id], function(err) {
+      if (err) {
+        console.log(`! Error deleting data record from ${table}:`);
+        console.log(`! ${err}`);
+        callback(err, null);
+      } else {
+        console.log(
+          `> Deleted data record with id ${id} from ${table}}`
+        );
+        callback(null, 1);
+      }
+    });
+  }
+
+  deleteProperty(id, callback) {
+    this.deleteById("property", id, callback);
+  }
+  deleteAccountType(id, callback) {
+    this.deleteById("account_type", id, callback);
+  }
+  deleteSensorType(id, callback) {
+    this.deleteById("sensor_type", id, callback);
+  }
+  deleteRoom(id, callback) {
+    this.deleteById("room", id, callback);
+  }
+  deleteDeviceType(id, callback) {
+    this.deleteById("device_type", id, callback);
+  }
+  deleteDeviceCommand(id, callback) {
+    this.deleteById("device_command", id, callback);
+  }
+  deleteUser(id, callback) {
+    this.deleteById("user", id, callback);
+  }
+  deleteAuth(id, callback) {
+    this.deleteById("auth", id, callback);
+  }
+  deleteSensor(id, callback) {
+    this.deleteById("sensor", id, callback);
+  }
+  deleteDevice(id, callback) {
+    this.deleteById("device", id, callback);
+  }
+  deleteRepeatTimer(id, callback) {
+    this.deleteById("timer_repeat", id, callback);
+  }
+  deleteOneshotTimer(id, callback) {
+    this.deleteById("timer_oneshot", id, callback);
+  }
+  deleteSensorReading(id, callback) {
+    this.deleteById("sensor_reading", id, callback);
+  }
+  deleteDeviceReading(id, callback) {
+    this.deleteById("device_reading", id, callback);
+  }
+  deleteDeviceTrigger(id, callback) {
+    this.deleteById("device_trigger", id, callback);
+  }
+
+  deleteDeviceReadingByDeviceId(id, callback) {
+    var q = `DELETE FROM device_reading WHERE device_reading_device_id = ?`;
+
+    db.run(q, [id], function(err) {
+      if (err) {
+        console.log(`! Error deleting data records from device_reading:`);
+        console.log(`! ${err}`);
+        callback(err, null);
+      } else {
+        console.log(
+          `> Deleted data records with device id ${id} from device_reading}`
+        );
+        callback(null, 1);
+      }
+    });
+  }
+
+  deleteSensorReadingBySensorId(id, callback) {
+    var q = `DELETE FROM sensor_reading WHERE sensor_reading_sensor_id = ?`;
+
+    db.run(q, [id], function(err) {
+      if (err) {
+        console.log(`! Error deleting data records from sensor_reading:`);
+        console.log(`! ${err}`);
+        callback(err, null);
+      } else {
+        console.log(
+          `> Deleted data records with sensor id ${id} from sensor_reading}`
+        );
+        callback(null, 1);
+      }
+    });
+  }
+
+  deleteRepeatTimerByDeviceId(id, callback) {
+    var q = `DELETE FROM timer_repeat WHERE timer_repeat_device_id = ?`;
+
+    db.run(q, [id], function(err) {
+      if (err) {
+        console.log(`! Error deleting data records from timer_repeat:`);
+        console.log(`! ${err}`);
+        callback(err, null);
+      } else {
+        console.log(
+          `> Deleted data records with device id ${id} from timer_repeat}`
+        );
+        callback(null, 1);
+      }
+    });
+  }
+
+  deleteOneshotTimerByDeviceId(id, callback) {
+    var q = `DELETE FROM timer_oneshot WHERE timer_oneshot_device_id = ?`;
+
+    db.run(q, [id], function(err) {
+      if (err) {
+        console.log(`! Error deleting data records from timer_oneshot:`);
+        console.log(`! ${err}`);
+        callback(err, null);
+      } else {
+        console.log(
+          `> Deleted data records with device id ${id} from timer_oneshot}`
+        );
+        callback(null, 1);
+      }
+    });
+  }
+
+  deleteTriggerByDeviceId(id, callback) {
+    var q = `DELETE FROM device_trigger WHERE device_trigger_device_id = ?`;
+
+    db.run(q, [id], function(err) {
+      if (err) {
+        console.log(`! Error deleting data records from device_trigger:`);
+        console.log(`! ${err}`);
+        callback(err, null);
+      } else {
+        console.log(
+          `> Deleted data records with device id ${id} from device_trigger}`
+        );
+        callback(null, 1);
+      }
+    });
+  }
+
+  deleteTriggerBySensorId(id, callback) {
+    var q = `DELETE FROM device_trigger WHERE device_trigger_sensor_id = ?`;
+
+    db.run(q, [id], function(err) {
+      if (err) {
+        console.log(`! Error deleting data records from device_trigger:`);
+        console.log(`! ${err}`);
+        callback(err, null);
+      } else {
+        console.log(
+          `> Deleted data records with sensor id ${id} from device_trigger}`
+        );
+        callback(null, 1);
+      }
+    });
+  }
+
 }
 
 module.exports = databasehandler;

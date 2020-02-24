@@ -244,8 +244,77 @@ function procTimersAndTriggers() {
             rows[x]["device_command_value_res"]
           );
 
-          db.deleteOneshotTimer(rows[x]["timer_oneshot_id"]);
+          db.deleteOneshotTimer(rows[x]["timer_oneshot_id"], function(err, res)  {
+          
+          });
         }
+      }
+    }
+  });
+
+  db.getDeviceTriggers(function(err, rows) {
+    if (err) {
+      console.log(
+        `[${getWholeDate()}] ! Error while checking device triggers:`
+      );
+      console.log(`[${getWholeDate()}] ! ${err}`);
+    } else if (rows[0]) {
+      for (x in rows) {
+        db.getSensorReadings(
+          function(err, reading) {
+
+            if(err) {
+              console.log(
+                `[${getWholeDate()}] ! Error while checking device triggers:`
+              );
+              console.log(`[${getWholeDate()}] ! ${err}`);
+            } else if(reading[0])  {
+
+              var value = reading[0]["sensor_reading_value"];
+
+              switch (rows[x]["device_trigger_gt_lt_eq"]) {
+                case "<":
+                  if (value < rows[x]["device_trigger_sensor_value"]) {
+                    sendCommand(
+                      `/${rows[x]["room_name"]}/${rows[x]["device_command_mqtt"]}/${rows[x]["device_id"]}`,
+                      rows[x]["device_command_value"],
+                      rows[x]["device_command_mqtt_res"],
+                      rows[x]["device_command_value_res"]
+                    );
+                  }
+                  break;
+
+                case "=":
+                  if (value == rows[x]["device_trigger_sensor_value"]) {
+                    sendCommand(
+                      `/${rows[x]["room_name"]}/${rows[x]["device_command_mqtt"]}/${rows[x]["device_id"]}`,
+                      rows[x]["device_command_value"],
+                      rows[x]["device_command_mqtt_res"],
+                      rows[x]["device_command_value_res"]
+                    );
+                  }
+                  break;
+
+                case ">":
+                  if (value > rows[x]["device_trigger_sensor_value"]) {
+                    sendCommand(
+                      `/${rows[x]["room_name"]}/${rows[x]["device_command_mqtt"]}/${rows[x]["device_id"]}`,
+                      rows[x]["device_command_value"],
+                      rows[x]["device_command_mqtt_res"],
+                      rows[x]["device_command_value_res"]
+                    );
+                  }
+                  break;
+              }
+            } else  {
+              console.log(`[${getWholeDate()}] > No data for trigger`);
+            }
+          },
+          1,
+          0,
+          rows[x]["device_trigger_sensor_id"]
+        );
+
       }
     }
   });
@@ -294,9 +363,9 @@ app.get("/hash", (req, res) => {
 });
 
 /* #######################################
-  
+ 
 Login functions.
-
+ 
 ####################################### */
 
 app.post("/login", (req, res) => {
@@ -331,12 +400,12 @@ app.post("/login", (req, res) => {
 });
 
 /* #######################################
-  
+ 
 Checking auth token.
-
+ 
 ANYTHING AFTER THIS FUNCTION IS AUTHENTICATED.
 AKA. It is blocked if it does not pass authentication.
-
+ 
 ####################################### */
 
 app.use(function(req, res, next) {
@@ -373,10 +442,37 @@ app.use(function(req, res, next) {
 });
 
 /* #######################################
-  
-  Get by ID.
-  
-  ####################################### */
+ 
+Execute command.
+ 
+####################################### */
+
+app.get("/execute", (req, res) => {
+  db.getCommandById(req.query.commandId, function(err, command) {
+
+    db.getDeviceById(req.query.deviceId, function(err, device) {
+
+      db.getRoomById(deviceRows["device_room"], function(err, room) {
+
+        sendCommand(
+          `/${room[0]["room_name"]}/${command[0]["device_command_mqtt"]}/${deviceId}`,
+          command[0]["device_command_value"],
+          command[0]["device_command_mqtt_res"],
+          command[0]["device_command_value_res"]
+        );
+
+      });
+
+    });
+
+  });
+});
+
+/* #######################################
+ 
+Get by ID.
+ 
+####################################### */
 
 app.get("/getAccountTypeById", (req, res) => {
   db.getAccountTypeById(req.query.id, function(err, rows) {
@@ -415,10 +511,10 @@ app.get("/getDeviceById", (req, res) => {
 });
 
 /* #######################################
-  
-  Get by room.
-  
-  ####################################### */
+ 
+Get by room.
+ 
+####################################### */
 
 app.get("/getSensorByRoom", (req, res) => {
   db.getSensorByRoom(req.query.room, function(err, rows) {
@@ -433,10 +529,10 @@ app.get("/getDeviceByRoom", (req, res) => {
 });
 
 /* #######################################
-  
-  Get all of something with limits.
-  
-  ####################################### */
+ 
+Get all of something with limits.
+ 
+####################################### */
 
 app.get("/getAccountTypes", (req, res) => {
   db.getAccountTypes(
@@ -529,9 +625,9 @@ app.get("/getDeviceReadings", (req, res) => {
 });
 
 /* #######################################
-                    
+ 
 Inserting auxiliary data.
-
+ 
 ####################################### */
 
 app.get("/insertProperty", (req, res) => {
@@ -625,9 +721,9 @@ app.post("/insertDeviceType", (req, res) => {
 });
 
 /* #######################################
-                   
+ 
 Inserting larger records.
-
+ 
 ####################################### */
 
 app.get("/insertUser", (req, res) => {
@@ -716,9 +812,9 @@ app.post("/insertDevice", (req, res) => {
 });
 
 /* #######################################
-                        
+ 
 Get certain things with filters.
-
+ 
 ####################################### */
 
 app.get("/getSensorReadingsByTimeframe", (req, res) => {
@@ -754,9 +850,9 @@ app.get("/getDeviceReadingsByTimeframe", (req, res) => {
 });
 
 /* #######################################
-                        
+ 
 Device command functions.
-
+ 
 ####################################### */
 
 app.get("/getCommandsByDevice", (req, res) => {
@@ -831,6 +927,206 @@ app.post("/insertOneshotTimer", (req, res) => {
       error: "Missing parameter! Needs trigger (UNIX TIME), device_id, command"
     });
   }
+});
+
+/* #######################################
+ 
+Delete functions.
+ 
+####################################### */
+
+app.get("/deleteProperty", (req, res) => {
+  db.deleteProperty(req.query.id, function(err, res) {
+    if (err) {
+      res.send({ error: err });
+    } else {
+      res.send({ status: "success" });
+    }
+  });
+});
+
+app.get("/deleteAccountType", (req, res) => {
+  db.deleteAccountType(req.query.id, function(err, res) {
+    if (err) {
+      res.send({ error: err });
+    } else {
+      res.send({ status: "success" });
+    }
+  });
+});
+
+app.get("/deleteSensorType", (req, res) => {
+  db.deleteSensorType(req.query.id, function(err, res) {
+    if (err) {
+      res.send({ error: err });
+    } else {
+      res.send({ status: "success" });
+    }
+  });
+});
+
+app.get("/deleteRoom", (req, res) => {
+  db.deleteRoom(req.query.id, function(err, res) {
+    if (err) {
+      res.send({ error: err });
+    } else {
+      res.send({ status: "success" });
+    }
+  });
+});
+
+app.get("/deleteDeviceType", (req, res) => {
+  db.deleteDeviceType(req.query.id, function(err, res) {
+    if (err) {
+      res.send({ error: err });
+    } else {
+      res.send({ status: "success" });
+    }
+  });
+});
+
+app.get("/deleteDeviceCommand", (req, res) => {
+  db.deleteDeviceCommand(req.query.id, function(err, res) {
+    if (err) {
+      res.send({ error: err });
+    } else {
+      res.send({ status: "success" });
+    }
+  });
+});
+
+app.get("/deleteUser", (req, res) => {
+  db.deleteUser(req.query.id, function(err, res) {
+    if (err) {
+      res.send({ error: err });
+    } else {
+      res.send({ status: "success" });
+    }
+  });
+});
+
+app.get("/deleteAuth", (req, res) => {
+  db.deleteAuth(req.query.id, function(err, res) {
+    if (err) {
+      res.send({ error: err });
+    } else {
+      res.send({ status: "success" });
+    }
+  });
+});
+
+app.get("/deleteSensor", (req, res) => {
+  db.deleteSensor(req.query.id, function(err, res) {
+    if (err) {
+      res.send({ error: err });
+    } else {
+      db.deleteTriggerBySensorId(req.query.id, function(err, res) {
+        if (err) {
+          res.send({ error: err });
+        } else {
+          if (req.query.data == "true") {
+            db.deleteSensorReadingBySensorId(req.query.id, function(err, res) {
+              if (err) {
+                res.send({ error: err });
+              } else {
+                res.send({ status: "success" });
+              }
+            });
+          } else {
+            res.send({ status: "success" });
+          }
+        }
+      });
+    }
+  });
+});
+
+app.get("/deleteDevice", (req, res) => {
+  db.deleteDevice(req.query.id, function(err, res) {
+    if (err) {
+      res.send({ error: err });
+    } else {
+      db.deleteRepeatTimerByDeviceId(req.query.id, function(err, res) {
+        if (err) {
+          res.send({ error: err });
+        } else {
+          db.deleteOneshotTimerByDeviceId(req.query.id, function(err, res) {
+            if (err) {
+              res.send({ error: err });
+            } else {
+              db.deleteTriggerByDeviceId(req.query.id, function(err, res) {
+                if (err) {
+                  res.send({ error: err });
+                } else {
+                  if (req.query.data == "true") {
+                    db.deleteDeviceReading(req.query.id, function(err, res) {
+                      if (err) {
+                        res.send({ error: err });
+                      } else {
+                        res.send({ status: "success" });
+                      }
+                    });
+                  } else {
+                    res.send({ status: "success" });
+                  }
+                }
+              });
+            }
+          });
+        }
+      });
+    }
+  });
+});
+
+app.get("/deleteRepeatTimer", (req, res) => {
+  db.deleteRepeatTimer(req.query.id, function(err, res) {
+    if (err) {
+      res.send({ error: err });
+    } else {
+      res.send({ status: "success" });
+    }
+  });
+});
+
+app.get("/deleteOneshotTimer", (req, res) => {
+  db.deleteOneshotTimer(req.query.id, function(err, res) {
+    if (err) {
+      res.send({ error: err });
+    } else {
+      res.send({ status: "success" });
+    }
+  });
+});
+
+app.get("/deleteSensorReading", (req, res) => {
+  db.deleteSensorReading(req.query.id, function(err, res) {
+    if (err) {
+      res.send({ error: err });
+    } else {
+      res.send({ status: "success" });
+    }
+  });
+});
+
+app.get("/deleteDeviceReading", (req, res) => {
+  db.deleteDeviceReading(req.query.id, function(err, res) {
+    if (err) {
+      res.send({ error: err });
+    } else {
+      res.send({ status: "success" });
+    }
+  });
+});
+
+app.get("/deleteDeviceTrigger", (req, res) => {
+  db.deleteDeviceTrigger(req.query.id, function(err, res) {
+    if (err) {
+      res.send({ error: err });
+    } else {
+      res.send({ status: "success" });
+    }
+  });
 });
 
 //
