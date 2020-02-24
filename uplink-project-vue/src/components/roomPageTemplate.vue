@@ -3,8 +3,21 @@
   <div id="room">
     <!--Top Navbar (Website)-->
     <NavTop class="top-show" />
+    <div class="bottom-show">
+      <div class="logo-back fixed-top">
+        <h5 class="logo">
+          <router-link class="links" :to="{name: 'dashboard'}">uplink</router-link>
+        </h5>
+      </div>
+    </div>
     <!--Take the roomName from props and store as title for the room page - demo data is also entered-->
-    <Summary :sumTitle="roomName" energy="100" solar="1000" temperature="21" />
+    <Summary
+      :userToken="this.userToken"
+      :sumTitle="roomName"
+      energy="200"
+      temperature="18"
+      solar="1000"
+    />
     <div class="container">
       <div id="rooms">
         <div class="sub-title-wrapper">
@@ -35,7 +48,7 @@
 </template>
 <script>
 //All the components that are needed for the roomPage
-import Summary from "./summary";
+import Summary from "./roomSummary";
 import Device from "./deviceCard";
 import AllDevices from "./allDevices";
 import NavTop from "./navbar-top";

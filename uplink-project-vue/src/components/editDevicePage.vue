@@ -1,6 +1,13 @@
 <template>
   <div>
-    <NavbarTop class="top-show" :back="back" />
+    <NavbarTop class="top-show" />
+    <div class="bottom-show">
+      <div class="logo-back fixed-top">
+        <h5 class="logo">
+          <router-link class="links" :to="{name: 'dashboard'}">uplink</router-link>
+        </h5>
+      </div>
+    </div>
     <div id="editDevice">
       <div class="container">
         <h3 class="display-3 text-center">Edit Schedule</h3>
@@ -75,6 +82,15 @@
                         <button class="form-buttons" type="submit">Save Changes</button>
                       </div>
                     </div>
+                    <div class="form-rows">
+                      <div class="col-sm-12">
+                        <router-link
+                          :to="{name: 'device',query:{deviceName:deviceName, 'deviceImage': deviceImage, deviceEnergy:deviceEnergy} }"
+                        >
+                          <button class="form-buttons" type="submit">Cancel</button>
+                        </router-link>
+                      </div>
+                    </div>
                   </div>
                 </b-form>
               </div>
@@ -83,7 +99,7 @@
         </div>
       </div>
     </div>
-    <NavbarBottom class="bottom-show" :back="back" />
+    <NavbarBottom class="bottom-show" />
   </div>
 </template>
 <script>
@@ -96,7 +112,7 @@ export default {
     NavbarTop,
     NavbarBottom
   },
-  props: ["deviceName", "deviceImage", "deviceEnergy", "userToken", "back"],
+  props: ["deviceName", "deviceImage", "deviceEnergy", "userToken"],
   data() {
     return {
       form: {

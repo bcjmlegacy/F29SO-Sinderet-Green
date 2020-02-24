@@ -8,15 +8,7 @@ Euan Gordon
     As roomName prop will match the roomName prop in the room page component (unique prop)
   -->
   <div id="app">
-    <!--
-    <component
-      :is="currentComponent"
-      :roomName="currentRoom"
-      :userToken="userToken"
-      :deviceToAdd="deviceToAdd"
-      :back="previousPage"
-    ></component>-->
-    <router-view :userToken="this.$cookies.get('token')" :roomName="currentRoom" />
+    <router-view :userToken="this.$cookies.get('token')" />
   </div>
 </template>
 <script>
@@ -32,17 +24,12 @@ export default {
   },
   data() {
     return {
-      currentRoom: "",
-      userToken: "", //user token for session
-      previousPage: ""
+      userToken: "" //user token for session
     };
   },
   methods: {},
   created() {
     //Controller function to control the room data that is displayed on the room page.
-    bus.$on("updateRoom", room => {
-      this.currentRoom = room;
-    });
     bus.$on("saveToken", token => {
       this.userToken = token;
     });

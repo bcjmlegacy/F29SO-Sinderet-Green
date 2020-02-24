@@ -2,6 +2,7 @@
   <!--Device Card-->
   <div class="item">
     <router-link
+      class="links"
       :to="{name: 'device',query:{deviceName:deviceName, 'deviceImage': deviceImage, deviceEnergy:deviceEnergy} }"
     >
       <div class="card custom-cards-devices">

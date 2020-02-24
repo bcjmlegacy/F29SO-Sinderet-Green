@@ -30,8 +30,8 @@ body {
   padding-bottom: 10px;
 }
 
-.links {
-  text-decoration: none !important;
+.display-2 {
+  font-size: 4em !important;
 }
 
 .display-3 {
@@ -42,6 +42,17 @@ body {
   font-size: 3em !important;
 }
 
+.links {
+  text-decoration: none !important;
+  color: rgb(68, 68, 68);
+}
+.links:hover {
+  color: #000;
+}
+
+.advanced-links {
+  font-size: 1.3em;
+}
 /*====================================================================================================================================*/
 /*Main Pages CSS*/
 /*====================================================================================================================================*/
@@ -50,21 +61,18 @@ body {
 /*Dashsboard CSS*/
 /*############################################################*/
 
-#dash {
-  margin-left: 30%;
-  margin-right: 30%;
-}
-
 #rooms {
-  margin-top: 50px;
-  margin-bottom: 50px;
+  margin-top: 40px;
+  margin-bottom: 80px;
+  margin-left: 15%;
+  margin-right: 15%;
 }
 
 .flex-rooms {
   display: flex !important;
   flex-direction: row !important;
   flex-wrap: wrap !important;
-  justify-content: space-evenly !important;
+  justify-content: space-around !important;
   align-items: flex-start !important;
 }
 
@@ -83,7 +91,14 @@ body {
 }
 
 @media screen and (max-width: 1025px) {
+  .text-area {
+    margin-top: 50px;
+  }
   #dash {
+    margin-left: 0;
+    margin-right: 0;
+  }
+  #rooms {
     margin-left: 0;
     margin-right: 0;
   }
@@ -104,11 +119,6 @@ body {
 /*############################################################*/
 /*Room Page CSS*/
 /*############################################################*/
-
-#room {
-  margin-left: 30%;
-  margin-right: 30%;
-}
 
 .item {
   margin-left: 50px;
@@ -141,7 +151,7 @@ body {
 /*############################################################*/
 
 #Add {
-  margin-top: 130px;
+  margin-top: 170px;
 }
 
 .flex-cont {
@@ -171,7 +181,7 @@ body {
 /*############################################################*/
 
 #devices {
-  margin-top: 100px;
+  margin-top: 150px;
 }
 
 @media screen and (max-width: 1025px) {
@@ -240,6 +250,7 @@ body {
   width: 23rem;
   height: 28rem;
   padding: 20px;
+  border-radius: 20px;
   background-color: white !important;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 1px 8px rgba(0, 0, 0, 0.22) !important;
   transition: 0.2s ease-in-out all !important;
@@ -267,7 +278,7 @@ body {
 /*############################################################*/
 
 #addDevice {
-  margin-top: 100px;
+  margin-top: 140px;
 }
 
 #form-addDevice {
@@ -288,6 +299,7 @@ body {
   width: 22rem;
   height: 40rem;
   padding: 20px;
+  border-radius: 20px;
   background-color: white !important;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 1px 8px rgba(0, 0, 0, 0.22) !important;
   transition: 0.2s ease-in-out all !important;
@@ -331,7 +343,7 @@ body {
 /*############################################################*/
 
 #editDevice {
-  margin-top: 80px;
+  margin-top: 120px;
   margin-bottom: 50px;
 }
 
@@ -373,8 +385,9 @@ body {
 
 .custom-cards-editDevices {
   width: 23rem;
-  height: 46rem;
+  height: 49rem;
   padding: 20px;
+  border-radius: 20px;
   background-color: white !important;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 1px 8px rgba(0, 0, 0, 0.22) !important;
   transition: 0.2s ease-in-out all !important;
@@ -406,11 +419,46 @@ body {
 
 @media screen and (max-width: 1025px) {
   #editDevice {
-    margin-top: 10%;
+    margin-top: 70px;
+    margin-bottom: 70px;
   }
   .custom-cards-editDevices {
     width: 20rem;
   }
+}
+
+/*############################################################*/
+/*Edit Device name and room. Also delete*/
+/*############################################################*/
+
+.custom-cards-editDevices-adv {
+  width: 23rem;
+  height: 54rem;
+  padding: 20px;
+  border-radius: 20px;
+  background-color: white !important;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 1px 8px rgba(0, 0, 0, 0.22) !important;
+  transition: 0.2s ease-in-out all !important;
+}
+
+.custom-cards-editDevices-adv:hover {
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22) !important;
+}
+
+.newRowSwitch-delete {
+  margin-top: 20%;
+  margin-bottom: 5%;
+}
+
+.form-buttons-delete {
+  width: 100%;
+  height: 3rem;
+  border-radius: 30px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 1px 8px rgba(0, 0, 0, 0.22) !important;
+  border: none;
+  outline: none;
+  color: white;
+  background-color: #e30000;
 }
 
 /*############################################################*/
@@ -431,8 +479,8 @@ body {
 }
 
 .item-deviceDetails {
-  margin-left: 50px;
-  margin-right: 50px;
+  margin-left: 20px;
+  margin-right: 20px;
 }
 
 .scheduleItem:before {
@@ -472,6 +520,7 @@ ul {
   width: 23rem;
   height: 30rem;
   padding: 20px;
+  border-radius: 20px;
   background-color: white !important;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 1px 8px rgba(0, 0, 0, 0.22) !important;
   transition: 0.2s ease-in-out all !important;
@@ -486,12 +535,28 @@ ul {
   min-height: 30rem;
   max-height: 50rem;
   padding: 30px;
+  border-radius: 20px;
   background-color: white !important;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 1px 8px rgba(0, 0, 0, 0.22) !important;
   transition: 0.2s ease-in-out all !important;
 }
 
 .custom-cards-devicesDetails-schedule:hover {
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22) !important;
+}
+
+.custom-cards-devicesDetails-graph {
+  width: 76rem;
+  min-height: 35rem;
+  max-height: 50rem;
+  padding: 30px;
+  border-radius: 20px;
+  background-color: white !important;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 1px 8px rgba(0, 0, 0, 0.22) !important;
+  transition: 0.2s ease-in-out all !important;
+}
+
+.custom-cards-devicesDetails-graph:hover {
   box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22) !important;
 }
 
@@ -518,6 +583,10 @@ ul {
   .custom-cards-devicesDetails-schedule {
     width: 20rem;
   }
+
+  .custom-cards-devicesDetails-graph {
+    width: 20rem;
+  }
 }
 
 /*====================================================================================================================================*/
@@ -529,7 +598,7 @@ ul {
 /*############################################################*/
 
 #loginCard {
-  margin-top: 80px;
+  margin-top: 120px;
 
   /* border: solid 1px #005872;*/
 }
@@ -586,6 +655,7 @@ ul {
   width: 25rem;
   height: 34rem;
   padding: 20px;
+  border-radius: 20px;
   background-color: white !important;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 1px 8px rgba(0, 0, 0, 0.22) !important;
   transition: 0.2s ease-in-out all !important;
@@ -598,11 +668,32 @@ ul {
 .logo {
   font-family: "Harlow-solid";
   text-align: center;
-  font-size: 3.5em;
+  font-size: 2.8em;
+  opacity: 0.5;
   color: #000;
-  margin-bottom: 10px;
+  padding: 5px;
+  margin-top: 2px;
+  margin-bottom: 2px;
 }
 
+.logo-top {
+  font-family: "Harlow-solid";
+  text-align: center;
+  font-size: 2.5em;
+  opacity: 0.5;
+  color: #000;
+  margin-top: 3px;
+  padding: 10px;
+}
+
+.logo-back {
+  background-color: white;
+  box-shadow: 0 0px 10px rgba(0, 0, 0, 0.3) !important;
+}
+
+.logo-top:hover {
+  opacity: 1;
+}
 /* Responsive CSS Queries */
 
 @media screen and (max-width: 1024px) {
@@ -672,18 +763,35 @@ ul {
 /*############################################################*/
 
 #stat-cards {
-  margin-top: 100px;
+  padding-top: 100px;
+  padding-bottom: 30px;
+  background-color: #e7e7e7;
 }
 
-.img {
+.img-summary {
   padding: 15px;
+  width: 80%;
+  text-align: center;
+}
+
+.img-cont-summary {
+  text-align: center;
+  width: 100%;
+}
+
+.col-width {
+  width: 12rem;
+}
+
+.slide {
+  transition: all ease-in-out 1s;
 }
 
 .flex-b {
   display: flex !important;
   flex-direction: row !important;
   flex-wrap: wrap !important;
-  justify-content: space-evenly !important;
+  justify-content: space-around !important;
   align-items: flex-start !important;
 }
 
@@ -695,10 +803,20 @@ ul {
   margin-bottom: 30px;
 }
 
+.flex-cards {
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: wrap !important;
+  justify-content: center !important;
+  align-items: center !important;
+}
+
 .custom-cards {
-  width: 11rem;
-  height: 16rem;
+  width: 28rem;
+  height: 20rem;
   padding: 1px;
+  margin: 5px;
+  border-radius: 20px;
   background-color: white !important;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 1px 8px rgba(0, 0, 0, 0.22) !important;
   transition: 0.2s ease-in-out all !important;
@@ -711,24 +829,28 @@ ul {
 
 @media screen and (max-width: 1025px) {
   #stat-cards {
-    margin-top: 50px;
+    padding-top: 50px;
+    padding-bottom: 20px;
   }
   .custom-cards {
-    width: 10.1rem;
+    width: 24rem;
+    height: 18rem;
+    margin: 1px;
+  }
+  .flex-b {
+    justify-content: space-evenly !important;
+  }
+  .col-width {
+    width: 11rem;
+  }
+  .img {
+    width: 100%;
   }
 }
 
 /*############################################################*/
 /*NAVBARS - TOP Component CSS*/
 /*############################################################*/
-
-.flex-nav {
-  display: flex !important;
-  flex-direction: row !important;
-  flex-wrap: wrap !important;
-  flex-flow: row wrap !important;
-  justify-content: space-evenly !important;
-}
 
 .logo-small-top {
   font-family: "Harlow-solid";
@@ -738,144 +860,66 @@ ul {
 }
 
 .nav-item {
-  padding: 10px;
+  padding: 0px;
 }
 
 .navbar-top {
-  padding: 0 !important;
-  background-color: white;
-  box-shadow: 0 0px 25px rgba(0, 0, 0, 0.3) !important;
-  border-bottom: 1px solid #198fca !important;
+  padding: 10px !important;
+  background-color: #ffffff !important;
+  border: none;
   border-top: none !important;
   border-left: none !important;
   border-right: none !important;
+  box-shadow: 0 0px 7px rgba(0, 0, 0, 0.3) !important;
 }
 
 .nav-image {
-  width: 15%;
+  width: 35%;
+}
+
+.flex-nav {
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: wrap !important;
+  flex-flow: row wrap !important;
+  justify-content: space-evenly !important;
+}
+
+.navbar-bottom {
+  padding: 10px !important;
+  background-color: #ffffff !important;
+  box-shadow: 0 0px 10px rgba(0, 0, 0, 0.3) !important;
+}
+
+.nav-image-bottom {
+  width: 80%;
 }
 
 .image-cont-nav {
   text-align: center;
-  width: 15%;
+  width: 9rem;
   padding: 20px;
   opacity: 0.5;
+  border-radius: 10px;
+
+  background: #ffffff;
+  box-shadow: 15px 15px 30px #c4c4c4, -15px -15px 30px #ffffff;
 }
 
 .image-cont-nav:hover {
   background-color: #f5f5f5;
   opacity: 1;
   cursor: pointer;
-  box-shadow: 0 12px 10px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22) !important;
-}
-
-.flex-nav {
-  display: flex !important;
-  flex-direction: row !important;
-  flex-wrap: wrap !important;
-  flex-flow: row wrap !important;
-  justify-content: space-between !important;
-}
-
-.nav-item {
-  padding: 10px;
-}
-
-.navbar-bottom {
-  padding: 0 !important;
-  background-color: white;
-  box-shadow: 0 0px 25px rgba(0, 0, 0, 0.3) !important;
-  border-top: 1px solid #198fca;
-}
-
-.nav-image-bottom {
-  width: 50%;
-}
-
-.logo-small {
-  font-family: "Harlow-solid";
-  text-align: center;
-  font-size: 1.1em;
-  padding-top: 10%;
-  margin: 0;
-}
-.image-cont-nav {
-  text-align: center;
-  width: 20%;
-  padding: 15px;
-  opacity: 0.5;
-}
-
-.image-cont-nav:hover {
-  background-color: #f5f5f5;
-  opacity: 1;
-  cursor: pointer;
-  box-shadow: 0 12px 10px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22) !important;
+  background: linear-gradient(145deg, #ffffff, #e6e6e6);
+  box-shadow: 15px 15px 30px #c4c4c4, -15px -15px 30px #ffffff;
 }
 
 @media screen and (max-width: 1025px) {
   .image-cont-nav {
     width: 20%;
   }
-}
-
-@media screen and (max-width: 812px) {
-  .nav-image {
-    width: 80%;
-  }
-}
-
-/*############################################################*/
-/*NAVBARS - Bottom Component CSS*/
-/*############################################################*/
-
-.flex-nav {
-  display: flex !important;
-  flex-direction: row !important;
-  flex-wrap: wrap !important;
-  flex-flow: row wrap !important;
-  justify-content: space-between !important;
-}
-
-.nav-item {
-  padding: 10px;
-}
-
-.navbar-bottom {
-  padding: 0 !important;
-  background-color: white;
-  box-shadow: 0 0px 25px rgba(0, 0, 0, 0.3) !important;
-  border-top: 1px solid #198fca;
-}
-
-.nav-image-bottom {
-  width: 50%;
-}
-
-.logo-small {
-  font-family: "Harlow-solid";
-  text-align: center;
-  font-size: 1.1em;
-  padding-top: 10%;
-  margin: 0;
-}
-.image-cont-nav {
-  text-align: center;
-  width: 20%;
-  padding: 15px;
-  opacity: 0.5;
-}
-
-.image-cont-nav:hover {
-  background-color: #f5f5f5;
-  opacity: 1;
-  cursor: pointer;
-  box-shadow: 0 12px 10px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22) !important;
-}
-
-@media screen and (max-width: 1025px) {
-  .image-cont-nav {
-    width: 20%;
+  .flex-nav {
+    justify-content: space-between !important;
   }
 }
 
@@ -906,6 +950,7 @@ ul {
   width: 11rem;
   height: 15rem;
   padding: 1px;
+  border-radius: 20px;
   background-color: white !important;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 1px 8px rgba(0, 0, 0, 0.22) !important;
   transition: 0.2s ease-in-out all !important;
@@ -940,6 +985,7 @@ ul {
   width: 11rem;
   height: 12rem;
   padding: 10px;
+  border-radius: 20px;
   background-color: white !important;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 1px 8px rgba(0, 0, 0, 0.22) !important;
   transition: 0.2s ease-in-out all !important;
@@ -1008,19 +1054,30 @@ ul {
 .card {
   margin-bottom: 30px !important;
   user-select: none !important;
+  border-color: none !important;
 }
 
 .custom-cards-rooms {
+  border: none;
   width: 11rem;
   height: 12rem;
   padding: 1px;
   background-color: white !important;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 1px 8px rgba(0, 0, 0, 0.22) !important;
+  border-radius: 20px;
+  /*
+  background: #ffffff;
+  box-shadow: 12px 12px 34px #cfcfcf, -12px -12px 34px #ffffff;
+  */
   transition: 0.2s ease-in-out all !important;
 }
 
 .custom-cards-rooms:hover {
   box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22) !important;
+  /*border-radius: 20px;
+  background: #ffffff;
+  box-shadow: inset 5px 5px 28px #d6d6d6, inset -5px -5px 28px #ffffff;
+  */
   cursor: pointer !important;
 }
 
