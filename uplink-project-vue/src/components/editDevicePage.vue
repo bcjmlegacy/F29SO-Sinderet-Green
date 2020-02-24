@@ -12,87 +12,104 @@
       <div class="container">
         <h3 class="display-3 text-center">Edit Schedule</h3>
         <div id="form-addDevice">
-          <div class="flex-add">
-            <div class="card custom-cards-editDevices">
-              <div class="img-cont">
-                <img
-                  :src="require(`../assets/${deviceImage}.png`)"
-                  alt="device icon"
-                  class="device-img"
-                />
-              </div>
-              <div class="text-wrapper">
-                <h5 class="card-title text-center label-section">{{ deviceName }}</h5>
-                <p class="card-text text-center">{{ deviceEnergy }} Watts</p>
-              </div>
-              <div class="device-cont">
-                <b-form @submit="go">
-                  <p class="label-section text-center">Scheduled Events</p>
+          <div class="flex-deviceDetails">
+            <div class="item-deviceDetails">
+              <div class="card custom-cards-editDevices">
+                <div class="img-cont">
+                  <img
+                    :src="require(`../assets/${deviceImage}.png`)"
+                    alt="device icon"
+                    class="device-img"
+                  />
+                </div>
+                <div class="text-wrapper">
+                  <h5 class="card-title text-center label-section">{{ deviceName }}</h5>
+                  <p class="card-text text-center">{{ deviceEnergy }} Watts</p>
+                </div>
+                <div class="device-cont">
+                  <b-form @submit="go">
+                    <p class="label-section text-center">Add Scheduled Events</p>
 
-                  <div class="col-sm-12">
-                    <label for="input-device-room" class="label">Set Time</label>
-                  </div>
-                  <div class="col-sm-12">
-                    <select
-                      v-model="form.hour"
-                      class="form-dropdown time-width"
-                      required="required"
-                    >
-                      <option disabled value>Hours</option>
-                      <option selected="selected" value="0">0</option>
-                      <option v-for="n in 24" :key="n" :value="n">
-                        {{
-                        n
-                        }}
-                      </option>
-                    </select>
-                    <select
-                      v-model="form.minute"
-                      class="form-dropdown time-width"
-                      required="required"
-                    >
-                      <option disabled value>Minutes</option>
-                      <option selected="selected" alue="0">0</option>
-                      <option v-for="n in 60" :key="n" :value="n">
-                        {{
-                        n
-                        }}
-                      </option>
-                    </select>
-                  </div>
-
-                  <div class="form-rows">
                     <div class="col-sm-12">
-                      <label for="input-device-room" class="label">Set Operation</label>
+                      <label for="input-device-room" class="label">Set Time</label>
                     </div>
                     <div class="col-sm-12">
-                      <select v-model="form.operation" class="form-dropdown" required="required">
-                        <option disabled value>Please Select An Operation</option>
-                        <option
-                          v-for="op in operations"
-                          :key="op.device_command_id"
-                          :value="op.device_command_value"
-                        >{{ op.device_command_name }}</option>
+                      <select
+                        v-model="form.hour"
+                        class="form-dropdown time-width"
+                        required="required"
+                      >
+                        <option disabled value>Hours</option>
+                        <option selected="selected" value="0">0</option>
+                        <option v-for="n in 24" :key="n" :value="n">
+                          {{
+                          n
+                          }}
+                        </option>
+                      </select>
+                      <select
+                        v-model="form.minute"
+                        class="form-dropdown time-width"
+                        required="required"
+                      >
+                        <option disabled value>Minutes</option>
+                        <option selected="selected" alue="0">0</option>
+                        <option v-for="n in 60" :key="n" :value="n">
+                          {{
+                          n
+                          }}
+                        </option>
                       </select>
                     </div>
-                  </div>
-                  <div class="newRowSwitch">
+
                     <div class="form-rows">
                       <div class="col-sm-12">
-                        <button class="form-buttons" type="submit">Save Changes</button>
+                        <label for="input-device-room" class="label">Set Operation</label>
                       </div>
-                    </div>
-                    <div class="form-rows">
                       <div class="col-sm-12">
-                        <router-link
-                          :to="{name: 'device',query:{deviceID:deviceID, deviceName:deviceName, 'deviceImage': deviceImage, deviceEnergy:deviceEnergy} }"
-                        >
-                          <button class="form-buttons" type="submit">Cancel</button>
-                        </router-link>
+                        <select v-model="form.operation" class="form-dropdown" required="required">
+                          <option disabled value>Please Select An Operation</option>
+                          <option
+                            v-for="op in operations"
+                            :key="op.device_command_id"
+                            :value="op.device_command_value"
+                          >{{ op.device_command_name }}</option>
+                        </select>
                       </div>
                     </div>
-                  </div>
-                </b-form>
+                    <div class="newRowSwitch">
+                      <div class="form-rows">
+                        <div class="col-sm-12">
+                          <button class="form-buttons" type="submit">Add To Schedule</button>
+                        </div>
+                      </div>
+                    </div>
+                  </b-form>
+                </div>
+              </div>
+            </div>
+            <div class="item-deviceDetails">
+              <div class="card custom-cards-devicesDetails-schedule-edit">
+                <h5 class="card-title text-center label-section">Delete Schedule Times</h5>
+                <div class="form-rows" />
+                <ul class="list-schedule">
+                  <li class="scheduleItem" v-for="command in scheduledCommands" :key="command.id">
+                    {{command.command}} at {{command.hour}}:{{command.minutes}}
+                    <img
+                      src="../assets/close.png"
+                      alt="Delete Item"
+                      class="img-delete"
+                      @click="deleteScheduleItem(command.id)"
+                    />
+                  </li>
+                </ul>
+                <div class="form-rows">
+                  <button
+                    class="form-buttons-delete"
+                    type="button"
+                    @click="deleteFullSchedule"
+                  >Delete Full Schedule</button>
+                </div>
               </div>
             </div>
           </div>
@@ -121,14 +138,15 @@ export default {
         month: "0",
         day: "0",
         hour: "",
-        minute: "",
-        checked: "off"
+        minute: ""
       },
       operations: [],
-      device: ""
+      device: "",
+      scheduledCommands: []
     };
   },
   methods: {
+    //Add item to the schedule
     go(evt) {
       let url = "http://192.168.0.11:5552/insertRepeatTimer";
       console.log(this.form);
@@ -155,18 +173,58 @@ export default {
         })
         .then(jsonData => {
           console.log(jsonData);
-          this.$router.push({
-            name: "device",
-            query: {
-              deviceID: this.deviceID,
-              deviceName: this.deviceName,
-              deviceImage: this.deviceImage,
-              deviceEnergy: this.deviceEnergy
-            }
-          });
+          location.reload();
         });
 
       evt.preventDefault();
+    },
+    deleteScheduleItem(id) {
+      //deletes the select scheduled item
+      if (!confirm("Do really want to delete this scheduled event?")) {
+        return false;
+      }
+      let url = "http://192.168.0.11:5552/deleteRepeatTimer?id=" + id;
+      fetch(url, {
+        mode: "cors",
+        method: "GET",
+        headers: {
+          Authorization: this.userToken
+        }
+      })
+        .then(response => {
+          return response.json();
+        })
+        .then(jsonData => {
+          console.log(jsonData);
+          location.reload();
+        });
+    },
+    deleteFullSchedule() {
+      //deletes the the entire Schedule
+
+      if (!confirm("Do really want to delete the entire schedule?")) {
+        return false;
+      }
+      //loops through the schedule and deletes each schedule item one by one using the id
+      for (let i in this.scheduledCommands) {
+        let url =
+          "http://192.168.0.11:5552/deleteRepeatTimer?id=" +
+          this.scheduledCommands[i].id;
+        fetch(url, {
+          mode: "cors",
+          method: "GET",
+          headers: {
+            Authorization: this.userToken
+          }
+        })
+          .then(response => {
+            return response.json();
+          })
+          .then(jsonData => {
+            console.log(jsonData);
+            location.reload();
+          });
+      }
     }
   },
   mounted: function() {
@@ -186,8 +244,10 @@ export default {
       })
       .then(jsonData => {
         this.operations = jsonData; //after we get commands find device ID
-        let url1 = "http://192.168.0.11:5552/getDevices";
-        fetch(url1, {
+        let url =
+          "http://192.168.0.11:5552/getRepeatTimers?id=" + this.deviceID;
+
+        fetch(url, {
           mode: "cors",
           method: "GET",
           headers: {
@@ -198,20 +258,51 @@ export default {
             return response.json();
           })
           .then(jsonData => {
-            console.log(jsonData);
-            for (let device in jsonData) {
+            for (let key in jsonData) {
               if (
-                jsonData[device].device_name === this.deviceName &&
-                jsonData[device].device_wattage === this.deviceEnergy
+                jsonData[key].timer_repeat_command === 1 ||
+                jsonData[key].timer_repeat_command === 3
               ) {
-                this.device = jsonData[device].device_id;
-                console.log(this.device);
+                jsonData[key].timer_repeat_command = "on";
+              } else if (
+                jsonData[key].timer_repeat_command === 2 ||
+                jsonData[key].timer_repeat_command === 4
+              ) {
+                jsonData[key].timer_repeat_command = "off";
               }
+              //creates a json of the each scheduled item and pushes to an array
+              this.scheduledCommands.push({
+                id: jsonData[key].timer_repeat_id,
+                hour: formatTime(jsonData[key].timer_repeat_hour),
+                minutes: formatTime(jsonData[key].timer_repeat_minute),
+                command: capitalize(jsonData[key].timer_repeat_command)
+              });
             }
+            /*this.lastTime = {
+              hour: jsonData[jsonData.length - 1].timer_repeat_hour,
+              minutes: jsonData[jsonData.length - 1].timer_repeat_minute,
+              command: jsonData[jsonData.length - 1].timer_repeat_command
+            };*/
+            console.log(this.scheduledCommands);
+            this.scheduledCommands.sort((a, b) => {
+              return a.hour - b.hour;
+            });
           });
       });
   }
 };
+
+//Formating for the schedule
+function capitalize(text) {
+  return text.charAt(0).toUpperCase() + text.slice(1);
+}
+
+function formatTime(time) {
+  if (time < 10) {
+    return "0" + time;
+  }
+  return time;
+}
 
 //Add more when more devices are available
 function pairImg(img) {
