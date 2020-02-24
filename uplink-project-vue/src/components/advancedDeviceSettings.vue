@@ -76,7 +76,11 @@
                   <div class="newRowSwitch-delete">
                     <div class="form-rows">
                       <div class="col-sm-12">
-                        <button class="form-buttons-delete" type="submit">Delete Device</button>
+                        <button
+                          class="form-buttons-delete"
+                          type="button"
+                          @click="deleteDevice"
+                        >Delete Device</button>
                       </div>
                     </div>
                   </div>
@@ -111,7 +115,25 @@ export default {
     };
   },
   props: ["deviceID", "deviceName", "deviceImage", "deviceEnergy", "userToken"],
-  methods: {},
+  methods: {
+    deleteDevice() {
+      confirm("Do really want to delete " + this.deviceName + "?");
+      let url = "http://192.168.0.11:5552/deleteDevice?id=" + this.deviceID;
+      fetch(url, {
+        mode: "cors",
+        method: "GET",
+        headers: {
+          Authorization: this.userToken
+        }
+      })
+        .then(response => {
+          return response.json();
+        })
+        .then(jsonData => {
+          console.log(jsonData);
+        });
+    }
+  },
   mounted: function() {
     fetch(url, {
       mode: "cors",
