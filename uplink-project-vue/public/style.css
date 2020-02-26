@@ -1055,7 +1055,7 @@ ul {
 
 .img-cont {
   text-align: center;
-  padding-top: 0px;
+  padding-top: 2px;
   padding-bottom: 0px;
   padding-left: 20px;
   padding-right: 20px;
@@ -1070,6 +1070,7 @@ ul {
   width: 11rem;
   height: 15rem;
   padding: 1px;
+  border-radius: 20px;
   background-color: white !important;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 1px 8px rgba(0, 0, 0, 0.22) !important;
   transition: 0.2s ease-in-out all !important;
