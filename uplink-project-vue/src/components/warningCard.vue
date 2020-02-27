@@ -12,9 +12,9 @@
         <div>
           <div class="col-width-warnings">
             <div class="card-body text-center">
-              <h2 class="card-title-warning">Livingroom-Lights</h2>
-              <h4 class="card-subtitle-warning">On for Too Long</h4>
-              <h4 class="warning-text">Uptime --> 50mins</h4>
+              <h2 class="card-title-warning">{{deviceName}}</h2>
+              <h4 class="card-subtitle-warning">{{warningMessage}}</h4>
+              <h4 class="warning-text">{{warningClarified}}</h4>
             </div>
           </div>
         </div>
@@ -26,7 +26,14 @@
 <script>
 export default {
   name: "WarningCard",
-  props: ["deviceID", "deviceName", "deviceImage", "deviceEnergy"]
+  props: [
+    "deviceID",
+    "deviceName",
+    "deviceImage",
+    "deviceEnergy",
+    "warningClarified",
+    "warningMessage"
+  ]
 };
 </script>
 

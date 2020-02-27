@@ -15,9 +15,7 @@
       </div>
       <div class="warnings-tree">
         <div class="flex-warnings">
-          <WarningCard />
-          <WarningCard />
-          <WarningCard />
+          <WarningCard deviceName="lights" warningMessage="blah" warningClarified="deedededeee" />
         </div>
       </div>
     </div>
