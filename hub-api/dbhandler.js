@@ -572,6 +572,27 @@ class databasehandler {
     });
   }
 
+  editDevice(id, room, type, wattage, name, callback) {
+    var q = `UPDATE device SET device_room = ?, device_type = ?, device_wattage = ?, device_name = ? WHERE device_id = ?`;
+
+    db.run(q, [room, type, wattage, name, id], function(err) {
+      if (err) {
+        console.log(
+          `[${getWholeDate()}] ! Error updating data record for device:`
+        );
+        console.log(`[${getWholeDate()}] ! ${err}`);
+        callback(err, null);
+      } else {
+        console.log(
+          `[${getWholeDate()}] > Updated data record for device: ${JSON.stringify(
+            this.lastID
+          )}`
+        );
+        callback(null, JSON.stringify(this.lastID));
+      }
+    });
+  }
+
   /* #######################################
                                     
   Inserting readings.
