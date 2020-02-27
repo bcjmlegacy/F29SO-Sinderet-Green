@@ -163,6 +163,7 @@ CREATE TABLE warning (
     warning_device_id           TEXT,
     warning_sensor_id           TEXT,
     warning_message             TEXT,
+    warning_severity            INTEGER,
     FOREIGN KEY (warning_device_id) REFERENCES device(device_id),
     FOREIGN KEY (warning_sensor_id) REFERENCES sensor(sensor_id)
 );

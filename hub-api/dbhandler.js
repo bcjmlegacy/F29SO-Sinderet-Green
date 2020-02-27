@@ -735,6 +735,45 @@ class databasehandler {
     });
   }
 
+  insertWarning(
+    device_id,
+    sensor_id,
+    message,
+    severity,
+    callback
+  ) {
+    var ts = new Date().valueOf();
+    var q = `INSERT INTO warning (
+              warning_timestamp,
+              warning_device_id,
+              warning_sensor_id,
+              warning_message,
+              warning_severity)
+             VALUES (?, ?, ?, ?, ?)`;
+
+    if(!(sensor_id)) sensor_id = NULL;
+    if(!(device_id)) device_id = NULL;
+
+    db.run(q, [ts, device_id, sensor_id, message, severity], function(
+      err
+    ) {
+      if (err) {
+        console.log(
+          `[${getWholeDate()}] ! Error inserting warning:`
+        );
+        console.log(`[${getWholeDate()}] ! ${err}`);
+        callback(err, null);
+      } else {
+        console.log(
+          `[${getWholeDate()}] > Inserted warning: ${JSON.stringify(
+            this.lastID
+          )}`
+        );
+        callback(null, JSON.stringify(this.lastID));
+      }
+    });
+  }
+
   /* #######################################
                                     
   Deleting things.
@@ -802,6 +841,9 @@ class databasehandler {
   }
   deleteDeviceTrigger(id, callback) {
     this.deleteById("device_trigger", id, callback);
+  }
+  deleteWarning(id, callback) {
+    this.deleteById("warning", id, callback);
   }
 
   deleteDeviceReadingByDeviceId(id, callback) {

@@ -320,6 +320,16 @@ function procTimersAndTriggers() {
 
 setInterval(procTimersAndTriggers, 60000);
 
+function procWarnings() {
+
+  // If a heater is on for more than 2 hours
+
+  // If the fridge temp raises above 6 degrees
+
+}
+
+setInterval(procWarnings, 60000);
+
 //
 // Define API
 //
@@ -1158,6 +1168,16 @@ app.get("/deleteDeviceReading", (req, res) => {
 
 app.get("/deleteDeviceTrigger", (req, res) => {
   db.deleteDeviceTrigger(req.query.id, function(err, rowId) {
+    if (err) {
+      res.send({ error: err });
+    } else {
+      res.send({ status: "success" });
+    }
+  });
+});
+
+app.get("/deleteWarning", (req, res) => {
+  db.deleteWarning(req.query.id, function(err, rowId) {
     if (err) {
       res.send({ error: err });
     } else {

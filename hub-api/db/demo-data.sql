@@ -109,6 +109,7 @@ INSERT INTO warning (
     warning_timestamp,
     warning_device_id,
     warning_sensor_id,
-    warning_message
+    warning_message,
+    warning_severity
 )
-VALUES (1579521113, "123ABC123", NULL, "The heater has been on for a while!");
+VALUES (1579521113, "123ABC123", NULL, "The heater has been on for a while!", 3);
