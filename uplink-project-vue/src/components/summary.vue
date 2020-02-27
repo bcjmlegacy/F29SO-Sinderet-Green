@@ -16,6 +16,7 @@
                     <div class="img-cont-summary">
                       <img src="../assets/idea.png" class="img-summary" alt="Energy Usage" />
                     </div>
+                    <!--Energy card area for data-->
                     <div class="card-body text-center">
                       <h5 class="card-title">Current Energy Usage</h5>
                       <h4 class="card-text">{{energy}}KWh</h4>
@@ -43,6 +44,7 @@
                       <div class="img-cont-summary">
                         <img src="../assets/battery.png" class="img-summary" alt="Energy Usage" />
                       </div>
+                      <!--Solar battery card area for data-->
                       <div class="card-body text-center">
                         <h5 class="card-title">Solar Stored Today</h5>
                         <h4 class="card-text">{{solar}}KWh</h4>
@@ -69,6 +71,7 @@
                     <div class="img-cont-summary">
                       <img src="../assets/sun.png" class="img-summary" alt="Energy Usage" />
                     </div>
+                    <!--Temperature card area for data-->
                     <div class="card-body text-center">
                       <h5 class="card-title">Average Temperature Inside</h5>
                       <h4 class="card-text">{{temperature}}&#x2103;</h4>
@@ -78,10 +81,9 @@
                 <div>
                   <div class="col-width">
                     <div class="card-body text-center slide">
-                      <h5 class="card-text">{{temperatures[0].loc}} it's</h5>
-                      <h4 class="display-2">{{temperatures[0].temp}}&#x2103;</h4>
-                      <p class="card-text">and</p>
-                      <h5 class="card-text">{{temperatures[0].currentDescription}}</h5>
+                      <h5 class="card-text">Outside it's</h5>
+                      <h4 class="display-2">{{temperatures.temp}}&#x2103;</h4>
+                      <h5 class="card-text">{{temperatures.currentDescription}}</h5>
                     </div>
                   </div>
                 </div>
@@ -101,13 +103,12 @@ export default {
   name: "Summary",
   data() {
     return {
-      temperatures: [],
-      currentTemp: ""
+      temperatures: ""
     };
   },
   props: ["userToken", "sumTitle", "energy", "temperature", "solar"],
   methods: {
-    findRooms() {
+    /*findRooms() {
       fetch("http://localhost:5552/getRooms", {
         method: "GET",
         mode: "cors",
@@ -129,7 +130,7 @@ export default {
           }
         });
     }
-    /*
+    
     let i = 0;
     startInterval: function(temp) {
       
@@ -150,6 +151,7 @@ export default {
     }*/
   },
   mounted: function() {
+    //Dark sky api to get data for outside weather. Set to Edinburgh
     fetch("https://dark-sky.p.rapidapi.com/55.9533,3.1883?lang=en&units=auto", {
       method: "GET",
       headers: {
@@ -162,13 +164,13 @@ export default {
       })
       .then(jsonData => {
         console.log(jsonData);
-        this.temperatures.push({
+        this.temperatures = {
           currentDescription: jsonData.currently.summary,
           temp: Math.round(jsonData.currently.temperature),
           loc: "Outside"
-        });
+        };
 
-        this.findRooms();
+        //this.findRooms();
         //this.startInterval(this.temperatures.length);
         console.log(this.temperatures);
       })

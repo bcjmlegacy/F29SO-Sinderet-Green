@@ -37,7 +37,7 @@
               </div>
               <div class="form-rows">
                 <router-link
-                  :to="{name: 'editDevice', query:{deviceName:deviceName, 'deviceImage': deviceImage, deviceEnergy:deviceEnergy}}"
+                  :to="{name: 'editDevice', query:{deviceID:deviceID, deviceName:deviceName, 'deviceImage': deviceImage, deviceEnergy:deviceEnergy}}"
                 >
                   <button class="form-buttons" type="button">Edit</button>
                 </router-link>
@@ -57,7 +57,7 @@
               </ul>
               <div class="form-rows">
                 <router-link
-                  :to="{name: 'editSchedule', query:{deviceName:deviceName, 'deviceImage': deviceImage, deviceEnergy:deviceEnergy}}"
+                  :to="{name: 'editSchedule', query:{deviceID:deviceID, deviceName:deviceName, 'deviceImage': deviceImage, deviceEnergy:deviceEnergy}}"
                 >
                   <button class="form-buttons" type="button">Edit</button>
                 </router-link>
@@ -74,7 +74,7 @@
               </ul>
               <div class="form-rows">
                 <router-link
-                  :to="{name: '', query:{deviceName:deviceName, 'deviceImage': deviceImage, deviceEnergy:deviceEnergy}}"
+                  :to="{name: '', query:{deviceID:deviceID, deviceName:deviceName, 'deviceImage': deviceImage, deviceEnergy:deviceEnergy}}"
                 >
                   <button class="form-buttons" type="button">Edit</button>
                 </router-link>
@@ -112,11 +112,18 @@ export default {
       scheduledCommands: []
     };
   },
-  props: ["deviceName", "deviceImage", "deviceEnergy", "userToken", "back"],
+  props: [
+    "deviceID",
+    "deviceName",
+    "deviceImage",
+    "deviceEnergy",
+    "userToken",
+    "back"
+  ],
   methods: {
     async turnOn() {
       await this.$nextTick();
-      let url = "http://localhost:5552/insertOneshotTimer";
+      let url = "http://192.168.0.11:5552/insertOneshotTimer";
       fetch(url, {
         mode: "cors",
         method: "POST",
@@ -126,7 +133,7 @@ export default {
           Authorization: this.userToken
         },
         body: JSON.stringify({
-          device_id: this.device,
+          device_id: this.deviceID,
           trigger: 1,
           command: swap(this.form.checked)
         })
@@ -137,15 +144,11 @@ export default {
         .then(jsonData => {
           console.log(jsonData);
         });
-    },
-    loadOnce: function() {
-      location.reload();
-      console.log("reloaded");
     }
   },
   mounted: function() {
-    //find device ID
-    let url = "http://localhost:5552/getDevices";
+    let url = "http://192.168.0.11:5552/getRepeatTimers?id=" + this.deviceID;
+
     fetch(url, {
       mode: "cors",
       method: "GET",
@@ -157,64 +160,41 @@ export default {
         return response.json();
       })
       .then(jsonData => {
-        console.log(jsonData);
-        let deviceNo = 0;
-        for (deviceNo in jsonData) {
+        //Some formating for finding on and off commands
+        for (let key in jsonData) {
           if (
-            jsonData[deviceNo].device_name === this.deviceName &&
-            jsonData[deviceNo].device_wattage === this.deviceEnergy
+            jsonData[key].timer_repeat_command === 1 ||
+            jsonData[key].timer_repeat_command === 3
           ) {
-            this.device = jsonData[deviceNo].device_id;
-            console.log(this.device);
+            jsonData[key].timer_repeat_command = "on";
+          } else if (
+            jsonData[key].timer_repeat_command === 2 ||
+            jsonData[key].timer_repeat_command === 4
+          ) {
+            jsonData[key].timer_repeat_command = "off";
           }
+          //creates a json for the scheduled item and pushes to the schedule array
+          this.scheduledCommands.push({
+            id: jsonData[key].timer_repeat_id,
+            hour: formatTime(jsonData[key].timer_repeat_hour),
+            minutes: formatTime(jsonData[key].timer_repeat_minute),
+            command: capitalize(jsonData[key].timer_repeat_command)
+          });
         }
-        let url1 = "http://localhost:5552/getRepeatTimers?id=" + this.device;
-
-        fetch(url1, {
-          mode: "cors",
-          method: "GET",
-          headers: {
-            Authorization: this.userToken
-          }
-        })
-          .then(response => {
-            return response.json();
-          })
-          .then(jsonData => {
-            console.log("nn");
-            for (let key in jsonData) {
-              if (
-                jsonData[key].timer_repeat_command === 1 ||
-                jsonData[key].timer_repeat_command === 3
-              ) {
-                jsonData[key].timer_repeat_command = "on";
-              } else if (
-                jsonData[key].timer_repeat_command === 2 ||
-                jsonData[key].timer_repeat_command === 4
-              ) {
-                jsonData[key].timer_repeat_command = "off";
-              }
-              this.scheduledCommands.push({
-                id: jsonData[key].timer_repeat_id,
-                hour: formatTime(jsonData[key].timer_repeat_hour),
-                minutes: formatTime(jsonData[key].timer_repeat_minute),
-                command: capitalize(jsonData[key].timer_repeat_command)
-              });
-            }
-            /*this.lastTime = {
+        /*this.lastTime = {
               hour: jsonData[jsonData.length - 1].timer_repeat_hour,
               minutes: jsonData[jsonData.length - 1].timer_repeat_minute,
               command: jsonData[jsonData.length - 1].timer_repeat_command
             };*/
-            console.log(this.scheduledCommands);
-            this.scheduledCommands.sort((a, b) => {
-              return a.hour - b.hour;
-            });
-          });
+        console.log(this.scheduledCommands);
+        this.scheduledCommands.sort((a, b) => {
+          return a.hour - b.hour;
+        });
       });
   }
 };
 
+//formatting for the schedule.
 function capitalize(text) {
   return text.charAt(0).toUpperCase() + text.slice(1);
 }

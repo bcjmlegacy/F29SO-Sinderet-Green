@@ -15,7 +15,7 @@
           </div>
         </router-link>
 
-        <router-link to="#" class="image-cont-nav">
+        <router-link :to="{name: 'warnings'}" class="image-cont-nav">
           <div>
             <img src="../assets/exclamation.png" alt="warnings" class="nav-image-bottom" />
           </div>
