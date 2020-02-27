@@ -104,3 +104,11 @@ INSERT INTO device_trigger (
     device_trigger_command
 )
 VALUES  ("123ABC123", "ABC123", "<", 20, 1);
+
+INSERT INTO warning (
+    warning_timestamp,
+    warning_device_id,
+    warning_sensor_id,
+    warning_message
+)
+VALUES (1579521113, "123ABC123", NULL, "The heater has been on for a while!");

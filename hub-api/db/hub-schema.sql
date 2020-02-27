@@ -156,3 +156,13 @@ CREATE TABLE device_trigger (
     FOREIGN KEY (device_trigger_sensor_id) REFERENCES sensor(sensor_id),
     FOREIGN KEY (device_trigger_command)   REFERENCES device_command(device_command_id)
 );
+
+CREATE TABLE warning (
+    warning_id                  INTEGER PRIMARY KEY AUTOINCREMENT,
+    warning_timestamp           INTEGER,
+    warning_device_id           TEXT,
+    warning_sensor_id           TEXT,
+    warning_message             TEXT,
+    FOREIGN KEY (warning_device_id) REFERENCES device(device_id),
+    FOREIGN KEY (warning_sensor_id) REFERENCES sensor(sensor_id)
+);
