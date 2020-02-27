@@ -548,6 +548,29 @@ class databasehandler {
     });
   }
 
+  editSensor(id, room, type, name, callback) {
+    var q = `UPDATE sensor SET sensor_room = ?, sensor_type = ?, sensor_name = ? WHERE sensor_id = ?`;
+
+    var newId = this.generateId();
+
+    db.run(q, [room, type, name, id], function(err) {
+      if (err) {
+        console.log(
+          `[${getWholeDate()}] ! Error updating data record for sensor:`
+        );
+        console.log(`[${getWholeDate()}] ! ${err}`);
+        callback(err, null);
+      } else {
+        console.log(
+          `[${getWholeDate()}] > Updated data record for sensor: ${JSON.stringify(
+            this.lastID
+          )}`
+        );
+        callback(null, JSON.stringify(this.lastID));
+      }
+    });
+  }
+
   insertDevice(room, type, wattage, name, callback) {
     var ts = new Date().valueOf();
     var q = `INSERT INTO device (device_id, device_room, device_type, device_wattage, device_name, device_added) VALUES (?, ?, ?, ?, ?, ?)`;
