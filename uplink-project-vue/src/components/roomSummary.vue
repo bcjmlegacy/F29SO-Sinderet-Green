@@ -65,7 +65,10 @@
           </div>
         </div>
         <div class="text-center">
-          <router-link class="advanced-links text-center links" to="#">See Advanced Stats</router-link>
+          <router-link
+            class="advanced-links text-center links"
+            :to="{name: 'stats'}"
+          >See Advanced Stats</router-link>
         </div>
       </div>
     </div>

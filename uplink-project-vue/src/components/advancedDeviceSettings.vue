@@ -98,7 +98,7 @@
 import NavbarTop from "./navbar-top";
 import NavbarBottom from "./navbar-bottom";
 
-let url = "http://192.168.0.11:5552/getRooms";
+let url = "http://localhost:5552/getRooms";
 export default {
   name: "addDevice",
   components: {
@@ -120,7 +120,7 @@ export default {
       if (!confirm("Do really want to delete " + this.deviceName + "?")) {
         return false;
       }
-      let url = "http://192.168.0.11:5552/deleteDevice?id=" + this.deviceID;
+      let url = "http://localhost:5552/deleteDevice?id=" + this.deviceID;
       fetch(url, {
         mode: "cors",
         method: "GET",
