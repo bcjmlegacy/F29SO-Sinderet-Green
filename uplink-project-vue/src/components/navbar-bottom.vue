@@ -20,7 +20,7 @@
             <img src="../assets/exclamation.png" alt="warnings" class="nav-image-bottom" />
           </div>
         </router-link>
-        <router-link to="#" class="image-cont-nav">
+        <router-link :to="{name: 'settings'}" class="image-cont-nav">
           <div>
             <img src="../assets/user.png" alt="Profile" class="nav-image-bottom" />
           </div>
