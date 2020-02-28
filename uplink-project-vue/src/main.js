@@ -25,6 +25,7 @@ import advancedEdit from "./components/advancedDeviceSettings";
 import Warnings from "./components/warnings";
 import AdvancedStats from "./components/statsPage";
 import Settings from "./components/settingsTemplate";
+import AllDevicesPage from "./components/allDevicesPage";
 //bootstrap vue tags can be used
 Vue.use(BootstrapVue);
 Vue.config.productionTip = false;
@@ -219,6 +220,22 @@ const router = new VueRouter({
       name: "settings",
       path: "/settings",
       component: Settings,
+      props(route) {
+        return route.query || {};
+      },
+      beforeEnter: (to, from, next) => {
+        let token = Vue.$cookies.get("token");
+        if (token == null) {
+          next({ name: "login" });
+        } else {
+          next();
+        }
+      }
+    },
+    {
+      name: "allDevicesPage",
+      path: "/allDevicesPage",
+      component: AllDevicesPage,
       props(route) {
         return route.query || {};
       },
