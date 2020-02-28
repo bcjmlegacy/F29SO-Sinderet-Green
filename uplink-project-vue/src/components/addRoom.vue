@@ -51,7 +51,7 @@
 import NavbarTop from "./navbar-top";
 import NavbarBottom from "./navbar-bottom";
 
-let url = "http://192.168.0.11:5552/insertRoom";
+let url = "http://localhost:5552/insertRoom";
 export default {
   name: "addRoom",
   components: { NavbarTop, NavbarBottom },

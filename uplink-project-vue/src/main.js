@@ -1,7 +1,9 @@
 //dependencies.
 import Vue from "vue";
 import App from "./App.vue";
+import VueGoogleCharts from "vue-google-charts";
 
+Vue.use(VueGoogleCharts);
 import BootstrapVue from "bootstrap-vue";
 import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap-vue/dist/bootstrap-vue.css";
@@ -21,6 +23,7 @@ import EditSchedule from "./components/editDevicePage";
 import deviceDetails from "./components/deviceDetails";
 import advancedEdit from "./components/advancedDeviceSettings";
 import Warnings from "./components/warnings";
+import AdvancedStats from "./components/statsPage";
 //bootstrap vue tags can be used
 Vue.use(BootstrapVue);
 Vue.config.productionTip = false;
@@ -39,167 +42,183 @@ export const bus = new Vue();
 
 Vue.use(VueRouter);
 const router = new VueRouter({
-	mode: "history",
-	routes: [
-		{
-			name: "dashboard",
-			path: "/",
-			component: Dash,
-			props: true,
-			beforeEnter: (to, from, next) => {
-				let token = Vue.$cookies.get("token");
-				if (token == null) {
-					next({ name: "login" });
-				} else {
-					next();
-				}
-			}
-		},
-		{
-			name: "login",
-			path: "/login",
-			component: Login
-		},
-		{
-			name: "room",
-			path: "/room/:name",
-			component: Room,
-			props: true,
-			beforeEnter: (to, from, next) => {
-				let token = Vue.$cookies.get("token");
-				if (token == null) {
-					next({ name: "login" });
-				} else {
-					next();
-				}
-			}
-		},
-		{
-			path: "/editSchedule",
-			name: "editSchedule",
-			component: EditSchedule,
-			beforeEnter: (to, from, next) => {
-				let token = Vue.$cookies.get("token");
-				if (token == null) {
-					next({ name: "login" });
-				} else {
-					next();
-				}
-			},
-			props(route) {
-				return route.query || {};
-			}
-		},
-		{
-			path: "/deviceDetails",
-			name: "device",
-			component: deviceDetails,
-			beforeEnter: (to, from, next) => {
-				let token = Vue.$cookies.get("token");
-				if (token == null) {
-					next({ name: "login" });
-				} else {
-					next();
-				}
-			},
-			props(route) {
-				return route.query || {};
-			}
-		},
-		{
-			name: "add",
-			path: "/add",
-			component: AddItem,
-			props: true,
-			beforeEnter: (to, from, next) => {
-				let token = Vue.$cookies.get("token");
-				if (token == null) {
-					next({ name: "login" });
-				} else {
-					next();
-				}
-			}
-		},
-		{
-			name: "addDevice",
-			path: "/addDevice",
-			component: AddDevices,
-			beforeEnter: (to, from, next) => {
-				let token = Vue.$cookies.get("token");
-				if (token == null) {
-					next({ name: "login" });
-				} else {
-					next();
-				}
-			}
-		},
-		{
-			name: "addRoom",
-			path: "/addroom",
-			component: AddRoom,
-			props: true,
-			beforeEnter: (to, from, next) => {
-				let token = Vue.$cookies.get("token");
-				if (token == null) {
-					next({ name: "login" });
-				} else {
-					next();
-				}
-			}
-		},
-		{
-			name: "addDeviceData",
-			path: "/addData",
-			component: AddDeviceMetrics,
-			props(route) {
-				return route.query || {};
-			},
-			beforeEnter: (to, from, next) => {
-				let token = Vue.$cookies.get("token");
-				if (token == null) {
-					next({ name: "login" });
-				} else {
-					next();
-				}
-			}
-		},
-		{
-			name: "editDevice",
-			path: "/edit",
-			component: advancedEdit,
-			props(route) {
-				return route.query || {};
-			},
-			beforeEnter: (to, from, next) => {
-				let token = Vue.$cookies.get("token");
-				if (token == null) {
-					next({ name: "login" });
-				} else {
-					next();
-				}
-			}
-		},
-		{
-			name: "warnings",
-			path: "/warnings",
-			component: Warnings,
-			props(route) {
-				return route.query || {};
-			},
-			beforeEnter: (to, from, next) => {
-				let token = Vue.$cookies.get("token");
-				if (token == null) {
-					next({ name: "login" });
-				} else {
-					next();
-				}
-			}
-		}
-	]
+  mode: "history",
+  routes: [
+    {
+      name: "dashboard",
+      path: "/",
+      component: Dash,
+      props: true,
+      beforeEnter: (to, from, next) => {
+        let token = Vue.$cookies.get("token");
+        if (token == null) {
+          next({ name: "login" });
+        } else {
+          next();
+        }
+      }
+    },
+    {
+      name: "login",
+      path: "/login",
+      component: Login
+    },
+    {
+      name: "room",
+      path: "/room/:name",
+      component: Room,
+      props: true,
+      beforeEnter: (to, from, next) => {
+        let token = Vue.$cookies.get("token");
+        if (token == null) {
+          next({ name: "login" });
+        } else {
+          next();
+        }
+      }
+    },
+    {
+      path: "/editSchedule",
+      name: "editSchedule",
+      component: EditSchedule,
+      beforeEnter: (to, from, next) => {
+        let token = Vue.$cookies.get("token");
+        if (token == null) {
+          next({ name: "login" });
+        } else {
+          next();
+        }
+      },
+      props(route) {
+        return route.query || {};
+      }
+    },
+    {
+      path: "/deviceDetails",
+      name: "device",
+      component: deviceDetails,
+      beforeEnter: (to, from, next) => {
+        let token = Vue.$cookies.get("token");
+        if (token == null) {
+          next({ name: "login" });
+        } else {
+          next();
+        }
+      },
+      props(route) {
+        return route.query || {};
+      }
+    },
+    {
+      name: "add",
+      path: "/add",
+      component: AddItem,
+      props: true,
+      beforeEnter: (to, from, next) => {
+        let token = Vue.$cookies.get("token");
+        if (token == null) {
+          next({ name: "login" });
+        } else {
+          next();
+        }
+      }
+    },
+    {
+      name: "addDevice",
+      path: "/addDevice",
+      component: AddDevices,
+      beforeEnter: (to, from, next) => {
+        let token = Vue.$cookies.get("token");
+        if (token == null) {
+          next({ name: "login" });
+        } else {
+          next();
+        }
+      }
+    },
+    {
+      name: "addRoom",
+      path: "/addroom",
+      component: AddRoom,
+      props: true,
+      beforeEnter: (to, from, next) => {
+        let token = Vue.$cookies.get("token");
+        if (token == null) {
+          next({ name: "login" });
+        } else {
+          next();
+        }
+      }
+    },
+    {
+      name: "addDeviceData",
+      path: "/addData",
+      component: AddDeviceMetrics,
+      props(route) {
+        return route.query || {};
+      },
+      beforeEnter: (to, from, next) => {
+        let token = Vue.$cookies.get("token");
+        if (token == null) {
+          next({ name: "login" });
+        } else {
+          next();
+        }
+      }
+    },
+    {
+      name: "editDevice",
+      path: "/edit",
+      component: advancedEdit,
+      props(route) {
+        return route.query || {};
+      },
+      beforeEnter: (to, from, next) => {
+        let token = Vue.$cookies.get("token");
+        if (token == null) {
+          next({ name: "login" });
+        } else {
+          next();
+        }
+      }
+    },
+    {
+      name: "warnings",
+      path: "/warnings",
+      component: Warnings,
+      props(route) {
+        return route.query || {};
+      },
+      beforeEnter: (to, from, next) => {
+        let token = Vue.$cookies.get("token");
+        if (token == null) {
+          next({ name: "login" });
+        } else {
+          next();
+        }
+      }
+    },
+    {
+      name: "stats",
+      path: "/home_stats",
+      component: AdvancedStats,
+      props(route) {
+        return route.query || {};
+      },
+      beforeEnter: (to, from, next) => {
+        let token = Vue.$cookies.get("token");
+        if (token == null) {
+          next({ name: "login" });
+        } else {
+          next();
+        }
+      }
+    }
+  ]
 });
 
 //mounts app to the html page - public/index.html
 new Vue({
-	router,
-	render: h => h(App)
+  router,
+  render: h => h(App)
 }).$mount("#app");
