@@ -43,12 +43,12 @@
 
 <script>
 //All the components needed for the dashboard
-import Summary from "./summary";
-import Room from "./roomTemplate";
+import Summary from "../helpers/summary";
+import Room from "../helpers/roomTemplate";
 
-import AllDevices from "./allDevices";
-import NavTop from "./navbar-top";
-import NavBottom from "./navbar-bottom";
+import AllDevices from "../helpers/allDevices";
+import NavTop from "../navbars/navbar-top";
+import NavBottom from "../navbars/navbar-bottom";
 
 //url for the API to get all the rooms assigned to base user. (no authorization as of yet)
 let url = "http://localhost:5552/getRooms";

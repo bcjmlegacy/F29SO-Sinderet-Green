@@ -3,14 +3,14 @@
   <div class="item">
     <router-link
       class="links"
-      :to="{name: 'addDeviceData',query:{deviceID:deviceID, deviceName:deviceName, 'deviceImage': deviceImage, deviceEnergy:deviceEnergy} }"
+      :to="{name: 'device',query:{deviceID:deviceID, deviceName:deviceName, 'deviceImage': deviceImage, deviceEnergy:deviceEnergy} }"
     >
       <div class="card custom-cards-devices">
         <div class="img-cont">
           <!--Image name is taken from the prop called deviceImage-->
           <img
             class="card-img-top img"
-            :src="require(`../assets/${deviceImage}.png`)"
+            :src="require(`../../assets/${deviceImage}.png`)"
             alt="Energy Usage"
           />
         </div>

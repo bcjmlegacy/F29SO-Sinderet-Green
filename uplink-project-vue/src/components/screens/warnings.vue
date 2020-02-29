@@ -24,9 +24,9 @@
 </template>
 
 <script>
-import NavTop from "./navbar-top.vue";
-import NavBottom from "./navbar-bottom";
-import WarningCard from "./warningCard";
+import NavTop from "../navbars/navbar-top";
+import NavBottom from "../navbars/navbar-bottom";
+import WarningCard from "../helpers/warningCard";
 export default {
   name: "warnings",
   components: { NavTop, NavBottom, WarningCard }

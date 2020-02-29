@@ -17,7 +17,7 @@
               <div class="card custom-cards-editDevices">
                 <div class="img-cont">
                   <img
-                    :src="require(`../assets/${deviceImage}.png`)"
+                    :src="require(`../../assets/${deviceImage}.png`)"
                     alt="device icon"
                     class="device-img"
                   />
@@ -96,7 +96,7 @@
                   <li class="scheduleItem" v-for="command in scheduledCommands" :key="command.id">
                     {{command.command}} at {{command.hour}}:{{command.minutes}}
                     <img
-                      src="../assets/close.png"
+                      src="../../assets/close.png"
                       alt="Delete Item"
                       class="img-delete"
                       @click="deleteScheduleItem(command.id)"
@@ -120,8 +120,8 @@
   </div>
 </template>
 <script>
-import NavbarTop from "./navbar-top";
-import NavbarBottom from "./navbar-bottom";
+import NavbarTop from "../navbars/navbar-top";
+import NavbarBottom from "../navbars/navbar-bottom";
 
 export default {
   name: "addDevice",

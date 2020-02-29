@@ -14,7 +14,7 @@
                 <div>
                   <div class="col-width">
                     <div class="img-cont-summary">
-                      <img src="../assets/idea.png" class="img-summary" alt="Energy Usage" />
+                      <img src="../../assets/idea.png" class="img-summary" alt="Energy Usage" />
                     </div>
                     <!--Energy card area for data-->
                     <div class="card-body text-center">
@@ -42,7 +42,7 @@
                   <div>
                     <div class="col-width">
                       <div class="img-cont-summary">
-                        <img src="../assets/battery.png" class="img-summary" alt="Energy Usage" />
+                        <img src="../../assets/battery.png" class="img-summary" alt="Energy Usage" />
                       </div>
                       <!--Solar battery card area for data-->
                       <div class="card-body text-center">
@@ -69,7 +69,11 @@
                 <div>
                   <div class="col-width">
                     <div class="img-cont-summary">
-                      <img src="../assets/sun.png" class="img-summary" alt="Energy Usage" />
+                      <img
+                        :src="require(`../../assets/${dayNightIcon}.png`)"
+                        class="img-summary"
+                        alt="Energy Usage"
+                      />
                     </div>
                     <!--Temperature card area for data-->
                     <div class="card-body text-center">
@@ -106,53 +110,22 @@ export default {
   name: "Summary",
   data() {
     return {
-      temperatures: ""
+      temperatures: "",
+      dayNightIcon: "sun"
     };
   },
   props: ["userToken", "sumTitle", "energy", "temperature", "solar"],
   methods: {
-    /*findRooms() {
-      fetch("http://localhost:5552/getRooms", {
-        method: "GET",
-        mode: "cors",
-        headers: {
-          authorization: this.userToken
-        }
-      })
-        .then(resp => {
-          return resp.json();
-        })
-        .then(jsonData => {
-          console.log(jsonData);
-          for (let room in jsonData) {
-            this.temperatures.push({
-              temp: Math.floor(Math.random() * (25 - 16 + 1)) + 16,
-              currentDescription: "",
-              loc: jsonData[room].room_name
-            });
-          }
-        });
+    getIcon() {
+      let hours = new Date().getHours();
+      let mins = new Date().getMinutes();
+      console.log(hours + ":" + mins);
+      if (hours >= 8 && hours <= 17) this.dayNightIcon = "sun";
+      if ((hours >= 18 && hours <= 24) || (hours >= 0 && hours <= 7))
+        this.dayNightIcon = "moon";
     }
-    
-    let i = 0;
-    startInterval: function(temp) {
-      
-      setInterval(function() {
-        if (i > temp) {
-          i = 0;
-        } else {
-          i++;
-          console.log(this.temperatures[i].loc);
-          this.currentTemp = {
-            loc: this.temperatures[i].loc,
-            temp: this.temperatures[i].temp,
-            currentDescription: this.temperatures[i].currentDescription
-          };
-        }
-      }, 10000);
-      
-    }*/
   },
+
   mounted: function() {
     //Dark sky api to get data for outside weather. Set to Edinburgh
     fetch("https://dark-sky.p.rapidapi.com/55.9533,3.1883?lang=en&units=auto", {
@@ -172,7 +145,7 @@ export default {
           temp: Math.round(jsonData.currently.temperature),
           loc: "Outside"
         };
-
+        this.getIcon();
         //this.findRooms();
         //this.startInterval(this.temperatures.length);
         console.log(this.temperatures);

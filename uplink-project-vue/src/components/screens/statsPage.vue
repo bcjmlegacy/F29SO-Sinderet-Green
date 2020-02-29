@@ -18,7 +18,7 @@
           <div>
             <div class="cards custom-cards-stats">
               <div class="img-cont-stats">
-                <img src="../assets/idea.png" class="img-stats" alt="Energy Usage" />
+                <img src="../../assets/idea.png" class="img-stats" alt="Energy Usage" />
               </div>
               <div class="card-body text-center">
                 <h5 class="card-title">Average Energy Usage</h5>
@@ -45,7 +45,7 @@
           <div>
             <div class="cards custom-cards-stats">
               <div class="img-cont-stats">
-                <img src="../assets/battery.png" class="img-stats" alt="Energy Usage" />
+                <img src="../../assets/battery.png" class="img-stats" alt="Energy Usage" />
               </div>
               <div class="card-body text-center">
                 <h5 class="card-title">Average Solar Stored</h5>
@@ -67,8 +67,8 @@
 </template>
 
 <script>
-import NavbarTop from "./navbar-top";
-import NavbarBottom from "./navbar-bottom";
+import NavbarTop from "../navbars/navbar-top";
+import NavbarBottom from "../navbars/navbar-bottom";
 import { GChart } from "vue-google-charts";
 export default {
   name: "stats",

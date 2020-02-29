@@ -69,7 +69,7 @@
 let url = "http://localhost:5552/login";
 
 //Bus to store current component
-import { bus } from "../main";
+import { bus } from "../../main";
 export default {
   name: "login",
   data() {
