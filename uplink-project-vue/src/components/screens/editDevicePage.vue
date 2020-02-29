@@ -10,7 +10,7 @@
     </div>
     <div id="editDevice">
       <div class="container">
-        <h3 class="display-3 text-center">Edit Schedule</h3>
+        <h3 class="display-2 text-center">Edit Schedule</h3>
         <div id="form-addDevice">
           <div class="flex-deviceDetails">
             <div class="item-deviceDetails">

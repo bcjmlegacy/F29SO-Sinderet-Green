@@ -10,7 +10,7 @@
     </div>
     <div id="editDevice">
       <div class="container">
-        <h3 class="display-3 text-center">Edit Device</h3>
+        <h3 class="display-2 text-center">Edit Device</h3>
         <div id="form-addDevice">
           <div class="flex-add">
             <div class="card custom-cards-editDevices-adv">
@@ -26,7 +26,7 @@
                 <p class="card-text text-center">{{ deviceEnergy }} Watts</p>
               </div>
               <div class="device-cont">
-                <b-form>
+                <b-form @submit="updateDevice">
                   <p class="label-section text-center"></p>
                   <div class="col-sm-12">
                     <label for="input-device-name" class="label">Rename Device</label>
@@ -51,7 +51,7 @@
                         <option disabled value>Please Select A Room</option>
                         <option
                           v-for="r in rooms"
-                          :key="r.room_id"
+                          :key="r.room_name"
                           :value="r.room_id"
                         >{{ r.room_name }}</option>
                       </select>
@@ -107,8 +107,11 @@ export default {
   },
   data() {
     return {
+      currentRoom: "none",
+      type: "",
+      wattage: this.deviceEnergy,
       form: {
-        name: "",
+        name: this.deviceName,
         room: ""
       },
       rooms: []
@@ -135,6 +138,35 @@ export default {
           console.log(jsonData);
           this.$router.push({ name: "dashboard" });
         });
+    },
+
+    updateDevice(evt) {
+      let url = "http://localhost:5552/editDevice";
+
+      fetch(url, {
+        mode: "cors",
+        method: "POST",
+        headers: {
+          Authorization: this.userToken,
+          Accept: "application/json",
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          id: this.deviceID,
+          name: this.form.name,
+          room: this.form.room,
+          wattage: this.wattage,
+          type: this.type
+        })
+      })
+        .then(response => {
+          return response.json();
+        })
+        .then(jsonData => {
+          console.log(jsonData);
+        });
+
+      evt.preventDefault();
     }
   },
   mounted: function() {
@@ -151,6 +183,28 @@ export default {
       .then(jsonData => {
         this.rooms = jsonData;
         console.log(this.rooms);
+        let url = "http://localhost:5552/getDevices";
+        fetch(url, {
+          mode: "cors",
+          method: "GET",
+          headers: { Authorization: this.userToken }
+        })
+          .then(response => {
+            return response.json();
+          })
+          .then(jsonData => {
+            for (let key in jsonData) {
+              if (jsonData[key].device_id === this.deviceID) {
+                for (let room in this.rooms) {
+                  if (jsonData[key].device_room === this.rooms[room].room_id) {
+                    this.form.room = this.rooms[room].room_name;
+                    this.type = jsonData[key].device_type;
+                    console.log(this.form.room);
+                  }
+                }
+              }
+            }
+          });
       });
   }
 };

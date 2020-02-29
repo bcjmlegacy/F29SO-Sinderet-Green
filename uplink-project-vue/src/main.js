@@ -11,6 +11,7 @@ import "../public/style.css"; //css file
 
 import VueRouter from "vue-router";
 
+//Main screen imports.
 import Dash from "./components/screens/dashboardTemplate";
 import Room from "./components/screens/roomPageTemplate";
 import AddItem from "./components/screens/addPage";
@@ -44,6 +45,12 @@ Vue.$cookies.set("hover-time", "1s");
 //data controller variable.
 export const bus = new Vue();
 
+// Routing system. This will take the name of the link, path that will be generated in the url for it and the component that will be used.
+// The routing system will make use of checks to make sure that the user is logged in if the user is not logged in then the user will be redirected to the login screen
+// Login is checked by checking if the user has a cookie stored on their computer.
+
+//Each object below consists of a different page and route.
+//Some pages make use of the props system that Vue provides this will look at the query section in the router-link tab to find the passable props.
 Vue.use(VueRouter);
 const router = new VueRouter({
   mode: "history",
