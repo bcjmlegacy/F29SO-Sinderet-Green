@@ -160,6 +160,18 @@ class databasehandler {
     });
   }
 
+  getOneshotTimersByDeviceId(id, callback) {
+    var q = `SELECT * FROM timer_oneshot WHERE timer_oneshot_device_id = ?`;
+
+    db.all(q, [id], function(err, rows) {
+      if (err) {
+        callback(err);
+      } else {
+        callback(null, rows);
+      }
+    });
+  }
+
   /* #######################################
           
   Get by room.
@@ -233,13 +245,13 @@ class databasehandler {
   }
 
   getSensorReadings(callback, limit, offset, id) {
-    if ( limit && offset && id )  {
+    if (limit && offset && id) {
       var q = `SELECT * FROM sensor_reading WHERE sensor_reading_id = '${id}' LIMIT ${limit} OFFSET ${offset}`;
-    } else if ( limit && id ) {
+    } else if (limit && id) {
       var q = `SELECT * FROM sensor_reading WHERE sensor_reading_id = '${id}' LIMIT ${limit}`;
-    } else if ( limit && offset ) {
+    } else if (limit && offset) {
       var q = `SELECT * FROM sensor_reading LIMIT ${limit} OFFSET ${offset}`;
-    } else if ( limit ) {
+    } else if (limit) {
       var q = `SELECT * FROM sensor_reading LIMIT ${limit}`;
     } else {
       var q = `SELECT * FROM sensor_reading`;
@@ -255,13 +267,13 @@ class databasehandler {
   }
 
   getDeviceReadings(callback, limit, offset, id) {
-    if ( limit && offset && id )  {
+    if (limit && offset && id) {
       var q = `SELECT * FROM device_reading WHERE device_reading_id = ${id} LIMIT ${limit} OFFSET ${offset}`;
-    } else if ( limit && id ) {
+    } else if (limit && id) {
       var q = `SELECT * FROM device_reading WHERE device_reading_id = ${id} LIMIT ${limit}`;
-    } else if ( limit && offset ) {
+    } else if (limit && offset) {
       var q = `SELECT * FROM device_reading LIMIT ${limit} OFFSET ${offset}`;
-    } else if ( limit ) {
+    } else if (limit) {
       var q = `SELECT * FROM device_reading LIMIT ${limit}`;
     } else {
       var q = `SELECT * FROM device_reading`;
@@ -686,9 +698,7 @@ class databasehandler {
       err
     ) {
       if (err) {
-        console.log(
-          `[${getWholeDate()}] ! Error inserting repeat timer:`
-        );
+        console.log(`[${getWholeDate()}] ! Error inserting repeat timer:`);
         console.log(`[${getWholeDate()}] ! ${err}`);
         callback(err, null);
       } else {
@@ -702,12 +712,7 @@ class databasehandler {
     });
   }
 
-  insertOneshotTimer(
-    trigger,
-    device_id,
-    command,
-    callback
-  ) {
+  insertOneshotTimer(trigger, device_id, command, callback) {
     var ts = new Date().valueOf();
     var q = `INSERT INTO timer_oneshot (
               timer_oneshot_trigger,
@@ -715,13 +720,9 @@ class databasehandler {
               timer_oneshot_command)
              VALUES (?, ?, ?)`;
 
-    db.run(q, [trigger, device_id, command], function(
-      err
-    ) {
+    db.run(q, [trigger, device_id, command], function(err) {
       if (err) {
-        console.log(
-          `[${getWholeDate()}] ! Error inserting oneshot timer:`
-        );
+        console.log(`[${getWholeDate()}] ! Error inserting oneshot timer:`);
         console.log(`[${getWholeDate()}] ! ${err}`);
         callback(err, null);
       } else {
@@ -750,9 +751,7 @@ class databasehandler {
         console.log(`! ${err}`);
         callback(err, null);
       } else {
-        console.log(
-          `> Deleted data record with id ${id} from ${table}}`
-        );
+        console.log(`> Deleted data record with id ${id} from ${table}}`);
         callback(null, 1);
       }
     });
@@ -905,7 +904,6 @@ class databasehandler {
       }
     });
   }
-
 }
 
 module.exports = databasehandler;
