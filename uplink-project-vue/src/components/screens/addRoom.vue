@@ -15,7 +15,7 @@
           <div class="flex-add">
             <div class="card custom-cards-addRooms">
               <div class="img-cont">
-                <img src="../assets/room.png" alt="device icon" class="room-img" />
+                <img src="../../assets/room.png" alt="device icon" class="room-img" />
               </div>
               <div class="cont">
                 <b-form @submit="go">
@@ -48,8 +48,8 @@
   </div>
 </template>
 <script>
-import NavbarTop from "./navbar-top";
-import NavbarBottom from "./navbar-bottom";
+import NavbarTop from "../navbars/navbar-top";
+import NavbarBottom from "../navbars/navbar-bottom";
 
 let url = "http://localhost:5552/insertRoom";
 export default {

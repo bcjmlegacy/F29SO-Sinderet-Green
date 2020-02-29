@@ -9,7 +9,7 @@
           <h4 class="display3 text-center">Profile</h4>
           <hr />
           <button type="button" class="btn btn-light" v-on:click="configure" v-show="!edit">Edit</button>
-          <img id="profilepic" src="../assets/user.png" alt="Profile" class="nav-image" />
+          <img id="profilepic" src="../../assets/user.png" alt="Profile" class="nav-image" />
           <div class="userDetails">
             <b-form-group id="username-input" label="Username:" label-for="input-username">
               <b-form-input v-if="!edit" id="input-username" v-model="username" plaintext></b-form-input>
@@ -53,9 +53,9 @@
 </template>
 
 <script>
-import NavTop from "./navbar-top";
-import NavBottom from "./navbar-bottom";
-import { bus } from "../main";
+import NavTop from "../navbars/navbar-top";
+import NavBottom from "../navbars/navbar-bottom";
+import { bus } from "../../main";
 
 let url = "http://localhost:5552/getUsers";
 

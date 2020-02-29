@@ -14,7 +14,7 @@
                 <div>
                   <div class="col-width">
                     <div class="img-cont-summary">
-                      <img src="../assets/idea.png" class="img-summary" alt="Energy Usage" />
+                      <img src="../../assets/idea.png" class="img-summary" alt="Energy Usage" />
                     </div>
                     <!--Energy card area for data-->
                     <div class="card-body text-center">
@@ -43,7 +43,7 @@
                   <div class="col-width">
                     <div class="img-cont-summary">
                       <img
-                        :src="require(`../assets/${dayNightIcon}.png`)"
+                        :src="require(`../../assets/${dayNightIcon}.png`)"
                         class="img-summary"
                         alt="Energy Usage"
                       />

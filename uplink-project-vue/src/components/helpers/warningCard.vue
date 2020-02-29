@@ -5,7 +5,7 @@
         <div>
           <div class="col-width">
             <div class="img-cont">
-              <img src="../assets/idea.png" class="img-warning" alt="Warning-Device-Img" />
+              <img src="../../assets/idea.png" class="img-warning" alt="Warning-Device-Img" />
             </div>
           </div>
         </div>

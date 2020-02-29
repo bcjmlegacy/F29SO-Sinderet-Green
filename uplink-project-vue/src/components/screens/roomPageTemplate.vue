@@ -49,11 +49,11 @@
 </template>
 <script>
 //All the components that are needed for the roomPage
-import Summary from "./roomSummary";
-import Device from "./deviceCard";
-import AllDevices from "./allDevices";
-import NavTop from "./navbar-top";
-import NavBottom from "./navbar-bottom";
+import Summary from "../helpers/roomSummary";
+import Device from "../helpers/deviceCard";
+import AllDevices from "../helpers/allDevices";
+import NavTop from "../navbars/navbar-top";
+import NavBottom from "../navbars/navbar-bottom";
 
 //URL for getting all the devices
 let url = "http://localhost:5552/getDevices";

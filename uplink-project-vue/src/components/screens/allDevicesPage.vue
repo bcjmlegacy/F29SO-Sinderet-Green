@@ -28,9 +28,9 @@
 </template>
 
 <script>
-import NavTop from "./navbar-top";
-import NavBottom from "./navbar-bottom";
-import Device from "./deviceCard";
+import NavTop from "../navbars/navbar-top";
+import NavBottom from "../navbars/navbar-bottom";
+import Device from "../helpers/deviceCard";
 
 let url = "http://localhost:5552/getDevices";
 export default {

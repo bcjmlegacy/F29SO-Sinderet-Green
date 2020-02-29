@@ -11,21 +11,21 @@ import "../public/style.css"; //css file
 
 import VueRouter from "vue-router";
 
-import Dash from "./components/dashboardTemplate";
-import Room from "./components/roomPageTemplate";
-import AddItem from "./components/addPage";
-import AddRoom from "./components/addRoom";
-import AddDevices from "./components/addDevices";
-import Login from "./components/loginTemplate";
+import Dash from "./components/screens/dashboardTemplate";
+import Room from "./components/screens/roomPageTemplate";
+import AddItem from "./components/screens/addPage";
+import AddRoom from "./components/screens/addRoom";
+import AddDevices from "./components/screens/addDevices";
+import Login from "./components/screens/loginTemplate";
 //import Register from "./components/registerTemplate";
-import AddDeviceMetrics from "./components/addDeviceMetrics";
-import EditSchedule from "./components/editDevicePage";
-import deviceDetails from "./components/deviceDetails";
-import advancedEdit from "./components/advancedDeviceSettings";
-import Warnings from "./components/warnings";
-import AdvancedStats from "./components/statsPage";
-import Settings from "./components/settingsTemplate";
-import AllDevicesPage from "./components/allDevicesPage";
+import AddDeviceMetrics from "./components/screens/addDeviceMetrics";
+import EditSchedule from "./components/screens/editDevicePage";
+import deviceDetails from "./components/screens/deviceDetails";
+import advancedEdit from "./components/screens/advancedDeviceSettings";
+import Warnings from "./components/screens/warnings";
+import AdvancedStats from "./components/screens/statsPage";
+import Settings from "./components/screens/settingsTemplate";
+import AllDevicesPage from "./components/screens/allDevicesPage";
 //bootstrap vue tags can be used
 Vue.use(BootstrapVue);
 Vue.config.productionTip = false;

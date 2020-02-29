@@ -16,7 +16,7 @@
             <div class="card custom-cards-addDevices">
               <div class="img-cont">
                 <img
-                  :src="require(`../assets/${deviceImage}.png`)"
+                  :src="require(`../../assets/${deviceImage}.png`)"
                   alt="device icon"
                   class="device-img"
                 />
@@ -71,8 +71,8 @@
   </div>
 </template>
 <script>
-import NavbarTop from "./navbar-top";
-import NavbarBottom from "./navbar-bottom";
+import NavbarTop from "../navbars/navbar-top";
+import NavbarBottom from "../navbars/navbar-bottom";
 
 let url = "http://localhost:5552/insertDevice";
 let url1 = "http://localhost:5552/getRooms";
