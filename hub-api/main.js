@@ -781,6 +781,25 @@ app.post("/insertSensor", (req, res) => {
   }
 });
 
+app.post("/editSensor", (req, res) => {
+  if (req.body.id && req.body.room && req.body.type && req.body.name) {
+    db.insertSensor(req.body.id && req.body.room, req.body.type, req.body.name, function(
+      err,
+      rowId
+    ) {
+      if (err) {
+        res.send({ error: err });
+      } else {
+        res.send({ rowId: rowId });
+      }
+    });
+  } else {
+    res.send({
+      error: "Missing parameter! Needs sensor id, room, type, wattage and name"
+    });
+  }
+});
+
 app.post("/insertDevice", (req, res) => {
   if (req.body.room && req.body.type && req.body.name && req.body.wattage) {
     db.insertDevice(
@@ -799,6 +818,29 @@ app.post("/insertDevice", (req, res) => {
   } else {
     res.send({
       error: "Missing parameter! Needs room, type, wattage and name"
+    });
+  }
+});
+
+app.post("/editDevice", (req, res) => {
+  if (req.body.id && req.body.room && req.body.type && req.body.name && req.body.wattage) {
+    db.insertDevice(
+      req.body.id,
+      req.body.room,
+      req.body.type,
+      req.body.wattage,
+      req.body.name,
+      function(err, rowId) {
+        if (err) {
+          res.send({ error: err });
+        } else {
+          res.send({ rowId: rowId });
+        }
+      }
+    );
+  } else {
+    res.send({
+      error: "Missing parameter! Needs device id, room, type, wattage and name"
     });
   }
 });
