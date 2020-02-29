@@ -174,7 +174,7 @@ export default {
         },
         body: JSON.stringify({
           device_id: this.deviceID,
-          trigger: 1,
+          trigger: getOpposite(this.form.checked),
           command: swap(this.form.checked)
         })
       })
@@ -183,6 +183,26 @@ export default {
         })
         .then(jsonData => {
           console.log(jsonData);
+        });
+    },
+    checkDeviceActivity() {
+      let url = "http://localhost:5552/getOneshotTimers?id=" + this.deviceID;
+      let result = null;
+      fetch(url, {
+        mode: "cors",
+        method: "GET",
+        headers: {
+          Authorization: this.userToken
+        }
+      })
+        .then(response => {
+          return response.json();
+        })
+        .then(jsonData => {
+          result = jsonData[jsonData.length - 1].timer_oneshot_trigger;
+          console.log(jsonData[jsonData.length - 1].timer_oneshot_trigger);
+          console.log(result);
+          this.form.checked = swap(map(result));
         });
     }
   },
@@ -230,6 +250,7 @@ export default {
         this.scheduledCommands.sort((a, b) => {
           return a.hour - b.hour;
         });
+        this.checkDeviceActivity();
       });
   }
 };
@@ -246,6 +267,26 @@ function formatTime(time) {
   return time;
 }
 
+//Find the current value of the device - 1 = on - 2 = off for oneshot timers.
+function getOpposite(command) {
+  if (command === "on") {
+    return 2;
+  } else {
+    return 1;
+  }
+}
+
+//Maps on and off to the commands
+function map(command) {
+  if (command === 1) {
+    return "on";
+  } else if (command === 2) {
+    return "off";
+  }
+}
+
+//Swaps the on off switch
+//Once device is turned on the device will ask if the user wants to turn it off otherwise ask to turn the device on.
 function swap(command) {
   if (command === "off") {
     return "on";
