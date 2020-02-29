@@ -26,6 +26,8 @@ import Warnings from "./components/screens/warnings";
 import AdvancedStats from "./components/screens/statsPage";
 import Settings from "./components/screens/settingsTemplate";
 import AllDevicesPage from "./components/screens/allDevicesPage";
+
+import NotFound from "./components/screens/404";
 //bootstrap vue tags can be used
 Vue.use(BootstrapVue);
 Vue.config.productionTip = false;
@@ -247,6 +249,11 @@ const router = new VueRouter({
           next();
         }
       }
+    },
+    {
+      name: "404",
+      path: "*",
+      component: NotFound
     }
   ]
 });
