@@ -104,3 +104,30 @@ INSERT INTO device_trigger (
     device_trigger_command
 )
 VALUES  ("123ABC123", "ABC123", "<", 20, 1);
+
+INSERT INTO warning (
+    warning_timestamp,
+    warning_last_updated_ts,
+    warning_device_id,
+    warning_sensor_id,
+    warning_message,
+    warning_severity,
+    warning_read
+)
+VALUES (1579521113, 1579521113, "123ABC123", NULL, "This heater has been on for over 2 hours!", 3, 0);
+
+INSERT INTO device_reading (
+    device_reading_device_id,
+    device_reading_type,
+    device_reading_value,
+    device_reading_timestamp
+)
+VALUES  ("123ABC123", "status", "on", 1579521113);
+
+INSERT INTO device_reading (
+    device_reading_device_id,
+    device_reading_type,
+    device_reading_value,
+    device_reading_timestamp
+)
+VALUES  ("789ABC123", "Temperature", "10", 1579521113);

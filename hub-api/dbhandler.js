@@ -197,6 +197,24 @@ class databasehandler {
     this.getByRoom("device", roomId, callback);
   }
 
+    /* #######################################
+          
+  Get by device type.
+  
+  ####################################### */
+
+  getDeviceByType(device_type_id, callback) {
+    var q = `SELECT * FROM device WHERE device_type = ?`;
+
+    db.all(q, [device_type_id], function(err, rows) {
+      if (err) {
+        callback(err);
+      } else {
+        callback(null, rows);
+      }
+    });
+  }
+
   /* #######################################
           
   Get all of something with limits.
@@ -284,6 +302,48 @@ class databasehandler {
         callback(err);
       } else {
         callback(null, rows);
+      }
+    });
+  }
+
+  getLastDeviceReadingByType(id, type, callback)  {
+    var q = "SELECT * FROM device_reading WHERE device_reading_id = ? AND device_reading_type = ? LIMIT 1";
+
+    db.all(q, [id, type],function(err, rows) {
+      if (err) {
+        callback(err);
+      } else if(rows[0])  {
+        callback(null, rows);
+      } else  {
+        callback("No data");
+      }
+    })
+  }
+
+  getDeviceStatusTime(id, callback) {
+    var q = `SELECT * FROM device_reading WHERE device_reading_device_id = ? AND device_reading_type = "status" AND ( device_reading_value = "on" OR device_reading_value = "off" ) LIMIT 1 `;
+
+    db.all(q, [id], function(err, rows) {
+      if (err) {
+        callback(err);
+      } else if(rows[0]) {
+        callback(null, rows[0]["device_reading_value"], rows[0]["device_reading_timestamp"]);
+      } else  {
+        callback("No data");
+      }
+    });
+  }
+
+  checkWarningExists(device_id, message, callback) {
+    var q = `SELECT * FROM warning WHERE warning_device_id = ? AND warning_message = ? LIMIT 1`;
+
+    db.all(q, [device_id, message], function(err, rows) {
+      if (err) {
+        callback(err);
+      } else if(rows[0]) {
+        callback(null, rows[0]);
+      } else  {
+        callback("No data");
       }
     });
   }
@@ -628,6 +688,27 @@ class databasehandler {
     });
   }
 
+  insertDeviceTrigger(device_id, sensor_id, gt_lt_eq, value, command_id, callback) {
+    var q = "INSERT INTO device_trigger (device_trigger_device_id, device_trigger_sensor_id, device_trigger_gt_lt_eq, device_sensor_value, device_command) VALUES (?, ?, ?, ?, ?)";
+  
+    db.run(q, [device_id, sensor_id, gt_lt_eq, value, command_id], function(err) {
+      if (err) {
+        console.log(
+          `[${getWholeDate()}] ! Error inserting new trigger:`
+        );
+        console.log(`[${getWholeDate()}] ! ${err}`);
+        callback(err, null);
+      } else {
+        console.log(
+          `[${getWholeDate()}] > Inserted new trigger for device ${device_id}: ${JSON.stringify(
+            this.lastID
+          )}`
+        );
+        callback(null, JSON.stringify(this.lastID));
+      }
+    });
+  }
+
   /* #######################################
                                     
   Inserting readings.
@@ -736,6 +817,63 @@ class databasehandler {
     });
   }
 
+  insertWarning(
+    device_id,
+    sensor_id,
+    message,
+    severity,
+  ) {
+    var ts = new Date().valueOf();
+    var q = `INSERT INTO warning (
+              warning_timestamp,
+              warning_last_updated_ts,
+              warning_device_id,
+              warning_sensor_id,
+              warning_message,
+              warning_severity)
+             VALUES (?, ?, ?, ?, ?, ?)`;
+
+    if(!(sensor_id)) sensor_id = null;
+    if(!(device_id)) device_id = null;
+
+    db.run(q, [ts, ts, device_id, sensor_id, message, severity], function(
+      err
+    ) {
+      if (err) {
+        console.log(
+          `[${getWholeDate()}] ! Error inserting warning:`
+        );
+        console.log(`[${getWholeDate()}] ! ${err}`);
+      } else {
+        console.log(
+          `[${getWholeDate()}] > Inserted warning: ${JSON.stringify(
+            this.lastID
+          )}`
+        );
+      }
+    });
+  }
+
+  updateWarning(warning_id, read) {
+    var ts = new Date().valueOf();
+    var q;
+    if(read == 0)  {
+      q = "UPDATE warning SET warning_read = 0, warning_last_updated_ts = ? WHERE warning_id = ?";
+    } else if(read == 1)  {
+      q = "UPDATE warning SET warning_read = 1, warning_last_updated_ts = ? WHERE warning_id = ?";
+    } else  {
+      q = "UPDATE warning SET warning_last_updated_ts = ? WHERE warning_id = ?";
+    }
+
+    db.all(q, [ts, warning_id], function(err, rows) {
+      if (err) {
+        console.log(err);
+      } else {
+        // console.log("Warning updated");
+      }
+    });
+  }
+
   /* #######################################
                                     
   Deleting things.
@@ -801,6 +939,9 @@ class databasehandler {
   }
   deleteDeviceTrigger(id, callback) {
     this.deleteById("device_trigger", id, callback);
+  }
+  deleteWarning(id, callback) {
+    this.deleteById("warning", id, callback);
   }
 
   deleteDeviceReadingByDeviceId(id, callback) {

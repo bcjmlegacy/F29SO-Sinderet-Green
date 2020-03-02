@@ -320,6 +320,91 @@ function procTimersAndTriggers() {
 
 setInterval(procTimersAndTriggers, 60000);
 
+function procWarnings() {
+
+  // If a heater is on for more than 2 hours
+  db.getDeviceByType(1, function(err, rows)  {
+    if(err) {
+      console.log(`[${getWholeDate()}] ! [H1] Error checking warnings:`);
+      console.log(`[${getWholeDate()}] ! ${err}`);
+    } else if(rows[0])  {
+      for ( x in rows ) {
+
+        db.getDeviceStatusTime(rows[x]["device_id"], function(err, type, since) {
+          if(err) {
+            console.log(`[${getWholeDate()}] ! [H2] Error checking warnings:`);
+            console.log(`[${getWholeDate()}] ! ${err}`);
+          } else if(type) {
+            if(type == "on" && (getUnixTime() - since > 3600000))  {
+              db.checkWarningExists(rows[x]["device_id"], "This heater has been on for over 2 hours!", function(err, row) {
+                if(err == "No data") {
+                  db.insertWarning(rows[x]["device_id"], null, "This heater has been on for over 2 hours!", 3);
+                  console.log(`[${getWholeDate()}] ! Created warning for a heater`);
+                } else if(err) {
+                  console.log(`[${getWholeDate()}] ! Error checking warnings:`);
+                  console.log(`[${getWholeDate()}] ! ${err}`);
+                } else if(row)  {
+                  // If it's been more than 1 hour since the warning was last valid,
+                  // set it as unread (new notif)
+                  if(getUnixTime() - row["warning_last_updated_ts"] > 1800000)  {
+                    db.updateWarning(row["warning_id"], 0);
+                  } else  {
+                    // Otherwise just update the existing warning to track that it's still happening
+                    db.updateWarning(row["warning_id"], null);
+                    console.log(`[${getWholeDate()}] ! Updated warning for a heater`);
+                  }
+                }
+              })
+            }
+          }
+        });
+      }
+    }
+  })
+
+  // If the fridge temp raises above 6 degrees
+  db.getDeviceByType(2, function(err, rows)  {
+    if(err) {
+      console.log(`[${getWholeDate()}] ! [F1] Error checking warnings:`);
+      console.log(`[${getWholeDate()}] ! ${err}`);
+    } else if(rows[0])  {
+      for ( x in rows ) {
+
+        db.getLastDeviceReadingByType(rows[x]["device_id"], "Temperature", function(err, row) {
+          if(err) {
+            console.log(`[${getWholeDate()}] ! [F2] Error checking warnings:`);
+            console.log(`[${getWholeDate()}] ! ${err}`);
+          } else if(row) {
+            if([row]["device_reading_value"] > 6)  {
+              db.checkWarningExists(rows[x]["device_id"], "This fridge has risen above 6 degrees!", function(err, row) {
+                if(err == "No data") {
+                  db.insertWarning(rows[x]["device_id"], null, "This fridge has risen above 6 degrees!", 3);
+                  console.log(`[${getWholeDate()}] ! Created warning for a fridge`);
+                } else if(err) {
+                  console.log(`[${getWholeDate()}] ! Error checking warnings:`);
+                  console.log(`[${getWholeDate()}] ! ${err}`);
+                } else if(row)  {
+                  // If it's been more than 1 hour since the warning was last valid,
+                  // set it as unread (new notif)
+                  if(getUnixTime() - row["warning_last_updated_ts"] > 1800000)  {
+                    db.updateWarning(row["warning_id"], 0);
+                  } else  {
+                    // Otherwise just update the existing warning to track that it's still happening
+                    db.updateWarning(row["warning_id"], null);
+                    console.log(`[${getWholeDate()}] ! Updated warning for a fridge`);
+                  }
+                }
+              })
+            }
+          }
+        });
+      }
+    }
+  })
+}
+
+setInterval(procWarnings, 6000);
+
 //
 // Define API
 //
@@ -824,6 +909,24 @@ app.post("/insertDevice", (req, res) => {
   }
 });
 
+app.post("/insertTrigger", (req, res) =>  {
+  if (req.body.deviceId && req.body.sensorId && req.body.symbol && req.body.value && req.body.commandId) {
+    db.insertDevice(req.body.deviceId, req.body.sensorId, req.body.symbol, req.body.value, req.body.commandId,
+      function(err, rowId) {
+        if (err) {
+          res.send({ error: err });
+        } else {
+          res.send({ rowId: rowId });
+        }
+      }
+    );
+  } else {
+    res.send({
+      error: "Missing parameter! Needs deviceId, sensorId, symbol (>, <, =), value and commandId"
+    });
+  }
+})
+
 app.post("/editDevice", (req, res) => {
   if (
     req.body.id &&
@@ -1172,6 +1275,16 @@ app.get("/deleteDeviceReading", (req, res) => {
 
 app.get("/deleteDeviceTrigger", (req, res) => {
   db.deleteDeviceTrigger(req.query.id, function(err, rowId) {
+    if (err) {
+      res.send({ error: err });
+    } else {
+      res.send({ status: "success" });
+    }
+  });
+});
+
+app.get("/deleteWarning", (req, res) => {
+  db.deleteWarning(req.query.id, function(err, rowId) {
     if (err) {
       res.send({ error: err });
     } else {
