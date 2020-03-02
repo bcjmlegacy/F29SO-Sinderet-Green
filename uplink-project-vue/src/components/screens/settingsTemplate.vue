@@ -6,6 +6,7 @@
     <div id="settings">
       <div class="flex-add">
         <div class="custom-card-settings">
+          <button type="button" class="btn btn-light logout-right" v-on:click="configure" v-show="!logout">Logout</button>
           <h4 class="display3 text-center">Profile</h4>
           <hr />
           <button type="button" class="btn btn-light" v-on:click="configure" v-show="!edit">Edit</button>
@@ -106,7 +107,7 @@ export default {
 </script>
 <style>
 #settings {
-  margin-top: 80px;
+  margin-top: 10%;
 }
 
 #profilepic {
@@ -132,8 +133,8 @@ export default {
 }
 
 .custom-card-settings {
-  width: 50em;
-  height: 45em;
+  width: 90%;
+  height: 75%;
   padding: 20px;
   background-color: white !important;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 1px 8px rgba(0, 0, 0, 0.22) !important;
@@ -146,6 +147,10 @@ export default {
   width: 49%;
 }
 
+.logout-right {
+  float: right;
+}
+
 .custom-card-settings:hover {
   box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3), 0 1px 8px rgba(0, 0, 0, 0.22) !important;
 }
@@ -155,7 +160,7 @@ export default {
     margin-top: 2%;
   }
   .custom-cards-settings {
-    width: 20em;
+    width: 60%;
   }
 }
 </style>
