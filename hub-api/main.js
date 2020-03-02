@@ -9,8 +9,9 @@ const express = require("express"),
 
 if(!fs.existsSync(__dirname + "/vapid.env"))    {
   console.log("Generating new VAPID keys...");
-  const vapidKeys = webpush.generateVAPIDKeys();
-  fs.appendFile('./vapid.env', `PUBLIC_VAPID_KEY=${vapidKeys.publicKey}\nPRIVATE_VAPID_KEY=${vapidKeys.privateKey}\n`, function(err) {
+  const vapidKeys = webPush.generateVAPIDKeys();
+  // console.log(vapidKeys);
+  fs.appendFileSync('./vapid.env', `PUBLIC_VAPID_KEY=${vapidKeys.publicKey}\nPRIVATE_VAPID_KEY=${vapidKeys.privateKey}\n`, function(err) {
     if(err) console.log(err);
   })
 }
