@@ -4,7 +4,7 @@
     <div class="bottom-show">
       <div class="logo-back fixed-top">
         <h5 class="logo">
-          <router-link class="links" :to="{name: 'dashboard'}">uplink</router-link>
+          <router-link class="links" :to="{ name: 'dashboard' }">uplink</router-link>
         </h5>
       </div>
     </div>
@@ -15,7 +15,7 @@
             <div class="card custom-cards-devicesDetails">
               <div class="img-cont">
                 <img
-                  :src="require(`../assets/${deviceImage}.png`)"
+                  :src="require(`../../assets/${deviceImage}.png`)"
                   alt="device icon"
                   class="device-img"
                 />
@@ -37,7 +37,15 @@
               </div>
               <div class="form-rows">
                 <router-link
-                  :to="{name: 'editDevice', query:{deviceID:deviceID, deviceName:deviceName, 'deviceImage': deviceImage, deviceEnergy:deviceEnergy}}"
+                  :to="{
+                    name: 'editDevice',
+                    query: {
+                      deviceID: deviceID,
+                      deviceName: deviceName,
+                      deviceImage: deviceImage,
+                      deviceEnergy: deviceEnergy
+                    }
+                  }"
                 >
                   <button class="form-buttons" type="button">Edit</button>
                 </router-link>
@@ -49,15 +57,23 @@
               <h5 class="card-title text-center label-section">Daily Schedule</h5>
               <div class="form-rows" />
               <ul class="list-schedule">
-                <li
-                  class="scheduleItem"
-                  v-for="command in scheduledCommands"
-                  :key="command.id"
-                >{{command.command}} at {{command.hour}}:{{command.minutes}}</li>
+                <li class="scheduleItem" v-for="command in scheduledCommands" :key="command.id">
+                  {{ command.command }} at {{ command.hour }}:{{
+                  command.minutes
+                  }}
+                </li>
               </ul>
               <div class="form-rows">
                 <router-link
-                  :to="{name: 'editSchedule', query:{deviceID:deviceID, deviceName:deviceName, 'deviceImage': deviceImage, deviceEnergy:deviceEnergy}}"
+                  :to="{
+                    name: 'editSchedule',
+                    query: {
+                      deviceID: deviceID,
+                      deviceName: deviceName,
+                      deviceImage: deviceImage,
+                      deviceEnergy: deviceEnergy
+                    }
+                  }"
                 >
                   <button class="form-buttons" type="button">Edit</button>
                 </router-link>
@@ -74,7 +90,15 @@
               </ul>
               <div class="form-rows">
                 <router-link
-                  :to="{name: '', query:{deviceID:deviceID, deviceName:deviceName, 'deviceImage': deviceImage, deviceEnergy:deviceEnergy}}"
+                  :to="{
+                    name: '',
+                    query: {
+                      deviceID: deviceID,
+                      deviceName: deviceName,
+                      deviceImage: deviceImage,
+                      deviceEnergy: deviceEnergy
+                    }
+                  }"
                 >
                   <button class="form-buttons" type="button">Edit</button>
                 </router-link>
@@ -85,6 +109,7 @@
             <div class="card custom-cards-devicesDetails-graph">
               <div class="text-center">
                 <h1>Device Graph</h1>
+                <GChart type="LineChart" :data="chartData" :options="chartOptions" />
               </div>
             </div>
           </div>
@@ -95,13 +120,15 @@
   </div>
 </template>
 <script>
-import NavbarTop from "./navbar-top";
-import NavbarBottom from "./navbar-bottom";
+import NavbarTop from "../navbars/navbar-top";
+import NavbarBottom from "../navbars/navbar-bottom";
+import { GChart } from "vue-google-charts";
 export default {
   name: "addDevice",
   components: {
     NavbarTop,
-    NavbarBottom
+    NavbarBottom,
+    GChart
   },
   data() {
     return {
@@ -109,7 +136,20 @@ export default {
         checked: "on"
       },
       device: "",
-      scheduledCommands: []
+      scheduledCommands: [],
+      chartData: [
+        ["Year", "Sales", "Expenses", "Profit"],
+        ["2014", 1000, 400, 200],
+        ["2015", 1170, 460, 250],
+        ["2016", 660, 1120, 300],
+        ["2017", 1030, 540, 350]
+      ],
+      chartOptions: {
+        chart: {
+          title: "Company Performance",
+          subtitle: "Sales, Expenses, and Profit: 2014-2017"
+        }
+      }
     };
   },
   props: [
@@ -123,7 +163,7 @@ export default {
   methods: {
     async turnOn() {
       await this.$nextTick();
-      let url = "http://192.168.0.11:5552/insertOneshotTimer";
+      let url = "http://localhost:5552/insertOneshotTimer";
       fetch(url, {
         mode: "cors",
         method: "POST",
@@ -134,7 +174,7 @@ export default {
         },
         body: JSON.stringify({
           device_id: this.deviceID,
-          trigger: 1,
+          trigger: getOpposite(this.form.checked),
           command: swap(this.form.checked)
         })
       })
@@ -144,10 +184,30 @@ export default {
         .then(jsonData => {
           console.log(jsonData);
         });
+    },
+    checkDeviceActivity() {
+      let url = "http://localhost:5552/getOneshotTimers?id=" + this.deviceID;
+      let result = null;
+      fetch(url, {
+        mode: "cors",
+        method: "GET",
+        headers: {
+          Authorization: this.userToken
+        }
+      })
+        .then(response => {
+          return response.json();
+        })
+        .then(jsonData => {
+          result = jsonData[jsonData.length - 1].timer_oneshot_trigger;
+          console.log(jsonData[jsonData.length - 1].timer_oneshot_trigger);
+          console.log(result);
+          this.form.checked = swap(map(result));
+        });
     }
   },
   mounted: function() {
-    let url = "http://192.168.0.11:5552/getRepeatTimers?id=" + this.deviceID;
+    let url = "http://localhost:5552/getRepeatTimers?id=" + this.deviceID;
 
     fetch(url, {
       mode: "cors",
@@ -190,6 +250,7 @@ export default {
         this.scheduledCommands.sort((a, b) => {
           return a.hour - b.hour;
         });
+        this.checkDeviceActivity();
       });
   }
 };
@@ -206,6 +267,26 @@ function formatTime(time) {
   return time;
 }
 
+//Find the current value of the device - 1 = on - 2 = off for oneshot timers.
+function getOpposite(command) {
+  if (command === "on") {
+    return 2;
+  } else {
+    return 1;
+  }
+}
+
+//Maps on and off to the commands
+function map(command) {
+  if (command === 1) {
+    return "on";
+  } else if (command === 2) {
+    return "off";
+  }
+}
+
+//Swaps the on off switch
+//Once device is turned on the device will ask if the user wants to turn it off otherwise ask to turn the device on.
 function swap(command) {
   if (command === "off") {
     return "on";

@@ -6,7 +6,11 @@
       <div class="card custom-cards-rooms">
         <div class="img-cont">
           <!--Image of the room from prop roomImage-->
-          <img class="card-img-top" :src="require(`../assets/${roomImage}.png`)" alt="Energy Usage" />
+          <img
+            class="card-img-top"
+            :src="require(`../../assets/${roomImage}.png`)"
+            alt="Energy Usage"
+          />
         </div>
         <!--Room name from prop roomName-->
         <div class="card-body">
@@ -18,7 +22,7 @@
 </template>
 <script>
 //Bus to keep track of the current page and to also set the room data to display on that page
-import { bus } from "../main";
+import { bus } from "../../main";
 export default {
   name: "roomCard",
   props: ["roomName", "roomImage"], //props/data required for this card
