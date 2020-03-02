@@ -605,7 +605,7 @@ Get VAPID public key.
 ####################################### */
 
 app.get("/getVapidKey", (req, res) => {
-  res.send( { "public_vapid_key": publicVapidKey } );
+  res.send( { public_vapid_key: publicVapidKey } );
 });
 
 /* #######################################
