@@ -868,16 +868,18 @@ app.post("/insertSensor", (req, res) => {
 
 app.post("/editSensor", (req, res) => {
   if (req.body.id && req.body.room && req.body.type && req.body.name) {
-    db.insertSensor(req.body.id && req.body.room, req.body.type, req.body.name, function(
-      err,
-      rowId
-    ) {
-      if (err) {
-        res.send({ error: err });
-      } else {
-        res.send({ rowId: rowId });
+    db.insertSensor(
+      req.body.id && req.body.room,
+      req.body.type,
+      req.body.name,
+      function(err, rowId) {
+        if (err) {
+          res.send({ error: err });
+        } else {
+          res.send({ rowId: rowId });
+        }
       }
-    });
+    );
   } else {
     res.send({
       error: "Missing parameter! Needs sensor id, room, type, wattage and name"
@@ -908,8 +910,14 @@ app.post("/insertDevice", (req, res) => {
 });
 
 app.post("/editDevice", (req, res) => {
-  if (req.body.id && req.body.room && req.body.type && req.body.name && req.body.wattage) {
-    db.insertDevice(
+  if (
+    req.body.id &&
+    req.body.room &&
+    req.body.type &&
+    req.body.name &&
+    req.body.wattage
+  ) {
+    db.editDevice(
       req.body.id,
       req.body.room,
       req.body.type,

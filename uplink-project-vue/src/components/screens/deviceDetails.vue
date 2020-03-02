@@ -200,8 +200,6 @@ export default {
         })
         .then(jsonData => {
           result = jsonData[jsonData.length - 1].timer_oneshot_trigger;
-          console.log(jsonData[jsonData.length - 1].timer_oneshot_trigger);
-          console.log(result);
           this.form.checked = swap(map(result));
         });
     }
