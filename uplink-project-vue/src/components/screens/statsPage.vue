@@ -65,13 +65,12 @@
 <script>
 import NavbarTop from "../navbars/navbar-top";
 import NavbarBottom from "../navbars/navbar-bottom";
-import { GChart } from "vue-google-charts";
+
 export default {
   name: "stats",
   components: {
     NavbarTop,
-    NavbarBottom,
-    GChart
+    NavbarBottom
   },
   data() {
     return {};
