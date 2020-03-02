@@ -160,10 +160,12 @@ CREATE TABLE device_trigger (
 CREATE TABLE warning (
     warning_id                  INTEGER PRIMARY KEY AUTOINCREMENT,
     warning_timestamp           INTEGER,
+    warning_last_updated_ts     INTEGER,
     warning_device_id           TEXT,
     warning_sensor_id           TEXT,
     warning_message             TEXT,
     warning_severity            INTEGER,
+    warning_read                INTEGER,
     FOREIGN KEY (warning_device_id) REFERENCES device(device_id),
     FOREIGN KEY (warning_sensor_id) REFERENCES sensor(sensor_id)
 );
