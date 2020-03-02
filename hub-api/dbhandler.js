@@ -688,6 +688,27 @@ class databasehandler {
     });
   }
 
+  insertDeviceTrigger(device_id, sensor_id, gt_lt_eq, value, command_id, callback) {
+    var q = "INSERT INTO device_trigger (device_trigger_device_id, device_trigger_sensor_id, device_trigger_gt_lt_eq, device_sensor_value, device_command) VALUES (?, ?, ?, ?, ?)";
+  
+    db.run(q, [device_id, sensor_id, gt_lt_eq, value, command_id], function(err) {
+      if (err) {
+        console.log(
+          `[${getWholeDate()}] ! Error inserting new trigger:`
+        );
+        console.log(`[${getWholeDate()}] ! ${err}`);
+        callback(err, null);
+      } else {
+        console.log(
+          `[${getWholeDate()}] > Inserted new trigger for device ${device_id}: ${JSON.stringify(
+            this.lastID
+          )}`
+        );
+        callback(null, JSON.stringify(this.lastID));
+      }
+    });
+  }
+
   /* #######################################
                                     
   Inserting readings.

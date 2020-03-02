@@ -909,6 +909,24 @@ app.post("/insertDevice", (req, res) => {
   }
 });
 
+app.post("/insertTrigger", (req, res) =>  {
+  if (req.body.deviceId && req.body.sensorId && req.body.symbol && req.body.value && req.body.commandId) {
+    db.insertDevice(req.body.deviceId, req.body.sensorId, req.body.symbol, req.body.value, req.body.commandId,
+      function(err, rowId) {
+        if (err) {
+          res.send({ error: err });
+        } else {
+          res.send({ rowId: rowId });
+        }
+      }
+    );
+  } else {
+    res.send({
+      error: "Missing parameter! Needs deviceId, sensorId, symbol (>, <, =), value and commandId"
+    });
+  }
+})
+
 app.post("/editDevice", (req, res) => {
   if (
     req.body.id &&
