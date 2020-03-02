@@ -109,7 +109,6 @@
             <div class="card custom-cards-devicesDetails-graph">
               <div class="text-center">
                 <h1>Device Graph</h1>
-                <GChart type="LineChart" :data="chartData" :options="chartOptions" />
               </div>
             </div>
           </div>
@@ -136,20 +135,7 @@ export default {
         checked: "on"
       },
       device: "",
-      scheduledCommands: [],
-      chartData: [
-        ["Year", "Sales", "Expenses", "Profit"],
-        ["2014", 1000, 400, 200],
-        ["2015", 1170, 460, 250],
-        ["2016", 660, 1120, 300],
-        ["2017", 1030, 540, 350]
-      ],
-      chartOptions: {
-        chart: {
-          title: "Company Performance",
-          subtitle: "Sales, Expenses, and Profit: 2014-2017"
-        }
-      }
+      scheduledCommands: []
     };
   },
   props: [
