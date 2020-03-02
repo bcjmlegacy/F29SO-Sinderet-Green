@@ -37,9 +37,9 @@
   </div>
 </template>
 <script>
-import NavbarTop from "../components/navbar-top";
-import NavbarBottom from "../components/navbar-bottom";
-import AddDeviceCard from "../components/addDeviceCard";
+import NavbarTop from "../navbars/navbar-top";
+import NavbarBottom from "../navbars/navbar-bottom";
+import AddDeviceCard from "../helpers/addDeviceCard";
 
 export default {
   name: "devices",

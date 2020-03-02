@@ -14,7 +14,7 @@
                 <div>
                   <div class="col-width">
                     <div class="img-cont-summary">
-                      <img src="../assets/idea.png" class="img-summary" alt="Energy Usage" />
+                      <img src="../../assets/idea.png" class="img-summary" alt="Energy Usage" />
                     </div>
                     <!--Energy card area for data-->
                     <div class="card-body text-center">
@@ -35,14 +35,45 @@
               </div>
             </div>
           </div>
-
+          <div>
+            <div class="card custom-cards">
+              <div>
+                <div class="flex-cards">
+                  <div>
+                    <div class="col-width">
+                      <div class="img-cont-summary">
+                        <img src="../../assets/battery.png" class="img-summary" alt="Energy Usage" />
+                      </div>
+                      <!--Solar battery card area for data-->
+                      <div class="card-body text-center">
+                        <h5 class="card-title">Solar Stored Today</h5>
+                        <h4 class="card-text">{{solar}}KWh</h4>
+                      </div>
+                    </div>
+                  </div>
+                  <div>
+                    <div class="col-width">
+                      <div class="card-body text-center">
+                        <h4 class="display-2">60%</h4>
+                        <h5 class="card-text">Charged</h5>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
           <div>
             <div class="card custom-cards">
               <div class="flex-cards">
                 <div>
                   <div class="col-width">
                     <div class="img-cont-summary">
-                      <img src="../assets/sun.png" class="img-summary" alt="Energy Usage" />
+                      <img
+                        :src="require(`../../assets/${dayNightIcon}.png`)"
+                        class="img-summary"
+                        alt="Energy Usage"
+                      />
                     </div>
                     <!--Temperature card area for data-->
                     <div class="card-body text-center">
@@ -65,7 +96,10 @@
           </div>
         </div>
         <div class="text-center">
-          <router-link class="advanced-links text-center links" to="#">See Advanced Stats</router-link>
+          <router-link
+            :to="{name: 'stats'}"
+            class="advanced-links text-center links"
+          >See Advanced Stats</router-link>
         </div>
       </div>
     </div>
@@ -76,55 +110,25 @@ export default {
   name: "Summary",
   data() {
     return {
-      temperatures: ""
+      temperatures: "",
+      dayNightIcon: "sun"
     };
   },
   props: ["userToken", "sumTitle", "energy", "temperature", "solar"],
   methods: {
-    /*findRooms() {
-      fetch("http://localhost:5552/getRooms", {
-        method: "GET",
-        mode: "cors",
-        headers: {
-          authorization: this.userToken
-        }
-      })
-        .then(resp => {
-          return resp.json();
-        })
-        .then(jsonData => {
-          console.log(jsonData);
-
-          this.temperatures = {
-            temp: Math.floor(Math.random() * (25 - 16 + 1)) + 16,
-            currentDescription: "",
-            loc: jsonData[0].room_name
-          };
-        });
+    getIcon() {
+      let hours = new Date().getHours();
+      let mins = new Date().getMinutes();
+      console.log(hours + ":" + mins);
+      if (hours >= 8 && hours <= 17) this.dayNightIcon = "sun";
+      if ((hours >= 18 && hours <= 24) || (hours >= 0 && hours <= 7))
+        this.dayNightIcon = "moon";
     }
-    
-    let i = 0;
-    startInterval: function(temp) {
-      
-      setInterval(function() {
-        if (i > temp) {
-          i = 0;
-        } else {
-          i++;
-          console.log(this.temperatures[i].loc);
-          this.currentTemp = {
-            loc: this.temperatures[i].loc,
-            temp: this.temperatures[i].temp,
-            currentDescription: this.temperatures[i].currentDescription
-          };
-        }
-      }, 10000);
-      
-    }*/
   },
+
   mounted: function() {
     //Dark sky api to get data for outside weather. Set to Edinburgh
-    fetch("https://dark-sky.p.rapidapi.com/55.9716,3.6026?lang=en&units=auto", {
+    fetch("https://dark-sky.p.rapidapi.com/55.9533,3.1883?lang=en&units=auto", {
       method: "GET",
       headers: {
         "x-rapidapi-host": "dark-sky.p.rapidapi.com",
@@ -141,7 +145,7 @@ export default {
           temp: Math.round(jsonData.currently.temperature),
           loc: "Outside"
         };
-
+        this.getIcon();
         //this.findRooms();
         //this.startInterval(this.temperatures.length);
         console.log(this.temperatures);

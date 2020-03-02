@@ -993,6 +993,12 @@ app.get("/getRepeatTimers", (req, res) => {
   });
 });
 
+app.get("/getOneshotTimers", (req, res) => {
+  db.getOneshotTimersByDeviceId(req.query.id, function(err, rows) {
+    res.send(rows);
+  });
+});
+
 app.post("/insertRepeatTimer", (req, res) => {
   if (
     req.body.type &&
