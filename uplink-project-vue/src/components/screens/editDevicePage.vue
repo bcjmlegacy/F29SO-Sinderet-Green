@@ -10,10 +10,9 @@
     </div>
     <div id="editDevice">
       <div class="container">
-        <h3 class="display-2 text-center">Edit Schedule</h3>
         <div id="form-addDevice">
           <div class="flex-deviceDetails">
-            <div class="item-deviceDetails">
+            <div>
               <div class="card custom-cards-editDevices">
                 <div class="img-cont">
                   <img
@@ -88,7 +87,7 @@
                 </div>
               </div>
             </div>
-            <div class="item-deviceDetails">
+            <div>
               <div class="card custom-cards-devicesDetails-schedule-edit">
                 <h5 class="card-title text-center label-section">Delete Schedule Times</h5>
                 <div class="form-rows" />

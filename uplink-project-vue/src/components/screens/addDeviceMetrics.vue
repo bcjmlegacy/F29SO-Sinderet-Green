@@ -10,7 +10,6 @@
     </div>
     <div id="addDevice">
       <div class="container">
-        <h3 class="display-3 text-center">Add Device</h3>
         <div id="form-addDevice">
           <div class="flex-add">
             <div class="card custom-cards-addDevices">

@@ -114,13 +114,13 @@ function pairImg(device) {
 <style>
 #EveryDevice {
   margin-top: 120px;
-  margin-bottom: 50px;
+  margin-bottom: 80px;
 }
 
 @media screen and (max-width: 1025px) {
   #EveryDevice {
     margin-top: 80px;
-    margin-bottom: 70px;
+    margin-bottom: 100px;
   }
 }
 </style>
