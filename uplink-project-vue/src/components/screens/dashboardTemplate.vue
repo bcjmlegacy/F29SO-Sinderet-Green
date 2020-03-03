@@ -51,7 +51,7 @@ import NavTop from "../navbars/navbar-top";
 import NavBottom from "../navbars/navbar-bottom";
 
 //url for the API to get all the rooms assigned to base user. (no authorization as of yet)
-let url = "http://localhost:5552/getRooms";
+let url = "http://192.168.0.11:5552/getRooms";
 //Vue.js main class for data and template scripts.
 export default {
   name: "dashboard-components",

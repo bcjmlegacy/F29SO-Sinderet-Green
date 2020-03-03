@@ -32,7 +32,7 @@ import NavTop from "../navbars/navbar-top";
 import NavBottom from "../navbars/navbar-bottom";
 import Device from "../helpers/deviceCard";
 
-let url = "http://localhost:5552/getDevices";
+let url = "http://192.168.0.11:5552/getDevices";
 export default {
   name: "AllDevices",
   components: {
