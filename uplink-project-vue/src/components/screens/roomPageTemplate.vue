@@ -22,6 +22,7 @@
       <div id="rooms">
         <div class="sub-title-wrapper">
           <h3 class="display-4 text-center">Devices</h3>
+          <hr />
         </div>
         <div class="flex-rooms">
           <!--Loop through all the devices by device name and generate cards for each of them-->
@@ -36,11 +37,13 @@
           </div>
         </div>
         <!--Additional Components.-->
-        <div class="additional">
-          <div class="flex-rooms">
-            <AllDevices />
-          </div>
+        <div class="text-center">
+          <router-link
+            class="advanced-links text-center links"
+            :to="{name: 'allDevicesPage'}"
+          >See All Devices</router-link>
         </div>
+        <hr />
       </div>
     </div>
     <!--Bottom Navbar (Mobile and Tablet)-->
@@ -51,7 +54,7 @@
 //All the components that are needed for the roomPage
 import Summary from "../helpers/roomSummary";
 import Device from "../helpers/deviceCard";
-import AllDevices from "../helpers/allDevices";
+
 import NavTop from "../navbars/navbar-top";
 import NavBottom from "../navbars/navbar-bottom";
 
@@ -65,7 +68,6 @@ export default {
     //Initialise the components
     Summary,
     Device,
-    AllDevices,
     NavTop,
     NavBottom
   },

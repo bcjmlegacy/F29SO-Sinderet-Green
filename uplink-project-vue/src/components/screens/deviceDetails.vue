@@ -12,7 +12,7 @@
       <div class="container">
         <div class="flex-deviceDetails">
           <div class="item-deviceDetails">
-            <div class="card custom-cards-devicesDetails">
+            <div class="custom-cards-devicesDetails">
               <div class="img-cont">
                 <img
                   :src="require(`../../assets/${deviceImage}.png`)"
@@ -53,7 +53,7 @@
             </div>
           </div>
           <div class="item-deviceDetails">
-            <div class="card custom-cards-devicesDetails-schedule">
+            <div class="custom-cards-devicesDetails-schedule">
               <h5 class="card-title text-center label-section">Daily Schedule</h5>
               <div class="form-rows" />
               <ul class="list-schedule">
@@ -81,7 +81,7 @@
             </div>
           </div>
           <div class="item-deviceDetails">
-            <div class="card custom-cards-devicesDetails-schedule">
+            <div class="custom-cards-devicesDetails-schedule">
               <h5 class="card-title text-center label-section">Automated Tasks</h5>
               <div class="form-rows" />
               <ul class="list-schedule">
