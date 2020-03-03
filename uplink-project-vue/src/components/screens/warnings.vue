@@ -15,7 +15,31 @@
       </div>
       <div class="warnings-tree">
         <div class="flex-warnings">
-          <WarningCard deviceName="lights" warningMessage="blah" warningClarified="deedededeee" />
+          <WarningCard
+            deviceName="lights"
+            warningMessage="On for too long"
+            warningClarified="Turn off"
+          />
+          <WarningCard
+            deviceName="lights"
+            warningMessage="On for too long"
+            warningClarified="Turn off"
+          />
+          <WarningCard
+            deviceName="lights"
+            warningMessage="On for too long"
+            warningClarified="Turn off"
+          />
+          <WarningCard
+            deviceName="lights"
+            warningMessage="On for too long"
+            warningClarified="Turn off"
+          />
+          <WarningCard
+            deviceName="lights"
+            warningMessage="On for too long"
+            warningClarified="Turn off"
+          />
         </div>
       </div>
     </div>
@@ -52,15 +76,15 @@ export default {
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-  flex-direction: column;
+  flex-direction: row;
 }
 
 @media screen and (max-width: 1025px) {
   #warnings {
     margin-left: 1%;
     margin-right: 1%;
-    margin-bottom: 70px;
-    margin-top: 80px;
+    margin-bottom: 80px;
+    margin-top: 100px;
   }
 }
 </style>
