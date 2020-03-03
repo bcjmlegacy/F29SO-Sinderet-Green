@@ -36,6 +36,7 @@
             />
           </div>
         </div>
+        <hr />
         <!--Additional Components.-->
         <div class="text-center">
           <router-link
@@ -43,7 +44,6 @@
             :to="{name: 'allDevicesPage'}"
           >See All Devices</router-link>
         </div>
-        <hr />
       </div>
     </div>
     <!--Bottom Navbar (Mobile and Tablet)-->

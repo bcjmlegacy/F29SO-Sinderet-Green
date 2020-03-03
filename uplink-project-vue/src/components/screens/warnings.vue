@@ -83,7 +83,7 @@ export default {
   #warnings {
     margin-left: 1%;
     margin-right: 1%;
-    margin-bottom: 80px;
+    margin-bottom: 100px;
     margin-top: 100px;
   }
 }

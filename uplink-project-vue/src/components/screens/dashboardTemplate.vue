@@ -32,6 +32,7 @@
             <Room :roomName="result.room_name" :roomImage="result.roomImage" />
           </div>
         </div>
+        <hr />
         <!--Additional Components-->
         <div class="text-center">
           <router-link
@@ -39,7 +40,6 @@
             :to="{name: 'allDevicesPage'}"
           >See All Devices</router-link>
         </div>
-        <hr />
       </div>
     </div>
     <!--Navbar bottom *mobile and tablet view*-->
