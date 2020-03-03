@@ -612,12 +612,12 @@ ul {
     margin-bottom: 100px;
   }
   .item-deviceDetails {
-    width: 50%;
+    width: 55%;
     margin: 0;
     padding: 20px;
   }
   .device-img {
-    width: 50%;
+    width: 40%;
   }
 
   .custom-cards-devicesDetails-graph {
@@ -631,11 +631,20 @@ ul {
   }
 }
 
+@media screen and (max-width: 680px) {
+  .device-img {
+    width: 60%;
+  }
+}
+
 @media screen and (max-width: 550px) {
   .item-deviceDetails {
     width: 70%;
     margin: 0;
     padding: 20px;
+  }
+  .device-img {
+    width: 60%;
   }
 }
 
