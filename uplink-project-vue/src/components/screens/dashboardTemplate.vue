@@ -2,7 +2,7 @@
   <!--Dashboard - main screen/page -->
   <div id="dash">
     <!--Navbar top *web view*-->
-    <NavTop class="top-show" :back="back" />
+    <NavTop class="top-show" />
     <div class="bottom-show">
       <div class="logo-back fixed-top">
         <h5 class="logo">
@@ -20,24 +20,30 @@
     />
     <div class="container">
       <div id="rooms">
-        <div style="padding-bottom: 20px;">
-          <div class="sub-title-wrapper">
-            <h3 class="display-3 text-center">Rooms</h3>
-          </div>
+        <div class="sub-title-wrapper">
+          <h3 class="display-2 text-center">Rooms</h3>
+          <hr />
         </div>
+
         <div class="flex-rooms">
           <!--Vue.js for loop to loop through all rooms gathered from database with their respective icons-->
           <div v-for="result in results" :key="result.room_id">
             <!--Props filled for Room Card Component *This tag is looped until there are no more rooms in the database* -->
             <Room :roomName="result.room_name" :roomImage="result.roomImage" />
           </div>
-          <AllDevices />
         </div>
+        <hr />
         <!--Additional Components-->
+        <div class="text-center">
+          <router-link
+            class="advanced-links text-center links"
+            :to="{name: 'allDevicesPage'}"
+          >See All Devices</router-link>
+        </div>
       </div>
     </div>
     <!--Navbar bottom *mobile and tablet view*-->
-    <NavBottom class="bottom-show" :back="back" />
+    <NavBottom class="bottom-show" />
   </div>
 </template>
 
@@ -46,16 +52,15 @@
 import Summary from "../helpers/summary";
 import Room from "../helpers/roomTemplate";
 
-import AllDevices from "../helpers/allDevices";
 import NavTop from "../navbars/navbar-top";
 import NavBottom from "../navbars/navbar-bottom";
 
 //url for the API to get all the rooms assigned to base user. (no authorization as of yet)
-let url = "http://localhost:5552/getRooms";
+let url = "http://192.168.0.11:5552/getRooms";
 //Vue.js main class for data and template scripts.
 export default {
   name: "dashboard-components",
-  components: { Summary, AllDevices, NavTop, NavBottom, Room }, //Initialise Components
+  components: { Summary, NavTop, NavBottom, Room }, //Initialise Components
   data() {
     return {
       results: [] //Array to store results gathered from database but also the icon for the room

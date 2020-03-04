@@ -12,7 +12,7 @@
       <div class="container">
         <div class="flex-deviceDetails">
           <div class="item-deviceDetails">
-            <div class="card custom-cards-devicesDetails">
+            <div class="custom-cards-devicesDetails">
               <div class="img-cont">
                 <img
                   :src="require(`../../assets/${deviceImage}.png`)"
@@ -53,7 +53,7 @@
             </div>
           </div>
           <div class="item-deviceDetails">
-            <div class="card custom-cards-devicesDetails-schedule">
+            <div class="custom-cards-devicesDetails-schedule">
               <h5 class="card-title text-center label-section">Daily Schedule</h5>
               <div class="form-rows" />
               <ul class="list-schedule">
@@ -81,7 +81,7 @@
             </div>
           </div>
           <div class="item-deviceDetails">
-            <div class="card custom-cards-devicesDetails-schedule">
+            <div class="custom-cards-devicesDetails-schedule">
               <h5 class="card-title text-center label-section">Automated Tasks</h5>
               <div class="form-rows" />
               <ul class="list-schedule">
@@ -105,11 +105,12 @@
               </div>
             </div>
           </div>
-          <div class="item-deviceDetails">
+        </div>
+        <div>
+          <div class="flex-deviceDetails">
             <div class="card custom-cards-devicesDetails-graph">
               <div class="text-center">
                 <h1>Device Graph</h1>
-                <GChart type="LineChart" :data="chartData" :options="chartOptions" />
               </div>
             </div>
           </div>
@@ -122,13 +123,12 @@
 <script>
 import NavbarTop from "../navbars/navbar-top";
 import NavbarBottom from "../navbars/navbar-bottom";
-import { GChart } from "vue-google-charts";
+
 export default {
   name: "addDevice",
   components: {
     NavbarTop,
-    NavbarBottom,
-    GChart
+    NavbarBottom
   },
   data() {
     return {
@@ -136,20 +136,7 @@ export default {
         checked: "on"
       },
       device: "",
-      scheduledCommands: [],
-      chartData: [
-        ["Year", "Sales", "Expenses", "Profit"],
-        ["2014", 1000, 400, 200],
-        ["2015", 1170, 460, 250],
-        ["2016", 660, 1120, 300],
-        ["2017", 1030, 540, 350]
-      ],
-      chartOptions: {
-        chart: {
-          title: "Company Performance",
-          subtitle: "Sales, Expenses, and Profit: 2014-2017"
-        }
-      }
+      scheduledCommands: []
     };
   },
   props: [
@@ -163,7 +150,7 @@ export default {
   methods: {
     async turnOn() {
       await this.$nextTick();
-      let url = "http://localhost:5552/insertOneshotTimer";
+      let url = "http://192.168.0.11:5552/insertOneshotTimer";
       fetch(url, {
         mode: "cors",
         method: "POST",
@@ -186,7 +173,7 @@ export default {
         });
     },
     checkDeviceActivity() {
-      let url = "http://localhost:5552/getOneshotTimers?id=" + this.deviceID;
+      let url = "http://192.168.0.11:5552/getOneshotTimers?id=" + this.deviceID;
       let result = null;
       fetch(url, {
         mode: "cors",
@@ -205,7 +192,7 @@ export default {
     }
   },
   mounted: function() {
-    let url = "http://localhost:5552/getRepeatTimers?id=" + this.deviceID;
+    let url = "http://192.168.0.11:5552/getRepeatTimers?id=" + this.deviceID;
 
     fetch(url, {
       mode: "cors",

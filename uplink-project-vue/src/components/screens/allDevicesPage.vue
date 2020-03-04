@@ -32,7 +32,7 @@ import NavTop from "../navbars/navbar-top";
 import NavBottom from "../navbars/navbar-bottom";
 import Device from "../helpers/deviceCard";
 
-let url = "http://localhost:5552/getDevices";
+let url = "http://192.168.0.11:5552/getDevices";
 export default {
   name: "AllDevices",
   components: {
@@ -114,13 +114,13 @@ function pairImg(device) {
 <style>
 #EveryDevice {
   margin-top: 120px;
-  margin-bottom: 50px;
+  margin-bottom: 80px;
 }
 
 @media screen and (max-width: 1025px) {
   #EveryDevice {
-    margin-top: 80px;
-    margin-bottom: 70px;
+    margin-top: 110px;
+    margin-bottom: 100px;
   }
 }
 </style>

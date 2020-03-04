@@ -10,7 +10,6 @@
     </div>
     <div id="addDevice">
       <div class="container">
-        <h3 class="display-3 text-center">Add Device</h3>
         <div id="form-addDevice">
           <div class="flex-add">
             <div class="card custom-cards-addDevices">
@@ -74,8 +73,8 @@
 import NavbarTop from "../navbars/navbar-top";
 import NavbarBottom from "../navbars/navbar-bottom";
 
-let url = "http://localhost:5552/insertDevice";
-let url1 = "http://localhost:5552/getRooms";
+let url = "http://192.168.0.11:5552/insertDevice";
+let url1 = "http://192.168.0.11:5552/getRooms";
 
 export default {
   name: "addDevice",

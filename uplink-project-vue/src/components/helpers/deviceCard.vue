@@ -9,7 +9,7 @@
         <div class="img-cont">
           <!--Image name is taken from the prop called deviceImage-->
           <img
-            class="card-img-top img"
+            class="card-img-top"
             :src="require(`../../assets/${deviceImage}.png`)"
             alt="Energy Usage"
           />

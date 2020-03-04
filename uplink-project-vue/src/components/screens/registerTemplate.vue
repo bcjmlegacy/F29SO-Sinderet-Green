@@ -117,7 +117,7 @@
 </template>
 <script>
 //API URL for POST request that will register a user.
-let url = "http://localhost:5552/insertUser";
+let url = "http://192.168.0.11:5552/insertUser";
 
 export default {
   data() {

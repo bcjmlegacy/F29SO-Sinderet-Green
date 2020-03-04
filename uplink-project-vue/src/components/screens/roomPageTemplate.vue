@@ -22,6 +22,7 @@
       <div id="rooms">
         <div class="sub-title-wrapper">
           <h3 class="display-4 text-center">Devices</h3>
+          <hr />
         </div>
         <div class="flex-rooms">
           <!--Loop through all the devices by device name and generate cards for each of them-->
@@ -35,11 +36,13 @@
             />
           </div>
         </div>
+        <hr />
         <!--Additional Components.-->
-        <div class="additional">
-          <div class="flex-rooms">
-            <AllDevices />
-          </div>
+        <div class="text-center">
+          <router-link
+            class="advanced-links text-center links"
+            :to="{name: 'allDevicesPage'}"
+          >See All Devices</router-link>
         </div>
       </div>
     </div>
@@ -51,21 +54,20 @@
 //All the components that are needed for the roomPage
 import Summary from "../helpers/roomSummary";
 import Device from "../helpers/deviceCard";
-import AllDevices from "../helpers/allDevices";
+
 import NavTop from "../navbars/navbar-top";
 import NavBottom from "../navbars/navbar-bottom";
 
 //URL for getting all the devices
-let url = "http://localhost:5552/getDevices";
+let url = "http://192.168.0.11:5552/getDevices";
 //URL for getting all rooms
-let url1 = "http://localhost:5552/getRooms";
+let url1 = "http://192.168.0.11:5552/getRooms";
 export default {
   name: "Room",
   components: {
     //Initialise the components
     Summary,
     Device,
-    AllDevices,
     NavTop,
     NavBottom
   },

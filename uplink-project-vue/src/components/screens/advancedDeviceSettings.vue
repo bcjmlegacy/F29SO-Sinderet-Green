@@ -10,7 +10,6 @@
     </div>
     <div id="editDevice">
       <div class="container">
-        <h3 class="display-2 text-center">Edit Device</h3>
         <div id="form-addDevice">
           <div class="flex-add">
             <div class="card custom-cards-editDevices-adv">
@@ -98,7 +97,7 @@
 import NavbarTop from "../navbars/navbar-top";
 import NavbarBottom from "../navbars/navbar-bottom";
 
-let url = "http://localhost:5552/getRooms";
+let url = "http://192.168.0.11:5552/getRooms";
 export default {
   name: "addDevice",
   components: {
@@ -123,7 +122,7 @@ export default {
       if (!confirm("Do really want to delete " + this.deviceName + "?")) {
         return false;
       }
-      let url = "http://localhost:5552/deleteDevice?id=" + this.deviceID;
+      let url = "http://192.168.0.11:5552/deleteDevice?id=" + this.deviceID;
       fetch(url, {
         mode: "cors",
         method: "GET",
@@ -141,7 +140,7 @@ export default {
     },
 
     updateDevice(evt) {
-      let url = "http://localhost:5552/editDevice";
+      let url = "http://192.168.0.11:5552/editDevice";
 
       fetch(url, {
         mode: "cors",
@@ -183,7 +182,7 @@ export default {
       .then(jsonData => {
         this.rooms = jsonData;
         console.log(this.rooms);
-        let url = "http://localhost:5552/getDevices";
+        let url = "http://192.168.0.11:5552/getDevices";
         fetch(url, {
           mode: "cors",
           method: "GET",

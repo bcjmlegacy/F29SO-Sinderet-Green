@@ -10,10 +10,9 @@
     </div>
     <div id="editDevice">
       <div class="container">
-        <h3 class="display-2 text-center">Edit Schedule</h3>
         <div id="form-addDevice">
           <div class="flex-deviceDetails">
-            <div class="item-deviceDetails">
+            <div>
               <div class="card custom-cards-editDevices">
                 <div class="img-cont">
                   <img
@@ -88,7 +87,7 @@
                 </div>
               </div>
             </div>
-            <div class="item-deviceDetails">
+            <div>
               <div class="card custom-cards-devicesDetails-schedule-edit">
                 <h5 class="card-title text-center label-section">Delete Schedule Times</h5>
                 <div class="form-rows" />
@@ -148,7 +147,7 @@ export default {
   methods: {
     //Add item to the schedule
     go(evt) {
-      let url = "http://localhost:5552/insertRepeatTimer";
+      let url = "http://192.168.0.11:5552/insertRepeatTimer";
       console.log(this.form);
       fetch(url, {
         mode: "cors",
@@ -183,7 +182,7 @@ export default {
       if (!confirm("Do really want to delete this scheduled event?")) {
         return false;
       }
-      let url = "http://localhost:5552/deleteRepeatTimer?id=" + id;
+      let url = "http://192.168.0.11:5552/deleteRepeatTimer?id=" + id;
       fetch(url, {
         mode: "cors",
         method: "GET",
@@ -208,7 +207,7 @@ export default {
       //loops through the schedule and deletes each schedule item one by one using the id
       for (let i in this.scheduledCommands) {
         let url =
-          "http://localhost:5552/deleteRepeatTimer?id=" +
+          "http://192.168.0.11:5552/deleteRepeatTimer?id=" +
           this.scheduledCommands[i].id;
         fetch(url, {
           mode: "cors",
@@ -229,7 +228,7 @@ export default {
   },
   mounted: function() {
     //Get command for device via icon thats displayed
-    let url = "http://localhost:5552/getCommandsByDevice?id=";
+    let url = "http://192.168.0.11:5552/getCommandsByDevice?id=";
     let id = pairImg(this.deviceImage);
     let urlComplete = url + id;
     fetch(urlComplete, {
@@ -244,7 +243,8 @@ export default {
       })
       .then(jsonData => {
         this.operations = jsonData; //after we get commands find device ID
-        let url = "http://localhost:5552/getRepeatTimers?id=" + this.deviceID;
+        let url =
+          "http://192.168.0.11:5552/getRepeatTimers?id=" + this.deviceID;
 
         fetch(url, {
           mode: "cors",
