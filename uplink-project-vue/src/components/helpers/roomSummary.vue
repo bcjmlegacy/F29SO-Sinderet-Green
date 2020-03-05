@@ -11,7 +11,7 @@
         <div class="flex-b-rooms">
           <div class="col-width">
             <div class="img-cont-summary">
-              <img src="../../assets/idea.png" class="img-summary" alt="Energy Usage" />
+              <img src="../../assets/flash.png" class="img-summary" alt="Energy Usage" />
             </div>
             <!--Energy card area for data-->
             <div class="card-body text-center">

@@ -64,22 +64,22 @@ body {
 #rooms {
   margin-top: 35px;
   margin-bottom: 100px;
-  margin-left: 15%;
-  margin-right: 15%;
+  margin-left: 5%;
+  margin-right: 5%;
 }
 
 .flex-rooms {
   display: flex !important;
   flex-direction: row !important;
   flex-wrap: wrap !important;
-  justify-content: space-around !important;
-  align-items: flex-start !important;
+  justify-content: center !important;
+  align-items: center !important;
   padding-bottom: 20px;
 }
 
 .item {
-  margin-left: 50px;
-  margin-right: 50px;
+  margin-left: 10px;
+  margin-right: 10px;
   margin-top: 10px;
 }
 
@@ -261,7 +261,7 @@ body {
     margin-top: 100px;
   }
   .custom-cards-addRooms {
-    width: 20rem;
+    width: 80%;
   }
 }
 
@@ -330,7 +330,7 @@ body {
     margin-top: 100px;
   }
   .custom-cards-addDevices {
-    width: 20rem;
+    width: 80%;
   }
 }
 
@@ -447,10 +447,10 @@ body {
     margin-bottom: 100px;
   }
   .custom-cards-editDevices {
-    width: 20rem;
+    width: 80%;
   }
   .custom-cards-devicesDetails-schedule-edit {
-    width: 20rem;
+    width: 80%;
   }
   .img-delete {
     width: 30%;
@@ -493,7 +493,7 @@ body {
 
 @media screen and (max-width: 1025px) {
   .custom-cards-editDevices-adv {
-    width: 20rem;
+    width: 80%;
   }
 }
 
@@ -670,12 +670,10 @@ ul {
 
 #loginCard {
   margin-top: 120px;
+  margin-left: 40%;
+  margin-right: 40%;
 
   /* border: solid 1px #005872;*/
-}
-
-#form {
-  margin-top: 10px;
 }
 
 #err {
@@ -747,19 +745,23 @@ ul {
   margin-bottom: 2px;
 }
 
-.logo-top {
-  font-family: "Harlow-solid";
-  text-align: center;
-  font-size: 2.5em;
-  opacity: 0.5;
-  color: #000;
-  margin-top: 3px;
-  padding: 10px;
+.logo-login {
+  font-size: 3.2em;
 }
 
 .logo-back {
   background-color: white;
   box-shadow: 0 0px 10px rgba(0, 0, 0, 0.3) !important;
+}
+
+.logo-top {
+  font-family: "Harlow-solid";
+  text-align: center;
+  font-size: 2.8em;
+  opacity: 0.5;
+  color: #000;
+  margin-top: 3px;
+  padding: 5px;
 }
 
 .logo-top:hover {
@@ -770,6 +772,8 @@ ul {
 @media screen and (max-width: 1024px) {
   #loginCard {
     margin-top: 120px;
+    margin-right: 10%;
+    margin-left: 10%;
   }
   .custom-cards-Login {
     width: 20rem;
@@ -1178,7 +1182,8 @@ ul {
     width: 70%;
   }
   .card {
-    margin-left: 1%;
-    margin-right: 1%;
+    margin-left: 2%;
+    margin-bottom: 10%;
+    margin-right: 2%;
   }
 }
