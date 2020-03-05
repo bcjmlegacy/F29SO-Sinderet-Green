@@ -28,12 +28,13 @@ INSERT INTO device_command  (device_command_device_type, device_command_name, de
 INSERT INTO device_command  (device_command_device_type, device_command_name, device_command_mqtt, device_command_value, device_command_mqtt_res, device_command_value_res) VALUES (4, "Turn on",  "set_power", "on",  "status", "on");
 INSERT INTO device_command  (device_command_device_type, device_command_name, device_command_mqtt, device_command_value, device_command_mqtt_res, device_command_value_res) VALUES (4, "Turn off", "set_power", "off", "status", "off");
 
-INSERT INTO user (user_account_type, user_username, user_password, user_created, user_last_active) 
+INSERT INTO user (user_account_type, user_username, user_password, user_created, user_last_active, user_admin) 
 VALUES (1, 
     "Test_user", 
     "b109f3bbbc244eb82441917ed06d618b9008dd09b3befd1b5e07394c706a8bb980b1d7785e5976ec049b46df5f1326af5a2ea6d103fd07c95385ffab0cacbc86", 
     1579521113, 
-    1579521113
+    1579521113,
+    1
 );
 
 INSERT INTO sensor (sensor_id, sensor_room, sensor_type, sensor_name, sensor_added) VALUES ("ABC123", 1, 1, "Livingroom temp sensor 1",     1579521113);
@@ -131,3 +132,9 @@ INSERT INTO device_reading (
     device_reading_timestamp
 )
 VALUES  ("789ABC123", "Temperature", "10", 1579521113);
+
+INSERT INTO user_permission (
+    user_permission_user_id,
+    user_permission_device_id
+)   
+VALUES (1, "789ABC123");

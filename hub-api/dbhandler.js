@@ -148,6 +148,10 @@ class databasehandler {
     this.getById("timer_repeat", id, callback);
   }
 
+  getUserById(id, callback) {
+    this.getById("user", id, callback);
+  }
+
   getRepeatTimerByDeviceId(id, callback) {
     var q = `SELECT * FROM timer_repeat WHERE timer_repeat_device_id = ?`;
 
@@ -168,6 +172,64 @@ class databasehandler {
         callback(err);
       } else {
         callback(null, rows);
+      }
+    });
+  }
+
+  getUserPermissionByDeviceId(id, callback) {
+    var q = `SELECT * FROM user_permission WHERE user_permission_device_id = ?`;
+
+    db.all(q, [id], function(err, rows) {
+      if (err) {
+        callback(err);
+      } else {
+        callback(null, rows);
+      }
+    });
+  }
+
+  getUserPermissionBySensorId(id, callback) {
+    var q = `SELECT * FROM user_permission WHERE user_permission_sensor_id = ?`;
+
+    db.all(q, [id], function(err, rows) {
+      if (err) {
+        callback(err);
+      } else {
+        callback(null, rows);
+      }
+    });
+  }
+
+  checkAuth(user_id, device_id, sensor_id, callback) {
+    if (!sensor_id) sensor_id = "NA";
+    if (!device_id) device_id = "NA";
+
+    this.getUserById(user_id, function(err, rows) {
+      if (err) {
+        console.log(err);
+        callback(err);
+      }
+      if (rows[0]) {
+        if (rows[0]["user_admin"] == 1) {
+          console.log("User is admin");
+          callback(null, true);
+        }
+      } else {
+        // Check permissions table
+        var q = `SELECT * FROM user_permission WHERE user_permission_user_id = ? AND (user_permission_device_id = ? OR user_permission_sensor_id = ?)`;
+
+        db.all(q, [user_id, device_id, sensor_id], function(err, rows) {
+          if (err) {
+            console.log(err);
+            callback(err, false);
+          } else if (rows[0]) {
+            console.log(rows);
+            callback(null, true);
+          } else {
+            console.log("Not authorized");
+            callback(null, false);
+          }
+        });
       }
     });
   }
@@ -197,7 +259,7 @@ class databasehandler {
     this.getByRoom("device", roomId, callback);
   }
 
-    /* #######################################
+  /* #######################################
           
   Get by device type.
   
@@ -306,18 +368,19 @@ class databasehandler {
     });
   }
 
-  getLastDeviceReadingByType(id, type, callback)  {
-    var q = "SELECT * FROM device_reading WHERE device_reading_id = ? AND device_reading_type = ? LIMIT 1";
+  getLastDeviceReadingByType(id, type, callback) {
+    var q =
+      "SELECT * FROM device_reading WHERE device_reading_id = ? AND device_reading_type = ? LIMIT 1";
 
-    db.all(q, [id, type],function(err, rows) {
+    db.all(q, [id, type], function(err, rows) {
       if (err) {
         callback(err);
-      } else if(rows[0])  {
+      } else if (rows[0]) {
         callback(null, rows);
-      } else  {
+      } else {
         callback("No data");
       }
-    })
+    });
   }
 
   getDeviceStatusTime(id, callback) {
@@ -326,9 +389,13 @@ class databasehandler {
     db.all(q, [id], function(err, rows) {
       if (err) {
         callback(err);
-      } else if(rows[0]) {
-        callback(null, rows[0]["device_reading_value"], rows[0]["device_reading_timestamp"]);
-      } else  {
+      } else if (rows[0]) {
+        callback(
+          null,
+          rows[0]["device_reading_value"],
+          rows[0]["device_reading_timestamp"]
+        );
+      } else {
         callback("No data");
       }
     });
@@ -340,9 +407,9 @@ class databasehandler {
     db.all(q, [device_id, message], function(err, rows) {
       if (err) {
         callback(err);
-      } else if(rows[0]) {
+      } else if (rows[0]) {
         callback(null, rows[0]);
-      } else  {
+      } else {
         callback("No data");
       }
     });
@@ -688,14 +755,22 @@ class databasehandler {
     });
   }
 
-  insertDeviceTrigger(device_id, sensor_id, gt_lt_eq, value, command_id, callback) {
-    var q = "INSERT INTO device_trigger (device_trigger_device_id, device_trigger_sensor_id, device_trigger_gt_lt_eq, device_sensor_value, device_command) VALUES (?, ?, ?, ?, ?)";
-  
-    db.run(q, [device_id, sensor_id, gt_lt_eq, value, command_id], function(err) {
+  insertDeviceTrigger(
+    device_id,
+    sensor_id,
+    gt_lt_eq,
+    value,
+    command_id,
+    callback
+  ) {
+    var q =
+      "INSERT INTO device_trigger (device_trigger_device_id, device_trigger_sensor_id, device_trigger_gt_lt_eq, device_sensor_value, device_command) VALUES (?, ?, ?, ?, ?)";
+
+    db.run(q, [device_id, sensor_id, gt_lt_eq, value, command_id], function(
+      err
+    ) {
       if (err) {
-        console.log(
-          `[${getWholeDate()}] ! Error inserting new trigger:`
-        );
+        console.log(`[${getWholeDate()}] ! Error inserting new trigger:`);
         console.log(`[${getWholeDate()}] ! ${err}`);
         callback(err, null);
       } else {
@@ -817,12 +892,7 @@ class databasehandler {
     });
   }
 
-  insertWarning(
-    device_id,
-    sensor_id,
-    message,
-    severity,
-  ) {
+  insertWarning(device_id, sensor_id, message, severity) {
     var ts = new Date().valueOf();
     var q = `INSERT INTO warning (
               warning_timestamp,
@@ -833,16 +903,12 @@ class databasehandler {
               warning_severity)
              VALUES (?, ?, ?, ?, ?, ?)`;
 
-    if(!(sensor_id)) sensor_id = null;
-    if(!(device_id)) device_id = null;
+    if (!sensor_id) sensor_id = null;
+    if (!device_id) device_id = null;
 
-    db.run(q, [ts, ts, device_id, sensor_id, message, severity], function(
-      err
-    ) {
+    db.run(q, [ts, ts, device_id, sensor_id, message, severity], function(err) {
       if (err) {
-        console.log(
-          `[${getWholeDate()}] ! Error inserting warning:`
-        );
+        console.log(`[${getWholeDate()}] ! Error inserting warning:`);
         console.log(`[${getWholeDate()}] ! ${err}`);
       } else {
         console.log(
@@ -857,11 +923,13 @@ class databasehandler {
   updateWarning(warning_id, read) {
     var ts = new Date().valueOf();
     var q;
-    if(read == 0)  {
-      q = "UPDATE warning SET warning_read = 0, warning_last_updated_ts = ? WHERE warning_id = ?";
-    } else if(read == 1)  {
-      q = "UPDATE warning SET warning_read = 1, warning_last_updated_ts = ? WHERE warning_id = ?";
-    } else  {
+    if (read == 0) {
+      q =
+        "UPDATE warning SET warning_read = 0, warning_last_updated_ts = ? WHERE warning_id = ?";
+    } else if (read == 1) {
+      q =
+        "UPDATE warning SET warning_read = 1, warning_last_updated_ts = ? WHERE warning_id = ?";
+    } else {
       q = "UPDATE warning SET warning_last_updated_ts = ? WHERE warning_id = ?";
     }
 
@@ -870,6 +938,30 @@ class databasehandler {
         console.log(err);
       } else {
         // console.log("Warning updated");
+      }
+    });
+  }
+
+  insertUserPermission(user_id, device_id, sensor_id, callback) {
+    var q = `INSERT INTO user_permission (
+      user_permission_user_id,
+      user_permission_device_id,
+      user_permission_sensor_id)
+     VALUES (?, ?, ?)`;
+
+    if (!sensor_id) sensor_id = null;
+    if (!device_id) device_id = null;
+
+    db.run(q, [user_id, device_id, sensor_id], function(err) {
+      if (err) {
+        console.log(`[${getWholeDate()}] ! Error inserting user permission:`);
+        console.log(`[${getWholeDate()}] ! ${err}`);
+      } else {
+        console.log(
+          `[${getWholeDate()}] > Inserted user permission: ${JSON.stringify(
+            this.lastID
+          )}`
+        );
       }
     });
   }

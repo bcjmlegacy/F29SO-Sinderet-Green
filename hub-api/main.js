@@ -477,7 +477,7 @@ function procWarnings() {
   });
 }
 
-setInterval(procWarnings, 6000);
+setInterval(procWarnings, 60000);
 
 //
 // Define API
@@ -582,6 +582,7 @@ app.use(function(req, res, next) {
       );
       console.log(`[${getWholeDate()}] > Request URI: ${req.url}`);
       user_id = auth[0];
+      req._user_id = user_id;
 
       db.checkToken(user_id, req.headers.authorization, function(err) {
         if (err) {
@@ -1001,20 +1002,42 @@ app.post("/insertTrigger", (req, res) => {
     req.body.value &&
     req.body.commandId
   ) {
-    db.insertDevice(
-      req.body.deviceId,
-      req.body.sensorId,
-      req.body.symbol,
-      req.body.value,
-      req.body.commandId,
-      function(err, rowId) {
-        if (err) {
-          res.send({ error: err });
-        } else {
-          res.send({ rowId: rowId });
-        }
+
+    db.checkAuth(req._user_id, req.body.deviceId, null, function(err, value) {
+
+      if(err) {
+        console.log(err);
+        res.send({
+          error:
+            "An error occured"
+        });
+      } else if(value)  {
+
+        db.insertDeviceTrigger(
+          req.body.deviceId,
+          req.body.sensorId,
+          req.body.symbol,
+          req.body.value,
+          req.body.commandId,
+          function(err, rowId) {
+            if (err) {
+              res.send({ error: err });
+            } else {
+              res.send({ rowId: rowId });
+            }
+          }
+        );
+
+      } else  {
+        console.log("Auth failed!");
+        res.send({
+          error:
+            "You do not have permission to do this!"
+        });
       }
-    );
+
+    }) 
+    
   } else {
     res.send({
       error:
@@ -1131,22 +1154,35 @@ app.post("/insertRepeatTimer", (req, res) => {
     req.body.device_id &&
     req.body.command
   ) {
-    db.insertRepeatTimer(
-      req.body.type,
-      req.body.month,
-      req.body.day,
-      req.body.hour,
-      req.body.minute,
-      req.body.device_id,
-      req.body.command,
-      function(err, rowId) {
-        if (err) {
-          res.send({ error: err });
-        } else {
-          res.send({ rowId: rowId });
+
+    if(db.checkAuth(req._user_id, req.body.device_id, null))  {
+
+      db.insertRepeatTimer(
+        req.body.type,
+        req.body.month,
+        req.body.day,
+        req.body.hour,
+        req.body.minute,
+        req.body.device_id,
+        req.body.command,
+        function(err, rowId) {
+          if (err) {
+            res.send({ error: err });
+          } else {
+            res.send({ rowId: rowId });
+          }
         }
-      }
-    );
+      );
+
+    } else  {
+      console.log("Auth failed!");
+      res.send({
+        error:
+          "You do not have permission to do this!"
+      });
+    }
+
+
   } else {
     res.send({
       error:

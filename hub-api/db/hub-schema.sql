@@ -66,6 +66,7 @@ CREATE TABLE user (
     user_surname        TEXT,
     user_created        INTEGER,
     user_last_active    TEXT,    
+    user_admin          INTEGER,
     FOREIGN KEY (user_account_type) REFERENCES account_type(account_type_id)
 );
 
@@ -104,6 +105,16 @@ CREATE TABLE device	(
 Data tables.
 
 ####################################### */
+
+CREATE TABLE user_permission (
+    user_permission_id          INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_permission_user_id     INTEGER,
+    user_permission_device_id   TEXT,
+    user_permission_sensor_id   TEXT,
+    FOREIGN KEY (user_permission_user_id)   REFERENCES user(user_id),
+    FOREIGN KEY (user_permission_device_id) REFERENCES device(device_id),
+    FOREIGN KEY (user_permission_sensor_id) REFERENCES sensor(sensor_id)
+);
 
 CREATE TABLE timer_repeat (
     timer_repeat_id             INTEGER PRIMARY KEY AUTOINCREMENT,
