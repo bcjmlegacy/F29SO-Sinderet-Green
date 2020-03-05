@@ -1,72 +1,55 @@
 <template>
   <!--Login Page-->
   <div id="loginCard">
-    <b-container>
-      <div class="flex-add">
-        <div class="card custom-cards-Login">
-          <div class="logo-background">
-            <h1 class="logo text-center">uplink</h1>
-          </div>
-          <div id="form">
+    <div class="container">
+      <div class="flex-login">
+        <div class="login-section">
+          <h1 class="logo logo-login text-center">uplink</h1>
+
+          <div id="form-login">
             <div id="err">{{ error }}</div>
+            <hr />
+
             <b-form @submit="go" id="loginForm">
-              <div class="col-sm-12">
-                <label for="input-username" class="label">Username</label>
-              </div>
               <!--v-model allows you to store data thats typed or collected from form inputs-->
-              <div class="col-sm-12">
+              <input
+                id="input-username"
+                placeholder="Username"
+                size="md"
+                v-model="form.username"
+                required="required"
+                type="text"
+                class="login-inputboxes"
+              />
+              <div class="form-rows">
                 <input
-                  id="input-username"
-                  placeholder="Cheerypal"
-                  size="md"
-                  v-model="form.username"
+                  id="input-password"
+                  type="password"
+                  v-model="form.password"
                   required="required"
-                  type="text"
-                  class="form-inputboxes"
+                  placeholder="Password"
+                  size="md"
+                  class="login-inputboxes"
                 />
               </div>
-              <div class="form-rows">
-                <div class="col-sm-12">
-                  <label for="input-password" class="label">Password</label>
-                </div>
-                <div class="col-sm-12">
-                  <input
-                    id="input-password"
-                    type="password"
-                    v-model="form.password"
-                    required="required"
-                    placeholder="*********"
-                    size="md"
-                    class="form-inputboxes"
-                  />
-                </div>
+              <hr />
+              <div class="text-center">
+                <router-link to="#" class="links">Forgot Password</router-link>
               </div>
-
-              <div class="form-rows">
-                <div class="col-sm-12">
-                  <button class="form-buttons" type="submit">Login</button>
-                </div>
+              <div class="form-rows-login">
+                <button class="login-buttons" type="submit">Login</button>
               </div>
             </b-form>
           </div>
-          <div class="flex-add">
-            <div>
-              <div class="form-rows">
-                <div class="col-sm-12">
-                  <b-link href="#" class="links text-center">Forgot Password</b-link>
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
-    </b-container>
+    </div>
   </div>
 </template>
 
 <script>
 //Post URL to API for login
-let url = "http://192.168.0.11:5552/login";
+let url = "http://localhost:5552/login";
 
 //Bus to store current component
 import { bus } from "../../main";
@@ -127,4 +110,49 @@ export default {
   }
 };
 </script>
+<style>
+.flex-login {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#form-login {
+  margin-top: 10px;
+}
+
+.login-section {
+  width: 100%;
+}
+
+.login-inputboxes {
+  width: 100%;
+  border: none;
+  padding: 15px;
+  border-radius: 20px;
+  text-align: center;
+  background-color: #d8d8d8 !important;
+  outline: none;
+}
+
+.login-inputboxes::placeholder {
+  color: #000 !important;
+  font-weight: bold;
+}
+
+.login-buttons {
+  width: 100%;
+  padding: 15px;
+  color: white;
+  border-radius: 20px;
+  border: none;
+  background-color: #198fca;
+}
+
+.form-rows-login {
+  margin-top: 20px;
+}
+</style>
 

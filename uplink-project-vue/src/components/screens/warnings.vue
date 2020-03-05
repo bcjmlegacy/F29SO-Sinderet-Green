@@ -11,7 +11,8 @@
     <div class="container">
       <div class="sub-title-wrapper">
         <!--summary title that will show the room name will be labeled home-->
-        <h5 class="warning-title-text text-center">Warnings</h5>
+        <h5 class="h1-titles text-center">Warnings</h5>
+        <hr />
       </div>
       <div class="warnings-tree">
         <div class="flex-warnings">

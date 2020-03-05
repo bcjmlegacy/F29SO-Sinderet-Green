@@ -12,103 +12,100 @@
       <div class="container">
         <div id="form-addDevice">
           <div class="flex-deviceDetails">
-            <div>
-              <div class="card custom-cards-editDevices">
-                <div class="img-cont">
-                  <img
-                    :src="require(`../../assets/${deviceImage}.png`)"
-                    alt="device icon"
-                    class="device-img"
-                  />
-                </div>
-                <div class="text-wrapper">
-                  <h5 class="card-title text-center label-section">{{ deviceName }}</h5>
-                  <p class="card-text text-center">{{ deviceEnergy }} Watts</p>
-                </div>
-                <div class="device-cont">
-                  <b-form @submit="go">
-                    <p class="label-section text-center">Add Scheduled Events</p>
+            <div class="card custom-cards-editDevices">
+              <div class="img-cont">
+                <img
+                  :src="require(`../../assets/${deviceImage}.png`)"
+                  alt="device icon"
+                  class="device-img"
+                />
+              </div>
+              <div class="text-wrapper">
+                <h5 class="card-title text-center label-section">{{ deviceName }}</h5>
+                <p class="card-text text-center">{{ deviceEnergy }} Watts</p>
+              </div>
+              <div class="device-cont">
+                <b-form @submit="go">
+                  <p class="label-section text-center">Add Scheduled Events</p>
 
+                  <div class="col-sm-12">
+                    <label for="input-device-room" class="label">Set Time</label>
+                  </div>
+                  <div class="col-sm-12">
+                    <select
+                      v-model="form.hour"
+                      class="form-dropdown time-width"
+                      required="required"
+                    >
+                      <option disabled value>Hours</option>
+                      <option selected="selected" value="0">0</option>
+                      <option v-for="n in 24" :key="n" :value="n">
+                        {{
+                        n
+                        }}
+                      </option>
+                    </select>
+                    <select
+                      v-model="form.minute"
+                      class="form-dropdown time-width"
+                      required="required"
+                    >
+                      <option disabled value>Minutes</option>
+                      <option selected="selected" alue="0">0</option>
+                      <option v-for="n in 60" :key="n" :value="n">
+                        {{
+                        n
+                        }}
+                      </option>
+                    </select>
+                  </div>
+
+                  <div class="form-rows">
                     <div class="col-sm-12">
-                      <label for="input-device-room" class="label">Set Time</label>
+                      <label for="input-device-room" class="label">Set Operation</label>
                     </div>
                     <div class="col-sm-12">
-                      <select
-                        v-model="form.hour"
-                        class="form-dropdown time-width"
-                        required="required"
-                      >
-                        <option disabled value>Hours</option>
-                        <option selected="selected" value="0">0</option>
-                        <option v-for="n in 24" :key="n" :value="n">
-                          {{
-                          n
-                          }}
-                        </option>
-                      </select>
-                      <select
-                        v-model="form.minute"
-                        class="form-dropdown time-width"
-                        required="required"
-                      >
-                        <option disabled value>Minutes</option>
-                        <option selected="selected" alue="0">0</option>
-                        <option v-for="n in 60" :key="n" :value="n">
-                          {{
-                          n
-                          }}
-                        </option>
+                      <select v-model="form.operation" class="form-dropdown" required="required">
+                        <option disabled value>Please Select An Operation</option>
+                        <option
+                          v-for="op in operations"
+                          :key="op.device_command_id"
+                          :value="op.device_command_value"
+                        >{{ op.device_command_name }}</option>
                       </select>
                     </div>
-
+                  </div>
+                  <div class="newRowSwitch">
                     <div class="form-rows">
                       <div class="col-sm-12">
-                        <label for="input-device-room" class="label">Set Operation</label>
-                      </div>
-                      <div class="col-sm-12">
-                        <select v-model="form.operation" class="form-dropdown" required="required">
-                          <option disabled value>Please Select An Operation</option>
-                          <option
-                            v-for="op in operations"
-                            :key="op.device_command_id"
-                            :value="op.device_command_value"
-                          >{{ op.device_command_name }}</option>
-                        </select>
+                        <button class="form-buttons" type="submit">Add To Schedule</button>
                       </div>
                     </div>
-                    <div class="newRowSwitch">
-                      <div class="form-rows">
-                        <div class="col-sm-12">
-                          <button class="form-buttons" type="submit">Add To Schedule</button>
-                        </div>
-                      </div>
-                    </div>
-                  </b-form>
-                </div>
+                  </div>
+                </b-form>
               </div>
             </div>
-            <div>
-              <div class="card custom-cards-devicesDetails-schedule-edit">
-                <h5 class="card-title text-center label-section">Delete Schedule Times</h5>
-                <div class="form-rows" />
-                <ul class="list-schedule">
-                  <li class="scheduleItem" v-for="command in scheduledCommands" :key="command.id">
-                    {{command.command}} at {{command.hour}}:{{command.minutes}}
-                    <img
-                      src="../../assets/close.png"
-                      alt="Delete Item"
-                      class="img-delete"
-                      @click="deleteScheduleItem(command.id)"
-                    />
-                  </li>
-                </ul>
-                <div class="form-rows">
-                  <button
-                    class="form-buttons-delete"
-                    type="button"
-                    @click="deleteFullSchedule"
-                  >Delete Full Schedule</button>
-                </div>
+
+            <div class="card custom-cards-devicesDetails-schedule-edit">
+              <h5 class="card-title text-center label-section">Delete Schedule Times</h5>
+              <div class="form-rows" />
+              <ul class="list-schedule">
+                <li class="scheduleItem" v-for="command in scheduledCommands" :key="command.id">
+                  {{command.command}} at {{command.hour}}:{{command.minutes}}
+                  <img
+                    src="../../assets/close.png"
+                    alt="Delete Item"
+                    class="img-delete"
+                    @click="deleteScheduleItem(command.id)"
+                  />
+                </li>
+              </ul>
+              <div class="form-rows">
+                <button
+                  class="form-buttons-delete"
+                  type="button"
+                  @click="deleteFullSchedule"
+                >Delete Full Schedule</button>
               </div>
             </div>
           </div>
@@ -147,7 +144,7 @@ export default {
   methods: {
     //Add item to the schedule
     go(evt) {
-      let url = "http://192.168.0.11:5552/insertRepeatTimer";
+      let url = "http://localhost:5552/insertRepeatTimer";
       console.log(this.form);
       fetch(url, {
         mode: "cors",
@@ -182,7 +179,7 @@ export default {
       if (!confirm("Do really want to delete this scheduled event?")) {
         return false;
       }
-      let url = "http://192.168.0.11:5552/deleteRepeatTimer?id=" + id;
+      let url = "http://localhost:5552/deleteRepeatTimer?id=" + id;
       fetch(url, {
         mode: "cors",
         method: "GET",
@@ -207,7 +204,7 @@ export default {
       //loops through the schedule and deletes each schedule item one by one using the id
       for (let i in this.scheduledCommands) {
         let url =
-          "http://192.168.0.11:5552/deleteRepeatTimer?id=" +
+          "http://localhost:5552/deleteRepeatTimer?id=" +
           this.scheduledCommands[i].id;
         fetch(url, {
           mode: "cors",
@@ -228,7 +225,7 @@ export default {
   },
   mounted: function() {
     //Get command for device via icon thats displayed
-    let url = "http://192.168.0.11:5552/getCommandsByDevice?id=";
+    let url = "http://localhost:5552/getCommandsByDevice?id=";
     let id = pairImg(this.deviceImage);
     let urlComplete = url + id;
     fetch(urlComplete, {
@@ -243,8 +240,7 @@ export default {
       })
       .then(jsonData => {
         this.operations = jsonData; //after we get commands find device ID
-        let url =
-          "http://192.168.0.11:5552/getRepeatTimers?id=" + this.deviceID;
+        let url = "http://localhost:5552/getRepeatTimers?id=" + this.deviceID;
 
         fetch(url, {
           mode: "cors",
@@ -306,11 +302,11 @@ function formatTime(time) {
 //Add more when more devices are available
 function pairImg(img) {
   switch (img) {
-    case "fire":
+    case "heating":
       return "1";
-    case "fridgecolor":
+    case "fridge":
       return "2";
-    case "solarpanelcolor":
+    case "solarpanel":
       return "3";
     case "light-bulb":
       return "4";

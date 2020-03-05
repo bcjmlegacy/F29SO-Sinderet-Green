@@ -21,13 +21,18 @@ To find styling for a component or page please search the page using CTRL+F
 }
 
 body {
-  background-color: #fff;
+  background: #313131 !important;
+  color: #fff;
 }
 
 .form-title {
   text-align: center;
   font-size: 3.2em;
   padding-bottom: 10px;
+}
+
+.h1-titles {
+  font-size: 4em;
 }
 
 .display-2 {
@@ -44,15 +49,34 @@ body {
 
 .links {
   text-decoration: none !important;
-  color: rgb(68, 68, 68);
+  color: rgb(187, 187, 187);
 }
 .links:hover {
-  color: #000;
+  color: #fff;
+}
+
+.links-top {
+  color: #fff;
+  text-decoration: none !important;
+}
+
+.links-top:hover {
+  color: #fff;
 }
 
 .advanced-links {
   font-size: 1.3em;
 }
+
+@media screen and (max-width: 750px) {
+  .h1-titles {
+    font-size: 2.8em;
+  }
+  .links {
+    color: #fff;
+  }
+}
+
 /*====================================================================================================================================*/
 /*Main Pages CSS*/
 /*====================================================================================================================================*/
@@ -64,22 +88,22 @@ body {
 #rooms {
   margin-top: 35px;
   margin-bottom: 100px;
-  margin-left: 15%;
-  margin-right: 15%;
+  margin-left: 5%;
+  margin-right: 5%;
 }
 
 .flex-rooms {
   display: flex !important;
   flex-direction: row !important;
   flex-wrap: wrap !important;
-  justify-content: space-around !important;
-  align-items: flex-start !important;
+  justify-content: center !important;
+  align-items: center !important;
   padding-bottom: 20px;
 }
 
 .item {
-  margin-left: 50px;
-  margin-right: 50px;
+  margin-left: 10px;
+  margin-right: 10px;
   margin-top: 10px;
 }
 
@@ -211,6 +235,7 @@ body {
   margin-top: 20px;
 }
 
+select,
 .form-inputboxes {
   width: 100%;
   height: 3rem;
@@ -218,11 +243,14 @@ body {
   border-left: none;
   border-top: none;
   border-right: none;
+  background-color: #313131 !important;
+  color: #fff;
 }
 
+select:focus,
 .form-inputboxes:focus {
   outline: none;
-  background-color: white;
+  background-color: #383838;
   border-bottom: 1px solid #198fca;
 }
 
@@ -247,7 +275,6 @@ body {
   height: 28rem;
   padding: 20px;
   border-radius: 20px;
-  background-color: white !important;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 1px 8px rgba(0, 0, 0, 0.22) !important;
   transition: 0.2s ease-in-out all !important;
 }
@@ -261,7 +288,7 @@ body {
     margin-top: 100px;
   }
   .custom-cards-addRooms {
-    width: 20rem;
+    width: 80%;
   }
 }
 
@@ -296,7 +323,6 @@ body {
   height: 40rem;
   padding: 20px;
   border-radius: 20px;
-  background-color: white !important;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 1px 8px rgba(0, 0, 0, 0.22) !important;
   transition: 0.2s ease-in-out all !important;
 }
@@ -330,7 +356,7 @@ body {
     margin-top: 100px;
   }
   .custom-cards-addDevices {
-    width: 20rem;
+    width: 80%;
   }
 }
 
@@ -384,7 +410,6 @@ body {
   height: 45rem;
   padding: 20px;
   border-radius: 20px;
-  background-color: white !important;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 1px 8px rgba(0, 0, 0, 0.22) !important;
   transition: 0.2s ease-in-out all !important;
 }
@@ -399,7 +424,6 @@ body {
   max-height: 50rem;
   padding: 30px;
   border-radius: 20px;
-  background-color: white !important;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 1px 8px rgba(0, 0, 0, 0.22) !important;
   transition: 0.2s ease-in-out all !important;
 }
@@ -447,10 +471,10 @@ body {
     margin-bottom: 100px;
   }
   .custom-cards-editDevices {
-    width: 20rem;
+    width: 80%;
   }
   .custom-cards-devicesDetails-schedule-edit {
-    width: 20rem;
+    width: 80%;
   }
   .img-delete {
     width: 30%;
@@ -466,7 +490,6 @@ body {
   height: 54rem;
   padding: 20px;
   border-radius: 20px;
-  background-color: white !important;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 1px 8px rgba(0, 0, 0, 0.22) !important;
   transition: 0.2s ease-in-out all !important;
 }
@@ -493,7 +516,7 @@ body {
 
 @media screen and (max-width: 1025px) {
   .custom-cards-editDevices-adv {
-    width: 20rem;
+    width: 80%;
   }
 }
 
@@ -558,7 +581,7 @@ ul {
   max-height: 38rem;
   padding: 30px;
   border-radius: 20px;
-  background-color: white !important;
+
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 1px 8px rgba(0, 0, 0, 0.22) !important;
   transition: 0.2s ease-in-out all !important;
 }
@@ -573,7 +596,7 @@ ul {
   max-height: 38rem;
   padding: 30px;
   border-radius: 20px;
-  background-color: white !important;
+
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 1px 8px rgba(0, 0, 0, 0.22) !important;
   transition: 0.2s ease-in-out all !important;
 }
@@ -588,7 +611,7 @@ ul {
   max-height: 38rem;
   padding: 30px;
   border-radius: 20px;
-  background-color: white !important;
+
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 1px 8px rgba(0, 0, 0, 0.22) !important;
   transition: 0.2s ease-in-out all !important;
 }
@@ -670,12 +693,10 @@ ul {
 
 #loginCard {
   margin-top: 120px;
+  margin-left: 40%;
+  margin-right: 40%;
 
   /* border: solid 1px #005872;*/
-}
-
-#form {
-  margin-top: 10px;
 }
 
 #err {
@@ -727,7 +748,6 @@ ul {
   height: 34rem;
   padding: 20px;
   border-radius: 20px;
-  background-color: white !important;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 1px 8px rgba(0, 0, 0, 0.22) !important;
   transition: 0.2s ease-in-out all !important;
 }
@@ -740,26 +760,30 @@ ul {
   font-family: "Harlow-solid";
   text-align: center;
   font-size: 2.8em;
-  opacity: 0.5;
-  color: #000;
+  opacity: 1;
+  color: #fff;
   padding: 5px;
   margin-top: 2px;
   margin-bottom: 2px;
 }
 
-.logo-top {
-  font-family: "Harlow-solid";
-  text-align: center;
-  font-size: 2.5em;
-  opacity: 0.5;
-  color: #000;
-  margin-top: 3px;
-  padding: 10px;
+.logo-login {
+  font-size: 3.2em;
 }
 
 .logo-back {
-  background-color: white;
+  background-color: #383838;
   box-shadow: 0 0px 10px rgba(0, 0, 0, 0.3) !important;
+}
+
+.logo-top {
+  font-family: "Harlow-solid";
+  text-align: center;
+  font-size: 2.8em;
+  opacity: 1;
+  color: #fff;
+  margin-top: 3px;
+  padding: 5px;
 }
 
 .logo-top:hover {
@@ -770,6 +794,8 @@ ul {
 @media screen and (max-width: 1024px) {
   #loginCard {
     margin-top: 120px;
+    margin-right: 10%;
+    margin-left: 10%;
   }
   .custom-cards-Login {
     width: 20rem;
@@ -797,7 +823,6 @@ ul {
   width: 25rem;
   height: 58rem;
   padding: 20px;
-  background-color: white !important;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 1px 8px rgba(0, 0, 0, 0.22) !important;
   transition: 0.2s ease-in-out all !important;
 }
@@ -836,12 +861,11 @@ ul {
 #stat-cards {
   padding-top: 80px;
   padding-bottom: 10px;
-  background-color: #ffffff;
 }
 
 .img-summary {
   padding: 10px;
-  width: 30%;
+  width: 35%;
   text-align: center;
 }
 
@@ -889,7 +913,7 @@ ul {
   padding: 1px;
   margin: 5px;
   border-radius: 20px;
-  background-color: white !important;
+
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 1px 8px rgba(0, 0, 0, 0.22) !important;
   transition: 0.2s ease-in-out all !important;
 }
@@ -919,6 +943,7 @@ ul {
   }
   .col-width {
     width: 40%;
+    margin: 3%;
   }
   .img {
     width: 100%;
@@ -940,7 +965,7 @@ ul {
 
 @media screen and (max-width: 450px) {
   .img-summary {
-    width: 55%;
+    width: 60%;
   }
 }
 
@@ -961,7 +986,7 @@ ul {
 
 .navbar-top {
   padding: 10px !important;
-  background-color: #ffffff !important;
+  background-color: #383838 !important;
   border: none;
   border-top: none !important;
   border-left: none !important;
@@ -983,7 +1008,7 @@ ul {
 
 .navbar-bottom {
   padding: 10px !important;
-  background-color: #ffffff !important;
+  background-color: #383838 !important;
   box-shadow: 0 0px 10px rgba(0, 0, 0, 0.3) !important;
 }
 
@@ -995,13 +1020,13 @@ ul {
   width: 10%;
   text-align: center;
   padding: 20px;
-  opacity: 0.5;
+  opacity: 1;
   border-radius: 10px;
-  background: #ffffff;
+  background: #383838;
 }
 
 .image-cont-nav-top:hover {
-  background-color: #f5f5f5;
+  background-color: #313131;
   opacity: 1;
   cursor: pointer;
 }
@@ -1010,11 +1035,10 @@ ul {
   width: 20%;
   text-align: center;
   padding: 20px;
-  opacity: 0.5;
+  opacity: 1;
   border-radius: 10px;
-  background: #ffffff;
-  background: #ffffff;
-  box-shadow: 15px 15px 30px #c4c4c4, -15px -15px 30px #ffffff;
+  background: #383838;
+  box-shadow: 6px 6px 12px #2d2d2d, -6px -6px 12px #434343;
 }
 
 @media screen and (max-width: 1025px) {
@@ -1046,16 +1070,16 @@ ul {
 
 .custom-cards-devices {
   width: 11rem;
-  max-height: 15rem;
+  max-height: 20rem;
   padding: 1px;
   border-radius: 20px;
-  background-color: white !important;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 1px 8px rgba(0, 0, 0, 0.22) !important;
+
+  border: none;
   transition: 0.2s ease-in-out all !important;
 }
 
 .custom-cards-devices:hover {
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22) !important;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 1px 8px rgba(0, 0, 0, 0.22) !important;
   cursor: pointer !important;
 }
 
@@ -1082,7 +1106,7 @@ ul {
   max-height: 12rem;
   padding: 10px;
   border-radius: 20px;
-  background-color: white !important;
+
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 1px 8px rgba(0, 0, 0, 0.22) !important;
   transition: 0.2s ease-in-out all !important;
 }
@@ -1106,22 +1130,12 @@ ul {
   text-align: center;
   padding-top: 2px;
   padding-bottom: 0px;
-  padding-left: 20px;
-  padding-right: 20px;
-}
-
-.custom-cards-devices {
-  width: 10rem;
-  max-height: 15rem;
-  padding: 5px;
-  border-radius: 20px;
-  background-color: white !important;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 1px 8px rgba(0, 0, 0, 0.22) !important;
-  transition: 0.2s ease-in-out all !important;
+  padding-left: 10px;
+  padding-right: 10px;
 }
 
 .custom-cards-devices:hover {
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22) !important;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 1px 8px rgba(0, 0, 0, 0.22) !important;
   cursor: pointer !important;
 }
 
@@ -1136,11 +1150,12 @@ ul {
 /*############################################################*/
 
 .card-img-top {
-  width: 90%;
+  width: 100%;
 }
 
 .card {
   margin: 10px;
+  background-color: transparent;
   user-select: none !important;
   border-color: none !important;
 }
@@ -1150,8 +1165,7 @@ ul {
   width: 10rem;
   max-height: 12rem;
   padding: 5px;
-  background-color: white !important;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 1px 8px rgba(0, 0, 0, 0.22) !important;
+
   border-radius: 20px;
 
   /*
@@ -1162,7 +1176,7 @@ ul {
 }
 
 .custom-cards-rooms:hover {
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22) !important;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 1px 8px rgba(0, 0, 0, 0.22) !important;
   /*border-radius: 20px;
   background: #ffffff;
   box-shadow: inset 5px 5px 28px #d6d6d6, inset -5px -5px 28px #ffffff;
@@ -1175,10 +1189,11 @@ ul {
     width: 10rem;
   }
   .card-img-top {
-    width: 70%;
+    width: 80%;
   }
   .card {
-    margin-left: 1%;
-    margin-right: 1%;
+    margin-left: 2%;
+    margin-bottom: 10%;
+    margin-right: 2%;
   }
 }

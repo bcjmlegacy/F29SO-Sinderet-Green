@@ -10,11 +10,11 @@
         </router-link>
         <router-link :to="{name:'add'}" class="image-cont-nav-top">
           <div>
-            <img src="../../assets/plus.png" alt="Add" class="nav-image" />
+            <img src="../../assets/add.png" alt="Add" class="nav-image" />
           </div>
         </router-link>
         <h5 class="logo-top">
-          <router-link class="links" :to="{name: 'dashboard'}">uplink</router-link>
+          <router-link class="links-top" :to="{name: 'dashboard'}">uplink</router-link>
         </h5>
         <router-link :to="{name: 'warnings'}" class="image-cont-nav-top">
           <div>

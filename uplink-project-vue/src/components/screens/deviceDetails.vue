@@ -150,7 +150,7 @@ export default {
   methods: {
     async turnOn() {
       await this.$nextTick();
-      let url = "http://192.168.0.11:5552/insertOneshotTimer";
+      let url = "http://localhost:5552/insertOneshotTimer";
       fetch(url, {
         mode: "cors",
         method: "POST",
@@ -173,7 +173,7 @@ export default {
         });
     },
     checkDeviceActivity() {
-      let url = "http://192.168.0.11:5552/getOneshotTimers?id=" + this.deviceID;
+      let url = "http://localhost:5552/getOneshotTimers?id=" + this.deviceID;
       let result = null;
       fetch(url, {
         mode: "cors",
@@ -192,7 +192,7 @@ export default {
     }
   },
   mounted: function() {
-    let url = "http://192.168.0.11:5552/getRepeatTimers?id=" + this.deviceID;
+    let url = "http://localhost:5552/getRepeatTimers?id=" + this.deviceID;
 
     fetch(url, {
       mode: "cors",

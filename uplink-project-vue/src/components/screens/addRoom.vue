@@ -10,7 +10,7 @@
     </div>
     <div id="addRooms">
       <div class="container">
-        <h3 class="display-3 text-center">Add Room</h3>
+        <h3 class="h1-titles text-center">Add Room</h3>
         <div id="form">
           <div class="flex-add">
             <div class="card custom-cards-addRooms">
@@ -51,7 +51,7 @@
 import NavbarTop from "../navbars/navbar-top";
 import NavbarBottom from "../navbars/navbar-bottom";
 
-let url = "http://192.168.0.11:5552/insertRoom";
+let url = "http://localhost:5552/insertRoom";
 export default {
   name: "addRoom",
   components: { NavbarTop, NavbarBottom },

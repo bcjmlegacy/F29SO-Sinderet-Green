@@ -11,7 +11,7 @@
     <div class="container">
       <div id="devices">
         <div class="sub-title-wrapper">
-          <h3 class="display-3 text-center">Connect a Device</h3>
+          <h3 class="h1-titles text-center">Connect a Device</h3>
         </div>
         <div class="flex-rooms">
           <AddDeviceCard deviceName="Phillips Hue Bulb" deviceImage="light-bulb" deviceEnergy="10" />

@@ -5,7 +5,7 @@
       <div class="flex-nav">
         <router-link :to="{name:'add'}" class="image-cont-nav-bottom">
           <div>
-            <img src="../../assets/plus.png" alt="Add" class="nav-image-bottom" />
+            <img src="../../assets/add.png" alt="Add" class="nav-image-bottom" />
           </div>
         </router-link>
 

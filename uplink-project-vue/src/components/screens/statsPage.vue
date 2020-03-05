@@ -12,13 +12,13 @@
       <div class="container">
         <div class="sub-title-wrapper">
           <!--summary title that will show the room name will be labeled home-->
-          <h5 class="display-2 text-center">Energy Statistics</h5>
+          <h5 class="h1-titles text-center">Energy Statistics</h5>
         </div>
         <div class="flex-stats">
           <div>
             <div class="cards custom-cards-stats">
               <div class="img-cont-stats">
-                <img src="../../assets/idea.png" class="img-stats" alt="Energy Usage" />
+                <img src="../../assets/energy.png" class="img-stats" alt="Energy Usage" />
               </div>
               <div class="card-body text-center">
                 <h5 class="card-title">Average Energy Usage</h5>
@@ -43,7 +43,7 @@
           <div>
             <div class="cards custom-cards-stats">
               <div class="img-cont-stats">
-                <img src="../../assets/battery.png" class="img-stats" alt="Energy Usage" />
+                <img src="../../assets/solarpanel.png" class="img-stats" alt="Energy Usage" />
               </div>
               <div class="card-body text-center">
                 <h5 class="card-title">Average Solar Stored</h5>

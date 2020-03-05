@@ -7,13 +7,17 @@ const express = require("express"),
   cors = require("cors"),
   webPush = require("web-push");
 
-if(!fs.existsSync(__dirname + "/vapid.env"))    {
+if (!fs.existsSync(__dirname + "/vapid.env")) {
   console.log("Generating new VAPID keys...");
   const vapidKeys = webPush.generateVAPIDKeys();
   // console.log(vapidKeys);
-  fs.appendFileSync('./vapid.env', `PUBLIC_VAPID_KEY=${vapidKeys.publicKey}\nPRIVATE_VAPID_KEY=${vapidKeys.privateKey}\n`, function(err) {
-    if(err) console.log(err);
-  })
+  fs.appendFileSync(
+    "./vapid.env",
+    `PUBLIC_VAPID_KEY=${vapidKeys.publicKey}\nPRIVATE_VAPID_KEY=${vapidKeys.privateKey}\n`,
+    function(err) {
+      if (err) console.log(err);
+    }
+  );
 }
 
 require("dotenv").config({ path: "vapid.env" });
@@ -21,7 +25,11 @@ require("dotenv").config({ path: "vapid.env" });
 const publicVapidKey = process.env.PUBLIC_VAPID_KEY;
 const privateVapidKey = process.env.PRIVATE_VAPID_KEY;
 
-webPush.setVapidDetails('mailto:bm56@hw.ac.uk', publicVapidKey, privateVapidKey);
+webPush.setVapidDetails(
+  "mailto:bm56@hw.ac.uk",
+  publicVapidKey,
+  privateVapidKey
+);
 
 // So we can parse the req body for POST data
 app.use(cors());
@@ -40,17 +48,20 @@ const port = 5552;
 var client = mqtt.connect("mqtt://127.0.0.1");
 var db = new DBHandler();
 
-app.post('/subscribe', (req, res) => {
-  const subscription = req.body
+app.post("/subscribe", (req, res) => {
+  const subscription = req.body;
 
   res.status(201).json({});
 
   const payload = JSON.stringify({
-    title: 'Push notifications with Service Workers',
+    title: "Push notifications with Service Workers"
   });
 
-  webPush.sendNotification(subscription, payload)
+  webPush
+    .sendNotification(subscription, payload)
     .catch(error => console.error(error));
+
+  console.log(`[${getWholeDate()}] > Subscribed to push notifications`);
 });
 
 function getWholeDate() {
@@ -605,7 +616,7 @@ Get VAPID public key.
 ####################################### */
 
 app.get("/getVapidKey", (req, res) => {
-  res.send( { public_vapid_key: publicVapidKey } );
+  res.send({ public_vapid_key: publicVapidKey });
 });
 
 /* #######################################
