@@ -21,7 +21,7 @@
     <div class="container">
       <div id="rooms">
         <div class="sub-title-wrapper">
-          <h3 class="display-2 text-center">Rooms</h3>
+          <h3 class="h1-titles text-center">Rooms</h3>
           <hr />
         </div>
 
@@ -100,7 +100,7 @@ function pairImg(rooms) {
     rooms.includes("lounge") ||
     rooms.includes("Lounge")
   ) {
-    return "couchcolor";
+    return "sofa";
   } else if (
     rooms.includes("Bathroom") ||
     rooms.includes("bathroom") ||
@@ -124,20 +124,20 @@ function pairImg(rooms) {
     rooms.includes("Roof") ||
     rooms.includes("roof")
   ) {
-    return "outsidecolor";
+    return "fruit";
   } else if (
     rooms.includes("Kitchen") ||
     rooms.includes("kitchen") ||
     rooms.includes("pantry") ||
     rooms.includes("Pantry")
   ) {
-    return "kitchencolor";
+    return "refrigerator";
   } else if (
     rooms.includes("Bedroom") ||
     rooms.includes("bedroom") ||
     rooms.includes("bed")
   ) {
-    return "bedcolor";
+    return "double-bed";
   } else {
     return "room";
   }

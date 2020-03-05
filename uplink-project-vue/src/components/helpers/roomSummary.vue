@@ -5,13 +5,13 @@
       <div class="stats">
         <div class="sub-title-wrapper">
           <!--summary title that will show the room name will be labeled home-->
-          <h5 class="display-2 text-center">Todays {{sumTitle}} Usage</h5>
+          <h5 class="h1-titles text-center">Todays {{sumTitle}} Usage</h5>
           <hr />
         </div>
         <div class="flex-b-rooms">
           <div class="col-width">
             <div class="img-cont-summary">
-              <img src="../../assets/flash.png" class="img-summary" alt="Energy Usage" />
+              <img src="../../assets/energy.png" class="img-summary" alt="Energy Usage" />
             </div>
             <!--Energy card area for data-->
             <div class="card-body text-center">
@@ -22,7 +22,7 @@
 
           <div class="col-width">
             <div class="img-cont-summary">
-              <img src="../../assets/sun.png" class="img-summary" alt="Energy Usage" />
+              <img src="../../assets/thermometer.png" class="img-summary" alt="Energy Usage" />
             </div>
             <!--Temperature card area for data-->
             <div class="card-body text-center">

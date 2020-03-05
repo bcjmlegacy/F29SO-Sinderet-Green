@@ -45,10 +45,9 @@ export default {
   width: 100%;
   padding: 10px;
   border-radius: 20px;
-  background-color: white !important;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 1px 8px rgba(0, 0, 0, 0.22) !important;
+
   transition: 0.2s ease-in-out all !important;
-  border: 2px solid #e30000;
+  border: 2px solid #aa0000;
 }
 
 .custom-cards-warnings:hover {

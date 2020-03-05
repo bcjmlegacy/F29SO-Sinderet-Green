@@ -21,7 +21,7 @@
     <div class="container">
       <div id="rooms">
         <div class="sub-title-wrapper">
-          <h3 class="display-4 text-center">Devices</h3>
+          <h3 class="h1-titles text-center">Devices</h3>
           <hr />
         </div>
         <div class="flex-rooms">
@@ -136,13 +136,13 @@ function pairImg(device) {
     device.includes("Heater") ||
     device.includes("heating")
   ) {
-    return "fire";
+    return "heating";
   } else if (device.includes("light") || device.includes("Light")) {
     return "light-bulb";
   } else if (device.includes("fridge") || device.includes("Fridge")) {
-    return "fridgecolor";
+    return "fridge";
   } else if (device.includes("Solar") || device.includes("solar")) {
-    return "solarpanelcolor";
+    return "solarpanel";
   } else if (
     device.includes("camera") ||
     device.includes("Camera") ||

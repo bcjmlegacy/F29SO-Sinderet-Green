@@ -303,11 +303,11 @@ function formatTime(time) {
 //Add more when more devices are available
 function pairImg(img) {
   switch (img) {
-    case "fire":
+    case "heating":
       return "1";
-    case "fridgecolor":
+    case "fridge":
       return "2";
-    case "solarpanelcolor":
+    case "solarpanel":
       return "3";
     case "light-bulb":
       return "4";
