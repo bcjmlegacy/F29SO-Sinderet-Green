@@ -59,9 +59,9 @@ import NavTop from "../navbars/navbar-top";
 import NavBottom from "../navbars/navbar-bottom";
 
 //URL for getting all the devices
-let url = "http://192.168.0.11:5552/getDevices";
+let url = "http://localhost:5552/getDevices";
 //URL for getting all rooms
-let url1 = "http://192.168.0.11:5552/getRooms";
+let url1 = "http://localhost:5552/getRooms";
 export default {
   name: "Room",
   components: {

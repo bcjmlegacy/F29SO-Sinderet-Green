@@ -49,7 +49,7 @@
 
 <script>
 //Post URL to API for login
-let url = "http://192.168.0.11:5552/login";
+let url = "http://localhost:5552/login";
 
 //Bus to store current component
 import { bus } from "../../main";
