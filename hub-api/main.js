@@ -155,340 +155,265 @@ function sendCommand(topic, command, topic_res, command_res) {
 function procTimersAndTriggers() {
   console.log(`[${getWholeDate()}] > Checking timers and triggers`);
 
-  db.getRepeatTimers(function(err, rows) {
-    if (err) {
-      console.log(`[${getWholeDate()}] ! Error while checking repeat timers:`);
-      console.log(`[${getWholeDate()}] ! ${err}`);
-    } else if (rows[0]) {
-      // console.log(rows);
+  var rows = db.getRepeatTimers();
+  if (rows > 0) {
+    // console.log(rows);
 
-      var d = new Date();
+    var d = new Date();
 
-      for (x in rows) {
-        switch (rows[x]["timer_repeat_type"]) {
-          case "Month":
-            if (getUnixTime() - 2629746 > rows[x]["timer_repeat_last_run"]) {
-              if (
-                rows[x]["timer_repeat_day"] == d.getDate() &&
-                rows[x]["timer_repeat_hour"] == d.getHours() &&
-                rows[x]["timer_repeat_minute"] == d.getMinutes()
-              ) {
-                // Execute
-                sendCommand(
-                  `/${rows[x]["room_name"]}/${rows[x]["device_command_mqtt"]}/${rows[x]["device_id"]}}`,
-                  rows[x]["device_command_value"],
-                  rows[x]["device_command_mqtt_res"],
-                  rows[x]["device_command_value_res"]
-                );
-                db.updateRepeatTimerLastRun(
-                  getUnixTime(),
-                  rows[x]["timer_repeat_id"]
-                );
-              }
+    for (x in rows) {
+      switch (rows[x]["timer_repeat_type"]) {
+        case "Month":
+          if (getUnixTime() - 2629746 > rows[x]["timer_repeat_last_run"]) {
+            if (
+              rows[x]["timer_repeat_day"] == d.getDate() &&
+              rows[x]["timer_repeat_hour"] == d.getHours() &&
+              rows[x]["timer_repeat_minute"] == d.getMinutes()
+            ) {
+              // Execute
+              sendCommand(
+                `/${rows[x]["room_name"]}/${rows[x]["device_command_mqtt"]}/${rows[x]["device_id"]}}`,
+                rows[x]["device_command_value"],
+                rows[x]["device_command_mqtt_res"],
+                rows[x]["device_command_value_res"]
+              );
+              db.updateRepeatTimerLastRun(
+                getUnixTime(),
+                rows[x]["timer_repeat_id"]
+              );
             }
-            break;
+          }
+          break;
 
-          case "Week":
-            if (getUnixTime() - 604800 > rows[x]["timer_repeat_last_run"]) {
-              if (
-                rows[x]["timer_repeat_day"] == d.getDate() &&
-                rows[x]["timer_repeat_hour"] == d.getHours() &&
-                rows[x]["timer_repeat_minute"] == d.getMinutes()
-              ) {
-                // Execute
-                sendCommand(
-                  `/${rows[x]["room_name"]}/${rows[x]["device_command_mqtt"]}/${rows[x]["device_id"]}}`,
-                  rows[x]["device_command_value"],
-                  rows[x]["device_command_mqtt_res"],
-                  rows[x]["device_command_value_res"]
-                );
-                db.updateRepeatTimerLastRun(
-                  getUnixTime(),
-                  rows[x]["timer_repeat_id"]
-                );
-              }
+        case "Week":
+          if (getUnixTime() - 604800 > rows[x]["timer_repeat_last_run"]) {
+            if (
+              rows[x]["timer_repeat_day"] == d.getDate() &&
+              rows[x]["timer_repeat_hour"] == d.getHours() &&
+              rows[x]["timer_repeat_minute"] == d.getMinutes()
+            ) {
+              // Execute
+              sendCommand(
+                `/${rows[x]["room_name"]}/${rows[x]["device_command_mqtt"]}/${rows[x]["device_id"]}}`,
+                rows[x]["device_command_value"],
+                rows[x]["device_command_mqtt_res"],
+                rows[x]["device_command_value_res"]
+              );
+              db.updateRepeatTimerLastRun(
+                getUnixTime(),
+                rows[x]["timer_repeat_id"]
+              );
             }
-            break;
+          }
+          break;
 
-          case "Day":
-            if (getUnixTime() - 86400 > rows[x]["timer_repeat_last_run"]) {
-              if (
-                rows[x]["timer_repeat_hour"] == d.getHours() &&
-                rows[x]["timer_repeat_minute"] == d.getMinutes()
-              ) {
-                // Execute
-                sendCommand(
-                  `/${rows[x]["room_name"]}/${rows[x]["device_command_mqtt"]}/${rows[x]["device_id"]}}`,
-                  rows[x]["device_command_value"],
-                  rows[x]["device_command_mqtt_res"],
-                  rows[x]["device_command_value_res"]
-                );
-                db.updateRepeatTimerLastRun(
-                  getUnixTime(),
-                  rows[x]["timer_repeat_id"]
-                );
-              }
+        case "Day":
+          if (getUnixTime() - 86400 > rows[x]["timer_repeat_last_run"]) {
+            if (
+              rows[x]["timer_repeat_hour"] == d.getHours() &&
+              rows[x]["timer_repeat_minute"] == d.getMinutes()
+            ) {
+              // Execute
+              sendCommand(
+                `/${rows[x]["room_name"]}/${rows[x]["device_command_mqtt"]}/${rows[x]["device_id"]}}`,
+                rows[x]["device_command_value"],
+                rows[x]["device_command_mqtt_res"],
+                rows[x]["device_command_value_res"]
+              );
+              db.updateRepeatTimerLastRun(
+                getUnixTime(),
+                rows[x]["timer_repeat_id"]
+              );
             }
-            break;
+          }
+          break;
 
-          case "Hour":
-            if (getUnixTime() - 3600 > rows[x]["timer_repeat_last_run"]) {
-              if (rows[x]["timer_repeat_minute"] == d.getMinutes()) {
-                // Execute
-                sendCommand(
-                  `/${rows[x]["room_name"]}/${rows[x]["device_command_mqtt"]}/${rows[x]["device_id"]}}`,
-                  rows[x]["device_command_value"],
-                  rows[x]["device_command_mqtt_res"],
-                  rows[x]["device_command_value_res"]
-                );
-                db.updateRepeatTimerLastRun(
-                  getUnixTime(),
-                  rows[x]["timer_repeat_id"]
-                );
-              }
+        case "Hour":
+          if (getUnixTime() - 3600 > rows[x]["timer_repeat_last_run"]) {
+            if (rows[x]["timer_repeat_minute"] == d.getMinutes()) {
+              // Execute
+              sendCommand(
+                `/${rows[x]["room_name"]}/${rows[x]["device_command_mqtt"]}/${rows[x]["device_id"]}}`,
+                rows[x]["device_command_value"],
+                rows[x]["device_command_mqtt_res"],
+                rows[x]["device_command_value_res"]
+              );
+              db.updateRepeatTimerLastRun(
+                getUnixTime(),
+                rows[x]["timer_repeat_id"]
+              );
             }
-            break;
+          }
+          break;
 
-          case "Minute":
-            // No need to check time since last run, since we only check timers every minute
-            // anyway
-            sendCommand(
-              `/${rows[x]["room_name"]}/${rows[x]["device_command_mqtt"]}/${rows[x]["device_id"]}`,
-              rows[x]["device_command_value"],
-              rows[x]["device_command_mqtt_res"],
-              rows[x]["device_command_value_res"]
-            );
-            db.updateRepeatTimerLastRun(
-              getUnixTime(),
-              rows[x]["timer_repeat_id"]
-            );
-            break;
-
-          default:
-            console.log(`[${getWholeDate()}] ! Unknown timer value`);
-        }
-      }
-    }
-  });
-
-  db.getOneshotTimers(function(err, rows) {
-    if (err) {
-      console.log(`[${getWholeDate()}] ! Error while checking oneshot timers:`);
-      console.log(`[${getWholeDate()}] ! ${err}`);
-    } else if (rows[0]) {
-      for (x in rows) {
-        if (getUnixTime() >= rows[x]["timer_oneshot_trigger"]) {
-          // console.log("Running oneshot timer...");
+        case "Minute":
+          // No need to check time since last run, since we only check timers every minute
+          // anyway
           sendCommand(
             `/${rows[x]["room_name"]}/${rows[x]["device_command_mqtt"]}/${rows[x]["device_id"]}`,
             rows[x]["device_command_value"],
             rows[x]["device_command_mqtt_res"],
             rows[x]["device_command_value_res"]
           );
+          db.updateRepeatTimerLastRun(
+            getUnixTime(),
+            rows[x]["timer_repeat_id"]
+          );
+          break;
 
-          db.deleteOneshotTimer(rows[x]["timer_oneshot_id"], function(
-            err,
-            res
-          ) {});
+        default:
+          console.log(`[${getWholeDate()}] ! Unknown timer value`);
+      }
+
+      rows = db.getOneshotTimers();
+      if (rows > 0) {
+        for (x in rows) {
+          if (getUnixTime() >= rows[x]["timer_oneshot_trigger"]) {
+            // console.log("Running oneshot timer...");
+            sendCommand(
+              `/${rows[x]["room_name"]}/${rows[x]["device_command_mqtt"]}/${rows[x]["device_id"]}`,
+              rows[x]["device_command_value"],
+              rows[x]["device_command_mqtt_res"],
+              rows[x]["device_command_value_res"]
+            );
+
+            db.deleteOneshotTimer(rows[x]["timer_oneshot_id"]);
+          }
         }
       }
     }
-  });
+  }
 
-  db.getDeviceTriggers(function(err, rows) {
-    if (err) {
-      console.log(
-        `[${getWholeDate()}] ! Error while checking device triggers:`
+  rows = db.getDeviceTriggers();
+  if (rows.length > 0) {
+    for (x in rows) {
+      var reading = db.getSensorReadings(
+        1,
+        0,
+        rows[x]["device_trigger_sensor_id"]
       );
-      console.log(`[${getWholeDate()}] ! ${err}`);
-    } else if (rows[0]) {
-      for (x in rows) {
-        db.getSensorReadings(
-          function(err, reading) {
-            if (err) {
-              console.log(
-                `[${getWholeDate()}] ! Error while checking device triggers:`
+      if (reading.length > 0) {
+        var value = reading[0]["sensor_reading_value"];
+
+        switch (rows[x]["device_trigger_gt_lt_eq"]) {
+          case "<":
+            if (value < rows[x]["device_trigger_sensor_value"]) {
+              sendCommand(
+                `/${rows[x]["room_name"]}/${rows[x]["device_command_mqtt"]}/${rows[x]["device_id"]}`,
+                rows[x]["device_command_value"],
+                rows[x]["device_command_mqtt_res"],
+                rows[x]["device_command_value_res"]
               );
-              console.log(`[${getWholeDate()}] ! ${err}`);
-            } else if (reading[0]) {
-              var value = reading[0]["sensor_reading_value"];
-
-              switch (rows[x]["device_trigger_gt_lt_eq"]) {
-                case "<":
-                  if (value < rows[x]["device_trigger_sensor_value"]) {
-                    sendCommand(
-                      `/${rows[x]["room_name"]}/${rows[x]["device_command_mqtt"]}/${rows[x]["device_id"]}`,
-                      rows[x]["device_command_value"],
-                      rows[x]["device_command_mqtt_res"],
-                      rows[x]["device_command_value_res"]
-                    );
-                  }
-                  break;
-
-                case "=":
-                  if (value == rows[x]["device_trigger_sensor_value"]) {
-                    sendCommand(
-                      `/${rows[x]["room_name"]}/${rows[x]["device_command_mqtt"]}/${rows[x]["device_id"]}`,
-                      rows[x]["device_command_value"],
-                      rows[x]["device_command_mqtt_res"],
-                      rows[x]["device_command_value_res"]
-                    );
-                  }
-                  break;
-
-                case ">":
-                  if (value > rows[x]["device_trigger_sensor_value"]) {
-                    sendCommand(
-                      `/${rows[x]["room_name"]}/${rows[x]["device_command_mqtt"]}/${rows[x]["device_id"]}`,
-                      rows[x]["device_command_value"],
-                      rows[x]["device_command_mqtt_res"],
-                      rows[x]["device_command_value_res"]
-                    );
-                  }
-                  break;
-              }
-            } else {
-              console.log(`[${getWholeDate()}] > No data for trigger`);
             }
-          },
-          1,
-          0,
-          rows[x]["device_trigger_sensor_id"]
-        );
+            break;
+
+          case "=":
+            if (value == rows[x]["device_trigger_sensor_value"]) {
+              sendCommand(
+                `/${rows[x]["room_name"]}/${rows[x]["device_command_mqtt"]}/${rows[x]["device_id"]}`,
+                rows[x]["device_command_value"],
+                rows[x]["device_command_mqtt_res"],
+                rows[x]["device_command_value_res"]
+              );
+            }
+            break;
+
+          case ">":
+            if (value > rows[x]["device_trigger_sensor_value"]) {
+              sendCommand(
+                `/${rows[x]["room_name"]}/${rows[x]["device_command_mqtt"]}/${rows[x]["device_id"]}`,
+                rows[x]["device_command_value"],
+                rows[x]["device_command_mqtt_res"],
+                rows[x]["device_command_value_res"]
+              );
+            }
+            break;
+        }
+      } else {
+        console.log(`[${getWholeDate()}] > No data for trigger`);
       }
     }
-  });
+  }
+}
+
+function procWarnings() {
+  console.log(`[${getWholeDate()}] > Checking warnings`);
+
+  // If a heater is on for more than 2 hours
+
+  var heaters = db.getDeviceByType(1);
+  if (heaters.length > 0) {
+    for (x in heaters) {
+      var deets = db.getDeviceStatusTime(heaters[x]["device_id"]);
+      if (deets && deets[0] == "on" && getUnixTime() - deets[1] > 3600000) {
+        var warn = db.checkWarningExists(
+          heaters[x]["device_id"],
+          "This heater has been on for over 2 hours!"
+        );
+
+        // If a warning already exists
+        if (warn) {
+          if (getUnixTime() - warn["warning_last_updated_ts"] > 1800000) {
+            db.updateWarning(warn["warning_id"], 0);
+          } else {
+            // Otherwise just update the existing warning to track that it's still happening
+            db.updateWarning(warn["warning_id"], null);
+            console.log(`[${getWholeDate()}] ! Updated warning for a heater`);
+          }
+          // If a warning does not exist
+        } else {
+          db.insertWarning(
+            heaters[x]["device_id"],
+            null,
+            "This heater has been on for over 2 hours!",
+            3
+          );
+          console.log(`[${getWholeDate()}] ! Created warning for a heater`);
+        }
+      }
+    }
+  }
+
+  // If the fridge temp raises above 6 degrees
+  var fridges = db.getDeviceByType(2);
+  if (fridges.length > 0) {
+    for (x in fridges) {
+      var deets = db.getLastDeviceReadingByType(
+        fridges[x]["device_id"],
+        "Temperature"
+      );
+      if (deets && deets["device_reading_value"] > 6) {
+        var warn = db.checkWarningExists(
+          fridges[x]["device_id"],
+          "This fridge has risen above 6 degrees!"
+        );
+
+        // If a warning already exists
+        if (warn) {
+          if (getUnixTime() - warn["warning_last_updated_ts"] > 1800000) {
+            db.updateWarning(warn["warning_id"], 0);
+          } else {
+            // Otherwise just update the existing warning to track that it's still happening
+            db.updateWarning(warn["warning_id"], null);
+            console.log(`[${getWholeDate()}] ! Updated warning for a fridge`);
+          }
+          // If a warning does not exist
+        } else {
+          db.insertWarning(
+            fridges[x]["device_id"],
+            null,
+            "This fridge has risen above 6 degrees!",
+            3
+          );
+          console.log(`[${getWholeDate()}] ! Created warning for a fridge`);
+        }
+      }
+    }
+  }
 }
 
 setInterval(procTimersAndTriggers, 60000);
-
-function procWarnings() {
-  // If a heater is on for more than 2 hours
-  db.getDeviceByType(1, function(err, rows) {
-    if (err) {
-      console.log(`[${getWholeDate()}] ! [H1] Error checking warnings:`);
-      console.log(`[${getWholeDate()}] ! ${err}`);
-    } else if (rows[0]) {
-      for (x in rows) {
-        db.getDeviceStatusTime(rows[x]["device_id"], function(
-          err,
-          type,
-          since
-        ) {
-          if (err) {
-            console.log(`[${getWholeDate()}] ! [H2] Error checking warnings:`);
-            console.log(`[${getWholeDate()}] ! ${err}`);
-          } else if (type) {
-            if (type == "on" && getUnixTime() - since > 3600000) {
-              db.checkWarningExists(
-                rows[x]["device_id"],
-                "This heater has been on for over 2 hours!",
-                function(err, row) {
-                  if (err == "No data") {
-                    db.insertWarning(
-                      rows[x]["device_id"],
-                      null,
-                      "This heater has been on for over 2 hours!",
-                      3
-                    );
-                    console.log(
-                      `[${getWholeDate()}] ! Created warning for a heater`
-                    );
-                  } else if (err) {
-                    console.log(
-                      `[${getWholeDate()}] ! Error checking warnings:`
-                    );
-                    console.log(`[${getWholeDate()}] ! ${err}`);
-                  } else if (row) {
-                    // If it's been more than 1 hour since the warning was last valid,
-                    // set it as unread (new notif)
-                    if (
-                      getUnixTime() - row["warning_last_updated_ts"] >
-                      1800000
-                    ) {
-                      db.updateWarning(row["warning_id"], 0);
-                    } else {
-                      // Otherwise just update the existing warning to track that it's still happening
-                      db.updateWarning(row["warning_id"], null);
-                      console.log(
-                        `[${getWholeDate()}] ! Updated warning for a heater`
-                      );
-                    }
-                  }
-                }
-              );
-            }
-          }
-        });
-      }
-    }
-  });
-
-  // If the fridge temp raises above 6 degrees
-  db.getDeviceByType(2, function(err, rows) {
-    if (err) {
-      console.log(`[${getWholeDate()}] ! [F1] Error checking warnings:`);
-      console.log(`[${getWholeDate()}] ! ${err}`);
-    } else if (rows[0]) {
-      for (x in rows) {
-        db.getLastDeviceReadingByType(
-          rows[x]["device_id"],
-          "Temperature",
-          function(err, row) {
-            if (err) {
-              console.log(
-                `[${getWholeDate()}] ! [F2] Error checking warnings:`
-              );
-              console.log(`[${getWholeDate()}] ! ${err}`);
-            } else if (row) {
-              if ([row]["device_reading_value"] > 6) {
-                db.checkWarningExists(
-                  rows[x]["device_id"],
-                  "This fridge has risen above 6 degrees!",
-                  function(err, row) {
-                    if (err == "No data") {
-                      db.insertWarning(
-                        rows[x]["device_id"],
-                        null,
-                        "This fridge has risen above 6 degrees!",
-                        3
-                      );
-                      console.log(
-                        `[${getWholeDate()}] ! Created warning for a fridge`
-                      );
-                    } else if (err) {
-                      console.log(
-                        `[${getWholeDate()}] ! Error checking warnings:`
-                      );
-                      console.log(`[${getWholeDate()}] ! ${err}`);
-                    } else if (row) {
-                      // If it's been more than 1 hour since the warning was last valid,
-                      // set it as unread (new notif)
-                      if (
-                        getUnixTime() - row["warning_last_updated_ts"] >
-                        1800000
-                      ) {
-                        db.updateWarning(row["warning_id"], 0);
-                      } else {
-                        // Otherwise just update the existing warning to track that it's still happening
-                        db.updateWarning(row["warning_id"], null);
-                        console.log(
-                          `[${getWholeDate()}] ! Updated warning for a fridge`
-                        );
-                      }
-                    }
-                  }
-                );
-              }
-            }
-          }
-        );
-      }
-    }
-  });
-}
-
-setInterval(procWarnings, 6000);
+setInterval(procWarnings, 60000);
 
 //
 // Define API
@@ -544,24 +469,20 @@ app.post("/login", (req, res) => {
     var hash = crypto.createHash("sha512");
     var hpasswd = hash.update(password).digest("hex");
 
-    db.getUserByUsernameAndPassword(username, hpasswd, function(err, user_id) {
-      if (err) {
-        res.send({ error: "Error logging in" });
-      } else if (user_id) {
-        var token = getNewToken(user_id);
-        console.log(`[${getWholeDate()}] > Generated token: ${token}`);
+    var user = db.getUserByUsernameAndPassword(username, hpasswd);
+    if (!user) {
+      res.send({ error: "Details incorrect" });
+    } else {
+      var token = getNewToken(user.user_id);
+      console.log(`[${getWholeDate()}] > Generated token: ${token}`);
 
-        db.insertNewAuthToken(user_id, token, null, function(err) {
-          if (err) {
-            res.send({ error: "Error creating auth token" });
-          } else {
-            res.send({ token: token });
-          }
-        });
+      var info = db.insertNewAuthToken(user.user_id, token, null);
+      if (!info) {
+        res.send({ error: "Error inserting token!" });
       } else {
-        res.send({ error: "Details incorrect" });
+        res.send({ token: token });
       }
-    });
+    }
   } else {
     res.send({ error: "Missing data!" });
   }
@@ -592,16 +513,15 @@ app.use(function(req, res, next) {
         }`
       );
       console.log(`[${getWholeDate()}] > Request URI: ${req.url}`);
-      user_id = auth[0];
+      req._user_id = auth[0];
 
-      db.checkToken(user_id, req.headers.authorization, function(err) {
-        if (err) {
-          console.log(`[${getWholeDate()}] ! Invalid header: ${err}`);
-          res.status(403).json({ error: "Invalid auth header" });
-        } else {
-          next();
-        }
-      });
+      var token = db.checkToken(req._user_id, req.headers.authorization);
+      if (token) {
+        next();
+      } else {
+        console.log(`[${getWholeDate()}] ! Invalid header`);
+        res.status(403).json({ error: "Invalid auth header" });
+      }
     } catch (err) {
       console.log(`[${getWholeDate()}] ! Error while checking header: ${err}`);
       return res.status(403).json({ error: "Invalid auth header" });
@@ -647,39 +567,27 @@ Get by ID.
 ####################################### */
 
 app.get("/getAccountTypeById", (req, res) => {
-  db.getAccountTypeById(req.query.id, function(err, rows) {
-    res.send(rows);
-  });
+  res.send(db.getAccountTypeById(req.query.id));
 });
 
 app.get("/getSensorTypeById", (req, res) => {
-  db.getSensorTypeById(req.query.id, function(err, rows) {
-    res.send(rows);
-  });
+  res.send(db.getSensorTypeById(req.query.id));
 });
 
 app.get("/getRoomById", (req, res) => {
-  db.getRoomById(req.query.id, function(err, rows) {
-    res.send(rows);
-  });
+  res.send(db.getRoomById(req.query.id));
 });
 
 app.get("/getDeviceTypeById", (req, res) => {
-  db.getDeviceTypeById(req.query.id, function(err, rows) {
-    res.send(rows);
-  });
+  res.send(db.getDeviceTypeById(req.query.id));
 });
 
 app.get("/getSensorById", (req, res) => {
-  db.getSensorById(req.query.id, function(err, rows) {
-    res.send(rows);
-  });
+  res.send(db.getSensorById(req.query.id));
 });
 
 app.get("/getDeviceById", (req, res) => {
-  db.getDeviceById(req.query.id, function(err, rows) {
-    res.send(rows);
-  });
+  res.send(db.getDeviceById(req.query.id));
 });
 
 /* #######################################
@@ -689,15 +597,11 @@ Get by room.
 ####################################### */
 
 app.get("/getSensorByRoom", (req, res) => {
-  db.getSensorByRoom(req.query.room, function(err, rows) {
-    res.send(rows);
-  });
+  res.send(db.getSensorByRoom(req.query.room));
 });
 
 app.get("/getDeviceByRoom", (req, res) => {
-  db.getDeviceByRoom(req.query.room, function(err, rows) {
-    res.send(rows);
-  });
+  res.send(db.getDeviceByRoom(req.query.room));
 });
 
 /* #######################################
@@ -707,93 +611,39 @@ Get all of something with limits.
 ####################################### */
 
 app.get("/getAccountTypes", (req, res) => {
-  db.getAccountTypes(
-    function(err, rows) {
-      res.send(rows);
-    },
-    req.query.limit,
-    req.query.offset
-  );
+  res.send(db.getAccountTypes(req.query.limit, req.query.offset));
 });
 
 app.get("/getSensorTypes", (req, res) => {
-  db.getSensorTypes(
-    function(err, rows) {
-      res.send(rows);
-    },
-    req.query.limit,
-    req.query.offset
-  );
+  res.send(db.getSensorTypes(req.query.limit, req.query.offset));
 });
 
 app.get("/getRooms", (req, res) => {
-  db.getRooms(
-    function(err, rows) {
-      res.send(rows);
-    },
-    req.query.limit,
-    req.query.offset
-  );
+  res.send(db.getRooms(req.query.limit, req.query.offset));
 });
 
 app.get("/getDeviceTypes", (req, res) => {
-  db.getDeviceTypes(
-    function(err, rows) {
-      res.send(rows);
-    },
-    req.query.limit,
-    req.query.offset
-  );
+  res.send(db.getDeviceTypes(req.query.limit, req.query.offset));
 });
 
 app.get("/getSensors", (req, res) => {
-  db.getSensors(
-    function(err, rows) {
-      res.send(rows);
-    },
-    req.query.limit,
-    req.query.offset
-  );
+  res.send(db.getSensors(req.query.limit, req.query.offset));
 });
 
 app.get("/getDevices", (req, res) => {
-  db.getDevices(
-    function(err, rows) {
-      res.send(rows);
-    },
-    req.query.limit,
-    req.query.offset
-  );
+  res.send(db.getDevices(req.query.limit, req.query.offset));
 });
 
 app.get("/getUsers", (req, res) => {
-  db.getUsers(
-    function(err, rows) {
-      res.send(rows);
-    },
-    req.query.limit,
-    req.query.offset
-  );
+  res.send(db.getUsers(req.query.limit, req.query.offset));
 });
 
 app.get("/getSensorReadings", (req, res) => {
-  db.getSensorReadings(
-    function(err, rows) {
-      res.send(rows);
-    },
-    req.query.limit,
-    req.query.offset
-  );
+  res.send(db.getSensorReadings(req.query.limit, req.query.offset));
 });
 
 app.get("/getDeviceReadings", (req, res) => {
-  db.getDeviceReadings(
-    function(err, rows) {
-      res.send(rows);
-    },
-    req.query.limit,
-    req.query.offset
-  );
+  res.send(db.getDeviceReadings(req.query.limit, req.query.offset));
 });
 
 /* #######################################
@@ -824,13 +674,12 @@ app.get("/insertDeviceType", (req, res) => {
 
 app.post("/insertProperty", (req, res) => {
   if (req.body.name) {
-    db.insertProperty(req.body.name, function(err, rowId) {
-      if (err) {
-        res.send({ error: err });
-      } else {
-        res.send({ rowId: rowId });
-      }
-    });
+    var info = db.insertProperty(req.body.name);
+    if (info) {
+      res.send({ rowId: info.lastInsertRowid });
+    } else {
+      res.send({ error: "Error" });
+    }
   } else {
     res.send({ error: "No name parameter given!" });
   }
@@ -838,13 +687,12 @@ app.post("/insertProperty", (req, res) => {
 
 app.post("/insertAccountType", (req, res) => {
   if (req.body.name) {
-    db.insertAccountType(req.body.name, function(err, rowId) {
-      if (err) {
-        res.send({ error: err });
-      } else {
-        res.send({ rowId: rowId });
-      }
-    });
+    var info = db.insertAccountType(req.body.name);
+    if (info) {
+      res.send({ rowId: info.lastInsertRowid });
+    } else {
+      res.send({ error: "Error" });
+    }
   } else {
     res.send({ error: "No name parameter given!" });
   }
@@ -852,13 +700,12 @@ app.post("/insertAccountType", (req, res) => {
 
 app.post("/insertSensorType", (req, res) => {
   if (req.body.name) {
-    db.insertSensorType(req.body.name, function(err, rowId) {
-      if (err) {
-        res.send({ error: err });
-      } else {
-        res.send({ rowId: rowId });
-      }
-    });
+    var info = db.insertSensorType(req.body.name);
+    if (info) {
+      res.send({ rowId: info.lastInsertRowid });
+    } else {
+      res.send({ error: "Error" });
+    }
   } else {
     res.send({ error: "No name parameter given!" });
   }
@@ -866,13 +713,12 @@ app.post("/insertSensorType", (req, res) => {
 
 app.post("/insertRoom", (req, res) => {
   if (req.body.name) {
-    db.insertRoom(req.body.name, function(err, rowId) {
-      if (err) {
-        res.send({ error: err });
-      } else {
-        res.send({ rowId: rowId });
-      }
-    });
+    var info = db.insertRoom(req.body.name);
+    if (info) {
+      res.send({ rowId: info.lastInsertRowid });
+    } else {
+      res.send({ error: "Error" });
+    }
   } else {
     res.send({ error: "No name parameter given!" });
   }
@@ -880,13 +726,12 @@ app.post("/insertRoom", (req, res) => {
 
 app.post("/insertDeviceType", (req, res) => {
   if (req.body.name) {
-    db.insertDeviceType(req.body.name, function(err, rowId) {
-      if (err) {
-        res.send({ error: err });
-      } else {
-        res.send({ rowId: rowId });
-      }
-    });
+    var info = db.insertDeviceType(req.body.name);
+    if (info) {
+      res.send({ rowId: info.lastInsertRowid });
+    } else {
+      res.send({ error: "Error" });
+    }
   } else {
     res.send({ error: "No name parameter given!" });
   }
@@ -917,23 +762,26 @@ app.post("/insertUser", (req, res) => {
     req.body.password &&
     req.body.email &&
     req.body.forename &&
-    req.body.surname
+    req.body.surname &&
+    req.body.admin
   ) {
-    db.insertUser(
-      req.body.account_type,
-      req.body.username,
-      req.body.password,
-      req.body.email,
-      req.body.forename,
-      req.body.surname,
-      function(err, rowId) {
-        if (err) {
-          res.send({ error: err });
-        } else {
-          res.send({ rowId: rowId });
-        }
+    var authed = db.checkAuth(req._user_id, null, null);
+    if (authed) {
+      var info = db.insertUser(
+        req.body.account_type,
+        req.body.username,
+        req.body.password,
+        req.body.email,
+        req.body.forename,
+        req.body.surname,
+        req.body.admin
+      );
+      if (info) {
+        res.send({ rowId: info.lastInsertRowid });
+      } else {
+        res.send({ Error: "There was an error" });
       }
-    );
+    }
   } else {
     res.send({
       error:
@@ -944,16 +792,15 @@ app.post("/insertUser", (req, res) => {
 
 app.post("/insertSensor", (req, res) => {
   if (req.body.room && req.body.type && req.body.name) {
-    db.insertSensor(req.body.room, req.body.type, req.body.name, function(
-      err,
-      rowId
-    ) {
-      if (err) {
-        res.send({ error: err });
+    var authed = db.checkAuth(req._user_id, null, null);
+    if (authed) {
+      var info = db.insertSensor(req.body.room, req.body.type, req.body.name);
+      if (info) {
+        res.send({ rowId: info.lastInsertRowid });
       } else {
-        res.send({ rowId: rowId });
+        res.send({ Error: "There was an error" });
       }
-    });
+    }
   } else {
     res.send({
       error: "Missing parameter! Needs room, type, wattage and name"
@@ -963,18 +810,19 @@ app.post("/insertSensor", (req, res) => {
 
 app.post("/editSensor", (req, res) => {
   if (req.body.id && req.body.room && req.body.type && req.body.name) {
-    db.insertSensor(
-      req.body.id && req.body.room,
-      req.body.type,
-      req.body.name,
-      function(err, rowId) {
-        if (err) {
-          res.send({ error: err });
-        } else {
-          res.send({ rowId: rowId });
-        }
+    var authed = db.checkAuth(req._user_id, null, req.body.id);
+    if (authed) {
+      var info = db.insertSensor(
+        req.body.id && req.body.room,
+        req.body.type,
+        req.body.name
+      );
+      if (info) {
+        res.send({ rowId: info.lastInsertRowid });
+      } else {
+        res.send({ Error: "There was an error" });
       }
-    );
+    }
   } else {
     res.send({
       error: "Missing parameter! Needs sensor id, room, type, wattage and name"
@@ -984,19 +832,20 @@ app.post("/editSensor", (req, res) => {
 
 app.post("/insertDevice", (req, res) => {
   if (req.body.room && req.body.type && req.body.name && req.body.wattage) {
-    db.insertDevice(
-      req.body.room,
-      req.body.type,
-      req.body.wattage,
-      req.body.name,
-      function(err, rowId) {
-        if (err) {
-          res.send({ error: err });
-        } else {
-          res.send({ rowId: rowId });
-        }
+    var authed = db.checkAuth(req._user_id, null, null);
+    if (authed) {
+      var info = db.insertDevice(
+        req.body.room,
+        req.body.type,
+        req.body.wattage,
+        req.body.name
+      );
+      if (info) {
+        res.send({ rowId: info.lastInsertRowid });
+      } else {
+        res.send({ Error: "There was an error" });
       }
-    );
+    }
   } else {
     res.send({
       error: "Missing parameter! Needs room, type, wattage and name"
@@ -1012,20 +861,26 @@ app.post("/insertTrigger", (req, res) => {
     req.body.value &&
     req.body.commandId
   ) {
-    db.insertDevice(
-      req.body.deviceId,
-      req.body.sensorId,
-      req.body.symbol,
-      req.body.value,
-      req.body.commandId,
-      function(err, rowId) {
-        if (err) {
-          res.send({ error: err });
-        } else {
-          res.send({ rowId: rowId });
-        }
+    var authed = db.checkAuth(req._user_id, req.body.deviceId, null);
+    if (authed) {
+      var info = db.insertDeviceTrigger(
+        req.body.deviceId,
+        req.body.sensorId,
+        req.body.symbol,
+        req.body.value,
+        req.body.commandId
+      );
+      if (info) {
+        res.send({ rowId: info.lastInsertRowid });
+      } else {
+        res.send({ Error: "There was an error" });
       }
-    );
+    } else {
+      console.log("Auth failed!");
+      res.send({
+        error: "You do not have permission to do this!"
+      });
+    }
   } else {
     res.send({
       error:
@@ -1042,23 +897,48 @@ app.post("/editDevice", (req, res) => {
     req.body.name &&
     req.body.wattage
   ) {
-    db.editDevice(
-      req.body.id,
-      req.body.room,
-      req.body.type,
-      req.body.wattage,
-      req.body.name,
-      function(err, rowId) {
-        if (err) {
-          res.send({ error: err });
-        } else {
-          res.send({ rowId: rowId });
-        }
+    var authed = db.checkAuth(req._user_id, req.body.id, null);
+    if (authed) {
+      db.editDevice(
+        req.body.id,
+        req.body.room,
+        req.body.type,
+        req.body.wattage,
+        req.body.name
+      );
+      if (info) {
+        res.send({ rowId: info.lastInsertRowid });
+      } else {
+        res.send({ Error: "There was an error" });
       }
-    );
+    }
   } else {
     res.send({
       error: "Missing parameter! Needs device id, room, type, wattage and name"
+    });
+  }
+});
+
+app.post("/insertUserPermission", (req, res) => {
+  if (req.body.user_id && (req.body.device_id || req.body.sensor_id)) {
+    var authed = db.checkAuth(req._user_id, req.body.id, null);
+    if (authed) {
+      db.insertUserPermission(
+        req.body.id,
+        req.body.room,
+        req.body.type,
+        req.body.wattage,
+        req.body.name
+      );
+      if (info) {
+        res.send({ rowId: info.lastInsertRowid });
+      } else {
+        res.send({ Error: "There was an error" });
+      }
+    }
+  } else {
+    res.send({
+      error: "Missing parameter! Needs user_id, device_id / sensor_id"
     });
   }
 });
@@ -1070,34 +950,22 @@ Get certain things with filters.
 ####################################### */
 
 app.get("/getSensorReadingsByTimeframe", (req, res) => {
-  console.log(req.query.id, req.query.start, req.query.end);
-  db.getSensorReadingsByTimeframe(
-    req.query.id,
-    req.query.start,
-    req.query.end,
-    function(err, rows) {
-      if (err) {
-        res.send({ error: err });
-      } else {
-        res.send(rows);
-      }
-    }
+  res.send(
+    db.getSensorReadingsByTimeframe(
+      req.query.id,
+      req.query.start,
+      req.query.end
+    )
   );
 });
 
 app.get("/getDeviceReadingsByTimeframe", (req, res) => {
-  console.log(req.query.id, req.query.start, req.query.end);
-  db.getDeviceReadingsByTimeframe(
-    req.query.id,
-    req.query.start,
-    req.query.end,
-    function(err, rows) {
-      if (err) {
-        res.send({ error: err });
-      } else {
-        res.send(rows);
-      }
-    }
+  res.send(
+    db.getDeviceReadingsByTimeframe(
+      req.query.id,
+      req.query.start,
+      req.query.end
+    )
   );
 });
 
@@ -1108,28 +976,19 @@ Device command functions.
 ####################################### */
 
 app.get("/getCommandsByDevice", (req, res) => {
-  db.getCommandsByDevice(req.query.id, function(err, rows) {
-    res.send(rows);
-  });
+  res.send(db.getCommandsByDevice(req.query.id));
 });
 
 app.get("/executeCommand", (req, res) => {
-  db.getCommandById(req.query.id, function(err, rows) {
-    if (rows[0]) {
-    }
-  });
+  res.send(db.getCommandById(req.query.id));
 });
 
 app.get("/getRepeatTimers", (req, res) => {
-  db.getRepeatTimerByDeviceId(req.query.id, function(err, rows) {
-    res.send(rows);
-  });
+  res.send(db.getRepeatTimerByDeviceId(req.query.id));
 });
 
 app.get("/getOneshotTimers", (req, res) => {
-  db.getOneshotTimersByDeviceId(req.query.id, function(err, rows) {
-    res.send(rows);
-  });
+  res.send(db.getOneshotTimersByDeviceId(req.query.id));
 });
 
 app.post("/insertRepeatTimer", (req, res) => {
@@ -1142,22 +1001,27 @@ app.post("/insertRepeatTimer", (req, res) => {
     req.body.device_id &&
     req.body.command
   ) {
-    db.insertRepeatTimer(
-      req.body.type,
-      req.body.month,
-      req.body.day,
-      req.body.hour,
-      req.body.minute,
-      req.body.device_id,
-      req.body.command,
-      function(err, rowId) {
-        if (err) {
-          res.send({ error: err });
-        } else {
-          res.send({ rowId: rowId });
-        }
+    if (db.checkAuth(req._user_id, req.body.device_id, null)) {
+      db.insertRepeatTimer(
+        req.body.type,
+        req.body.month,
+        req.body.day,
+        req.body.hour,
+        req.body.minute,
+        req.body.device_id,
+        req.body.command
+      );
+      if (info) {
+        res.send({ rowId: info.lastInsertRowid });
+      } else {
+        res.send({ Error: "There was an error" });
       }
-    );
+    } else {
+      console.log("Auth failed!");
+      res.send({
+        error: "You do not have permission to do this!"
+      });
+    }
   } else {
     res.send({
       error:
@@ -1168,18 +1032,19 @@ app.post("/insertRepeatTimer", (req, res) => {
 
 app.post("/insertOneshotTimer", (req, res) => {
   if (req.body.trigger && req.body.device_id && req.body.command) {
-    db.insertOneshotTimer(
-      req.body.trigger,
-      req.body.device_id,
-      req.body.command,
-      function(err, rowId) {
-        if (err) {
-          res.send({ error: err });
-        } else {
-          res.send({ rowId: rowId });
-        }
+    var authed = db.checkAuth(req._user_id, req.body.device_id, null);
+    if (authed) {
+      db.insertOneshotTimer(
+        req.body.trigger,
+        req.body.device_id,
+        req.body.command
+      );
+      if (info) {
+        res.send({ rowId: info.lastInsertRowid });
+      } else {
+        res.send({ Error: "There was an error" });
       }
-    );
+    }
   } else {
     res.send({
       error: "Missing parameter! Needs trigger (UNIX TIME), device_id, command"
@@ -1194,210 +1059,119 @@ Delete functions.
 ####################################### */
 
 app.get("/deleteProperty", (req, res) => {
-  db.deleteProperty(req.query.id, function(err, rowId) {
-    if (err) {
-      res.send({ error: err });
-    } else {
-      res.send({ status: "success" });
-    }
-  });
+  var authed = db.checkAuth(req._user_id, null, null);
+  if (authed) {
+    res.send(db.deleteProperty(req.query.id));
+  }
 });
 
 app.get("/deleteAccountType", (req, res) => {
-  db.deleteAccountType(req.query.id, function(err, rowId) {
-    if (err) {
-      res.send({ error: err });
-    } else {
-      res.send({ status: "success" });
-    }
-  });
+  var authed = db.checkAuth(req._user_id, null, null);
+  if (authed) {
+    res.send(db.deleteAccountType(req.query.id));
+  }
 });
 
 app.get("/deleteSensorType", (req, res) => {
-  db.deleteSensorType(req.query.id, function(err, rowId) {
-    if (err) {
-      res.send({ error: err });
-    } else {
-      res.send({ status: "success" });
-    }
-  });
+  var authed = db.checkAuth(req._user_id, null, null);
+  if (authed) {
+    res.send(db.deleteSensorType(req.query.id));
+  }
 });
 
 app.get("/deleteRoom", (req, res) => {
-  db.deleteRoom(req.query.id, function(err, rowId) {
-    if (err) {
-      res.send({ error: err });
-    } else {
-      res.send({ status: "success" });
-    }
-  });
+  var authed = db.checkAuth(req._user_id, null, null);
+  if (authed) {
+    res.send(db.deleteRoom(req.query.id));
+  }
 });
 
 app.get("/deleteDeviceType", (req, res) => {
-  db.deleteDeviceType(req.query.id, function(err, rowId) {
-    if (err) {
-      res.send({ error: err });
-    } else {
-      res.send({ status: "success" });
-    }
-  });
+  var authed = db.checkAuth(req._user_id, null, null);
+  if (authed) {
+    res.send(db.deleteDeviceType(req.query.id));
+  }
 });
 
 app.get("/deleteDeviceCommand", (req, res) => {
-  db.deleteDeviceCommand(req.query.id, function(err, rowId) {
-    if (err) {
-      res.send({ error: err });
-    } else {
-      res.send({ status: "success" });
-    }
-  });
+  var authed = db.checkAuth(req._user_id, null, null);
+  if (authed) {
+    res.send(db.deleteDeviceCommand(req.query.id));
+  }
 });
 
 app.get("/deleteUser", (req, res) => {
-  db.deleteUser(req.query.id, function(err, rowId) {
-    if (err) {
-      res.send({ error: err });
-    } else {
-      res.send({ status: "success" });
-    }
-  });
+  var authed = db.checkAuth(req._user_id, null, null);
+  if (authed) {
+    res.send(db.deleteUser(req.query.id));
+  }
 });
 
 app.get("/deleteAuth", (req, res) => {
-  db.deleteAuth(req.query.id, function(err, rowId) {
-    if (err) {
-      res.send({ error: err });
-    } else {
-      res.send({ status: "success" });
-    }
-  });
+  var authed = db.checkAuth(req._user_id, null, null);
+  if (authed) {
+    res.send(db.deleteAuth(req.query.id));
+  }
 });
 
 app.get("/deleteSensor", (req, res) => {
-  db.deleteSensor(req.query.id, function(err, rowId) {
-    if (err) {
-      res.send({ error: err });
-    } else {
-      db.deleteTriggerBySensorId(req.query.id, function(err, rowId) {
-        if (err) {
-          res.send({ error: err });
-        } else {
-          if (req.query.data == "true") {
-            db.deleteSensorReadingBySensorId(req.query.id, function(
-              err,
-              rowId
-            ) {
-              if (err) {
-                res.send({ error: err });
-              } else {
-                res.send({ status: "success" });
-              }
-            });
-          } else {
-            res.send({ status: "success" });
-          }
-        }
-      });
-    }
-  });
+  db.deleteSensor(req.query.id);
+  db.deleteTriggerBySensorId(req.query.id);
+  if (req.query.data == "true") db.deleteSensorReadingBySensorId(req.query.id);
+
+  res.send({ status: "success" });
 });
 
 app.get("/deleteDevice", (req, res) => {
-  db.deleteDevice(req.query.id, function(err, rowId) {
-    if (err) {
-      res.send({ error: err });
-    } else {
-      db.deleteRepeatTimerByDeviceId(req.query.id, function(err, rowId) {
-        if (err) {
-          res.send({ error: err });
-        } else {
-          db.deleteOneshotTimerByDeviceId(req.query.id, function(err, rowId) {
-            if (err) {
-              res.send({ error: err });
-            } else {
-              db.deleteTriggerByDeviceId(req.query.id, function(err, rowId) {
-                if (err) {
-                  res.send({ error: err });
-                } else {
-                  if (req.query.data == "true") {
-                    db.deleteDeviceReading(req.query.id, function(err, rowId) {
-                      if (err) {
-                        res.send({ error: err });
-                      } else {
-                        res.send({ status: "success" });
-                      }
-                    });
-                  } else {
-                    res.send({ status: "success" });
-                  }
-                }
-              });
-            }
-          });
-        }
-      });
-    }
-  });
+  db.deleteDevice(req.query.id);
+  db.deleteRepeatTimerByDeviceId(req.query.id);
+  db.deleteOneshotTimerByDeviceId(req.query.id);
+  db.deleteTriggerByDeviceId(req.query.id);
+  if (req.query.data == "true") db.deleteDeviceReading(req.query.id);
+
+  res.send({ status: "success" });
 });
 
 app.get("/deleteRepeatTimer", (req, res) => {
-  db.deleteRepeatTimer(req.query.id, function(err, rowId) {
-    if (err) {
-      res.send({ error: err });
-    } else {
-      res.send({ status: "success" });
-    }
-  });
+  var authed = db.checkAuth(req._user_id, null, null);
+  if (authed) {
+    res.send(db.deleteRepeatTimer(req.query.id));
+  }
 });
 
 app.get("/deleteOneshotTimer", (req, res) => {
-  db.deleteOneshotTimer(req.query.id, function(err, rowId) {
-    if (err) {
-      res.send({ error: err });
-    } else {
-      res.send({ status: "success" });
-    }
-  });
+  var authed = db.checkAuth(req._user_id, null, null);
+  if (authed) {
+    res.send(db.deleteOneshotTimer(req.query.id));
+  }
 });
 
 app.get("/deleteSensorReading", (req, res) => {
-  db.deleteSensorReading(req.query.id, function(err, rowId) {
-    if (err) {
-      res.send({ error: err });
-    } else {
-      res.send({ status: "success" });
-    }
-  });
+  var authed = db.checkAuth(req._user_id, null, null);
+  if (authed) {
+    res.send(db.deleteSensorReading(req.query.id));
+  }
 });
 
 app.get("/deleteDeviceReading", (req, res) => {
-  db.deleteDeviceReading(req.query.id, function(err, rowId) {
-    if (err) {
-      res.send({ error: err });
-    } else {
-      res.send({ status: "success" });
-    }
-  });
+  var authed = db.checkAuth(req._user_id, null, null);
+  if (authed) {
+    res.send(db.deleteDeviceReading(req.query.id));
+  }
 });
 
 app.get("/deleteDeviceTrigger", (req, res) => {
-  db.deleteDeviceTrigger(req.query.id, function(err, rowId) {
-    if (err) {
-      res.send({ error: err });
-    } else {
-      res.send({ status: "success" });
-    }
-  });
+  var authed = db.checkAuth(req._user_id, null, null);
+  if (authed) {
+    res.send(db.deleteDeviceTrigger(req.query.id));
+  }
 });
 
 app.get("/deleteWarning", (req, res) => {
-  db.deleteWarning(req.query.id, function(err, rowId) {
-    if (err) {
-      res.send({ error: err });
-    } else {
-      res.send({ status: "success" });
-    }
-  });
+  var authed = db.checkAuth(req._user_id, null, null);
+  if (authed) {
+    res.send(db.deleteWarning(req.query.id));
+  }
 });
 
 //
