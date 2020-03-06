@@ -21,7 +21,8 @@
     <div class="container">
       <div id="rooms">
         <div class="sub-title-wrapper">
-          <h3 class="display-4 text-center">Devices</h3>
+          <h3 class="h1-titles text-center">Devices</h3>
+          <hr />
         </div>
         <div class="flex-rooms">
           <!--Loop through all the devices by device name and generate cards for each of them-->
@@ -35,11 +36,13 @@
             />
           </div>
         </div>
+        <hr />
         <!--Additional Components.-->
-        <div class="additional">
-          <div class="flex-rooms">
-            <AllDevices />
-          </div>
+        <div class="text-center">
+          <router-link
+            class="advanced-links text-center links"
+            :to="{name: 'allDevicesPage'}"
+          >See All Devices</router-link>
         </div>
       </div>
     </div>
@@ -51,7 +54,7 @@
 //All the components that are needed for the roomPage
 import Summary from "../helpers/roomSummary";
 import Device from "../helpers/deviceCard";
-import AllDevices from "../helpers/allDevices";
+
 import NavTop from "../navbars/navbar-top";
 import NavBottom from "../navbars/navbar-bottom";
 
@@ -65,7 +68,6 @@ export default {
     //Initialise the components
     Summary,
     Device,
-    AllDevices,
     NavTop,
     NavBottom
   },
@@ -134,13 +136,13 @@ function pairImg(device) {
     device.includes("Heater") ||
     device.includes("heating")
   ) {
-    return "fire";
+    return "heating";
   } else if (device.includes("light") || device.includes("Light")) {
     return "light-bulb";
   } else if (device.includes("fridge") || device.includes("Fridge")) {
-    return "fridgecolor";
+    return "fridge";
   } else if (device.includes("Solar") || device.includes("solar")) {
-    return "solarpanelcolor";
+    return "solarpanel";
   } else if (
     device.includes("camera") ||
     device.includes("Camera") ||

@@ -21,13 +21,18 @@ To find styling for a component or page please search the page using CTRL+F
 }
 
 body {
-  background-color: #f5f5f5;
+  background: #313131 !important;
+  color: #fff;
 }
 
 .form-title {
   text-align: center;
   font-size: 3.2em;
   padding-bottom: 10px;
+}
+
+.h1-titles {
+  font-size: 4em;
 }
 
 .display-2 {
@@ -44,15 +49,34 @@ body {
 
 .links {
   text-decoration: none !important;
-  color: rgb(68, 68, 68);
+  color: rgb(187, 187, 187);
 }
 .links:hover {
-  color: #000;
+  color: #fff;
+}
+
+.links-top {
+  color: #fff;
+  text-decoration: none !important;
+}
+
+.links-top:hover {
+  color: #fff;
 }
 
 .advanced-links {
   font-size: 1.3em;
 }
+
+@media screen and (max-width: 750px) {
+  .h1-titles {
+    font-size: 2.8em;
+  }
+  .links {
+    color: #fff;
+  }
+}
+
 /*====================================================================================================================================*/
 /*Main Pages CSS*/
 /*====================================================================================================================================*/
@@ -62,23 +86,24 @@ body {
 /*############################################################*/
 
 #rooms {
-  margin-top: 40px;
-  margin-bottom: 80px;
-  margin-left: 15%;
-  margin-right: 15%;
+  margin-top: 35px;
+  margin-bottom: 100px;
+  margin-left: 5%;
+  margin-right: 5%;
 }
 
 .flex-rooms {
   display: flex !important;
   flex-direction: row !important;
   flex-wrap: wrap !important;
-  justify-content: space-around !important;
-  align-items: flex-start !important;
+  justify-content: center !important;
+  align-items: center !important;
+  padding-bottom: 20px;
 }
 
 .item {
-  margin-left: 50px;
-  margin-right: 50px;
+  margin-left: 10px;
+  margin-right: 10px;
   margin-top: 10px;
 }
 
@@ -105,12 +130,7 @@ body {
   .item {
     margin: 0;
   }
-  .top-show {
-    display: none !important;
-  }
-  .bottom-show {
-    display: block !important;
-  }
+
   .flex-rooms {
     justify-content: space-evenly !important;
   }
@@ -138,6 +158,9 @@ body {
   .item {
     margin: 0;
   }
+}
+
+@media screen and (max-width: 580px) {
   .top-show {
     display: none !important;
   }
@@ -151,12 +174,12 @@ body {
 /*############################################################*/
 
 #Add {
-  margin-top: 170px;
-  margin-bottom: 50px;
+  margin-top: 120px;
+  margin-bottom: 80px;
 }
 
 .flex-cont {
-  margin-top: 80px;
+  margin-top: 40px;
 }
 
 .flex-add {
@@ -167,13 +190,9 @@ body {
   align-items: center !important;
 }
 
-.img-add {
-  padding: 10px;
-}
-
 @media screen and (max-width: 1025px) {
-  #Add {
-    margin-top: 70px;
+  .flex-cont {
+    margin-top: 20px;
   }
 }
 
@@ -216,6 +235,7 @@ body {
   margin-top: 20px;
 }
 
+select,
 .form-inputboxes {
   width: 100%;
   height: 3rem;
@@ -223,11 +243,14 @@ body {
   border-left: none;
   border-top: none;
   border-right: none;
+  background-color: #313131 !important;
+  color: #fff;
 }
 
+select:focus,
 .form-inputboxes:focus {
   outline: none;
-  background-color: white;
+  background-color: #383838;
   border-bottom: 1px solid #198fca;
 }
 
@@ -252,7 +275,6 @@ body {
   height: 28rem;
   padding: 20px;
   border-radius: 20px;
-  background-color: white !important;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 1px 8px rgba(0, 0, 0, 0.22) !important;
   transition: 0.2s ease-in-out all !important;
 }
@@ -266,7 +288,7 @@ body {
     margin-top: 100px;
   }
   .custom-cards-addRooms {
-    width: 20rem;
+    width: 80%;
   }
 }
 
@@ -289,7 +311,7 @@ body {
   margin-top: 0.5rem;
 }
 .device-img {
-  width: 50%;
+  width: 40%;
   padding: 10px;
 }
 .label {
@@ -301,7 +323,6 @@ body {
   height: 40rem;
   padding: 20px;
   border-radius: 20px;
-  background-color: white !important;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 1px 8px rgba(0, 0, 0, 0.22) !important;
   transition: 0.2s ease-in-out all !important;
 }
@@ -332,10 +353,10 @@ body {
 
 @media screen and (max-width: 1025px) {
   #addDevice {
-    margin-top: 90px;
+    margin-top: 100px;
   }
   .custom-cards-addDevices {
-    width: 20rem;
+    width: 80%;
   }
 }
 
@@ -345,7 +366,7 @@ body {
 
 #editDevice {
   margin-top: 120px;
-  margin-bottom: 50px;
+  margin-bottom: 100px;
 }
 
 #form-addDevice {
@@ -389,7 +410,6 @@ body {
   height: 45rem;
   padding: 20px;
   border-radius: 20px;
-  background-color: white !important;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 1px 8px rgba(0, 0, 0, 0.22) !important;
   transition: 0.2s ease-in-out all !important;
 }
@@ -404,7 +424,6 @@ body {
   max-height: 50rem;
   padding: 30px;
   border-radius: 20px;
-  background-color: white !important;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 1px 8px rgba(0, 0, 0, 0.22) !important;
   transition: 0.2s ease-in-out all !important;
 }
@@ -434,7 +453,7 @@ body {
 }
 
 .img-delete {
-  width: 25%;
+  width: 20%;
   padding-left: 20px;
   padding-top: 3px;
   padding-bottom: 3px;
@@ -448,14 +467,14 @@ body {
 
 @media screen and (max-width: 1025px) {
   #editDevice {
-    margin-top: 70px;
-    margin-bottom: 70px;
+    margin-top: 80px;
+    margin-bottom: 100px;
   }
   .custom-cards-editDevices {
-    width: 20rem;
+    width: 80%;
   }
   .custom-cards-devicesDetails-schedule-edit {
-    width: 20rem;
+    width: 80%;
   }
   .img-delete {
     width: 30%;
@@ -471,7 +490,6 @@ body {
   height: 54rem;
   padding: 20px;
   border-radius: 20px;
-  background-color: white !important;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 1px 8px rgba(0, 0, 0, 0.22) !important;
   transition: 0.2s ease-in-out all !important;
 }
@@ -498,7 +516,7 @@ body {
 
 @media screen and (max-width: 1025px) {
   .custom-cards-editDevices-adv {
-    width: 20rem;
+    width: 80%;
   }
 }
 
@@ -508,11 +526,11 @@ body {
 
 #deviceDetails {
   margin-top: 140px;
-  margin-bottom: 80px;
+  margin-bottom: 100px;
 }
 
 .device-img {
-  width: 60%;
+  width: 50%;
   padding: 10px;
 }
 .label {
@@ -520,8 +538,8 @@ body {
 }
 
 .item-deviceDetails {
-  margin-left: 20px;
-  margin-right: 20px;
+  width: 30%;
+  padding: 20px;
 }
 
 .scheduleItem:before {
@@ -558,12 +576,13 @@ ul {
 }
 
 .custom-cards-devicesDetails {
-  width: 23rem;
-  height: 30rem;
-  padding: 20px;
+  width: 100%;
+  min-height: 27rem;
+  max-height: 38rem;
+  padding: 30px;
   border-radius: 20px;
-  background-color: white !important;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 1px 8px rgba(0, 0, 0, 0.22) !important;
+
   transition: 0.2s ease-in-out all !important;
 }
 
@@ -572,12 +591,11 @@ ul {
 }
 
 .custom-cards-devicesDetails-schedule {
-  width: 23rem;
-  min-height: 30rem;
-  max-height: 50rem;
+  width: 100%;
+  min-height: 27rem;
+  max-height: 38rem;
   padding: 30px;
   border-radius: 20px;
-  background-color: white !important;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 1px 8px rgba(0, 0, 0, 0.22) !important;
   transition: 0.2s ease-in-out all !important;
 }
@@ -587,12 +605,10 @@ ul {
 }
 
 .custom-cards-devicesDetails-graph {
-  width: 76rem;
-  min-height: 35rem;
-  max-height: 50rem;
+  width: 87%;
   padding: 30px;
   border-radius: 20px;
-  background-color: white !important;
+  border: none;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 1px 8px rgba(0, 0, 0, 0.22) !important;
   transition: 0.2s ease-in-out all !important;
 }
@@ -617,16 +633,63 @@ ul {
 @media screen and (max-width: 1025px) {
   #deviceDetails {
     margin-top: 80px;
+    margin-bottom: 100px;
   }
-  .custom-cards-devicesDetails {
-    width: 20rem;
+  .item-deviceDetails {
+    width: 55%;
+    margin: 0;
+    padding: 20px;
   }
-  .custom-cards-devicesDetails-schedule {
-    width: 20rem;
+  .device-img {
+    width: 40%;
   }
 
   .custom-cards-devicesDetails-graph {
-    width: 20rem;
+    width: 100%;
+  }
+  .custom-cards-devicesDetails {
+    padding: 40px;
+  }
+  .custom-cards-devicesDetails-schedule {
+    padding: 40px;
+  }
+}
+
+@media screen and (max-width: 680px) {
+  .device-img {
+    width: 60%;
+  }
+}
+
+@media screen and (max-width: 550px) {
+  .item-deviceDetails {
+    width: 70%;
+    margin: 0;
+    padding: 20px;
+  }
+  .custom-cards-devicesDetails-graph {
+    width: 100%;
+  }
+  .device-img {
+    width: 60%;
+  }
+  .custom-cards-devicesDetails {
+    min-height: 0;
+  }
+  .custom-cards-devicesDetails-schedule {
+    min-height: 0;
+  }
+}
+
+@media screen and (max-width: 450px) {
+  .item-deviceDetails {
+    width: 100%;
+    margin: 0;
+    padding: 20px;
+  }
+
+  .custom-cards-devicesDetails-graph {
+    padding: 10px;
   }
 }
 
@@ -640,12 +703,10 @@ ul {
 
 #loginCard {
   margin-top: 120px;
+  margin-left: 40%;
+  margin-right: 40%;
 
   /* border: solid 1px #005872;*/
-}
-
-#form {
-  margin-top: 10px;
 }
 
 #err {
@@ -697,7 +758,6 @@ ul {
   height: 34rem;
   padding: 20px;
   border-radius: 20px;
-  background-color: white !important;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 1px 8px rgba(0, 0, 0, 0.22) !important;
   transition: 0.2s ease-in-out all !important;
 }
@@ -710,26 +770,30 @@ ul {
   font-family: "Harlow-solid";
   text-align: center;
   font-size: 2.8em;
-  opacity: 0.5;
-  color: #000;
+  opacity: 1;
+  color: #fff;
   padding: 5px;
   margin-top: 2px;
   margin-bottom: 2px;
 }
 
-.logo-top {
-  font-family: "Harlow-solid";
-  text-align: center;
-  font-size: 2.5em;
-  opacity: 0.5;
-  color: #000;
-  margin-top: 3px;
-  padding: 10px;
+.logo-login {
+  font-size: 3.2em;
 }
 
 .logo-back {
-  background-color: white;
+  background-color: #383838;
   box-shadow: 0 0px 10px rgba(0, 0, 0, 0.3) !important;
+}
+
+.logo-top {
+  font-family: "Harlow-solid";
+  text-align: center;
+  font-size: 2.8em;
+  opacity: 1;
+  color: #fff;
+  margin-top: 3px;
+  padding: 5px;
 }
 
 .logo-top:hover {
@@ -740,6 +804,8 @@ ul {
 @media screen and (max-width: 1024px) {
   #loginCard {
     margin-top: 120px;
+    margin-right: 10%;
+    margin-left: 10%;
   }
   .custom-cards-Login {
     width: 20rem;
@@ -767,7 +833,6 @@ ul {
   width: 25rem;
   height: 58rem;
   padding: 20px;
-  background-color: white !important;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 1px 8px rgba(0, 0, 0, 0.22) !important;
   transition: 0.2s ease-in-out all !important;
 }
@@ -804,24 +869,22 @@ ul {
 /*############################################################*/
 
 #stat-cards {
-  padding-top: 100px;
-  padding-bottom: 30px;
-  background-color: #e7e7e7;
+  padding-top: 80px;
+  padding-bottom: 10px;
 }
 
 .img-summary {
-  padding: 15px;
-  width: 80%;
+  padding: 10px;
+  width: 35%;
   text-align: center;
 }
 
 .img-cont-summary {
   text-align: center;
-  width: 100%;
 }
 
 .col-width {
-  width: 12rem;
+  width: 25%;
 }
 
 .slide {
@@ -832,8 +895,18 @@ ul {
   display: flex !important;
   flex-direction: row !important;
   flex-wrap: wrap !important;
-  justify-content: space-around !important;
+  justify-content: space-evenly !important;
   align-items: flex-start !important;
+  padding-bottom: 25px;
+}
+
+.flex-b-rooms {
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: wrap !important;
+  justify-content: center !important;
+  align-items: center !important;
+  padding-bottom: 15px;
 }
 
 .stats {
@@ -844,21 +917,13 @@ ul {
   margin-bottom: 30px;
 }
 
-.flex-cards {
-  display: flex !important;
-  flex-direction: row !important;
-  flex-wrap: wrap !important;
-  justify-content: center !important;
-  align-items: center !important;
-}
-
 .custom-cards {
   width: 28rem;
   height: 20rem;
   padding: 1px;
   margin: 5px;
   border-radius: 20px;
-  background-color: white !important;
+
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 1px 8px rgba(0, 0, 0, 0.22) !important;
   transition: 0.2s ease-in-out all !important;
 }
@@ -869,7 +934,7 @@ ul {
 
 @media screen and (max-width: 1025px) {
   #stat-cards {
-    padding-top: 50px;
+    padding-top: 80px;
     padding-bottom: 20px;
   }
   .display-2 {
@@ -887,10 +952,30 @@ ul {
     justify-content: space-evenly !important;
   }
   .col-width {
-    width: 10rem;
+    width: 40%;
+    margin: 3%;
   }
   .img {
     width: 100%;
+  }
+  .img-summary {
+    width: 25%;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  #stat-cards {
+    padding-top: 50px;
+    padding-bottom: 20px;
+  }
+  .img-summary {
+    width: 35%;
+  }
+}
+
+@media screen and (max-width: 450px) {
+  .img-summary {
+    width: 60%;
   }
 }
 
@@ -911,7 +996,7 @@ ul {
 
 .navbar-top {
   padding: 10px !important;
-  background-color: #ffffff !important;
+  background-color: #383838 !important;
   border: none;
   border-top: none !important;
   border-left: none !important;
@@ -933,36 +1018,42 @@ ul {
 
 .navbar-bottom {
   padding: 10px !important;
-  background-color: #ffffff !important;
+  background-color: #383838 !important;
   box-shadow: 0 0px 10px rgba(0, 0, 0, 0.3) !important;
 }
 
 .nav-image-bottom {
-  width: 80%;
+  width: 70%;
 }
 
-.image-cont-nav {
+.image-cont-nav-top {
+  width: 10%;
   text-align: center;
-  width: 9rem;
   padding: 20px;
-  opacity: 0.5;
+  opacity: 1;
   border-radius: 10px;
-
-  background: #ffffff;
-  box-shadow: 15px 15px 30px #c4c4c4, -15px -15px 30px #ffffff;
+  background: #383838;
 }
 
-.image-cont-nav:hover {
-  background-color: #f5f5f5;
+.image-cont-nav-top:hover {
+  background-color: #313131;
   opacity: 1;
   cursor: pointer;
-  background: linear-gradient(145deg, #ffffff, #e6e6e6);
-  box-shadow: 15px 15px 30px #c4c4c4, -15px -15px 30px #ffffff;
+}
+
+.image-cont-nav-bottom {
+  width: 20%;
+  text-align: center;
+  padding: 20px;
+  opacity: 1;
+  border-radius: 10px;
+  background: #383838;
+  box-shadow: 6px 6px 12px #2d2d2d, -6px -6px 12px #434343;
 }
 
 @media screen and (max-width: 1025px) {
-  .image-cont-nav {
-    width: 20%;
+  .image-cont-nav-top {
+    width: 13%;
   }
   .flex-nav {
     justify-content: space-between !important;
@@ -971,7 +1062,7 @@ ul {
 
 @media screen and (max-width: 812px) {
   .nav-image {
-    width: 80%;
+    width: 70%;
   }
 }
 
@@ -987,23 +1078,18 @@ ul {
   padding-right: 20px;
 }
 
-.card {
-  margin-bottom: 30px !important;
-  user-select: none !important;
-}
-
 .custom-cards-devices {
   width: 11rem;
-  height: 15rem;
+  max-height: 20rem;
   padding: 1px;
   border-radius: 20px;
-  background-color: white !important;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 1px 8px rgba(0, 0, 0, 0.22) !important;
+
+  border: none;
   transition: 0.2s ease-in-out all !important;
 }
 
 .custom-cards-devices:hover {
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22) !important;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 1px 8px rgba(0, 0, 0, 0.22) !important;
   cursor: pointer !important;
 }
 
@@ -1022,17 +1108,15 @@ ul {
   padding: 10px;
 }
 .img-cont-menu {
-  padding-left: 20px;
-  padding-right: 20px;
-  padding-bottom: 0;
+  text-align: center;
 }
 
 .custom-cards-menu {
-  width: 11rem;
-  height: 12rem;
+  width: 10rem;
+  max-height: 12rem;
   padding: 10px;
   border-radius: 20px;
-  background-color: white !important;
+
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 1px 8px rgba(0, 0, 0, 0.22) !important;
   transition: 0.2s ease-in-out all !important;
 }
@@ -1056,27 +1140,12 @@ ul {
   text-align: center;
   padding-top: 2px;
   padding-bottom: 0px;
-  padding-left: 20px;
-  padding-right: 20px;
-}
-
-.card {
-  margin-bottom: 30px !important;
-  user-select: none !important;
-}
-
-.custom-cards-devices {
-  width: 11rem;
-  height: 15rem;
-  padding: 1px;
-  border-radius: 20px;
-  background-color: white !important;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 1px 8px rgba(0, 0, 0, 0.22) !important;
-  transition: 0.2s ease-in-out all !important;
+  padding-left: 10px;
+  padding-right: 10px;
 }
 
 .custom-cards-devices:hover {
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22) !important;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 1px 8px rgba(0, 0, 0, 0.22) !important;
   cursor: pointer !important;
 }
 
@@ -1090,28 +1159,25 @@ ul {
 /*CARDS - roomTemplate (room cards on dash) Component CSS*/
 /*############################################################*/
 
-.img-cont {
-  text-align: center;
-  padding-top: 0px;
-  padding-bottom: 0px;
-  padding-left: 20px;
-  padding-right: 20px;
+.card-img-top {
+  width: 100%;
 }
 
 .card {
-  margin-bottom: 30px !important;
+  margin: 10px;
+  background-color: transparent;
   user-select: none !important;
   border-color: none !important;
 }
 
 .custom-cards-rooms {
   border: none;
-  width: 11rem;
-  height: 12rem;
-  padding: 1px;
-  background-color: white !important;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 1px 8px rgba(0, 0, 0, 0.22) !important;
+  width: 10rem;
+  max-height: 12rem;
+  padding: 5px;
+
   border-radius: 20px;
+
   /*
   background: #ffffff;
   box-shadow: 12px 12px 34px #cfcfcf, -12px -12px 34px #ffffff;
@@ -1120,7 +1186,7 @@ ul {
 }
 
 .custom-cards-rooms:hover {
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22) !important;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 1px 8px rgba(0, 0, 0, 0.22) !important;
   /*border-radius: 20px;
   background: #ffffff;
   box-shadow: inset 5px 5px 28px #d6d6d6, inset -5px -5px 28px #ffffff;
@@ -1131,5 +1197,13 @@ ul {
 @media screen and (max-width: 1025px) {
   .custom-cards-rooms {
     width: 10rem;
+  }
+  .card-img-top {
+    width: 80%;
+  }
+  .card {
+    margin-left: 2%;
+    margin-bottom: 10%;
+    margin-right: 2%;
   }
 }

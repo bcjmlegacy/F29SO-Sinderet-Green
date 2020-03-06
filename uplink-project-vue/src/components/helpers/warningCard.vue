@@ -1,23 +1,14 @@
 <template>
-  <div class="item">
-    <div class="card custom-cards-warnings">
-      <div class="flex-cards">
-        <div>
-          <div class="col-width">
-            <div class="img-cont">
-              <img src="../../assets/idea.png" class="img-warning" alt="Warning-Device-Img" />
-            </div>
-          </div>
-        </div>
-        <div>
-          <div class="col-width-warnings">
-            <div class="card-body text-center">
-              <h2 class="card-title-warning">{{deviceName}}</h2>
-              <h4 class="card-subtitle-warning">{{warningMessage}}</h4>
-              <h4 class="warning-text">{{warningClarified}}</h4>
-            </div>
-          </div>
-        </div>
+  <div class="col-width-warnings">
+    <div class="custom-cards-warnings">
+      <div class="img-cont-summary">
+        <img src="../../assets/sun.png" class="img-warning" alt="Energy Usage" />
+      </div>
+      <!--Energy card area for data-->
+      <div class="card-body text-center">
+        <h3 class="card-title">{{deviceName}}</h3>
+        <h5 class="card-text tip">{{warningMessage}}</h5>
+        <h5 class="card-text tip">{{warningClarified}}</h5>
       </div>
     </div>
   </div>
@@ -38,48 +29,25 @@ export default {
 </script>
 
 <style scoped>
-.img-cont-warning {
-  text-align: center;
+.col-width-warnings {
+  width: 25%;
+  padding: 10px;
 }
 
 .img-warning {
-  width: 100%;
-  padding: 1px;
+  width: 30%;
 }
 
-.card {
-  margin-bottom: 30px !important;
-  user-select: none !important;
-}
-
-.col-width-warnings {
-  width: 40rem;
-}
-
-.card-title-warning {
-  font-size: 2.5em;
-  padding-bottom: 3px;
-}
-.card-subtitle-warning {
-  padding-top: 2px;
-  padding-bottom: 2px;
-}
-
-.warning-text {
-  font-size: 1.9em;
+.tip {
   font-weight: bold;
 }
-
 .custom-cards-warnings {
-  width: 60rem;
-  min-height: 11rem;
-  max-height: 20rem;
-  padding: 1px;
+  width: 100%;
+  padding: 10px;
   border-radius: 20px;
-  background-color: white !important;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 1px 8px rgba(0, 0, 0, 0.22) !important;
+
   transition: 0.2s ease-in-out all !important;
-  border: 3px solid #e30000;
+  border: 2px solid #aa0000;
 }
 
 .custom-cards-warnings:hover {
@@ -88,20 +56,9 @@ export default {
 }
 
 @media screen and (max-width: 1025px) {
-  .custom-cards-warnings {
-    width: 20rem;
-  }
   .col-width-warnings {
-    width: 20rem;
-  }
-  .card-title-warning {
-    font-size: 1.5em;
-  }
-  .warning-text {
-    font-size: 1.5em;
-  }
-  .card-subtitle-warning {
-    font-size: 1.3em;
+    width: 50%;
+    padding: 10;
   }
 }
 </style>

@@ -10,7 +10,7 @@
     </div>
     <div class="container">
       <div class="sub-title-wrapper">
-        <h5 class="display-2 text-center">Devices</h5>
+        <h5 class="h1-titles text-center">Devices</h5>
       </div>
       <div class="flex-rooms">
         <div v-for="device in devices" :key="device.deviceID">
@@ -75,13 +75,13 @@ function pairImg(device) {
     device.includes("Heater") ||
     device.includes("heating")
   ) {
-    return "fire";
+    return "heating";
   } else if (device.includes("light") || device.includes("Light")) {
     return "light-bulb";
   } else if (device.includes("fridge") || device.includes("Fridge")) {
-    return "fridgecolor";
+    return "fridge";
   } else if (device.includes("Solar") || device.includes("solar")) {
-    return "solarpanelcolor";
+    return "solarpanel";
   } else if (
     device.includes("camera") ||
     device.includes("Camera") ||
@@ -114,13 +114,13 @@ function pairImg(device) {
 <style>
 #EveryDevice {
   margin-top: 120px;
-  margin-bottom: 50px;
+  margin-bottom: 80px;
 }
 
 @media screen and (max-width: 1025px) {
   #EveryDevice {
-    margin-top: 80px;
-    margin-bottom: 70px;
+    margin-top: 110px;
+    margin-bottom: 100px;
   }
 }
 </style>

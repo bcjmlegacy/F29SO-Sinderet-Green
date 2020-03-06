@@ -1,9 +1,7 @@
 //dependencies.
 import Vue from "vue";
 import App from "./App.vue";
-import VueGoogleCharts from "vue-google-charts";
 
-Vue.use(VueGoogleCharts);
 import BootstrapVue from "bootstrap-vue";
 import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap-vue/dist/bootstrap-vue.css";
@@ -264,6 +262,53 @@ const router = new VueRouter({
     }
   ]
 });
+
+const vapid_key =
+  "BFtZSN6h5imT_YhoDK5QbpfcixOoroZmD40cT_rISQfufxr6uMOw1AJs-NevkEp2egqVnvXouMx5qwZzvLHTMVI";
+
+if ("serviceWorker" in navigator) {
+  send().catch(err => console.log(err));
+}
+
+function urlBase64ToUint8Array(base64String) {
+  const padding = "=".repeat((4 - (base64String.length % 4)) % 4);
+  const base64 = (base64String + padding).replace(/-/g, "+").replace(/_/g, "/");
+
+  const rawData = window.atob(base64);
+  const outputArray = new Uint8Array(rawData.length);
+
+  for (let i = 0; i < rawData.length; ++i) {
+    outputArray[i] = rawData.charCodeAt(i);
+  }
+  return outputArray;
+}
+
+async function send() {
+  console.log("Register Service Worker....");
+  const register = await navigator.serviceWorker.register("/sw.js", {
+    scope: "/"
+  });
+  console.log("Registered Service Worker....");
+
+  console.log("Registered Push....");
+  const subscription = await register.pushManager.subscribe({
+    userVisibleOnly: true,
+    applicationServerKey: urlBase64ToUint8Array(vapid_key)
+  });
+
+  console.log("Sending Push....");
+  await fetch("http://192.168.0.11:5552/subscribe", {
+    mode: "cors",
+    method: "POST",
+    headers: {
+      authorization: Vue.$cookies.get("token"),
+      "content-type": "application/json"
+    },
+    body: JSON.stringify(subscription)
+  });
+
+  console.log("Push sent...");
+}
 
 //mounts app to the html page - public/index.html
 new Vue({

@@ -5,59 +5,49 @@
       <div class="bottom-show">
         <div class="logo-back fixed-top">
           <h5 class="logo">
-            <router-link class="links" :to="{ name: 'dashboard' }">uplink</router-link>
+            <router-link class="links" :to="{ name: 'dashboard' }"
+              >uplink</router-link
+            >
           </h5>
         </div>
       </div>
       <div class="container">
         <div class="sub-title-wrapper">
           <!--summary title that will show the room name will be labeled home-->
-          <h5 class="display-2 text-center">Energy Statistics</h5>
+          <h5 class="h1-titles text-center">Energy Statistics</h5>
         </div>
         <div class="flex-stats">
-          <div>
-            <div class="cards custom-cards-stats">
-              <div class="img-cont-stats">
-                <img src="../../assets/idea.png" class="img-stats" alt="Energy Usage" />
-              </div>
-              <div class="card-body text-center">
-                <h5 class="card-title">Average Energy Usage</h5>
-                <h4 class="display-3">2000KWh</h4>
-                <h5 class="card-title">This Week</h5>
-              </div>
+          <div class="col-width">
+            <div class="img-cont-summary">
+              <img
+                src="../../assets/energy.png"
+                class="img-summary"
+                alt="Energy Usage"
+              />
+            </div>
+            <!--Energy card area for data-->
+            <div class="card-body text-center">
+              <h5 class="card-title">Average Energy Usage Per Day</h5>
+              <h4 class="card-text">2000KWh</h4>
             </div>
           </div>
-          <div>
-            <div class="cards custom-cards-stats-graph">
-              <GChart type="LineChart" :data="chartData" :options="chartOptions" />
+
+          <div class="col-width">
+            <div class="img-cont-summary">
+              <img
+                src="../../assets/solarpanel.png"
+                class="img-summary"
+                alt="Energy Usage"
+              />
+            </div>
+            <!--Solar battery card area for data-->
+            <div class="card-body text-center">
+              <h5 class="card-title">Average Energy Storage Per Day</h5>
+              <h4 class="card-text">3000KWh</h4>
             </div>
           </div>
-        </div>
-      </div>
-    </div>
-    <div id="stats-energy">
-      <div class="container">
-        <div class="sub-title-wrapper">
-          <!--summary title that will show the room name will be labeled home-->
-          <h5 class="display-2 text-center">Solar Statistics</h5>
-        </div>
-        <div class="flex-stats">
-          <div>
-            <div class="cards custom-cards-stats">
-              <div class="img-cont-stats">
-                <img src="../../assets/battery.png" class="img-stats" alt="Energy Usage" />
-              </div>
-              <div class="card-body text-center">
-                <h5 class="card-title">Average Solar Stored</h5>
-                <h4 class="display-3">12000KW</h4>
-                <h5 class="card-title">This Week</h5>
-              </div>
-            </div>
-          </div>
-          <div>
-            <div class="cards custom-cards-stats-graph">
-              <GChart type="LineChart" :data="chartData" :options="chartOptions" />
-            </div>
+          <div class="cards custom-cards-stats-graph">
+            <canvas id="chart"></canvas>
           </div>
         </div>
       </div>
@@ -69,30 +59,81 @@
 <script>
 import NavbarTop from "../navbars/navbar-top";
 import NavbarBottom from "../navbars/navbar-bottom";
-import { GChart } from "vue-google-charts";
+import Chart from "chart.js";
 export default {
   name: "stats",
   components: {
     NavbarTop,
-    NavbarBottom,
-    GChart
+    NavbarBottom
   },
   data() {
     return {
-      chartData: [
-        ["Year", "Sales", "Expenses", "Profit"],
-        ["2014", 1000, 400, 200],
-        ["2015", 1170, 460, 250],
-        ["2016", 660, 1120, 300],
-        ["2017", 1030, 540, 350]
-      ],
-      chartOptions: {
-        chart: {
-          title: "Company Performance",
-          subtitle: "Sales, Expenses, and Profit: 2014-2017"
+      chartD: {
+        type: "line",
+        data: {
+          labels: [
+            "Monday",
+            "Tuesday",
+            "Wednesday",
+            "Thursday",
+            "Friday",
+            "Saturday",
+            "Sunday"
+          ],
+          datasets: [
+            {
+              label: "Energy Use",
+              backgroundColor: "rgba(25, 143, 202, 0.1)",
+              borderColor: "rgba(25, 143, 202, 1)",
+              borderWidth: 0.7,
+              data: [21211, 32221, 33312, 22211, 12121, 32323, 22222]
+            },
+            {
+              label: "Energy Storage(solar)",
+              backgroundColor: "rgba(255, 195, 0, 0.1)",
+              borderColor: "rgba(255, 195, 0, 1)",
+              borderWidth: 0.7,
+              data: [42214, 30000, 42134, 25000, 23000, 34312, 33333]
+            }
+          ]
+        },
+        lineChartOptions: {
+          responsive: true,
+          maintainAspectRatio: true,
+          scales: {
+            xAxes: [
+              {
+                gridLines: {
+                  display: true,
+                  color: "rgba(0, 0, 0, 0.1)"
+                }
+              }
+            ],
+            yAxes: [
+              {
+                gridLines: {
+                  display: true,
+                  color: "rgba(0, 0, 0, 0.1)"
+                }
+              }
+            ]
+          }
         }
       }
     };
+  },
+  methods: {
+    chartData(chartId, chartData) {
+      const ctx = document.getElementById(chartId);
+      new Chart(ctx, {
+        type: chartData.type,
+        data: chartData.data,
+        options: chartData.lineChartOptions
+      });
+    }
+  },
+  mounted: function() {
+    this.chartData("chart", this.chartD);
   }
 };
 </script>
@@ -121,21 +162,24 @@ export default {
   padding: 5px;
 }
 
+.cards {
+  margin: 20px !important;
+}
+
 .flex-stats {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  justify-content: space-evenly;
-  align-items: flex-start;
+  justify-content: center;
+  align-items: center;
   margin-bottom: 40px;
 }
 
 .custom-cards-stats {
-  width: 20rem;
-  height: 23rem;
+  width: 20%;
   padding: 20px;
   border-radius: 20px;
-  background-color: white !important;
+
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 1px 8px rgba(0, 0, 0, 0.22) !important;
   transition: 0.2s ease-in-out all !important;
 }
@@ -145,16 +189,26 @@ export default {
 }
 
 .custom-cards-stats-graph {
-  width: 55rem;
-  height: 23rem;
+  width: 70%;
   padding: 20px;
   border-radius: 20px;
-  background-color: white !important;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 1px 8px rgba(0, 0, 0, 0.22) !important;
   transition: 0.2s ease-in-out all !important;
 }
 
 .custom-cards-stats-graph:hover {
   box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22) !important;
+}
+
+@media screen and (max-width: 1025px) {
+  .custom-cards-stats {
+    width: 80%;
+  }
+  .img-stats {
+    width: 40%;
+  }
+  .custom-cards-stats-graph {
+    width: 100%;
+  }
 }
 </style>

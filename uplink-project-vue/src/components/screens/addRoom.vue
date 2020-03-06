@@ -10,7 +10,7 @@
     </div>
     <div id="addRooms">
       <div class="container">
-        <h3 class="display-3 text-center">Add Room</h3>
+        <h3 class="h1-titles text-center">Add Room</h3>
         <div id="form">
           <div class="flex-add">
             <div class="card custom-cards-addRooms">

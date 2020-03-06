@@ -60,6 +60,8 @@ app.post("/subscribe", (req, res) => {
   webPush
     .sendNotification(subscription, payload)
     .catch(error => console.error(error));
+
+  console.log(`[${getWholeDate()}] > Subscribed to push notifications`);
 });
 
 function getWholeDate() {
