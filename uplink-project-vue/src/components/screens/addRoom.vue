@@ -4,9 +4,7 @@
     <div class="bottom-show">
       <div class="logo-back fixed-top">
         <h5 class="logo">
-          <router-link class="links" :to="{ name: 'dashboard' }"
-            >uplink</router-link
-          >
+          <router-link class="links-top" :to="{ name: 'dashboard' }">uplink</router-link>
         </h5>
       </div>
     </div>
@@ -17,11 +15,7 @@
           <div class="flex-add">
             <div class="card custom-cards-addRooms">
               <div class="img-cont">
-                <img
-                  src="../../assets/room.png"
-                  alt="device icon"
-                  class="room-img"
-                />
+                <img src="../../assets/room.png" alt="device icon" class="room-img" />
               </div>
               <div class="cont">
                 <b-form @submit="go">
@@ -40,9 +34,7 @@
                   </div>
                   <div class="form-rows">
                     <div class="col-sm-12">
-                      <button class="form-buttons" type="submit">
-                        Add Room
-                      </button>
+                      <button class="form-buttons" type="submit">Add Room</button>
                     </div>
                   </div>
                 </b-form>

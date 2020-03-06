@@ -4,9 +4,7 @@
     <div class="bottom-show">
       <div class="logo-back fixed-top">
         <h5 class="logo">
-          <router-link class="links" :to="{ name: 'dashboard' }"
-            >uplink</router-link
-          >
+          <router-link class="links-top" :to="{ name: 'dashboard' }">uplink</router-link>
         </h5>
       </div>
     </div>
@@ -29,9 +27,7 @@
               <div class="device-cont">
                 <b-form @submit="go">
                   <div class="col-sm-12">
-                    <label for="input-device-name" class="label"
-                      >Device Name</label
-                    >
+                    <label for="input-device-name" class="label">Device Name</label>
                   </div>
                   <div class="col-sm-12">
                     <input
@@ -45,31 +41,22 @@
                   </div>
                   <div class="form-rows">
                     <div class="col-sm-12">
-                      <label for="input-device-room" class="label"
-                        >Device Room</label
-                      >
+                      <label for="input-device-room" class="label">Device Room</label>
                     </div>
                     <div class="col-sm-12">
-                      <select
-                        v-model="form.room"
-                        class="form-dropdown"
-                        required="required"
-                      >
+                      <select v-model="form.room" class="form-dropdown" required="required">
                         <option disabled value>Please Select A Room</option>
                         <option
                           v-for="r in rooms"
                           :key="r.room_id"
                           :value="r.room_id"
-                          >{{ r.room_name }}</option
-                        >
+                        >{{ r.room_name }}</option>
                       </select>
                     </div>
                   </div>
                   <div class="form-rows">
                     <div class="col-sm-12">
-                      <button class="form-buttons" type="submit">
-                        Add Device
-                      </button>
+                      <button class="form-buttons" type="submit">Add Device</button>
                     </div>
                   </div>
                 </b-form>

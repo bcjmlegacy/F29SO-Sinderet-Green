@@ -4,7 +4,7 @@
     <div class="bottom-show">
       <div class="logo-back fixed-top">
         <h5 class="logo">
-          <router-link class="links" :to="{ name: 'dashboard' }">uplink</router-link>
+          <router-link class="links-top" :to="{ name: 'dashboard' }">uplink</router-link>
         </h5>
       </div>
     </div>

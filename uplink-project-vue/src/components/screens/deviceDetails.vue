@@ -4,9 +4,7 @@
     <div class="bottom-show">
       <div class="logo-back fixed-top">
         <h5 class="logo">
-          <router-link class="links" :to="{ name: 'dashboard' }"
-            >uplink</router-link
-          >
+          <router-link class="links-top" :to="{ name: 'dashboard' }">uplink</router-link>
         </h5>
       </div>
     </div>
@@ -23,9 +21,7 @@
                 />
               </div>
               <div class="text-wrapper">
-                <h5 class="card-title text-center label-section">
-                  {{ deviceName }}
-                </h5>
+                <h5 class="card-title text-center label-section">{{ deviceName }}</h5>
                 <p class="card-text text-center">{{ deviceEnergy }} Watts</p>
               </div>
               <div class="text-center">
@@ -37,8 +33,7 @@
                   unchecked-value="on"
                   switch
                   @input="turnOn()"
-                  >Turn {{ form.checked }}</b-form-checkbox
-                >
+                >Turn {{ form.checked }}</b-form-checkbox>
               </div>
               <div class="form-rows">
                 <router-link
@@ -59,18 +54,12 @@
           </div>
           <div class="item-deviceDetails">
             <div class="custom-cards-devicesDetails-schedule">
-              <h5 class="card-title text-center label-section">
-                Daily Schedule
-              </h5>
+              <h5 class="card-title text-center label-section">Daily Schedule</h5>
               <div class="form-rows" />
               <ul class="list-schedule">
-                <li
-                  class="scheduleItem"
-                  v-for="command in scheduledCommands"
-                  :key="command.id"
-                >
+                <li class="scheduleItem" v-for="command in scheduledCommands" :key="command.id">
                   {{ command.command }} at {{ command.hour }}:{{
-                    command.minutes
+                  command.minutes
                   }}
                 </li>
               </ul>
@@ -93,9 +82,7 @@
           </div>
           <div class="item-deviceDetails">
             <div class="custom-cards-devicesDetails-schedule">
-              <h5 class="card-title text-center label-section">
-                Automated Tasks
-              </h5>
+              <h5 class="card-title text-center label-section">Automated Tasks</h5>
               <div class="form-rows" />
               <ul class="list-schedule">
                 <!--List all the automated tasks that were set up like how the schedule looks
@@ -122,9 +109,7 @@
         <div>
           <div class="flex-deviceDetails">
             <div class="card custom-cards-devicesDetails-graph">
-              <h5 class="card-title text-center label-section">
-                Device Energy
-              </h5>
+              <h5 class="card-title text-center label-section">Device Energy</h5>
               <div class="graph-container">
                 <canvas id="chart"></canvas>
               </div>
