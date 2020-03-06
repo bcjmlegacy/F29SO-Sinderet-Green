@@ -4,7 +4,9 @@
     <div class="bottom-show">
       <div class="logo-back fixed-top">
         <h5 class="logo">
-          <router-link class="links" :to="{name: 'dashboard'}">uplink</router-link>
+          <router-link class="links" :to="{ name: 'dashboard' }"
+            >uplink</router-link
+          >
         </h5>
       </div>
     </div>
@@ -21,7 +23,9 @@
                 />
               </div>
               <div class="text-wrapper">
-                <h5 class="card-title text-center label-section">{{ deviceName }}</h5>
+                <h5 class="card-title text-center label-section">
+                  {{ deviceName }}
+                </h5>
                 <p class="card-text text-center">{{ deviceEnergy }} Watts</p>
               </div>
               <div class="device-cont">
@@ -29,7 +33,9 @@
                   <p class="label-section text-center">Add Scheduled Events</p>
 
                   <div class="col-sm-12">
-                    <label for="input-device-room" class="label">Set Time</label>
+                    <label for="input-device-room" class="label"
+                      >Set Time</label
+                    >
                   </div>
                   <div class="col-sm-12">
                     <select
@@ -40,9 +46,7 @@
                       <option disabled value>Hours</option>
                       <option selected="selected" value="0">0</option>
                       <option v-for="n in 24" :key="n" :value="n">
-                        {{
-                        n
-                        }}
+                        {{ n }}
                       </option>
                     </select>
                     <select
@@ -53,32 +57,41 @@
                       <option disabled value>Minutes</option>
                       <option selected="selected" alue="0">0</option>
                       <option v-for="n in 60" :key="n" :value="n">
-                        {{
-                        n
-                        }}
+                        {{ n }}
                       </option>
                     </select>
                   </div>
 
                   <div class="form-rows">
                     <div class="col-sm-12">
-                      <label for="input-device-room" class="label">Set Operation</label>
+                      <label for="input-device-room" class="label"
+                        >Set Operation</label
+                      >
                     </div>
                     <div class="col-sm-12">
-                      <select v-model="form.operation" class="form-dropdown" required="required">
-                        <option disabled value>Please Select An Operation</option>
+                      <select
+                        v-model="form.operation"
+                        class="form-dropdown"
+                        required="required"
+                      >
+                        <option disabled value
+                          >Please Select An Operation</option
+                        >
                         <option
                           v-for="op in operations"
                           :key="op.device_command_id"
                           :value="op.device_command_value"
-                        >{{ op.device_command_name }}</option>
+                          >{{ op.device_command_name }}</option
+                        >
                       </select>
                     </div>
                   </div>
                   <div class="newRowSwitch">
                     <div class="form-rows">
                       <div class="col-sm-12">
-                        <button class="form-buttons" type="submit">Add To Schedule</button>
+                        <button class="form-buttons" type="submit">
+                          Add To Schedule
+                        </button>
                       </div>
                     </div>
                   </div>
@@ -87,11 +100,19 @@
             </div>
 
             <div class="card custom-cards-devicesDetails-schedule-edit">
-              <h5 class="card-title text-center label-section">Delete Schedule Times</h5>
+              <h5 class="card-title text-center label-section">
+                Delete Schedule Times
+              </h5>
               <div class="form-rows" />
               <ul class="list-schedule">
-                <li class="scheduleItem" v-for="command in scheduledCommands" :key="command.id">
-                  {{command.command}} at {{command.hour}}:{{command.minutes}}
+                <li
+                  class="scheduleItem"
+                  v-for="command in scheduledCommands"
+                  :key="command.id"
+                >
+                  {{ command.command }} at {{ command.hour }}:{{
+                    command.minutes
+                  }}
                   <img
                     src="../../assets/close.png"
                     alt="Delete Item"
@@ -105,7 +126,9 @@
                   class="form-buttons-delete"
                   type="button"
                   @click="deleteFullSchedule"
-                >Delete Full Schedule</button>
+                >
+                  Delete Full Schedule
+                </button>
               </div>
             </div>
           </div>

@@ -89,7 +89,9 @@
               </div>
               <div class="form-rows">
                 <div class="col-sm-12">
-                  <label for="input-confirm-password" class="label">Confirm Password</label>
+                  <label for="input-confirm-password" class="label"
+                    >Confirm Password</label
+                  >
                 </div>
                 <div class="col-sm-12">
                   <input
