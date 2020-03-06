@@ -4,9 +4,7 @@
     <div class="bottom-show">
       <div class="logo-back fixed-top">
         <h5 class="logo">
-          <router-link class="links" :to="{ name: 'dashboard' }"
-            >uplink</router-link
-          >
+          <router-link class="links" :to="{ name: 'dashboard' }">uplink</router-link>
         </h5>
       </div>
     </div>
@@ -23,18 +21,14 @@
                 />
               </div>
               <div class="text-wrapper">
-                <h5 class="card-title text-center label-section">
-                  {{ deviceName }}
-                </h5>
+                <h5 class="card-title text-center label-section">{{ deviceName }}</h5>
                 <p class="card-text text-center">{{ deviceEnergy }} Watts</p>
               </div>
               <div class="device-cont">
                 <b-form @submit="updateDevice">
                   <p class="label-section text-center"></p>
                   <div class="col-sm-12">
-                    <label for="input-device-name" class="label"
-                      >Rename Device</label
-                    >
+                    <label for="input-device-name" class="label">Rename Device</label>
                   </div>
                   <div class="col-sm-12">
                     <input
@@ -48,33 +42,24 @@
                   </div>
                   <div class="form-rows">
                     <div class="col-sm-12">
-                      <label for="input-device-room" class="label"
-                        >Change Device Room</label
-                      >
+                      <label for="input-device-room" class="label">Change Device Room</label>
                     </div>
 
                     <div class="col-sm-12">
-                      <select
-                        id="input-device-room"
-                        v-model="form.room"
-                        class="form-dropdown"
-                      >
+                      <select id="input-device-room" v-model="form.room" class="form-dropdown">
                         <option disabled value>Please Select A Room</option>
                         <option
                           v-for="r in rooms"
                           :key="r.room_name"
                           :value="r.room_id"
-                          >{{ r.room_name }}</option
-                        >
+                        >{{ r.room_name }}</option>
                       </select>
                     </div>
                   </div>
                   <div class="newRowSwitch">
                     <div class="form-rows">
                       <div class="col-sm-12">
-                        <button class="form-buttons" type="submit">
-                          Save Changes
-                        </button>
+                        <button class="form-buttons" type="submit">Save Changes</button>
                       </div>
                     </div>
                     <div class="form-rows">
@@ -90,9 +75,7 @@
                             }
                           }"
                         >
-                          <button class="form-buttons" type="submit">
-                            Cancel
-                          </button>
+                          <button class="form-buttons" type="submit">Cancel</button>
                         </router-link>
                       </div>
                     </div>
@@ -104,9 +87,7 @@
                           class="form-buttons-delete"
                           type="button"
                           @click="deleteDevice"
-                        >
-                          Delete Device
-                        </button>
+                        >Delete Device</button>
                       </div>
                     </div>
                   </div>
@@ -133,7 +114,7 @@ export default {
   },
   data() {
     return {
-      currentRoom: "none",
+      currentRoom: "",
       type: "",
       wattage: this.deviceEnergy,
       form: {
@@ -166,9 +147,17 @@ export default {
         });
     },
 
+    getURL(roomID) {
+      for (let i in this.rooms) {
+        if (roomID === this.rooms[i].room_id) {
+          return this.rooms[i].room_name;
+        }
+      }
+      return null;
+    },
+
     updateDevice(evt) {
       let url = "http://localhost:5552/editDevice";
-
       fetch(url, {
         mode: "cors",
         method: "POST",
@@ -190,6 +179,10 @@ export default {
         })
         .then(jsonData => {
           console.log(jsonData);
+          this.$router.push({
+            name: "room",
+            params: { name: this.getURL(this.form.room) }
+          });
         });
 
       evt.preventDefault();
@@ -223,9 +216,9 @@ export default {
               if (jsonData[key].device_id === this.deviceID) {
                 for (let room in this.rooms) {
                   if (jsonData[key].device_room === this.rooms[room].room_id) {
-                    this.form.room = this.rooms[room].room_name;
-                    this.type = jsonData[key].device_type;
-                    console.log(this.form.room);
+                    this.form.room = this.rooms[room].room_id;
+                    this.currentRoom = this.rooms[room].room_name;
+                    this.type = jsonData[room].device_type;
                   }
                 }
               }
