@@ -8,13 +8,14 @@
 		"lint": "vue-cli-service lint"
 	},
 	"dependencies": {
-		"angular": "^1.7.8",
+		"angular": "^1.7.9",
 		"axios": "^0.19.1",
 		"bootstrap": "^4.4.1",
 		"bootstrap-vue": "^2.1.0",
+		"chart.js": "^2.9.3",
 		"core-js": "^3.1.2",
 		"jquery": "^3.4.1",
-		"node-sass": "^4.12.0",
+		"node-sass": "^4.13.1",
 		"popper": "^1.0.1",
 		"vue": "^2.6.11",
 		"vue-cookies": "^1.6.1",

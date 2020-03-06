@@ -538,8 +538,8 @@ select:focus,
 }
 
 .item-deviceDetails {
-  width: 25%;
-  margin: 30px;
+  width: 30%;
+  padding: 20px;
 }
 
 .scheduleItem:before {
@@ -581,8 +581,8 @@ ul {
   max-height: 38rem;
   padding: 30px;
   border-radius: 20px;
-
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 1px 8px rgba(0, 0, 0, 0.22) !important;
+
   transition: 0.2s ease-in-out all !important;
 }
 
@@ -596,7 +596,6 @@ ul {
   max-height: 38rem;
   padding: 30px;
   border-radius: 20px;
-
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 1px 8px rgba(0, 0, 0, 0.22) !important;
   transition: 0.2s ease-in-out all !important;
 }
@@ -606,12 +605,10 @@ ul {
 }
 
 .custom-cards-devicesDetails-graph {
-  width: 90%;
-  min-height: 27rem;
-  max-height: 38rem;
+  width: 87%;
   padding: 30px;
   border-radius: 20px;
-
+  border: none;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 1px 8px rgba(0, 0, 0, 0.22) !important;
   transition: 0.2s ease-in-out all !important;
 }
@@ -648,7 +645,7 @@ ul {
   }
 
   .custom-cards-devicesDetails-graph {
-    width: 90%;
+    width: 100%;
   }
   .custom-cards-devicesDetails {
     padding: 40px;
@@ -670,8 +667,17 @@ ul {
     margin: 0;
     padding: 20px;
   }
+  .custom-cards-devicesDetails-graph {
+    width: 100%;
+  }
   .device-img {
     width: 60%;
+  }
+  .custom-cards-devicesDetails {
+    min-height: 0;
+  }
+  .custom-cards-devicesDetails-schedule {
+    min-height: 0;
   }
 }
 
@@ -680,6 +686,10 @@ ul {
     width: 100%;
     margin: 0;
     padding: 20px;
+  }
+
+  .custom-cards-devicesDetails-graph {
+    padding: 10px;
   }
 }
 

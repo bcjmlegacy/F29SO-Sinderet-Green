@@ -4,7 +4,9 @@
     <div class="bottom-show">
       <div class="logo-back fixed-top">
         <h5 class="logo">
-          <router-link class="links" :to="{ name: 'dashboard' }">uplink</router-link>
+          <router-link class="links" :to="{ name: 'dashboard' }"
+            >uplink</router-link
+          >
         </h5>
       </div>
     </div>
@@ -21,7 +23,9 @@
                 />
               </div>
               <div class="text-wrapper">
-                <h5 class="card-title text-center label-section">{{ deviceName }}</h5>
+                <h5 class="card-title text-center label-section">
+                  {{ deviceName }}
+                </h5>
                 <p class="card-text text-center">{{ deviceEnergy }} Watts</p>
               </div>
               <div class="text-center">
@@ -33,7 +37,8 @@
                   unchecked-value="on"
                   switch
                   @input="turnOn()"
-                >Turn {{ form.checked }}</b-form-checkbox>
+                  >Turn {{ form.checked }}</b-form-checkbox
+                >
               </div>
               <div class="form-rows">
                 <router-link
@@ -54,12 +59,18 @@
           </div>
           <div class="item-deviceDetails">
             <div class="custom-cards-devicesDetails-schedule">
-              <h5 class="card-title text-center label-section">Daily Schedule</h5>
+              <h5 class="card-title text-center label-section">
+                Daily Schedule
+              </h5>
               <div class="form-rows" />
               <ul class="list-schedule">
-                <li class="scheduleItem" v-for="command in scheduledCommands" :key="command.id">
+                <li
+                  class="scheduleItem"
+                  v-for="command in scheduledCommands"
+                  :key="command.id"
+                >
                   {{ command.command }} at {{ command.hour }}:{{
-                  command.minutes
+                    command.minutes
                   }}
                 </li>
               </ul>
@@ -82,7 +93,9 @@
           </div>
           <div class="item-deviceDetails">
             <div class="custom-cards-devicesDetails-schedule">
-              <h5 class="card-title text-center label-section">Automated Tasks</h5>
+              <h5 class="card-title text-center label-section">
+                Automated Tasks
+              </h5>
               <div class="form-rows" />
               <ul class="list-schedule">
                 <!--List all the automated tasks that were set up like how the schedule looks
@@ -109,8 +122,11 @@
         <div>
           <div class="flex-deviceDetails">
             <div class="card custom-cards-devicesDetails-graph">
-              <div class="text-center">
-                <h1>Device Graph</h1>
+              <h5 class="card-title text-center label-section">
+                Device Energy
+              </h5>
+              <div class="graph-container">
+                <canvas id="chart"></canvas>
               </div>
             </div>
           </div>
@@ -123,6 +139,7 @@
 <script>
 import NavbarTop from "../navbars/navbar-top";
 import NavbarBottom from "../navbars/navbar-bottom";
+import Chart from "chart.js";
 
 export default {
   name: "addDevice",
@@ -136,7 +153,44 @@ export default {
         checked: "on"
       },
       device: "",
-      scheduledCommands: []
+      scheduledCommands: [],
+      chartD: {
+        type: "line",
+        data: {
+          labels: ["January", "February", "March", "April", "May", "june"],
+          datasets: [
+            {
+              label: "Energy Use",
+              backgroundColor: "rgba(25, 143, 202, 0.1)",
+              borderColor: "rgba(25, 143, 202, 1)",
+              borderWidth: 0.7,
+              data: [65, 59, 80, 81, 56, 90]
+            }
+          ]
+        },
+        lineChartOptions: {
+          responsive: false,
+          maintainAspectRatio: false,
+          scales: {
+            xAxes: [
+              {
+                gridLines: {
+                  display: true,
+                  color: "rgba(0, 0, 0, 0.1)"
+                }
+              }
+            ],
+            yAxes: [
+              {
+                gridLines: {
+                  display: true,
+                  color: "rgba(0, 0, 0, 0.1)"
+                }
+              }
+            ]
+          }
+        }
+      }
     };
   },
   props: [
@@ -189,11 +243,19 @@ export default {
           result = jsonData[jsonData.length - 1].timer_oneshot_trigger;
           this.form.checked = swap(map(result));
         });
+    },
+    chartData(chartId, chartData) {
+      const ctx = document.getElementById(chartId);
+      new Chart(ctx, {
+        type: chartData.type,
+        data: chartData.data,
+        options: chartData.options
+      });
     }
   },
   mounted: function() {
     let url = "http://localhost:5552/getRepeatTimers?id=" + this.deviceID;
-
+    this.chartData("chart", this.chartD);
     fetch(url, {
       mode: "cors",
       method: "GET",
@@ -280,3 +342,8 @@ function swap(command) {
   }
 }
 </script>
+<style>
+.graph-container {
+  padding: 10px;
+}
+</style>
