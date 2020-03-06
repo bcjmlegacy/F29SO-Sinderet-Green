@@ -1,14 +1,12 @@
 var fs = require("fs"),
-  sqlite3 = require("sqlite3").verbose(),
-  schemaFile = `${__dirname}/db/hub-schema.sql`,
-  demoFile = `${__dirname}/db/demo-data.sql`,
-  schema = fs.readFileSync(schemaFile, "utf8");
-demo = fs.readFileSync(demoFile, "utf8");
+    bs3 = require("better-sqlite3"),
+    schemaFile = `${__dirname}/db/hub-schema.sql`,
+    demoFile = `${__dirname}/db/demo-data.sql`,
+    schema = fs.readFileSync(schemaFile, "utf8");
+    demo = fs.readFileSync(demoFile, "utf8");
 
-var db = new sqlite3.Database(`${__dirname}/db/data.db`);
-
-// Make a temporary database in memory, NOT PERSISTENTLY TO DISK
-// var db = new sqlite3.Database(":memory:");
+// const db = new bs3(`${__dirname}/db/data.db`, { verbose: console.log });
+const db = new bs3(`${__dirname}/db/data.db`);
 
 function getWholeDate() {
   var d = new Date();
@@ -17,29 +15,14 @@ function getWholeDate() {
   return dateString.padEnd(19, " ");
 }
 
-db.serialize(function() {
-  db.exec(schema, function(err) {
-    if (err) {
-      console.log(`[${getWholeDate()}] ! Error creating database!`);
-      console.log(`[${getWholeDate()}] ! ${err}`);
-      console.log(`[${getWholeDate()}] ! Likely already created!`);
-    } else {
-      console.log(`[${getWholeDate()}] > Created database`);
-      db.exec(demo, function(err) {
-        if (err) {
-          console.log(`[${getWholeDate()}] ! Error created demo data!`);
-          console.log(`[${getWholeDate()}] ! ${err}`);
-        } else {
-          console.log(`[${getWholeDate()}] > Added demo data`);
-        }
-      });
-    }
-  });
-});
-
-db.on("error", function(error) {
-  console.log(`[${getWholeDate()}] ! ${error}`);
-});
+try {
+  db.exec(schema);
+  db.exec(demo);
+} catch (e) {
+  console.log(`[${getWholeDate()}] ! Error creating database!`);
+  console.log(`[${getWholeDate()}] ! ${e}`);
+  console.log(`[${getWholeDate()}] ! Likely already created!`);
+}
 
 class databasehandler {
   constructor() {
@@ -52,55 +35,27 @@ class databasehandler {
     
     ####################################### */
 
-  getUserByUsernameAndPassword(username, password, callback) {
-    var q = `SELECT * FROM user WHERE user_username = ? AND user_password = ?`;
+  getUserByUsernameAndPassword(username, password) {
+    var q = db.prepare(
+      `SELECT user_id FROM user WHERE user_username = ? AND user_password = ?`
+    );
 
-    db.all(q, [username, password], function(err, rows) {
-      if (err) {
-        callback(err);
-      } else if (rows[0]) {
-        callback(null, rows[0]["user_id"]); // Details are correct
-      } else {
-        callback("Not found");
-      }
-    });
+    return q.get(username, password);
   }
 
-  insertNewAuthToken(user_id, token, expires, callback) {
-    var q = `INSERT INTO auth (auth_token, auth_user_id, auth_created, auth_expires) VALUES (?, ?, ?, ?)`;
-
+  insertNewAuthToken(user_id, token, expires) {
+    var q = db.prepare(
+      `INSERT INTO auth (auth_token, auth_user_id, auth_created, auth_expires) VALUES (?, ?, ?, ?)`
+    );
     var created = new Date().valueOf();
-
-    db.run(q, [token, user_id, created, expires], function(err) {
-      if (err) {
-        console.log(
-          `[${getWholeDate()}] ! Error inserting data record into ${table}:`
-        );
-        console.log(`[${getWholeDate()}] ! ${err}`);
-        callback(err, null);
-      } else {
-        console.log(
-          `[${getWholeDate()}] > Inserted new auth token: ${JSON.stringify(
-            this.lastID
-          )}`
-        );
-        callback(null, JSON.stringify(this.lastID));
-      }
-    });
+    return q.run(token, user_id, created, expires);
   }
 
-  checkToken(user_id, token, callback) {
-    var q = `SELECT * FROM auth WHERE auth_user_id = ? AND auth_token = ?`;
-
-    db.all(q, [user_id, token], function(err, rows) {
-      if (err) {
-        callback(err);
-      } else if (rows[0]) {
-        callback(null, "auth_expires");
-      } else {
-        callback("Not found");
-      }
-    });
+  checkToken(user_id, token) {
+    var q = db.prepare(
+      `SELECT * FROM auth WHERE auth_user_id = ? AND auth_token = ?`
+    );
+    return q.get(user_id, token);
   }
 
   /* #######################################
@@ -109,67 +64,93 @@ class databasehandler {
   
   ####################################### */
 
-  getById(table, id, callback) {
-    var q = `SELECT * FROM ${table} WHERE ${table}_id = ?`;
-
-    db.all(q, [id], function(err, rows) {
-      if (err) {
-        callback(err);
-      } else {
-        callback(null, rows);
-      }
-    });
+  getById(table, id) {
+    var q = db.prepare(`SELECT * FROM ${table} WHERE ${table}_id = ?`);
+    return q.all(id);
   }
 
-  getAccountTypeById(id, callback) {
-    this.getById("account_type", id, callback);
+  getAccountTypeById(id) {
+    return this.getById("account_type", id);
   }
-  getSensorTypeById(id, callback) {
-    this.getById("sensor_type", id, callback);
+  getSensorTypeById(id) {
+    return this.getById("sensor_type", id);
   }
-  getRoomById(id, callback) {
-    this.getById("room", id, callback);
+  getRoomById(id) {
+    return this.getById("room", id);
   }
-  getDeviceTypeById(id, callback) {
-    this.getById("device_type", id, callback);
+  getDeviceTypeById(id) {
+    return this.getById("device_type", id);
   }
-  getCommandById(id, callback) {
-    this.getById("device_command", id, callback);
-  }
-
-  getSensorById(id, callback) {
-    this.getById("sensor", id, callback);
-  }
-  getDeviceById(id, callback) {
-    this.getById("device", id, callback);
+  getCommandById(id) {
+    return this.getById("device_command", id);
   }
 
-  getRepeatTimerById(id, callback) {
-    this.getById("timer_repeat", id, callback);
+  getSensorById(id) {
+    return this.getById("sensor", id);
+  }
+  getDeviceById(id) {
+    return this.getById("device", id);
   }
 
-  getRepeatTimerByDeviceId(id, callback) {
-    var q = `SELECT * FROM timer_repeat WHERE timer_repeat_device_id = ?`;
-
-    db.all(q, [id], function(err, rows) {
-      if (err) {
-        callback(err);
-      } else {
-        callback(null, rows);
-      }
-    });
+  getRepeatTimerById(id) {
+    return this.getById("timer_repeat", id);
   }
 
-  getOneshotTimersByDeviceId(id, callback) {
-    var q = `SELECT * FROM timer_oneshot WHERE timer_oneshot_device_id = ?`;
+  getUserById(id) {
+    return this.getById("user", id);
+  }
 
-    db.all(q, [id], function(err, rows) {
-      if (err) {
-        callback(err);
-      } else {
-        callback(null, rows);
-      }
-    });
+  getRepeatTimerByDeviceId(id) {
+    var q = db.prepare(
+      `SELECT * FROM timer_repeat WHERE timer_repeat_device_id = ?`
+    );
+
+    return q.all(id);
+  }
+
+  getOneshotTimersByDeviceId(id) {
+    var q = db.prepare(
+      `SELECT * FROM timer_oneshot WHERE timer_oneshot_device_id = ?`
+    );
+
+    return q.all(id);
+  }
+
+  getUserPermissionByDeviceId(id) {
+    var q = db.prepare(
+      `SELECT * FROM user_permission WHERE user_permission_device_id = ?`
+    );
+
+    return q.all(id);
+  }
+
+  getUserPermissionBySensorId(id) {
+    var q = db.prepare(
+      `SELECT * FROM user_permission WHERE user_permission_sensor_id = ?`
+    );
+
+    return q.all(id);
+  }
+
+  checkAuth(user_id, device_id, sensor_id) {
+    console.log("> Checking auth...");
+    if (!sensor_id) sensor_id = "NA";
+    if (!device_id) device_id = "NA";
+
+    var user = this.getUserById(user_id);
+    if (user[0]["user_admin"] == 1) {
+      console.log("> Admin override");
+      return true;
+    } else {
+      // Check permissions table
+      var q = db.prepare(
+        `SELECT * FROM user_permission WHERE user_permission_user_id = ? AND (user_permission_device_id = ? OR user_permission_sensor_id = ?)`
+      );
+
+      var row = q.all(user_id, device_id, sensor_id);
+      if (row.length > 0) return true;
+      return false;
+    }
   }
 
   /* #######################################
@@ -179,40 +160,28 @@ class databasehandler {
   ####################################### */
 
   getByRoom(table, roomId, callback) {
-    var q = `SELECT * FROM ${table} WHERE ${table}_room = ?`;
+    var q = db.prepare(`SELECT * FROM ${table} WHERE ${table}_room = ?`);
 
-    db.all(q, [roomId], function(err, rows) {
-      if (err) {
-        callback(err);
-      } else {
-        callback(null, rows);
-      }
-    });
+    return q.all(roomId);
   }
 
-  getSensorByRoom(roomId, callback) {
-    this.getByRoom("sensor", roomId, callback);
+  getSensorByRoom(roomId) {
+    return this.getByRoom("sensor", roomId);
   }
-  getDeviceByRoom(roomId, callback) {
-    this.getByRoom("device", roomId, callback);
+  getDeviceByRoom(roomId) {
+    return this.getByRoom("device", roomId);
   }
 
-    /* #######################################
+  /* #######################################
           
   Get by device type.
   
   ####################################### */
 
-  getDeviceByType(device_type_id, callback) {
-    var q = `SELECT * FROM device WHERE device_type = ?`;
+  getDeviceByType(device_type_id) {
+    var q = db.prepare(`SELECT * FROM device WHERE device_type = ?`);
 
-    db.all(q, [device_type_id], function(err, rows) {
-      if (err) {
-        callback(err);
-      } else {
-        callback(null, rows);
-      }
-    });
+    return q.all(device_type_id);
   }
 
   /* #######################################
@@ -221,200 +190,152 @@ class databasehandler {
   
   ####################################### */
 
-  getMany(table, callback, limit, offset) {
+  getMany(table, limit, offset) {
     if (limit && offset) {
-      var q = `SELECT * FROM ${table} LIMIT ${limit} OFFSET ${offset}`;
+      var q = db.prepare(`SELECT * FROM ${table} LIMIT ? OFFSET ?`);
+      return q.all(limit, offset);
     } else if (limit) {
-      var q = `SELECT * FROM ${table} LIMIT ${limit}`;
+      var q = db.prepare(`SELECT * FROM ${table} LIMIT ?`);
+      return q.all(limit);
     } else {
-      var q = `SELECT * FROM ${table}`;
+      var q = db.prepare(`SELECT * FROM ${table}`);
+      return q.all();
     }
-
-    db.all(q, function(err, rows) {
-      if (err) {
-        callback(err);
-      } else {
-        callback(null, rows);
-      }
-    });
   }
 
-  getAccountTypes(callback, limit, offset) {
-    this.getMany("account_type", callback, limit, offset);
+  getAccountTypes(limit, offset) {
+    return this.getMany("account_type", limit, offset);
   }
-  getSensorTypes(callback, limit, offset) {
-    this.getMany("sensor_type", callback, limit, offset);
+  getSensorTypes(limit, offset) {
+    return this.getMany("sensor_type", limit, offset);
   }
-  getRooms(callback, limit, offset) {
-    this.getMany("room", callback, limit, offset);
+  getRooms(limit, offset) {
+    return this.getMany("room", limit, offset);
   }
-  getDeviceTypes(callback, limit, offset) {
-    this.getMany("device_type", callback, limit, offset);
+  getDeviceTypes(limit, offset) {
+    return this.getMany("device_type", limit, offset);
+  }
+  getSensors(limit, offset) {
+    return this.getMany("sensor", limit, offset);
+  }
+  getDevices(limit, offset) {
+    return this.getMany("device", limit, offset);
+  }
+  getUsers(limit, offset) {
+    return this.getMany("user", limit, offset);
   }
 
-  getSensors(callback, limit, offset) {
-    this.getMany("sensor", callback, limit, offset);
-  }
-  getDevices(callback, limit, offset) {
-    this.getMany("device", callback, limit, offset);
-  }
-  getUsers(callback, limit, offset) {
-    this.getMany("user", callback, limit, offset);
-  }
-
-  getSensorReadings(callback, limit, offset, id) {
+  getSensorReadings(limit, offset, id) {
     if (limit && offset && id) {
-      var q = `SELECT * FROM sensor_reading WHERE sensor_reading_id = '${id}' LIMIT ${limit} OFFSET ${offset}`;
+      var q = db.prepare(
+        `SELECT * FROM sensor_reading WHERE sensor_reading_id = ? LIMIT ? OFFSET ?`
+      );
+      return q.all(id, limit, offset);
     } else if (limit && id) {
-      var q = `SELECT * FROM sensor_reading WHERE sensor_reading_id = '${id}' LIMIT ${limit}`;
+      var q = db.prepare(
+        `SELECT * FROM sensor_reading WHERE sensor_reading_id = ? LIMIT ?`
+      );
+      return q.all(id, limit);
     } else if (limit && offset) {
-      var q = `SELECT * FROM sensor_reading LIMIT ${limit} OFFSET ${offset}`;
+      var q = db.prepare(`SELECT * FROM sensor_reading LIMIT ? OFFSET ?`);
+      return q.all(limit, offset);
     } else if (limit) {
-      var q = `SELECT * FROM sensor_reading LIMIT ${limit}`;
+      var q = db.prepare(`SELECT * FROM sensor_reading LIMIT ?`);
+      return q.all(limit);
     } else {
-      var q = `SELECT * FROM sensor_reading`;
+      var q = db.prepare(`SELECT * FROM sensor_reading`);
+      return q.all();
     }
-
-    db.all(q, function(err, rows) {
-      if (err) {
-        callback(err);
-      } else {
-        callback(null, rows);
-      }
-    });
   }
 
-  getDeviceReadings(callback, limit, offset, id) {
+  getDeviceReadings(limit, offset, id) {
     if (limit && offset && id) {
-      var q = `SELECT * FROM device_reading WHERE device_reading_id = ${id} LIMIT ${limit} OFFSET ${offset}`;
+      var q = db.prepare(
+        `SELECT * FROM device_reading WHERE device_reading_id = ? LIMIT ? OFFSET ?`
+      );
+      return q.all(id, limit, offset);
     } else if (limit && id) {
-      var q = `SELECT * FROM device_reading WHERE device_reading_id = ${id} LIMIT ${limit}`;
+      var q = db.prepare(
+        `SELECT * FROM device_reading WHERE device_reading_id = ? LIMIT ?`
+      );
+      return q.all(id, limit);
     } else if (limit && offset) {
-      var q = `SELECT * FROM device_reading LIMIT ${limit} OFFSET ${offset}`;
+      var q = db.prepare(`SELECT * FROM device_reading LIMIT ? OFFSET ?`);
+      return q.all(limit, offset);
     } else if (limit) {
-      var q = `SELECT * FROM device_reading LIMIT ${limit}`;
+      var q = db.prepare(`SELECT * FROM device_reading LIMIT ?`);
+      return q.all(limit);
     } else {
-      var q = `SELECT * FROM device_reading`;
+      var q = db.prepare(`SELECT * FROM device_reading`);
+      return q.all();
     }
-
-    db.all(q, function(err, rows) {
-      if (err) {
-        callback(err);
-      } else {
-        callback(null, rows);
-      }
-    });
   }
 
-  getLastDeviceReadingByType(id, type, callback)  {
-    var q = "SELECT * FROM device_reading WHERE device_reading_id = ? AND device_reading_type = ? LIMIT 1";
-
-    db.all(q, [id, type],function(err, rows) {
-      if (err) {
-        callback(err);
-      } else if(rows[0])  {
-        callback(null, rows);
-      } else  {
-        callback("No data");
-      }
-    })
+  getLastDeviceReadingByType(id, type) {
+    var q = db.prepare(
+      "SELECT * FROM device_reading WHERE device_reading_device_id = ? AND device_reading_type = ? LIMIT 1"
+    );
+    return q.get(id, type);
   }
 
-  getDeviceStatusTime(id, callback) {
-    var q = `SELECT * FROM device_reading WHERE device_reading_device_id = ? AND device_reading_type = "status" AND ( device_reading_value = "on" OR device_reading_value = "off" ) LIMIT 1 `;
+  getDeviceStatusTime(id) {
+    var q = db.prepare(
+      `SELECT * FROM device_reading WHERE device_reading_device_id = ? AND device_reading_type = 'status' AND ( device_reading_value = 'on' OR device_reading_value = 'off' ) LIMIT 1 `
+    );
+    var row = q.get(id);
 
-    db.all(q, [id], function(err, rows) {
-      if (err) {
-        callback(err);
-      } else if(rows[0]) {
-        callback(null, rows[0]["device_reading_value"], rows[0]["device_reading_timestamp"]);
-      } else  {
-        callback("No data");
-      }
-    });
+    if (row !== undefined) {
+      return [
+        row["device_reading_value"],
+        row["device_reading_timestamp"]
+      ];
+    } else {
+      return row;
+    }
   }
 
-  checkWarningExists(device_id, message, callback) {
-    var q = `SELECT * FROM warning WHERE warning_device_id = ? AND warning_message = ? LIMIT 1`;
-
-    db.all(q, [device_id, message], function(err, rows) {
-      if (err) {
-        callback(err);
-      } else if(rows[0]) {
-        callback(null, rows[0]);
-      } else  {
-        callback("No data");
-      }
-    });
+  checkWarningExists(device_id, message) {
+    var q = db.prepare(
+      `SELECT * FROM warning WHERE warning_device_id = ? AND warning_message = ? LIMIT 1`
+    );
+    return q.get(device_id, message);
   }
 
-  getRepeatTimers(callback) {
-    var q = `SELECT * FROM timer_repeat
+  getRepeatTimers() {
+    var q = db.prepare(`SELECT * FROM timer_repeat
              INNER JOIN device         ON timer_repeat.timer_repeat_device_id = device.device_id
              INNER JOIN device_type    ON device.device_type                  = device_type.device_type_id
              INNER JOIN device_command ON timer_repeat.timer_repeat_command   = device_command.device_command_id
-             INNER JOIN room           ON device.device_room                  = room.room_id`;
+             INNER JOIN room           ON device.device_room                  = room.room_id`);
 
-    db.all(q, function(err, rows) {
-      if (err) {
-        callback(err);
-      } else {
-        callback(null, rows);
-      }
-    });
+    return q.all();
   }
 
   updateRepeatTimerLastRun(last_run, id) {
     var q = `UPDATE timer_repeat SET timer_repeat_last_run = ? WHERE timer_repeat_id = ?`;
 
-    db.all(q, [last_run, id], function(err, rows) {
-      if (err) {
-        console.log(err);
-      } else {
-        // console.log("Repeat timer updated");
-      }
-    });
+    return q.run(last_run, id);
   }
 
-  getOneshotTimers(callback) {
-    var q = `SELECT * FROM timer_oneshot
+  getOneshotTimers() {
+    var q = db.prepare(`SELECT * FROM timer_oneshot
              INNER JOIN device         ON timer_oneshot.timer_oneshot_device_id = device.device_id
              INNER JOIN device_type    ON device.device_type                    = device_type.device_type_id
              INNER JOIN device_command ON timer_oneshot.timer_oneshot_command   = device_command.device_command_id
-             INNER JOIN room           ON device.device_room                    = room.room_id`;
+             INNER JOIN room           ON device.device_room                    = room.room_id`);
 
-    // var q = `SELECT * FROM timer_oneshot
-    //          INNER JOIN device         ON timer_oneshot.timer_oneshot_device_id = device.device_id
-    //          INNER JOIN device_type    ON device.device_type                    = device_type.device_type_id`;
-
-    db.all(q, function(err, rows) {
-      if (err) {
-        callback(err);
-      } else {
-        callback(null, rows);
-      }
-    });
+    return q.all();
   }
 
-  getDeviceTriggers(callback) {
-    var q = `SELECT * FROM device_trigger
+  getDeviceTriggers() {
+    var q = db.prepare(`SELECT * FROM device_trigger
              INNER JOIN device         ON device_trigger.device_trigger_device_id = device.device_id
              INNER JOIN sensor         ON device_trigger.device_trigger_sensor_id = sensor.sensor_id
              INNER JOIN device_type    ON device.device_type                      = device_type.device_type_id
              INNER JOIN device_command ON device_trigger.device_trigger_command   = device_command.device_command_id
-             INNER JOIN room           ON device.device_room                      = room.room_id`;
+             INNER JOIN room           ON device.device_room                      = room.room_id`);
 
-    // var q = `SELECT * FROM timer_oneshot
-    //          INNER JOIN device         ON timer_oneshot.timer_oneshot_device_id = device.device_id
-    //          INNER JOIN device_type    ON device.device_type                    = device_type.device_type_id`;
-
-    db.all(q, function(err, rows) {
-      if (err) {
-        callback(err);
-      } else {
-        callback(null, rows);
-      }
-    });
+    return q.all();
   }
 
   /* #######################################
@@ -423,38 +344,26 @@ class databasehandler {
   
   ####################################### */
 
-  getSensorReadingsByTimeframe(id, start, end, callback) {
+  getSensorReadingsByTimeframe(id, start, end) {
     if (!end) {
       end = new Date().valueOf();
     }
-    var q = `SELECT * FROM sensor_reading WHERE sensor_reading_sensor_id = ?
+    var q = db.prepare(`SELECT * FROM sensor_reading WHERE sensor_reading_sensor_id = ?
             AND sensor_reading_timestamp > ?
-            AND sensor_reading_timestamp < ? `;
+            AND sensor_reading_timestamp < ? `);
 
-    db.all(q, [id, start, end], function(err, rows) {
-      if (err) {
-        callback(err);
-      } else {
-        callback(null, rows);
-      }
-    });
+    return q.all(id, start, end);
   }
 
-  getDeviceReadingsByTimeframe(id, start, end, callback) {
+  getDeviceReadingsByTimeframe(id, start, end) {
     if (!end) {
       end = new Date().valueOf();
     }
-    var q = `SELECT * FROM device_reading WHERE device_reading_sensor_id = ?
+    var q = db.prepare(`SELECT * FROM device_reading WHERE device_reading_sensor_id = ?
             AND device_reading_timestamp > ?
-            AND device_reading_timestamp < ? `;
+            AND device_reading_timestamp < ? `);
 
-    db.all(q, [id, start, end], function(err, rows) {
-      if (err) {
-        callback(err);
-      } else {
-        callback(null, rows);
-      }
-    });
+    return q.all(id, start, end);
   }
 
   /* #######################################
@@ -463,18 +372,12 @@ class databasehandler {
   
   ####################################### */
 
-  getCommandsByDevice(device_type_id, callback) {
-    var q = `SELECT * FROM device_command
+  getCommandsByDevice(device_type_id) {
+    var q = db.prepare(`SELECT * FROM device_command
             INNER JOIN device_type ON device_type.device_type_id = device_command.device_command_device_type
-            WHERE device_type.device_type_id = ?`;
+            WHERE device_type.device_type_id = ?`);
 
-    db.all(q, [device_type_id], function(err, rows) {
-      if (err) {
-        callback(err);
-      } else {
-        callback(null, rows);
-      }
-    });
+    return q.all(device_type_id);
   }
 
   /* #######################################
@@ -483,37 +386,25 @@ class databasehandler {
   
   ####################################### */
 
-  insertOne(table, val, callback) {
-    var q = `INSERT INTO ${table} (${table}_name) VALUES (?)`;
-
-    db.run(q, [val], function(err) {
-      if (err) {
-        console.log(`! Error inserting data record into ${table}:`);
-        console.log(`! ${err}`);
-        callback(err, null);
-      } else {
-        console.log(
-          `> Inserted data record into ${table}: ${JSON.stringify(this.lastID)}`
-        );
-        callback(null, JSON.stringify(this.lastID));
-      }
-    });
+  insertOne(table, val) {
+    var q = db.prepare(`INSERT INTO ${table} (${table}_name) VALUES (?)`);
+    return q.run(val);
   }
 
-  insertProperty(val, callback) {
-    this.insertOne("property", val, callback);
+  insertProperty(val) {
+    return this.insertOne("property", val);
   }
-  insertAccountType(val, callback) {
-    this.insertOne("account_type", val, callback);
+  insertAccountType(val) {
+    return this.insertOne("account_type", val);
   }
-  insertSensorType(val, callback) {
-    this.insertOne("sensor_type", val, callback);
+  insertSensorType(val) {
+    return this.insertOne("sensor_type", val);
   }
-  insertRoom(val, callback) {
-    this.insertOne("room", val, callback);
+  insertRoom(val) {
+    return this.insertOne("room", val);
   }
-  insertDeviceType(val, callback) {
-    this.insertOne("device_type", val, callback);
+  insertDeviceType(val) {
+    return this.insertOne("device_type", val);
   }
 
   /* #######################################
@@ -522,41 +413,24 @@ class databasehandler {
   
   ####################################### */
 
-  insertUser(
-    account_type,
-    username,
-    password,
-    email,
-    forename,
-    surname,
-    callback
-  ) {
+  insertUser(account_type, username, password, email, forename, surname, admin) {
     var ts = new Date().valueOf();
-    var q = `INSERT INTO user (user_account_type, user_username, user_email, user_forename, user_surname, user_password, user_created) VALUES (?, ?, ?, ?, ?, ?, ?)`;
+    var q = `INSERT INTO user (user_account_type, user_username, user_email, user_forename, user_surname, user_password, user_created, user_admin) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`;
 
-    db.run(
-      q,
-      [account_type, username, email, forename, surname, password, ts],
-      function(err) {
-        if (err) {
-          console.log(
-            `[${getWholeDate()}] ! Error inserting data record into user:`
-          );
-          console.log(`[${getWholeDate()}] ! ${err}`);
-          callback(err, null);
-        } else {
-          console.log(
-            `[${getWholeDate()}] > Inserted data record into user: ${JSON.stringify(
-              this.lastID
-            )}`
-          );
-          callback(null, JSON.stringify(this.lastID));
-        }
-      }
+    return q.run(
+      account_type,
+      username,
+      email,
+      forename,
+      surname,
+      password,
+      ts,
+      user_admin
     );
   }
 
   generateId() {
+    console.log("> Generating new device / sensor id...");
     var id = "",
       idPiece = "",
       length = 3,
@@ -575,138 +449,63 @@ class databasehandler {
       }
     }
 
-    this.getDeviceById(id, function(err, rows) {
-      if (err) {
-        callback(err);
-      } else if (rows[0]) {
-        // There was a device with that id
-        id = generateId();
-      }
-    });
+    var dev = this.getDeviceById(id)
+    if (dev.length > 0) {
+      return this.generateId();
+    }
 
-    this.getSensorById(id, function(err, rows) {
-      if (err) {
-        callback(err);
-      } else if (rows[0]) {
-        // There was a sensor with that id
-        id = generateId();
-      }
-    });
+    var sen = this.getSensorById(id)
+    if (sen.length > 0) {
+      return this.generateId();
+    }
 
+    console.log("> Created: " + id);
     return id;
   }
 
-  insertSensor(room, type, name, callback) {
+  insertSensor(room, type, name) {
     var ts = new Date().valueOf();
-    var q = `INSERT INTO sensor (sensor_id, sensor_room, sensor_type, sensor_name, sensor_added) VALUES (?, ?, ?, ?, ?)`;
-
+    var q = db.prepare(
+      `INSERT INTO sensor (sensor_id, sensor_room, sensor_type, sensor_name, sensor_added) VALUES (?, ?, ?, ?, ?)`
+    );
     var newId = this.generateId();
 
-    db.run(q, [newId, room, type, name, ts], function(err) {
-      if (err) {
-        console.log(
-          `[${getWholeDate()}] ! Error inserting data record into sensor:`
-        );
-        console.log(`[${getWholeDate()}] ! ${err}`);
-        callback(err, null);
-      } else {
-        console.log(
-          `[${getWholeDate()}] > Inserted data record into sensor: ${JSON.stringify(
-            this.lastID
-          )}`
-        );
-        callback(null, JSON.stringify(this.lastID));
-      }
-    });
+    return q.run(newId, room, type, name, ts);
   }
 
-  editSensor(id, room, type, name, callback) {
-    var q = `UPDATE sensor SET sensor_room = ?, sensor_type = ?, sensor_name = ? WHERE sensor_id = ?`;
+  editSensor(id, room, type, name) {
+    var q = db.prepare(
+      `UPDATE sensor SET sensor_room = ?, sensor_type = ?, sensor_name = ? WHERE sensor_id = ?`
+    );
 
-    var newId = this.generateId();
-
-    db.run(q, [room, type, name, id], function(err) {
-      if (err) {
-        console.log(
-          `[${getWholeDate()}] ! Error updating data record for sensor:`
-        );
-        console.log(`[${getWholeDate()}] ! ${err}`);
-        callback(err, null);
-      } else {
-        console.log(
-          `[${getWholeDate()}] > Updated data record for sensor: ${JSON.stringify(
-            this.lastID
-          )}`
-        );
-        callback(null, JSON.stringify(this.lastID));
-      }
-    });
+    return q.run(room, type, name, id);
   }
 
-  insertDevice(room, type, wattage, name, callback) {
+  insertDevice(room, type, wattage, name) {
     var ts = new Date().valueOf();
-    var q = `INSERT INTO device (device_id, device_room, device_type, device_wattage, device_name, device_added) VALUES (?, ?, ?, ?, ?, ?)`;
+    var q = db.prepare(
+      `INSERT INTO device (device_id, device_room, device_type, device_wattage, device_name, device_added) VALUES (?, ?, ?, ?, ?, ?)`
+    );
 
     var newId = this.generateId();
 
-    db.run(q, [newId, room, type, wattage, name, ts], function(err) {
-      if (err) {
-        console.log(
-          `[${getWholeDate()}] ! Error inserting data record into device:`
-        );
-        console.log(`[${getWholeDate()}] ! ${err}`);
-        callback(err, null);
-      } else {
-        console.log(
-          `[${getWholeDate()}] > Inserted data record into device: ${JSON.stringify(
-            this.lastID
-          )}`
-        );
-        callback(null, JSON.stringify(this.lastID));
-      }
-    });
+    return q.run(newId, room, type, wattage, name, ts);;
   }
 
-  editDevice(id, room, type, wattage, name, callback) {
-    var q = `UPDATE device SET device_room = ?, device_type = ?, device_wattage = ?, device_name = ? WHERE device_id = ?`;
+  editDevice(id, room, type, wattage, name) {
+    var q = db.prepare(
+      `UPDATE device SET device_room = ?, device_type = ?, device_wattage = ?, device_name = ? WHERE device_id = ?`
+    );
 
-    db.run(q, [room, type, wattage, name, id], function(err) {
-      if (err) {
-        console.log(
-          `[${getWholeDate()}] ! Error updating data record for device:`
-        );
-        console.log(`[${getWholeDate()}] ! ${err}`);
-        callback(err, null);
-      } else {
-        console.log(
-          `[${getWholeDate()}] > Updated data record for device: ${JSON.stringify(
-            this.lastID
-          )}`
-        );
-        callback(null, JSON.stringify(this.lastID));
-      }
-    });
+    return q.run(room, type, wattage, name, id);
   }
 
-  insertDeviceTrigger(device_id, sensor_id, gt_lt_eq, value, command_id, callback) {
-    var q = "INSERT INTO device_trigger (device_trigger_device_id, device_trigger_sensor_id, device_trigger_gt_lt_eq, device_sensor_value, device_command) VALUES (?, ?, ?, ?, ?)";
-  
-    db.run(q, [device_id, sensor_id, gt_lt_eq, value, command_id], function(err) {
-      if (err) {
-        console.log(
-          `[${getWholeDate()}] ! Error inserting new trigger:`
-        );
-        console.log(`[${getWholeDate()}] ! ${err}`);
-        callback(err, null);
-      } else {
-        console.log(
-          `[${getWholeDate()}] > Inserted new trigger for device ${device_id}: ${JSON.stringify(
-            this.lastID
-          )}`
-        );
-        callback(null, JSON.stringify(this.lastID));
-      }
-    });
+  insertDeviceTrigger(device_id, sensor_id, gt_lt_eq, value, command_id) {
+    var q = db.prepare(
+      "INSERT INTO device_trigger (device_trigger_device_id, device_trigger_sensor_id, device_trigger_gt_lt_eq, device_sensor_value, device_command) VALUES (?, ?, ?, ?, ?)"
+    );
+
+    return q.run(device_id, sensor_id, gt_lt_eq, value, command_id);
   }
 
   /* #######################################
@@ -717,54 +516,24 @@ class databasehandler {
 
   insertSensorReading(id, val) {
     var ts = new Date().valueOf();
-    var q = `INSERT INTO sensor_reading (sensor_reading_sensor_id, sensor_reading_value, sensor_reading_timestamp) VALUES (?, ?, ?)`;
+    var q = db.prepare(
+      `INSERT INTO sensor_reading (sensor_reading_sensor_id, sensor_reading_value, sensor_reading_timestamp) VALUES (?, ?, ?)`
+    );
 
-    db.run(q, [id, val, ts], function(err) {
-      if (err) {
-        console.log(
-          `[${getWholeDate()}] ! Error inserting data record for sensor ${id}:`
-        );
-        console.log(`[${getWholeDate()}] ! ${err}`);
-      }
-      console.log(
-        `[${getWholeDate()}] > Inserted data record for sensor ${id}: ${JSON.stringify(
-          this.lastID
-        )}`
-      );
-    });
+    return q.run(id, val, ts);
   }
 
   insertDeviceReading(id, type, val) {
     var ts = new Date().valueOf();
-    var q = `INSERT INTO device_reading (device_reading_device_id, device_reading_type, device_reading_value, device_reading_timestamp) VALUES (?, ?, ?, ?)`;
+    var q = db.prepare(
+      `INSERT INTO device_reading (device_reading_device_id, device_reading_type, device_reading_value, device_reading_timestamp) VALUES (?, ?, ?, ?)`
+    );
 
-    db.run(q, [id, type, val, ts], function(err) {
-      if (err) {
-        console.log(
-          `[${getWholeDate()}] ! Error inserting data record for device ${id}:`
-        );
-        console.log(`[${getWholeDate()}] ! ${err}`);
-      }
-      console.log(
-        `[${getWholeDate()}] > Inserted data record for device ${id}: ${JSON.stringify(
-          this.lastID
-        )}`
-      );
-    });
+    return q.run(id, type, val, ts);
   }
 
-  insertRepeatTimer(
-    type,
-    month,
-    day,
-    hour,
-    minute,
-    device_id,
-    command,
-    callback
-  ) {
-    var ts = new Date().valueOf();
-    var q = `INSERT INTO timer_repeat (
+  insertRepeatTimer(type, month, day, hour, minute, device_id, command) {
+    var q = db.prepare(`INSERT INTO timer_repeat (
               timer_repeat_type,
               timer_repeat_month,
               timer_repeat_day,
@@ -773,105 +542,70 @@ class databasehandler {
               timer_repeat_device_id,
               timer_repeat_command,
               timer_repeat_last_run) 
-             VALUES (?, ?, ?, ?, ?, ?, ?, 0)`;
+             VALUES (?, ?, ?, ?, ?, ?, ?, 0)`);
 
-    db.run(q, [type, month, day, hour, minute, device_id, command], function(
-      err
-    ) {
-      if (err) {
-        console.log(`[${getWholeDate()}] ! Error inserting repeat timer:`);
-        console.log(`[${getWholeDate()}] ! ${err}`);
-        callback(err, null);
-      } else {
-        console.log(
-          `[${getWholeDate()}] > Inserted repeat timer: ${JSON.stringify(
-            this.lastID
-          )}`
-        );
-        callback(null, JSON.stringify(this.lastID));
-      }
-    });
+    return q.run(type, month, day, hour, minute, device_id, command);
   }
 
-  insertOneshotTimer(trigger, device_id, command, callback) {
+  insertOneshotTimer(trigger, device_id, command) {
     var ts = new Date().valueOf();
-    var q = `INSERT INTO timer_oneshot (
+    var q = db.prepare(`INSERT INTO timer_oneshot (
               timer_oneshot_trigger,
               timer_oneshot_device_id,
               timer_oneshot_command)
-             VALUES (?, ?, ?)`;
+             VALUES (?, ?, ?)`);
 
-    db.run(q, [trigger, device_id, command], function(err) {
-      if (err) {
-        console.log(`[${getWholeDate()}] ! Error inserting oneshot timer:`);
-        console.log(`[${getWholeDate()}] ! ${err}`);
-        callback(err, null);
-      } else {
-        console.log(
-          `[${getWholeDate()}] > Inserted oneshot timer: ${JSON.stringify(
-            this.lastID
-          )}`
-        );
-        callback(null, JSON.stringify(this.lastID));
-      }
-    });
+    return q.run(trigger, device_id, command);
   }
 
-  insertWarning(
-    device_id,
-    sensor_id,
-    message,
-    severity,
-  ) {
+  insertWarning(device_id, sensor_id, message, severity) {
     var ts = new Date().valueOf();
-    var q = `INSERT INTO warning (
+    var q = db.prepare(`INSERT INTO warning (
               warning_timestamp,
               warning_last_updated_ts,
               warning_device_id,
               warning_sensor_id,
               warning_message,
               warning_severity)
-             VALUES (?, ?, ?, ?, ?, ?)`;
+             VALUES (?, ?, ?, ?, ?, ?)`);
 
-    if(!(sensor_id)) sensor_id = null;
-    if(!(device_id)) device_id = null;
+    if (!sensor_id) sensor_id = null;
+    if (!device_id) device_id = null;
 
-    db.run(q, [ts, ts, device_id, sensor_id, message, severity], function(
-      err
-    ) {
-      if (err) {
-        console.log(
-          `[${getWholeDate()}] ! Error inserting warning:`
-        );
-        console.log(`[${getWholeDate()}] ! ${err}`);
-      } else {
-        console.log(
-          `[${getWholeDate()}] > Inserted warning: ${JSON.stringify(
-            this.lastID
-          )}`
-        );
-      }
-    });
+    return q.run(ts, ts, device_id, sensor_id, message, severity);
   }
 
   updateWarning(warning_id, read) {
     var ts = new Date().valueOf();
     var q;
-    if(read == 0)  {
-      q = "UPDATE warning SET warning_read = 0, warning_last_updated_ts = ? WHERE warning_id = ?";
-    } else if(read == 1)  {
-      q = "UPDATE warning SET warning_read = 1, warning_last_updated_ts = ? WHERE warning_id = ?";
-    } else  {
-      q = "UPDATE warning SET warning_last_updated_ts = ? WHERE warning_id = ?";
+    if (read == 0) {
+      q = db.prepare(
+        "UPDATE warning SET warning_read = 0, warning_last_updated_ts = ? WHERE warning_id = ?"
+      );
+    } else if (read == 1) {
+      q = db.prepare(
+        "UPDATE warning SET warning_read = 1, warning_last_updated_ts = ? WHERE warning_id = ?"
+      );
+    } else {
+      q = db.prepare(
+        "UPDATE warning SET warning_last_updated_ts = ? WHERE warning_id = ?"
+      );
     }
 
-    db.all(q, [ts, warning_id], function(err, rows) {
-      if (err) {
-        console.log(err);
-      } else {
-        // console.log("Warning updated");
-      }
-    });
+    return q.run(ts, warning_id);
+  }
+
+  insertUserPermission(user_id, device_id, sensor_id) {
+    var q = db.prepare(`INSERT INTO user_permission (
+      user_permission_user_id,
+      user_permission_device_id,
+      user_permission_sensor_id)
+     VALUES (?, ?, ?)`);
+
+    if (!sensor_id) sensor_id = null;
+    if (!device_id) device_id = null;
+
+    return q.run(user_id, device_id, sensor_id);
   }
 
   /* #######################################
@@ -880,170 +614,106 @@ class databasehandler {
 
   ####################################### */
 
-  deleteById(table, id, callback) {
-    var q = `DELETE FROM ${table} WHERE ${table}_id = ?`;
-
-    db.run(q, [id], function(err) {
-      if (err) {
-        console.log(`! Error deleting data record from ${table}:`);
-        console.log(`! ${err}`);
-        callback(err, null);
-      } else {
-        console.log(`> Deleted data record with id ${id} from ${table}}`);
-        callback(null, 1);
-      }
-    });
+  deleteById(table, id) {
+    var q = db.prepare(`DELETE FROM ${table} WHERE ${table}_id = ?`);
+    return q.run(id);
   }
 
-  deleteProperty(id, callback) {
-    this.deleteById("property", id, callback);
+  deleteProperty(id) {
+    return this.deleteById("property", id);
   }
-  deleteAccountType(id, callback) {
-    this.deleteById("account_type", id, callback);
+  deleteAccountType(id) {
+    return this.deleteById("account_type", id);
   }
-  deleteSensorType(id, callback) {
-    this.deleteById("sensor_type", id, callback);
+  deleteSensorType(id) {
+    return this.deleteById("sensor_type", id);
   }
-  deleteRoom(id, callback) {
-    this.deleteById("room", id, callback);
+  deleteRoom(id) {
+    return this.deleteById("room", id);
   }
-  deleteDeviceType(id, callback) {
-    this.deleteById("device_type", id, callback);
+  deleteDeviceType(id) {
+    return this.deleteById("device_type", id);
   }
-  deleteDeviceCommand(id, callback) {
-    this.deleteById("device_command", id, callback);
+  deleteDeviceCommand(id) {
+    return this.deleteById("device_command", id);
   }
-  deleteUser(id, callback) {
-    this.deleteById("user", id, callback);
+  deleteUser(id) {
+    return this.deleteById("user", id);
   }
-  deleteAuth(id, callback) {
-    this.deleteById("auth", id, callback);
+  deleteAuth(id) {
+    return this.deleteById("auth", id);
   }
-  deleteSensor(id, callback) {
-    this.deleteById("sensor", id, callback);
+  deleteSensor(id) {
+    return this.deleteById("sensor", id);
   }
-  deleteDevice(id, callback) {
-    this.deleteById("device", id, callback);
+  deleteDevice(id) {
+    return this.deleteById("device", id);
   }
-  deleteRepeatTimer(id, callback) {
-    this.deleteById("timer_repeat", id, callback);
+  deleteRepeatTimer(id) {
+    return this.deleteById("timer_repeat", id);
   }
-  deleteOneshotTimer(id, callback) {
-    this.deleteById("timer_oneshot", id, callback);
+  deleteOneshotTimer(id) {
+    return this.deleteById("timer_oneshot", id);
   }
-  deleteSensorReading(id, callback) {
-    this.deleteById("sensor_reading", id, callback);
+  deleteSensorReading(id) {
+    return this.deleteById("sensor_reading", id);
   }
-  deleteDeviceReading(id, callback) {
-    this.deleteById("device_reading", id, callback);
+  deleteDeviceReading(id) {
+    return this.deleteById("device_reading", id);
   }
-  deleteDeviceTrigger(id, callback) {
-    this.deleteById("device_trigger", id, callback);
+  deleteDeviceTrigger(id) {
+    return this.deleteById("device_trigger", id);
   }
-  deleteWarning(id, callback) {
-    this.deleteById("warning", id, callback);
-  }
-
-  deleteDeviceReadingByDeviceId(id, callback) {
-    var q = `DELETE FROM device_reading WHERE device_reading_device_id = ?`;
-
-    db.run(q, [id], function(err) {
-      if (err) {
-        console.log(`! Error deleting data records from device_reading:`);
-        console.log(`! ${err}`);
-        callback(err, null);
-      } else {
-        console.log(
-          `> Deleted data records with device id ${id} from device_reading}`
-        );
-        callback(null, 1);
-      }
-    });
+  deleteWarning(id) {
+    return this.deleteById("warning", id);
   }
 
-  deleteSensorReadingBySensorId(id, callback) {
-    var q = `DELETE FROM sensor_reading WHERE sensor_reading_sensor_id = ?`;
+  deleteDeviceReadingByDeviceId(id) {
+    var q = db.prepare(
+      `DELETE FROM device_reading WHERE device_reading_device_id = ?`
+    );
 
-    db.run(q, [id], function(err) {
-      if (err) {
-        console.log(`! Error deleting data records from sensor_reading:`);
-        console.log(`! ${err}`);
-        callback(err, null);
-      } else {
-        console.log(
-          `> Deleted data records with sensor id ${id} from sensor_reading}`
-        );
-        callback(null, 1);
-      }
-    });
+    return q.run(id);
   }
 
-  deleteRepeatTimerByDeviceId(id, callback) {
-    var q = `DELETE FROM timer_repeat WHERE timer_repeat_device_id = ?`;
+  deleteSensorReadingBySensorId(id) {
+    var q = db.prepare(
+      `DELETE FROM sensor_reading WHERE sensor_reading_sensor_id = ?`
+    );
 
-    db.run(q, [id], function(err) {
-      if (err) {
-        console.log(`! Error deleting data records from timer_repeat:`);
-        console.log(`! ${err}`);
-        callback(err, null);
-      } else {
-        console.log(
-          `> Deleted data records with device id ${id} from timer_repeat}`
-        );
-        callback(null, 1);
-      }
-    });
+    return q.run(id);
   }
 
-  deleteOneshotTimerByDeviceId(id, callback) {
-    var q = `DELETE FROM timer_oneshot WHERE timer_oneshot_device_id = ?`;
+  deleteRepeatTimerByDeviceId(id) {
+    var q = db.prepare(
+      `DELETE FROM timer_repeat WHERE timer_repeat_device_id = ?`
+    );
 
-    db.run(q, [id], function(err) {
-      if (err) {
-        console.log(`! Error deleting data records from timer_oneshot:`);
-        console.log(`! ${err}`);
-        callback(err, null);
-      } else {
-        console.log(
-          `> Deleted data records with device id ${id} from timer_oneshot}`
-        );
-        callback(null, 1);
-      }
-    });
+    return q.run(id);
+  }
+
+  deleteOneshotTimerByDeviceId(id) {
+    var q = db.prepare(
+      `DELETE FROM timer_oneshot WHERE timer_oneshot_device_id = ?`
+    );
+
+    return q.run(id);
   }
 
   deleteTriggerByDeviceId(id, callback) {
-    var q = `DELETE FROM device_trigger WHERE device_trigger_device_id = ?`;
+    var q = db.prepare(
+      `DELETE FROM device_trigger WHERE device_trigger_device_id = ?`
+    );
 
-    db.run(q, [id], function(err) {
-      if (err) {
-        console.log(`! Error deleting data records from device_trigger:`);
-        console.log(`! ${err}`);
-        callback(err, null);
-      } else {
-        console.log(
-          `> Deleted data records with device id ${id} from device_trigger}`
-        );
-        callback(null, 1);
-      }
-    });
+    return q.run(id);
   }
 
-  deleteTriggerBySensorId(id, callback) {
-    var q = `DELETE FROM device_trigger WHERE device_trigger_sensor_id = ?`;
+  deleteTriggerBySensorId(id) {
+    var q = db.prepare(
+      `DELETE FROM device_trigger WHERE device_trigger_sensor_id = ?`
+    );
 
-    db.run(q, [id], function(err) {
-      if (err) {
-        console.log(`! Error deleting data records from device_trigger:`);
-        console.log(`! ${err}`);
-        callback(err, null);
-      } else {
-        console.log(
-          `> Deleted data records with sensor id ${id} from device_trigger}`
-        );
-        callback(null, 1);
-      }
-    });
+    return q.run(id);
   }
 }
 
