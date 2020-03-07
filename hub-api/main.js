@@ -899,7 +899,7 @@ app.post("/editDevice", (req, res) => {
   ) {
     var authed = db.checkAuth(req._user_id, req.body.id, null);
     if (authed) {
-      db.editDevice(
+      var info = db.editDevice(
         req.body.id,
         req.body.room,
         req.body.type,
@@ -923,7 +923,7 @@ app.post("/insertUserPermission", (req, res) => {
   if (req.body.user_id && (req.body.device_id || req.body.sensor_id)) {
     var authed = db.checkAuth(req._user_id, req.body.id, null);
     if (authed) {
-      db.insertUserPermission(
+      var info = db.insertUserPermission(
         req.body.id,
         req.body.room,
         req.body.type,
@@ -1002,7 +1002,7 @@ app.post("/insertRepeatTimer", (req, res) => {
     req.body.command
   ) {
     if (db.checkAuth(req._user_id, req.body.device_id, null)) {
-      db.insertRepeatTimer(
+      var info = db.insertRepeatTimer(
         req.body.type,
         req.body.month,
         req.body.day,
@@ -1034,7 +1034,7 @@ app.post("/insertOneshotTimer", (req, res) => {
   if (req.body.trigger && req.body.device_id && req.body.command) {
     var authed = db.checkAuth(req._user_id, req.body.device_id, null);
     if (authed) {
-      db.insertOneshotTimer(
+      var info = db.insertOneshotTimer(
         req.body.trigger,
         req.body.device_id,
         req.body.command

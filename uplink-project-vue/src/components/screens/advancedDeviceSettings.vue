@@ -124,7 +124,14 @@ export default {
       rooms: []
     };
   },
-  props: ["deviceID", "deviceName", "deviceImage", "deviceEnergy", "userToken"],
+  props: [
+    "deviceID",
+    "deviceName",
+    "deviceImage",
+    "deviceEnergy",
+    "deviceType",
+    "userToken"
+  ],
   methods: {
     deleteDevice() {
       if (!confirm("Do really want to delete " + this.deviceName + "?")) {

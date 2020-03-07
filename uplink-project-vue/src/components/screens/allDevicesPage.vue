@@ -19,6 +19,7 @@
             :deviceName="device.deviceName"
             :deviceImage="device.deviceImage"
             :deviceEnergy="device.deviceWattage"
+            :deviceType="device.deviceType"
           />
         </div>
       </div>
@@ -63,7 +64,8 @@ export default {
             deviceID: jsonData[dev].device_id,
             deviceName: jsonData[dev].device_name,
             deviceImage: pairImg(jsonData[dev].device_name),
-            deviceWattage: jsonData[dev].device_wattage
+            deviceWattage: jsonData[dev].device_wattage,
+            deviceType: jsonData[dev].device_type
           });
         }
       });

@@ -43,7 +43,8 @@
                       deviceID: deviceID,
                       deviceName: deviceName,
                       deviceImage: deviceImage,
-                      deviceEnergy: deviceEnergy
+                      deviceEnergy: deviceEnergy,
+                      deviceType:deviceType
                     }
                   }"
                 >
@@ -71,7 +72,8 @@
                       deviceID: deviceID,
                       deviceName: deviceName,
                       deviceImage: deviceImage,
-                      deviceEnergy: deviceEnergy
+                      deviceEnergy: deviceEnergy,
+                      deviceType:deviceType
                     }
                   }"
                 >
@@ -96,7 +98,8 @@
                       deviceID: deviceID,
                       deviceName: deviceName,
                       deviceImage: deviceImage,
-                      deviceEnergy: deviceEnergy
+                      deviceEnergy: deviceEnergy,
+                      deviceType:deviceType
                     }
                   }"
                 >
@@ -118,7 +121,7 @@
         </div>
       </div>
     </div>
-    <NavbarBottom class="bottom-show" :back="back" />
+    <NavbarBottom class="bottom-show" />
   </div>
 </template>
 <script>
@@ -139,6 +142,7 @@ export default {
       },
       device: "",
       scheduledCommands: [],
+      deviceCommands: [],
       chartD: {
         type: "line",
         data: {
@@ -183,10 +187,35 @@ export default {
     "deviceName",
     "deviceImage",
     "deviceEnergy",
-    "userToken",
-    "back"
+    "deviceType",
+    "userToken"
   ],
   methods: {
+    getDeviceCommands() {
+      let url =
+        "http://localhost:5552/getCommandsByDevice?id=" + this.deviceType;
+      fetch(url, {
+        mode: "cors",
+        method: "GET",
+        headers: {
+          Authorization: this.userToken
+        }
+      })
+        .then(response => {
+          return response.json();
+        })
+        .then(jsonData => {
+          this.deviceCommands = jsonData;
+          console.log(this.deviceCommands);
+        });
+    },
+    mapCommands(textCommand) {
+      for (let i in this.deviceCommands) {
+        if (this.deviceCommands[i].device_command_value === textCommand) {
+          return this.deviceCommands[i].device_command_id;
+        }
+      }
+    },
     async turnOn() {
       await this.$nextTick();
       let url = "http://localhost:5552/insertOneshotTimer";
@@ -201,7 +230,7 @@ export default {
         body: JSON.stringify({
           device_id: this.deviceID,
           trigger: getOpposite(this.form.checked),
-          command: swap(this.form.checked)
+          command: this.mapCommands(swap(this.form.checked))
         })
       })
         .then(response => {
@@ -283,6 +312,7 @@ export default {
           return a.hour - b.hour;
         });
         this.checkDeviceActivity();
+        this.getDeviceCommands();
       });
   }
 };

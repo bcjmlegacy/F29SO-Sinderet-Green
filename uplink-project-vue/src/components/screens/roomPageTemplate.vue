@@ -26,13 +26,14 @@
         </div>
         <div class="flex-rooms">
           <!--Loop through all the devices by device name and generate cards for each of them-->
-          <div v-for="device in roomDevices" :key="device.deviceName">
+          <div v-for="device in roomDevices" :key="device.deviceID">
             <!--Data that the Device component uses to show the card.-->
             <Device
               :deviceID="device.deviceID"
               :deviceName="device.deviceName"
               :deviceImage="device.deviceImage"
               :deviceEnergy="device.deviceWattage"
+              :deviceType="device.deviceType"
             />
           </div>
         </div>
@@ -112,13 +113,15 @@ export default {
             }
             for (let key in this.devices) {
               if (roomID === this.devices[key].device_room) {
+                console.log(this.devices);
                 //Loop to get the icon that matches the second half of the device name
                 this.roomDevices.push({
                   //generate a JSON of the device name and icon and store in roomDevices array
                   deviceID: this.devices[key].device_id,
                   deviceName: this.devices[key].device_name,
                   deviceImage: pairImg(this.devices[key].device_name),
-                  deviceWattage: this.devices[key].device_wattage
+                  deviceWattage: this.devices[key].device_wattage,
+                  deviceType: this.devices[key].device_type
                 });
               }
             }

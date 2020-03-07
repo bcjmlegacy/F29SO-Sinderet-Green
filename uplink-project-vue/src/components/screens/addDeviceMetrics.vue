@@ -87,8 +87,8 @@ export default {
     "deviceName",
     "deviceImage",
     "deviceEnergy",
-    "userToken",
-    "back"
+    "deviceType",
+    "userToken"
   ],
   data() {
     return {

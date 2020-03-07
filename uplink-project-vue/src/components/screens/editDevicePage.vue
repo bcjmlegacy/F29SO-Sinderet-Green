@@ -62,7 +62,7 @@
                         <option
                           v-for="op in operations"
                           :key="op.device_command_id"
-                          :value="op.device_command_value"
+                          :value="op.device_command_id"
                         >{{ op.device_command_name }}</option>
                       </select>
                     </div>
@@ -119,7 +119,14 @@ export default {
     NavbarTop,
     NavbarBottom
   },
-  props: ["deviceID", "deviceName", "deviceImage", "deviceEnergy", "userToken"],
+  props: [
+    "deviceID",
+    "deviceName",
+    "deviceImage",
+    "deviceEnergy",
+    "deviceType",
+    "userToken"
+  ],
   data() {
     return {
       form: {
@@ -219,10 +226,8 @@ export default {
   },
   mounted: function() {
     //Get command for device via icon thats displayed
-    let url = "http://localhost:5552/getCommandsByDevice?id=";
-    let id = pairImg(this.deviceImage);
-    let urlComplete = url + id;
-    fetch(urlComplete, {
+    let url = "http://localhost:5552/getCommandsByDevice?id=" + this.deviceType;
+    fetch(url, {
       mode: "cors",
       method: "GET",
       headers: {
@@ -234,9 +239,10 @@ export default {
       })
       .then(jsonData => {
         this.operations = jsonData; //after we get commands find device ID
-        let url = "http://localhost:5552/getRepeatTimers?id=" + this.deviceID;
+        console.log(this.operations);
+        let url1 = "http://localhost:5552/getRepeatTimers?id=" + this.deviceID;
 
-        fetch(url, {
+        fetch(url1, {
           mode: "cors",
           method: "GET",
           headers: {
@@ -247,6 +253,7 @@ export default {
             return response.json();
           })
           .then(jsonData => {
+            console.log(jsonData);
             for (let key in jsonData) {
               if (
                 jsonData[key].timer_repeat_command === 1 ||
@@ -291,19 +298,5 @@ function formatTime(time) {
     return "0" + time;
   }
   return time;
-}
-
-//Add more when more devices are available
-function pairImg(img) {
-  switch (img) {
-    case "heating":
-      return "1";
-    case "fridge":
-      return "2";
-    case "solarpanel":
-      return "3";
-    case "light-bulb":
-      return "4";
-  }
 }
 </script>
