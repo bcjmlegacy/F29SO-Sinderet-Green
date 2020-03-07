@@ -71,7 +71,8 @@
                               deviceID: deviceID,
                               deviceName: deviceName,
                               deviceImage: deviceImage,
-                              deviceEnergy: deviceEnergy
+                              deviceEnergy: deviceEnergy,
+                              deviceType : deviceType
                             }
                           }"
                         >

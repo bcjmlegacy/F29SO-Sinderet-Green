@@ -25,7 +25,7 @@ import Warnings from "./components/screens/warnings";
 import AdvancedStats from "./components/screens/statsPage";
 import Settings from "./components/screens/settingsTemplate";
 import AllDevicesPage from "./components/screens/allDevicesPage";
-
+import Automate from "./components/screens/automateDevice";
 import NotFound from "./components/screens/404";
 //bootstrap vue tags can be used
 Vue.use(BootstrapVue);
@@ -243,6 +243,22 @@ const router = new VueRouter({
       name: "allDevicesPage",
       path: "/allDevicesPage",
       component: AllDevicesPage,
+      props(route) {
+        return route.query || {};
+      },
+      beforeEnter: (to, from, next) => {
+        let token = Vue.$cookies.get("token");
+        if (token == null) {
+          next({ name: "login" });
+        } else {
+          next();
+        }
+      }
+    },
+    {
+      name: "automate",
+      path: "/automate",
+      component: Automate,
       props(route) {
         return route.query || {};
       },

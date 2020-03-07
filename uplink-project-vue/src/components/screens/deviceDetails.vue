@@ -24,7 +24,7 @@
                 <h5 class="card-title text-center label-section">{{ deviceName }}</h5>
                 <p class="card-text text-center">{{ deviceEnergy }} Watts</p>
               </div>
-              <div class="text-center">
+              <div class="text-center" v-bind:style="{'display' : isAvailable? 'block' : 'none'}">
                 <b-form-checkbox
                   v-model="form.checked"
                   name="check-button"
@@ -44,7 +44,7 @@
                       deviceName: deviceName,
                       deviceImage: deviceImage,
                       deviceEnergy: deviceEnergy,
-                      deviceType:deviceType
+                      deviceType: deviceType
                     }
                   }"
                 >
@@ -53,7 +53,10 @@
               </div>
             </div>
           </div>
-          <div class="item-deviceDetails">
+          <div
+            class="item-deviceDetails"
+            v-bind:style="{'display' : isAvailable? 'block' : 'none'}"
+          >
             <div class="custom-cards-devicesDetails-schedule">
               <h5 class="card-title text-center label-section">Daily Schedule</h5>
               <div class="form-rows" />
@@ -82,7 +85,10 @@
               </div>
             </div>
           </div>
-          <div class="item-deviceDetails">
+          <div
+            class="item-deviceDetails"
+            v-bind:style="{'display' : isAvailable? 'block' : 'none'}"
+          >
             <div class="custom-cards-devicesDetails-schedule">
               <h5 class="card-title text-center label-section">Automated Tasks</h5>
               <div class="form-rows" />
@@ -93,7 +99,7 @@
               <div class="form-rows">
                 <router-link
                   :to="{
-                    name: '',
+                    name: 'automate',
                     query: {
                       deviceID: deviceID,
                       deviceName: deviceName,
@@ -143,6 +149,7 @@ export default {
       device: "",
       scheduledCommands: [],
       deviceCommands: [],
+      isAvailable: true,
       chartD: {
         type: "line",
         data: {
@@ -265,11 +272,17 @@ export default {
         data: chartData.data,
         options: chartData.options
       });
+    },
+    checkDevice() {
+      if (this.deviceType != 1 && this.deviceType != 4) {
+        this.isAvailable = !this.isAvailable;
+      }
     }
   },
   mounted: function() {
     let url = "http://localhost:5552/getRepeatTimers?id=" + this.deviceID;
     this.chartData("chart", this.chartD);
+    this.checkDevice();
     fetch(url, {
       mode: "cors",
       method: "GET",
