@@ -4,7 +4,7 @@
     <div class="bottom-show">
       <div class="logo-back fixed-top">
         <h5 class="logo">
-          <router-link class="links" :to="{name: 'dashboard'}">uplink</router-link>
+          <router-link class="links-top" :to="{ name: 'dashboard' }">uplink</router-link>
         </h5>
       </div>
     </div>
@@ -65,7 +65,15 @@
                     <div class="form-rows">
                       <div class="col-sm-12">
                         <router-link
-                          :to="{name: 'device',query:{deviceID:deviceID, deviceName:deviceName, 'deviceImage': deviceImage, deviceEnergy:deviceEnergy} }"
+                          :to="{
+                            name: 'device',
+                            query: {
+                              deviceID: deviceID,
+                              deviceName: deviceName,
+                              deviceImage: deviceImage,
+                              deviceEnergy: deviceEnergy
+                            }
+                          }"
                         >
                           <button class="form-buttons" type="submit">Cancel</button>
                         </router-link>
@@ -106,7 +114,7 @@ export default {
   },
   data() {
     return {
-      currentRoom: "none",
+      currentRoom: "",
       type: "",
       wattage: this.deviceEnergy,
       form: {
@@ -116,7 +124,14 @@ export default {
       rooms: []
     };
   },
-  props: ["deviceID", "deviceName", "deviceImage", "deviceEnergy", "userToken"],
+  props: [
+    "deviceID",
+    "deviceName",
+    "deviceImage",
+    "deviceEnergy",
+    "deviceType",
+    "userToken"
+  ],
   methods: {
     deleteDevice() {
       if (!confirm("Do really want to delete " + this.deviceName + "?")) {
@@ -139,9 +154,17 @@ export default {
         });
     },
 
+    getURL(roomID) {
+      for (let i in this.rooms) {
+        if (roomID === this.rooms[i].room_id) {
+          return this.rooms[i].room_name;
+        }
+      }
+      return null;
+    },
+
     updateDevice(evt) {
       let url = "http://localhost:5552/editDevice";
-
       fetch(url, {
         mode: "cors",
         method: "POST",
@@ -163,6 +186,10 @@ export default {
         })
         .then(jsonData => {
           console.log(jsonData);
+          this.$router.push({
+            name: "room",
+            params: { name: this.getURL(this.form.room) }
+          });
         });
 
       evt.preventDefault();
@@ -196,9 +223,9 @@ export default {
               if (jsonData[key].device_id === this.deviceID) {
                 for (let room in this.rooms) {
                   if (jsonData[key].device_room === this.rooms[room].room_id) {
-                    this.form.room = this.rooms[room].room_name;
-                    this.type = jsonData[key].device_type;
-                    console.log(this.form.room);
+                    this.form.room = this.rooms[room].room_id;
+                    this.currentRoom = this.rooms[room].room_name;
+                    this.type = jsonData[room].device_type;
                   }
                 }
               }
@@ -209,5 +236,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>

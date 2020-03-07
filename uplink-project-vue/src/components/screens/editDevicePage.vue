@@ -4,7 +4,7 @@
     <div class="bottom-show">
       <div class="logo-back fixed-top">
         <h5 class="logo">
-          <router-link class="links" :to="{name: 'dashboard'}">uplink</router-link>
+          <router-link class="links-top" :to="{ name: 'dashboard' }">uplink</router-link>
         </h5>
       </div>
     </div>
@@ -39,11 +39,7 @@
                     >
                       <option disabled value>Hours</option>
                       <option selected="selected" value="0">0</option>
-                      <option v-for="n in 24" :key="n" :value="n">
-                        {{
-                        n
-                        }}
-                      </option>
+                      <option v-for="n in 24" :key="n" :value="n">{{ n }}</option>
                     </select>
                     <select
                       v-model="form.minute"
@@ -52,11 +48,7 @@
                     >
                       <option disabled value>Minutes</option>
                       <option selected="selected" alue="0">0</option>
-                      <option v-for="n in 60" :key="n" :value="n">
-                        {{
-                        n
-                        }}
-                      </option>
+                      <option v-for="n in 60" :key="n" :value="n">{{ n }}</option>
                     </select>
                   </div>
 
@@ -70,7 +62,7 @@
                         <option
                           v-for="op in operations"
                           :key="op.device_command_id"
-                          :value="op.device_command_value"
+                          :value="op.device_command_id"
                         >{{ op.device_command_name }}</option>
                       </select>
                     </div>
@@ -91,7 +83,9 @@
               <div class="form-rows" />
               <ul class="list-schedule">
                 <li class="scheduleItem" v-for="command in scheduledCommands" :key="command.id">
-                  {{command.command}} at {{command.hour}}:{{command.minutes}}
+                  {{ command.command }} at {{ command.hour }}:{{
+                  command.minutes
+                  }}
                   <img
                     src="../../assets/close.png"
                     alt="Delete Item"
@@ -125,7 +119,14 @@ export default {
     NavbarTop,
     NavbarBottom
   },
-  props: ["deviceID", "deviceName", "deviceImage", "deviceEnergy", "userToken"],
+  props: [
+    "deviceID",
+    "deviceName",
+    "deviceImage",
+    "deviceEnergy",
+    "deviceType",
+    "userToken"
+  ],
   data() {
     return {
       form: {
@@ -225,10 +226,8 @@ export default {
   },
   mounted: function() {
     //Get command for device via icon thats displayed
-    let url = "http://localhost:5552/getCommandsByDevice?id=";
-    let id = pairImg(this.deviceImage);
-    let urlComplete = url + id;
-    fetch(urlComplete, {
+    let url = "http://localhost:5552/getCommandsByDevice?id=" + this.deviceType;
+    fetch(url, {
       mode: "cors",
       method: "GET",
       headers: {
@@ -240,9 +239,10 @@ export default {
       })
       .then(jsonData => {
         this.operations = jsonData; //after we get commands find device ID
-        let url = "http://localhost:5552/getRepeatTimers?id=" + this.deviceID;
+        console.log(this.operations);
+        let url1 = "http://localhost:5552/getRepeatTimers?id=" + this.deviceID;
 
-        fetch(url, {
+        fetch(url1, {
           mode: "cors",
           method: "GET",
           headers: {
@@ -253,6 +253,7 @@ export default {
             return response.json();
           })
           .then(jsonData => {
+            console.log(jsonData);
             for (let key in jsonData) {
               if (
                 jsonData[key].timer_repeat_command === 1 ||
@@ -297,19 +298,5 @@ function formatTime(time) {
     return "0" + time;
   }
   return time;
-}
-
-//Add more when more devices are available
-function pairImg(img) {
-  switch (img) {
-    case "heating":
-      return "1";
-    case "fridge":
-      return "2";
-    case "solarpanel":
-      return "3";
-    case "light-bulb":
-      return "4";
-  }
 }
 </script>
