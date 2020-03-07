@@ -113,7 +113,6 @@ export default {
             }
             for (let key in this.devices) {
               if (roomID === this.devices[key].device_room) {
-                console.log(this.devices);
                 //Loop to get the icon that matches the second half of the device name
                 this.roomDevices.push({
                   //generate a JSON of the device name and icon and store in roomDevices array
@@ -125,7 +124,6 @@ export default {
                 });
               }
             }
-            console.log(this.roomDevices);
           });
       });
   }

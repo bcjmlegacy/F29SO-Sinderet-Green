@@ -115,7 +115,6 @@ export default {
   data() {
     return {
       currentRoom: "",
-      type: "",
       wattage: this.deviceEnergy,
       form: {
         name: this.deviceName,
@@ -178,7 +177,7 @@ export default {
           name: this.form.name,
           room: this.form.room,
           wattage: this.wattage,
-          type: this.type
+          type: this.deviceType
         })
       })
         .then(response => {
@@ -225,7 +224,6 @@ export default {
                   if (jsonData[key].device_room === this.rooms[room].room_id) {
                     this.form.room = this.rooms[room].room_id;
                     this.currentRoom = this.rooms[room].room_name;
-                    this.type = jsonData[room].device_type;
                   }
                 }
               }
