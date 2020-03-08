@@ -67,6 +67,7 @@
                   }}
                 </li>
               </ul>
+              <div id="empty">{{ emptySchedule }}</div>
               <div class="form-rows">
                 <router-link
                   :to="{
@@ -96,6 +97,7 @@
                 <!--List all the automated tasks that were set up like how the schedule looks
                 -->
               </ul>
+              <div id="empty">{{emptyAutomation}}</div>
               <div class="form-rows">
                 <router-link
                   :to="{
@@ -150,6 +152,8 @@ export default {
       scheduledCommands: [],
       deviceCommands: [],
       isAvailable: true,
+      emptySchedule: "",
+      emptyAutomation: "",
       chartD: {
         type: "line",
         data: {
@@ -274,7 +278,11 @@ export default {
       });
     },
     checkDevice() {
-      if (this.deviceType != 1 && this.deviceType != 4) {
+      if (
+        this.deviceType != 1 &&
+        this.deviceType != 4 &&
+        this.deviceType != 9
+      ) {
         this.isAvailable = !this.isAvailable;
       }
     }
@@ -295,6 +303,10 @@ export default {
       })
       .then(jsonData => {
         //Some formating for finding on and off commands
+        if (jsonData.length < 1) {
+          this.emptySchedule = "Schedule is Empty";
+        }
+        this.emptyAutomation = "No Automation Added";
         for (let key in jsonData) {
           if (
             jsonData[key].timer_repeat_command === 1 ||

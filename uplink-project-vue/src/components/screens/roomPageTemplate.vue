@@ -72,7 +72,7 @@ export default {
     NavTop,
     NavBottom
   },
-  props: ["userToken", "back"], //props to confirm the room the page is showing
+  props: ["userToken"], //props to confirm the room the page is showing
   data() {
     return {
       roomName: this.$route.params.name,
@@ -167,6 +167,14 @@ function pairImg(device) {
     device.includes("Socket")
   ) {
     return "plug";
+  } else if (
+    device.includes("TV") ||
+    device.includes("Television") ||
+    device.includes("tv") ||
+    device.includes("television") ||
+    device.includes("Tv")
+  ) {
+    return "tv";
   } else {
     return "question";
   }

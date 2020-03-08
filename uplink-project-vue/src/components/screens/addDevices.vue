@@ -15,21 +15,54 @@
         </div>
         <div class="flex-rooms">
           <AddDeviceCard deviceName="Phillips Hue Bulb" deviceImage="light-bulb" deviceEnergy="10" />
-          <AddDeviceCard deviceName="Ring Door Bell" deviceImage="doorbell" deviceEnergy="10" />
+          <AddDeviceCard
+            deviceName="Ring Door Bell"
+            deviceImage="doorbell"
+            deviceEnergy="10"
+            deviceType="5"
+          />
           <AddDeviceCard
             deviceName="Hive CCTV Camera"
             deviceImage="security-camera"
             deviceEnergy="60"
+            deviceType="7"
           />
-          <AddDeviceCard deviceName="Smart Socket" deviceImage="plug" deviceEnergy="120" />
-          <AddDeviceCard deviceName="Smart Socket" deviceImage="plug" deviceEnergy="120" />
-          <AddDeviceCard deviceName="Smart Socket" deviceImage="plug" deviceEnergy="120" />
+          <AddDeviceCard
+            deviceName="Smart Socket"
+            deviceImage="plug"
+            deviceEnergy="120"
+            deviceType="9"
+          />
+          <AddDeviceCard
+            deviceName="Smart Socket"
+            deviceImage="plug"
+            deviceEnergy="120"
+            deviceType="9"
+          />
+          <AddDeviceCard
+            deviceName="Smart Socket"
+            deviceImage="plug"
+            deviceEnergy="120"
+            deviceType="9"
+          />
           <AddDeviceCard
             deviceName="Hive CCTV Camera"
             deviceImage="security-camera"
             deviceEnergy="60"
+            deviceType="7"
           />
-          <AddDeviceCard deviceName="Phillips Hue Bulb" deviceImage="light-bulb" deviceEnergy="10" />
+          <AddDeviceCard
+            deviceName="Phillips Hue Bulb"
+            deviceImage="light-bulb"
+            deviceEnergy="10"
+            deviceType="4"
+          />
+          <AddDeviceCard
+            deviceName="Phillips Smart TV"
+            deviceImage="tv"
+            deviceEnergy="100"
+            deviceType="8"
+          />
         </div>
       </div>
     </div>

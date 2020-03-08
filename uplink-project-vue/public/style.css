@@ -68,6 +68,11 @@ body {
   font-size: 1.3em;
 }
 
+#empty {
+  text-align: center;
+  font-size: 1.3em;
+}
+
 @media screen and (max-width: 750px) {
   .h1-titles {
     font-size: 2.8em;
@@ -605,7 +610,7 @@ ul {
 }
 
 .custom-cards-devicesDetails-graph {
-  width: 87%;
+  width: 70%;
   padding: 30px;
   border-radius: 20px;
   border: none;
@@ -1079,11 +1084,10 @@ ul {
 }
 
 .custom-cards-devices {
-  width: 11rem;
+  width: 10rem;
   max-height: 20rem;
-  padding: 1px;
+  padding: 5px;
   border-radius: 20px;
-
   border: none;
   transition: 0.2s ease-in-out all !important;
 }
@@ -1107,6 +1111,7 @@ ul {
   opacity: 0.4 !important;
   padding: 10px;
 }
+
 .img-cont-menu {
   text-align: center;
 }
@@ -1160,7 +1165,7 @@ ul {
 /*############################################################*/
 
 .card-img-top {
-  width: 100%;
+  width: 90%;
 }
 
 .card {

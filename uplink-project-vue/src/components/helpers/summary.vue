@@ -5,7 +5,7 @@
       <div class="stats">
         <div class="sub-title-wrapper">
           <!--summary title that will show the room name will be labeled home-->
-          <h1 class="h1-titles text-center">Todays {{sumTitle}} Usage</h1>
+          <h1 class="h1-titles text-center">Todays Usage</h1>
           <hr />
         </div>
         <div class="flex-b">
