@@ -107,6 +107,14 @@ function pairImg(device) {
     device.includes("Socket")
   ) {
     return "plug";
+  } else if (
+    device.includes("TV") ||
+    device.includes("Television") ||
+    device.includes("tv") ||
+    device.includes("television") ||
+    device.includes("Tv")
+  ) {
+    return "tv";
   } else {
     return "question";
   }
