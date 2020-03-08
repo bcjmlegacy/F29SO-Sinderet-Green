@@ -290,7 +290,34 @@ select:focus,
 
 @media screen and (max-width: 1025px) {
   #addRooms {
-    margin-top: 100px;
+    margin-top: 120px;
+  }
+  .custom-cards-addRooms {
+    width: 30%;
+  }
+}
+
+@media screen and (max-width: 750px) {
+  #addRooms {
+    margin-top: 120px;
+  }
+  .custom-cards-addRooms {
+    width: 40%;
+  }
+}
+
+@media screen and (max-width: 550px) {
+  #addRooms {
+    margin-top: 80px;
+  }
+  .custom-cards-addRooms {
+    width: 60%;
+  }
+}
+
+@media screen and (max-width: 450px) {
+  #addRooms {
+    margin-top: 80px;
   }
   .custom-cards-addRooms {
     width: 80%;
@@ -325,7 +352,6 @@ select:focus,
 
 .custom-cards-addDevices {
   width: 22rem;
-  height: 40rem;
   padding: 20px;
   border-radius: 20px;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 1px 8px rgba(0, 0, 0, 0.22) !important;
@@ -358,8 +384,32 @@ select:focus,
 
 @media screen and (max-width: 1025px) {
   #addDevice {
-    margin-top: 100px;
+    margin-top: 120px;
   }
+  .custom-cards-addDevices {
+    width: 35%;
+  }
+}
+
+@media screen and (max-width: 812px) {
+  #addDevice {
+    margin-top: 120px;
+  }
+  .custom-cards-addDevices {
+    width: 40%;
+  }
+}
+
+@media screen and (max-width: 550px) {
+  #addDevice {
+    margin-top: 80px;
+  }
+  .custom-cards-addDevices {
+    width: 60%;
+  }
+}
+
+@media screen and (max-width: 450px) {
   .custom-cards-addDevices {
     width: 80%;
   }
@@ -412,7 +462,7 @@ select:focus,
 
 .custom-cards-editDevices {
   width: 23rem;
-  height: 45rem;
+
   padding: 20px;
   border-radius: 20px;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 1px 8px rgba(0, 0, 0, 0.22) !important;
@@ -425,8 +475,6 @@ select:focus,
 
 .custom-cards-devicesDetails-schedule-edit {
   width: 23rem;
-  min-height: 20rem;
-  max-height: 50rem;
   padding: 30px;
   border-radius: 20px;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 1px 8px rgba(0, 0, 0, 0.22) !important;
@@ -472,6 +520,31 @@ select:focus,
 
 @media screen and (max-width: 1025px) {
   #editDevice {
+    margin-top: 120px;
+    margin-bottom: 100px;
+  }
+  .custom-cards-editDevices {
+    width: 40%;
+  }
+  .custom-cards-devicesDetails-schedule-edit {
+    width: 40%;
+  }
+  .img-delete {
+    width: 30%;
+  }
+}
+
+@media screen and (max-width: 750px) {
+  .custom-cards-editDevices {
+    width: 60%;
+  }
+  .custom-cards-devicesDetails-schedule-edit {
+    width: 60%;
+  }
+}
+
+@media screen and (max-width: 550px) {
+  #editDevice {
     margin-top: 80px;
     margin-bottom: 100px;
   }
@@ -480,9 +553,6 @@ select:focus,
   }
   .custom-cards-devicesDetails-schedule-edit {
     width: 80%;
-  }
-  .img-delete {
-    width: 30%;
   }
 }
 
