@@ -4,7 +4,7 @@
     <div class="bottom-show">
       <div class="logo-back fixed-top">
         <h5 class="logo">
-          <router-link class="links" :to="{name: 'dashboard'}">uplink</router-link>
+          <router-link class="links-top" :to="{ name: 'dashboard' }">uplink</router-link>
         </h5>
       </div>
     </div>
@@ -19,6 +19,7 @@
             :deviceName="device.deviceName"
             :deviceImage="device.deviceImage"
             :deviceEnergy="device.deviceWattage"
+            :deviceType="device.deviceType"
           />
         </div>
       </div>
@@ -63,7 +64,8 @@ export default {
             deviceID: jsonData[dev].device_id,
             deviceName: jsonData[dev].device_name,
             deviceImage: pairImg(jsonData[dev].device_name),
-            deviceWattage: jsonData[dev].device_wattage
+            deviceWattage: jsonData[dev].device_wattage,
+            deviceType: jsonData[dev].device_type
           });
         }
       });

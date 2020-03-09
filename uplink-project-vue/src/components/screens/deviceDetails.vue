@@ -4,9 +4,7 @@
     <div class="bottom-show">
       <div class="logo-back fixed-top">
         <h5 class="logo">
-          <router-link class="links" :to="{ name: 'dashboard' }"
-            >uplink</router-link
-          >
+          <router-link class="links-top" :to="{ name: 'dashboard' }">uplink</router-link>
         </h5>
       </div>
     </div>
@@ -23,9 +21,7 @@
                 />
               </div>
               <div class="text-wrapper">
-                <h5 class="card-title text-center label-section">
-                  {{ deviceName }}
-                </h5>
+                <h5 class="card-title text-center label-section">{{ deviceName }}</h5>
                 <p class="card-text text-center">{{ deviceEnergy }} Watts</p>
               </div>
               <div class="text-center">
@@ -37,8 +33,7 @@
                   unchecked-value="on"
                   switch
                   @input="turnOn()"
-                  >Turn {{ form.checked }}</b-form-checkbox
-                >
+                >Turn {{ form.checked }}</b-form-checkbox>
               </div>
               <div class="form-rows">
                 <router-link
@@ -48,7 +43,8 @@
                       deviceID: deviceID,
                       deviceName: deviceName,
                       deviceImage: deviceImage,
-                      deviceEnergy: deviceEnergy
+                      deviceEnergy: deviceEnergy,
+                      deviceType:deviceType
                     }
                   }"
                 >
@@ -59,18 +55,12 @@
           </div>
           <div class="item-deviceDetails">
             <div class="custom-cards-devicesDetails-schedule">
-              <h5 class="card-title text-center label-section">
-                Daily Schedule
-              </h5>
+              <h5 class="card-title text-center label-section">Daily Schedule</h5>
               <div class="form-rows" />
               <ul class="list-schedule">
-                <li
-                  class="scheduleItem"
-                  v-for="command in scheduledCommands"
-                  :key="command.id"
-                >
+                <li class="scheduleItem" v-for="command in scheduledCommands" :key="command.id">
                   {{ command.command }} at {{ command.hour }}:{{
-                    command.minutes
+                  command.minutes
                   }}
                 </li>
               </ul>
@@ -82,7 +72,8 @@
                       deviceID: deviceID,
                       deviceName: deviceName,
                       deviceImage: deviceImage,
-                      deviceEnergy: deviceEnergy
+                      deviceEnergy: deviceEnergy,
+                      deviceType:deviceType
                     }
                   }"
                 >
@@ -93,9 +84,7 @@
           </div>
           <div class="item-deviceDetails">
             <div class="custom-cards-devicesDetails-schedule">
-              <h5 class="card-title text-center label-section">
-                Automated Tasks
-              </h5>
+              <h5 class="card-title text-center label-section">Automated Tasks</h5>
               <div class="form-rows" />
               <ul class="list-schedule">
                 <!--List all the automated tasks that were set up like how the schedule looks
@@ -109,7 +98,8 @@
                       deviceID: deviceID,
                       deviceName: deviceName,
                       deviceImage: deviceImage,
-                      deviceEnergy: deviceEnergy
+                      deviceEnergy: deviceEnergy,
+                      deviceType:deviceType
                     }
                   }"
                 >
@@ -122,9 +112,7 @@
         <div>
           <div class="flex-deviceDetails">
             <div class="card custom-cards-devicesDetails-graph">
-              <h5 class="card-title text-center label-section">
-                Device Energy
-              </h5>
+              <h5 class="card-title text-center label-section">Device Energy</h5>
               <div class="graph-container">
                 <canvas id="chart"></canvas>
               </div>
@@ -133,7 +121,7 @@
         </div>
       </div>
     </div>
-    <NavbarBottom class="bottom-show" :back="back" />
+    <NavbarBottom class="bottom-show" />
   </div>
 </template>
 <script>
@@ -154,6 +142,7 @@ export default {
       },
       device: "",
       scheduledCommands: [],
+      deviceCommands: [],
       chartD: {
         type: "line",
         data: {
@@ -198,10 +187,35 @@ export default {
     "deviceName",
     "deviceImage",
     "deviceEnergy",
-    "userToken",
-    "back"
+    "deviceType",
+    "userToken"
   ],
   methods: {
+    getDeviceCommands() {
+      let url =
+        "http://localhost:5552/getCommandsByDevice?id=" + this.deviceType;
+      fetch(url, {
+        mode: "cors",
+        method: "GET",
+        headers: {
+          Authorization: this.userToken
+        }
+      })
+        .then(response => {
+          return response.json();
+        })
+        .then(jsonData => {
+          this.deviceCommands = jsonData;
+          console.log(this.deviceCommands);
+        });
+    },
+    mapCommands(textCommand) {
+      for (let i in this.deviceCommands) {
+        if (this.deviceCommands[i].device_command_value === textCommand) {
+          return this.deviceCommands[i].device_command_id;
+        }
+      }
+    },
     async turnOn() {
       await this.$nextTick();
       let url = "http://localhost:5552/insertOneshotTimer";
@@ -216,7 +230,7 @@ export default {
         body: JSON.stringify({
           device_id: this.deviceID,
           trigger: getOpposite(this.form.checked),
-          command: swap(this.form.checked)
+          command: this.mapCommands(swap(this.form.checked))
         })
       })
         .then(response => {
@@ -298,6 +312,7 @@ export default {
           return a.hour - b.hour;
         });
         this.checkDeviceActivity();
+        this.getDeviceCommands();
       });
   }
 };
