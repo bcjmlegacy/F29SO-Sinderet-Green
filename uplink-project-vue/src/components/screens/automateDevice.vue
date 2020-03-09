@@ -8,7 +8,7 @@
         </h5>
       </div>
     </div>
-    <div id="automate">
+    <div id="editDevice">
       <div class="container">
         <div class="flex-deviceDetails">
           <div class="card custom-cards-editDevices">
@@ -364,10 +364,6 @@ export default {
 </script>
 
 <style>
-#automate {
-  margin-top: 120px;
-  margin-bottom: 120px;
-}
 .option-width {
   width: 50%;
 }

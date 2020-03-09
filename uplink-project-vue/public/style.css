@@ -701,7 +701,7 @@ ul {
   flex-direction: row !important;
   justify-content: center !important;
   flex-wrap: wrap !important;
-  align-items: center !important;
+  align-items: flex-start !important;
 }
 
 @media screen and (max-width: 1025px) {
