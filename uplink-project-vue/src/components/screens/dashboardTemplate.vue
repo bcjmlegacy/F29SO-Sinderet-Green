@@ -6,9 +6,7 @@
     <div class="bottom-show">
       <div class="logo-back fixed-top">
         <h5 class="logo">
-          <router-link class="links-top" :to="{ name: 'dashboard' }"
-            >uplink</router-link
-          >
+          <router-link class="links-top" :to="{ name: 'dashboard' }">uplink</router-link>
         </h5>
       </div>
     </div>
@@ -40,8 +38,7 @@
           <router-link
             class="advanced-links text-center links"
             :to="{ name: 'allDevicesPage' }"
-            >See All Devices</router-link
-          >
+          >See All Devices</router-link>
         </div>
       </div>
     </div>
@@ -69,7 +66,7 @@ export default {
       results: [] //Array to store results gathered from database but also the icon for the room
     };
   },
-  props: ["userToken", "back"],
+  props: ["userToken"],
 
   mounted: function() {
     fetch(url, {

@@ -25,7 +25,7 @@ import Warnings from "./components/screens/warnings";
 import AdvancedStats from "./components/screens/statsPage";
 import Settings from "./components/screens/settingsTemplate";
 import AllDevicesPage from "./components/screens/allDevicesPage";
-
+import Automate from "./components/screens/automateDevice";
 import NotFound from "./components/screens/404";
 //bootstrap vue tags can be used
 Vue.use(BootstrapVue);
@@ -256,59 +256,84 @@ const router = new VueRouter({
       }
     },
     {
+      name: "automate",
+      path: "/automate",
+      component: Automate,
+      props(route) {
+        return route.query || {};
+      },
+      beforeEnter: (to, from, next) => {
+        let token = Vue.$cookies.get("token");
+        if (token == null) {
+          next({ name: "login" });
+        } else {
+          next();
+        }
+      }
+    },
+    {
       name: "404",
       path: "*",
       component: NotFound
     }
   ]
 });
+fetch("http://localhost:5552/getVapidKey", {
+  mode: "cors",
+  method: "GET",
+  headers: { authorization: Vue.$cookies.get("token") }
+})
+  .then(Response => {
+    return Response.json();
+  })
+  .then(jsonData => {
+    const vapid_key = jsonData.public_vapid_key;
+    if ("serviceWorker" in navigator) {
+      send().catch(err => console.log(err));
+    }
 
-const vapid_key =
-  "BFtZSN6h5imT_YhoDK5QbpfcixOoroZmD40cT_rISQfufxr6uMOw1AJs-NevkEp2egqVnvXouMx5qwZzvLHTMVI";
+    function urlBase64ToUint8Array(base64String) {
+      const padding = "=".repeat((4 - (base64String.length % 4)) % 4);
+      const base64 = (base64String + padding)
+        .replace(/-/g, "+")
+        .replace(/_/g, "/");
 
-if ("serviceWorker" in navigator) {
-  send().catch(err => console.log(err));
-}
+      const rawData = window.atob(base64);
+      const outputArray = new Uint8Array(rawData.length);
 
-function urlBase64ToUint8Array(base64String) {
-  const padding = "=".repeat((4 - (base64String.length % 4)) % 4);
-  const base64 = (base64String + padding).replace(/-/g, "+").replace(/_/g, "/");
+      for (let i = 0; i < rawData.length; ++i) {
+        outputArray[i] = rawData.charCodeAt(i);
+      }
+      return outputArray;
+    }
 
-  const rawData = window.atob(base64);
-  const outputArray = new Uint8Array(rawData.length);
+    async function send() {
+      console.log("Register Service Worker....");
+      const register = await navigator.serviceWorker.register("/sw.js", {
+        scope: "/"
+      });
+      console.log("Registered Service Worker....");
 
-  for (let i = 0; i < rawData.length; ++i) {
-    outputArray[i] = rawData.charCodeAt(i);
-  }
-  return outputArray;
-}
+      console.log("Registered Push....");
+      const subscription = await register.pushManager.subscribe({
+        userVisibleOnly: true,
+        applicationServerKey: urlBase64ToUint8Array(vapid_key)
+      });
 
-async function send() {
-  console.log("Register Service Worker....");
-  const register = await navigator.serviceWorker.register("/sw.js", {
-    scope: "/"
+      console.log("Sending Push....");
+      await fetch("http://localhost:5552/subscribe", {
+        mode: "cors",
+        method: "POST",
+        headers: {
+          authorization: Vue.$cookies.get("token"),
+          "content-type": "application/json"
+        },
+        body: JSON.stringify(subscription)
+      });
+
+      console.log("Push sent...");
+    }
   });
-  console.log("Registered Service Worker....");
-
-  console.log("Registered Push....");
-  const subscription = await register.pushManager.subscribe({
-    userVisibleOnly: true,
-    applicationServerKey: urlBase64ToUint8Array(vapid_key)
-  });
-
-  console.log("Sending Push....");
-  await fetch("http://192.168.0.11:5552/subscribe", {
-    mode: "cors",
-    method: "POST",
-    headers: {
-      authorization: Vue.$cookies.get("token"),
-      "content-type": "application/json"
-    },
-    body: JSON.stringify(subscription)
-  });
-
-  console.log("Push sent...");
-}
 
 //mounts app to the html page - public/index.html
 new Vue({

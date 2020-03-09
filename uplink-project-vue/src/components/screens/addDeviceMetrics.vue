@@ -1,6 +1,6 @@
 <template>
   <div>
-    <NavbarTop class="top-show" :back="back" />
+    <NavbarTop class="top-show" />
     <div class="bottom-show">
       <div class="logo-back fixed-top">
         <h5 class="logo">
@@ -66,7 +66,7 @@
         </div>
       </div>
     </div>
-    <NavbarBottom class="bottom-show" :back="back" />
+    <NavbarBottom class="bottom-show" />
   </div>
 </template>
 <script>
@@ -96,7 +96,7 @@ export default {
         name: "",
         room: "",
         wattage: this.deviceEnergy,
-        type: "1"
+        type: this.deviceType
       },
       rooms: []
     };

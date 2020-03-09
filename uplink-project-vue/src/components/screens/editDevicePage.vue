@@ -26,7 +26,7 @@
               </div>
               <div class="device-cont">
                 <b-form @submit="go">
-                  <p class="label-section text-center">Add Scheduled Events</p>
+                  <p class="label-section text-center">Add to Schedule</p>
 
                   <div class="col-sm-12">
                     <label for="input-device-room" class="label">Set Time</label>
@@ -38,17 +38,26 @@
                       required="required"
                     >
                       <option disabled value>Hours</option>
-                      <option selected="selected" value="0">0</option>
-                      <option v-for="n in 24" :key="n" :value="n">{{ n }}</option>
+                      <option selected="selected" value="0">{{formatTimeFront(0)}}</option>
+                      <option v-for="n in 24" :key="n" :value="n">
+                        {{
+                        formatTimeFront(n)
+                        }}
+                      </option>
                     </select>
+                    :
                     <select
                       v-model="form.minute"
                       class="form-dropdown time-width"
                       required="required"
                     >
                       <option disabled value>Minutes</option>
-                      <option selected="selected" alue="0">0</option>
-                      <option v-for="n in 60" :key="n" :value="n">{{ n }}</option>
+                      <option selected="selected" alue="0">{{formatTimeFront(0)}}</option>
+                      <option v-for="n in 60" :key="n" :value="n">
+                        {{
+                        formatTimeFront(n)
+                        }}
+                      </option>
                     </select>
                   </div>
 
@@ -222,6 +231,12 @@ export default {
             location.reload();
           });
       }
+    },
+    formatTimeFront(time) {
+      if (time < 10) {
+        return "0" + time;
+      }
+      return time;
     }
   },
   mounted: function() {
