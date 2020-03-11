@@ -240,13 +240,9 @@ export default {
   display: block;
   margin-left: auto;
   margin-right: auto;
-  width: 30%;
+  width: 40%;
   margin-top: 1em;
   padding: 20px;
-}
-
-#savebuttons {
-  width: 100%;
 }
 
 .inputs-b {
@@ -305,7 +301,7 @@ export default {
 }
 
 .custom-card-settings {
-  width: 90%;
+  width: 25%;
   height: 75%;
   padding: 30px;
   border-radius: 20px;
@@ -327,10 +323,28 @@ export default {
 
 @media screen and (max-width: 1025px) {
   #settings {
-    margin-top: 100px;
+    margin-top: 120px;
   }
-  .custom-cards-settings {
+  .custom-card-settings {
     width: 60%;
+  }
+  #profilepic {
+    width: 20%;
+  }
+}
+
+@media screen and (max-width: 750px) {
+  .custom-card-settings {
+    width: 90%;
+  }
+  #profilepic {
+    width: 30%;
+  }
+}
+
+@media screen and (max-width: 550px) {
+  #settings {
+    margin-top: 100px;
   }
 }
 </style>
