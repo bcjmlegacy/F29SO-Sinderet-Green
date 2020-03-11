@@ -6,46 +6,22 @@
     <div id="settings">
       <div class="flex-add">
         <div class="custom-card-settings">
-          <button type="button" class="btn btn-light logout-right" v-on:click="configure" v-show="!logout">Logout</button>
-          <h4 class="display3 text-center">Profile</h4>
-          <hr />
           <button
             type="button"
-            class="btn btn-light"
+            class="btn btn-light logout-right"
             v-on:click="configure"
-            v-show="!edit"
-          >
-            Edit
-          </button>
-          <img
-            id="profilepic"
-            src="../../assets/user.png"
-            alt="Profile"
-            class="nav-image"
-          />
+            v-show="!logout"
+          >Logout</button>
+          <h4 class="display3 text-center">Profile</h4>
+          <hr />
+          <button type="button" class="btn btn-light" v-on:click="configure" v-show="!edit">Edit</button>
+          <img id="profilepic" src="../../assets/user.png" alt="Profile" class="nav-image" />
           <div class="userDetails">
-            <b-form-group
-              id="username-input"
-              label="Username:"
-              label-for="input-username"
-            >
-              <b-form-input
-                v-if="!edit"
-                id="input-username"
-                v-model="username"
-                plaintext
-              ></b-form-input>
-              <b-form-input
-                v-if="edit"
-                id="input-username"
-                v-model="username"
-              ></b-form-input>
+            <b-form-group id="username-input" label="Username:" label-for="input-username">
+              <b-form-input v-if="!edit" id="input-username" v-model="username" plaintext></b-form-input>
+              <b-form-input v-if="edit" id="input-username" v-model="username"></b-form-input>
             </b-form-group>
-            <b-form-group
-              id="password-input"
-              label="Password:"
-              label-for="input-password"
-            >
+            <b-form-group id="password-input" label="Password:" label-for="input-password">
               <b-form-input
                 v-if="!edit"
                 id="input-password"
@@ -53,76 +29,23 @@
                 type="password"
                 plaintext
               ></b-form-input>
-              <b-form-input
-                v-if="edit"
-                id="input-password"
-                v-model="password"
-                type="password"
-              ></b-form-input>
+              <b-form-input v-if="edit" id="input-password" v-model="password" type="password"></b-form-input>
             </b-form-group>
-            <b-form-group
-              id="email-input"
-              label="Email:"
-              label-for="input-email"
-            >
-              <b-form-input
-                v-if="!edit"
-                id="input-email"
-                v-model="email"
-                type="email"
-                plaintext
-              ></b-form-input>
-              <b-form-input
-                v-if="edit"
-                id="input-email"
-                v-model="email"
-                type="email"
-              ></b-form-input>
+            <b-form-group id="email-input" label="Email:" label-for="input-email">
+              <b-form-input v-if="!edit" id="input-email" v-model="email" type="email" plaintext></b-form-input>
+              <b-form-input v-if="edit" id="input-email" v-model="email" type="email"></b-form-input>
             </b-form-group>
-            <b-form-group
-              id="forename-input"
-              label="Forename:"
-              label-for="input-forename"
-            >
-              <b-form-input
-                v-if="!edit"
-                id="input-forename"
-                v-model="forename"
-                plaintext
-              ></b-form-input>
-              <b-form-input
-                v-if="edit"
-                id="input-forename"
-                v-model="forename"
-              ></b-form-input>
+            <b-form-group id="forename-input" label="Forename:" label-for="input-forename">
+              <b-form-input v-if="!edit" id="input-forename" v-model="forename" plaintext></b-form-input>
+              <b-form-input v-if="edit" id="input-forename" v-model="forename"></b-form-input>
             </b-form-group>
-            <b-form-group
-              id="surname-input"
-              label="Surname:"
-              label-for="input-surname"
-            >
-              <b-form-input
-                v-if="!edit"
-                id="input-surname"
-                v-model="surname"
-                plaintext
-              ></b-form-input>
-              <b-form-input
-                v-if="edit"
-                id="input-surname"
-                v-model="surname"
-              ></b-form-input>
+            <b-form-group id="surname-input" label="Surname:" label-for="input-surname">
+              <b-form-input v-if="!edit" id="input-surname" v-model="surname" plaintext></b-form-input>
+              <b-form-input v-if="edit" id="input-surname" v-model="surname"></b-form-input>
             </b-form-group>
-            <b-button-toolbar
-              id="savebuttons"
-              v-show="edit"
-              aria-label="Save/Cancel buttons"
-            >
-              <b-button-group size="sm">
-                <b-button class="btn btn-light">Save</b-button>
-                <b-button class="btn btn-light">Cancel</b-button>
-              </b-button-group>
-            </b-button-toolbar>
+
+            <button type="submit" class="form-buttons">Save</button>
+            <button type="submit" class="form-buttons">Cancel</button>
           </div>
         </div>
         <!--Navbar bottom *mobile and tablet view*-->
@@ -135,7 +58,6 @@
 <script>
 import NavTop from "../navbars/navbar-top";
 import NavBottom from "../navbars/navbar-bottom";
-import { bus } from "../../main";
 
 let url = "http://localhost:5552/getUsers";
 
@@ -152,15 +74,8 @@ export default {
       edit: false
     };
   },
-  props: ["userToken", "back"],
+  props: ["userToken"],
   methods: {
-    switchComp(comp) {
-      //Switch component
-      bus.$emit("switchComp", comp);
-    },
-    prev(previous) {
-      bus.$emit("prev", previous);
-    },
     configure(event) {
       if (this.edit === false) {
         this.edit = true;
@@ -215,15 +130,13 @@ export default {
   width: 90%;
   height: 75%;
   padding: 20px;
-  background-color: white !important;
+
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 1px 8px rgba(0, 0, 0, 0.22) !important;
   transition: 0.2s ease-in-out all !important;
 }
 
 .siblings {
-  float: left;
   display: inline;
-  width: 49%;
 }
 
 .logout-right {
