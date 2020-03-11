@@ -1,27 +1,59 @@
-var fs = require("fs"),
-	bs3 = require("better-sqlite3"),
-	schemaFile = `${__dirname}/db/hub-schema.sql`,
-	demoFile = `${__dirname}/db/demo-data.sql`,
-	schema = fs.readFileSync(schemaFile, "utf8");
-demo = fs.readFileSync(demoFile, "utf8");
+var fs         = require("fs"),
+    bs3        = require("better-sqlite3"),
+    schemaFile = `${__dirname}/db/hub-schema.sql`,
+    demoFile   = `${__dirname}/db/demo-data.sql`,
+    cityFile   = `${__dirname}/db/cities.sql`,
+    dbFile     = `${__dirname}/db/data.db`,
+    dbJFile    = `${__dirname}/db/data.db-journal`,
+    schema     = fs.readFileSync(schemaFile, "utf8"),
+    demo       = fs.readFileSync(demoFile, "utf8"),
+    cities     = fs.readFileSync(cityFile, 'utf-8').split('\n');
 
-// const db = new bs3(`${__dirname}/db/data.db`, { verbose: console.log });
-const db = new bs3(`${__dirname}/db/data.db`);
+const rebuild   = false,
+      demoMode  = false;
+
+
+
+if(rebuild) {
+
+  console.log(`[${getWholeDate()}] > Rebuilding database...`);
+
+  if(fs.existsSync(dbFile)) {
+    fs.unlinkSync(dbFile)
+  }
+
+  if(fs.existsSync(dbJFile)) {
+    fs.unlinkSync(dbJFile)
+  }
+
+  const db = new bs3(dbFile);
+  console.log(`[${getWholeDate()}] > Building schema...`);
+  db.exec(schema);
+  
+  console.log(`[${getWholeDate()}] > Adding city data...`);
+
+  var cityCount = 0;
+  for(x in cities)  {
+    cityCount++;
+    db.exec(cities[x]);
+    process.stdout.write(`[${getWholeDate()}] > Importing cities: ${cityCount}/15494\r`);
+  }
+  console.log("");
+
+  if(demoMode)  {
+    console.log(`[${getWholeDate()}] > Adding demo data...`);
+    db.exec(demo);
+  }
+
+} else  {
+  const db = new bs3(dbFile);
+}
 
 function getWholeDate() {
 	var d = new Date();
 	var dateString = `${d.getFullYear()}-${d.getMonth() +
 		1}-${d.getDate()} ${d.getHours()}:${d.getMinutes()}:${d.getSeconds()}`;
 	return dateString.padEnd(19, " ");
-}
-
-try {
-	db.exec(schema);
-	db.exec(demo);
-} catch (e) {
-	console.log(`[${getWholeDate()}] ! Error creating database!`);
-	console.log(`[${getWholeDate()}] ! ${e}`);
-	console.log(`[${getWholeDate()}] ! Likely already created!`);
 }
 
 class databasehandler {
