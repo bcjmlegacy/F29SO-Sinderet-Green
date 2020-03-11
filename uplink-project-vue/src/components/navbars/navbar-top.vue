@@ -38,6 +38,28 @@ export default {
     return {
       warningCounter: 1
     };
+  },
+  props: ["userToken"],
+  methods: {
+    getWarningNumber() {
+      let url = "http://localhost:5552/getTriggers";
+      fetch(url, {
+        mode: "cors",
+        method: "GET",
+        headers: {
+          authorization: this.userToken
+        }
+      })
+        .then(response => {
+          return response.json();
+        })
+        .then(jsonData => {
+          this.warningCounter = jsonData.length;
+        });
+    }
+  },
+  mounted: function() {
+    this.getWarningNumber();
   }
 };
 </script>
@@ -48,10 +70,9 @@ export default {
   text-decoration: none;
 }
 .notifications .warningCounter {
-  padding-left: 3px;
-  padding-right: 3px;
-  height: 20px;
-  min-width: 23px;
+  padding: 2px;
+  height: 18px;
+  min-width: 18px;
   border-radius: 20px;
   position: absolute;
   top: -14px;

@@ -35,8 +35,30 @@ export default {
   name: "navbar-top",
   data() {
     return {
-      warningCounter: "9"
+      warningCounter: ""
     };
+  },
+  props: ["userToken"],
+  methods: {
+    getWarningNumber() {
+      let url = "http://localhost:5552/getTriggers";
+      fetch(url, {
+        mode: "cors",
+        method: "GET",
+        headers: {
+          authorization: this.userToken
+        }
+      })
+        .then(response => {
+          return response.json();
+        })
+        .then(jsonData => {
+          this.warningCounter = jsonData.length;
+        });
+    }
+  },
+  mounted: function() {
+    this.getWarningNumber();
   }
 };
 </script>

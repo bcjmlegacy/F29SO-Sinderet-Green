@@ -1,6 +1,6 @@
 <template>
   <div>
-    <NavbarTop class="top-show" />
+    <NavbarTop class="top-show" :userToken="userToken" />
     <div class="bottom-show">
       <div class="logo-back fixed-top">
         <h5 class="logo">
@@ -42,7 +42,7 @@
         </div>
       </div>
     </div>
-    <NavbarBottom class="bottom-show" />
+    <NavbarBottom class="bottom-show" :userToken="userToken" />
   </div>
 </template>
 <script>

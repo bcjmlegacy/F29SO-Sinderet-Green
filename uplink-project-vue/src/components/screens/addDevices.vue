@@ -1,6 +1,6 @@
 <template>
   <div>
-    <NavbarTop class="top-show" :back="back" />
+    <NavbarTop class="top-show" :userToken="userToken" />
     <div class="bottom-show">
       <div class="logo-back fixed-top">
         <h5 class="logo">
@@ -66,7 +66,7 @@
         </div>
       </div>
     </div>
-    <NavbarBottom class="bottom-show" :back="back" />
+    <NavbarBottom class="bottom-show" :userToken="userToken" />
   </div>
 </template>
 <script>
@@ -76,7 +76,7 @@ import AddDeviceCard from "../helpers/addDeviceCard";
 
 export default {
   name: "devices",
-  props: ["back"],
+  props: ["userToken"],
   components: {
     NavbarTop,
     NavbarBottom,

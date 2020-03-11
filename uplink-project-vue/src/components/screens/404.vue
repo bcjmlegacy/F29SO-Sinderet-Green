@@ -1,6 +1,6 @@
 <template>
   <div>
-    <NavbarTop class="top-show" />
+    <NavbarTop :userToken="userToken" class="top-show" />
     <div class="bottom-show">
       <div class="logo-back fixed-top">
         <h5 class="logo">
@@ -17,7 +17,7 @@
         </div>
       </div>
     </div>
-    <NavbarBottom class="bottom-show" />
+    <NavbarBottom :userToken="userToken" class="bottom-show" />
   </div>
 </template>
 
@@ -29,7 +29,8 @@ export default {
   components: {
     NavbarTop,
     NavbarBottom
-  }
+  },
+  props: ["userToken"]
 };
 </script>
 

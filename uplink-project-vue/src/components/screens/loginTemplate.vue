@@ -95,7 +95,7 @@ export default {
         })
         .then(jsonData => {
           console.log(jsonData);
-          if (jsonData.error == "Error logging in") {
+          if (jsonData.error === "Details incorrect") {
             this.error = "Incorrect Username or Password";
             this.resetForm();
           } else {

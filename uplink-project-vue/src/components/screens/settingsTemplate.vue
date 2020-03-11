@@ -1,6 +1,6 @@
 <template>
   <div>
-    <NavTop class="top-show" />
+    <NavTop :userToken="userToken" class="top-show" />
     <div class="bottom-show">
       <div class="logo-back fixed-top">
         <h5 class="logo">
@@ -193,11 +193,20 @@
                   src="../../assets/close.png"
                   alt="Delete Item"
                   class="img-delete"
+                  v-show="edit1"
                   @click="deleteSensorItem(sensor.sensor_id)"
                 />
               </li>
             </ul>
+            <div class="button-cont" v-show="edit1">
+              <button
+                type="button"
+                class="form-buttons-settings save-cancel"
+                v-on:click="undoEdit1"
+              >Finish</button>
+            </div>
           </div>
+          <!--
           <div class="custom-card-settings">
             <div class="flex-buttons">
               <h4 class="display3 width-sensor">Rooms</h4>
@@ -220,12 +229,14 @@
                 />
               </li>
             </ul>
+            
           </div>
+          -->
         </div>
       </div>
       <!--Navbar bottom *mobile and tablet view*-->
     </div>
-    <NavBottom class="bottom-show" />
+    <NavBottom class="bottom-show" :userToken="userToken" />
   </div>
 </template>
 
@@ -250,6 +261,7 @@ export default {
       },
 
       edit: false,
+      edit1: false,
       logout: false,
       editButton: true,
       editButton1: true,
@@ -269,11 +281,22 @@ export default {
       }
     },
     configureRooms() {},
-    configureSensors() {},
+    configureSensors() {
+      if (this.edit1 === false) {
+        this.edit1 = true;
+        this.editButton1 = false;
+      }
+    },
     undoEdit() {
       if (this.edit === true) {
         this.edit = false;
         this.editButton = true;
+      }
+    },
+    undoEdit1() {
+      if (this.edit1 === true) {
+        this.edit1 = false;
+        this.editButton1 = true;
       }
     },
     getRooms() {
@@ -307,7 +330,42 @@ export default {
         .then(jsonData => {
           this.displayData.sensors = jsonData;
         });
+    },
+
+    deleteSensorItem(id) {
+      let url = "http://localhost:5552/deleteSensor?id=" + id;
+      fetch(url, {
+        mode: "cors",
+        method: "GET",
+        headers: {
+          Authorization: this.userToken
+        }
+      })
+        .then(response => {
+          return response.json();
+        })
+        .then(jsonData => {
+          console.log(jsonData);
+        });
     }
+    /*
+    deleteRoomItem(id) {
+      let url = "http://localhost:5552/deleteRoom?id=" + id;
+      fetch(url, {
+        mode: "cors",
+        method: "GET",
+        headers: {
+          Authorization: this.userToken
+        }
+      })
+        .then(response => {
+          return response.json();
+        })
+        .then(jsonData => {
+          console.log(jsonData);
+        });
+    }
+    */
   },
   mounted: function() {
     this.getRooms();
@@ -455,7 +513,7 @@ export default {
 
 @media screen and (max-width: 550px) {
   #settings {
-    margin-top: 100px;
+    margin-top: 80px;
   }
 }
 </style>
