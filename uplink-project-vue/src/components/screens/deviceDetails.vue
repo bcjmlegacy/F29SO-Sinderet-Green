@@ -68,7 +68,7 @@
                   }}
                 </li>
               </ul>
-              <div id="empty">{{ emptySchedule }}</div>
+              <div id="empty">{{ empty.emptySchedule }}</div>
               <div class="form-rows">
                 <router-link
                   :to="{
@@ -96,10 +96,13 @@
               <h5 class="card-title text-center label-section">Automated Tasks</h5>
               <div class="form-rows" />
               <ul class="list-schedule">
-                <!--List all the automated tasks that were set up like how the schedule looks
-                -->
+                <li
+                  class="scheduleItem"
+                  v-for="automation in automations"
+                  :key="automation.id"
+                >{{automation.command}} when the {{getType(automation.type)}} is {{translateSymbol(automation.symbol)}} &nbsp; {{automation.value}}{{getUnits(automation.type)}}</li>
               </ul>
-              <div id="empty">{{ emptyAutomation }}</div>
+              <div id="empty">{{ empty.emptyAutomation }}</div>
               <div class="form-rows">
                 <router-link
                   :to="{
@@ -154,9 +157,13 @@ export default {
       device: "",
       scheduledCommands: [],
       deviceCommands: [],
+      sensorType: "",
+      automations: [],
       isAvailable: true,
-      emptySchedule: "",
-      emptyAutomation: "",
+      empty: {
+        emptySchedule: "",
+        emptyAutomation: ""
+      },
       chartD: {
         type: "line",
         data: {
@@ -231,6 +238,97 @@ export default {
         }
       }
     },
+    getSensorType(sensorId) {
+      console.log(sensorId);
+      let url = "http://localhost:5552/getSensorById?id=" + sensorId;
+
+      fetch(url, {
+        mode: "cors",
+        method: "GET",
+        headers: {
+          Authorization: this.userToken
+        }
+      })
+        .then(response => {
+          return response.json();
+        })
+        .then(jsonData => {
+          this.sensorType = jsonData[0].sensor_type;
+        });
+    },
+
+    getType(sensorType) {
+      if (sensorType === 1) {
+        return "temperature";
+      }
+      if (sensorType === 2) {
+        return "humidity";
+      }
+      return null;
+    },
+
+    translateSymbol(sym) {
+      if (sym === "<") {
+        return "lower than";
+      }
+      if (sym === ">") {
+        return "higher than";
+      }
+      return null;
+    },
+    ascii(a) {
+      return String.fromCharCode(a);
+    },
+    getUnits(unit) {
+      if (unit === 1) {
+        unit = this.ascii(176) + "c";
+        return unit;
+      }
+      if (unit === 2) {
+        return "%";
+      }
+      return "";
+    },
+
+    getAutomationData() {
+      let url = "http://localhost:5552/getTriggers";
+      fetch(url, {
+        mode: "cors",
+        method: "GET",
+        headers: {
+          Authorization: this.userToken
+        }
+      })
+        .then(response => {
+          return response.json();
+        })
+        .then(jsonData => {
+          if (jsonData < 1) {
+            this.empty.emptyAutomation = "No Automations";
+          }
+          for (let i in this.deviceCommands) {
+            for (let j in jsonData) {
+              if (this.deviceID === jsonData[j].device_trigger_device_id) {
+                if (
+                  this.deviceCommands[i].device_command_id ===
+                  jsonData[j].device_trigger_command
+                ) {
+                  this.getSensorType(jsonData[j].device_trigger_sensor_id);
+                  this.automations.push({
+                    id: jsonData[j].device_trigger_id,
+                    symbol: jsonData[j].device_trigger_gt_lt_eq,
+                    value: jsonData[j].device_trigger_sensor_value,
+                    command: this.deviceCommands[i].device_command_name,
+                    type: jsonData[j].device_trigger_sensor_id
+                  });
+                }
+              }
+            }
+          }
+
+          console.log(this.automations);
+        });
+    },
     async turnOn() {
       await this.$nextTick();
       let url = "http://localhost:5552/insertOneshotTimer";
@@ -295,6 +393,8 @@ export default {
     let url = "http://localhost:5552/getRepeatTimers?id=" + this.deviceID;
     this.chartData("chart", this.chartD);
     this.checkDevice();
+    this.getDeviceCommands();
+    this.getAutomationData();
     fetch(url, {
       mode: "cors",
       method: "GET",
@@ -308,7 +408,7 @@ export default {
       .then(jsonData => {
         //Some formating for finding on and off commands
         if (jsonData.length < 1) {
-          this.emptySchedule = "Schedule is Empty";
+          this.empty.emptySchedule = "Schedule is Empty";
         }
         this.emptyAutomation = "No Automation Added";
         for (let key in jsonData) {
@@ -341,7 +441,6 @@ export default {
           return a.hour - b.hour;
         });
         this.checkDeviceActivity();
-        this.getDeviceCommands();
       });
   }
 };

@@ -56,6 +56,9 @@ export default {
   name: "warnings",
   components: { NavTop, NavBottom, WarningCard },
   props: ["userToken"],
+  data() {
+    return {};
+  },
   methods: {
     getWarnings() {
       let url = "http://localhost:5552/getWarnings";
