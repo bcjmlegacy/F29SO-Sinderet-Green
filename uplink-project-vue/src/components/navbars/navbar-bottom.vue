@@ -16,8 +16,9 @@
         </router-link>
 
         <router-link :to="{name: 'warnings'}" class="image-cont-nav-bottom">
-          <div>
+          <div class="notifications">
             <img src="../../assets/exclamation.png" alt="warnings" class="nav-image-bottom" />
+            <h5 class="warningCounter">{{warningCounter}}</h5>
           </div>
         </router-link>
         <router-link :to="{name: 'settings'}" class="image-cont-nav-bottom">
@@ -31,6 +32,34 @@
 </template>
 <script>
 export default {
-  name: "navbar-top"
+  name: "navbar-top",
+  data() {
+    return {
+      warningCounter: "9"
+    };
+  }
 };
 </script>
+<style scoped>
+.notifications {
+  display: inline-block;
+  position: relative;
+  text-decoration: none;
+}
+.notifications .warningCounter {
+  padding-left: 3px;
+  padding-right: 3px;
+  min-width: 23px;
+  border-radius: 25px;
+  position: absolute;
+  top: -10px;
+  right: -12px;
+  color: white;
+  font-size: 0.9em;
+  background-color: #ff4a4a;
+}
+
+.warningCounter:hover {
+  background-color: #ff2f2f;
+}
+</style>

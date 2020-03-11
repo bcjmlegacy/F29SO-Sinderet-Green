@@ -340,6 +340,7 @@ export default {
       evt.preventDefault();
     },
 
+    getTriggers() {},
     deleteAutomation() {},
 
     capitalize(text) {
