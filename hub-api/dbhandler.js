@@ -456,7 +456,7 @@ class databasehandler {
 		email,
 		forename,
 		surname,
-		admin
+		user_admin
 	) {
 		var ts = new Date().valueOf();
 		var q = `INSERT INTO user (user_account_type, user_username, user_email, user_forename, user_surname, user_password, user_created, user_admin) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`;
@@ -470,6 +470,32 @@ class databasehandler {
 			password,
 			ts,
 			user_admin
+		);
+	}
+
+	editUser(
+    user_id,
+		account_type,
+		username,
+		password,
+		email,
+		forename,
+		surname,
+		user_admin
+	) {
+		var ts = new Date().valueOf();
+		var q = `UPDATE user SET user_account_type = ?, user_username = ?, user_email = ?, user_forename = ?, user_surname = ?, user_password = ?, user_created = ?, user_admin = ? WHERE user_id = ?`;
+
+		return q.run(
+			account_type,
+			username,
+			email,
+			forename,
+			surname,
+			password,
+			ts,
+      user_admin,
+      user_id
 		);
 	}
 
@@ -710,6 +736,11 @@ class databasehandler {
 	}
 	deleteWarning(id) {
 		return this.deleteById("warning", id);
+	}
+
+	deleteAuthByToken(token) {
+    var q = db.prepare(`DELETE FROM auth WHERE auth_token = ?`);
+		return q.run(token);
 	}
 
 	deleteDeviceReadingByDeviceId(id) {
