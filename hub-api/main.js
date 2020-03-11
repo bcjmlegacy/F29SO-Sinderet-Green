@@ -22,7 +22,7 @@ if (!fs.existsSync(__dirname + "/vapid.env")) {
 
 require("dotenv").config({ path: "vapid.env" });
 
-const publicVapidKey  = process.env.PUBLIC_VAPID_KEY;
+const publicVapidKey = process.env.PUBLIC_VAPID_KEY;
 const privateVapidKey = process.env.PRIVATE_VAPID_KEY;
 
 webPush.setVapidDetails(
@@ -51,7 +51,7 @@ var db = new DBHandler();
 // Web push subscription
 var subscription;
 
-function newPush(text)  {
+function newPush(text) {
   const payload = JSON.stringify({
     title: "Upload",
     body: text
@@ -666,6 +666,10 @@ app.get("/getDeviceReadings", (req, res) => {
 
 app.get("/getTriggers", (req, res) => {
   res.send(db.getTriggers(req.query.limit, req.query.offset));
+});
+
+app.get("/getWarnings", (req, res) => {
+  res.send(db.getWarnings(req.query.limit, req.query.offset));
 });
 
 /* #######################################

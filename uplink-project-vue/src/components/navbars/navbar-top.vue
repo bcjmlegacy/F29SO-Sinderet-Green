@@ -42,7 +42,7 @@ export default {
   props: ["userToken"],
   methods: {
     getWarningNumber() {
-      let url = "http://localhost:5552/getTriggers";
+      let url = "http://localhost:5552/getWarnings";
       fetch(url, {
         mode: "cors",
         method: "GET",

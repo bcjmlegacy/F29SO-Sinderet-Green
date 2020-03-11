@@ -55,7 +55,28 @@ import WarningCard from "../helpers/warningCard";
 export default {
   name: "warnings",
   components: { NavTop, NavBottom, WarningCard },
-  props: ["userToken"]
+  props: ["userToken"],
+  methods: {
+    getWarnings() {
+      let url = "http://localhost:5552/getWarnings";
+      fetch(url, {
+        mode: "cors",
+        method: "GET",
+        headers: {
+          authorization: this.userToken
+        }
+      })
+        .then(response => {
+          return response.json();
+        })
+        .then(jsonData => {
+          console.log(jsonData);
+        });
+    }
+  },
+  mounted: function() {
+    this.getWarnings();
+  }
 };
 </script>
 
