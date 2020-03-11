@@ -12,7 +12,7 @@ var fs         = require("fs"),
 const rebuild   = false,
       demoMode  = false;
 
-
+var db;
 
 if(rebuild) {
 
@@ -26,7 +26,7 @@ if(rebuild) {
     fs.unlinkSync(dbJFile)
   }
 
-  const db = new bs3(dbFile);
+  var db = new bs3(dbFile);
   console.log(`[${getWholeDate()}] > Building schema...`);
   db.exec(schema);
   
@@ -46,7 +46,7 @@ if(rebuild) {
   }
 
 } else  {
-  const db = new bs3(dbFile);
+  db = new bs3(dbFile);
 }
 
 function getWholeDate() {
