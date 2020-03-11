@@ -56,6 +56,14 @@ Object tables.
 
 ####################################### */
 
+CREATE TABLE city (
+    city_id             INTEGER PRIMARY KEY AUTOINCREMENT,
+    city_name           TEXT,
+    city_lat            FLOAT,
+    city_long           FLOAT,
+    city_country        TEXT
+);
+
 CREATE TABLE user (
     user_id             INTEGER PRIMARY KEY AUTOINCREMENT,
     user_account_type   INTEGER,
