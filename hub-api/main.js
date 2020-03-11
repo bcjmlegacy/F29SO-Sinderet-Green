@@ -49,7 +49,7 @@ var client = mqtt.connect("mqtt://127.0.0.1");
 var db = new DBHandler();
 
 // Web push subscription
-const subscription;
+var subscription;
 
 function newPush(text)  {
   const payload = JSON.stringify({
