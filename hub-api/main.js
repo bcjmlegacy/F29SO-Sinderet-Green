@@ -590,6 +590,10 @@ app.get("/getDeviceById", (req, res) => {
   res.send(db.getDeviceById(req.query.id));
 });
 
+app.get("/getTriggerById", (req, res) => {
+  res.send(db.getDeviceById(req.query.id));
+});
+
 /* #######################################
  
 Get by room.
@@ -644,6 +648,10 @@ app.get("/getSensorReadings", (req, res) => {
 
 app.get("/getDeviceReadings", (req, res) => {
   res.send(db.getDeviceReadings(req.query.limit, req.query.offset));
+});
+
+app.get("/getTriggers", (req, res) => {
+  res.send(db.getTriggers(req.query.limit, req.query.offset));
 });
 
 /* #######################################

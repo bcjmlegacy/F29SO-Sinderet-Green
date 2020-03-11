@@ -130,7 +130,11 @@ class databasehandler {
 
 	getUserById(id) {
 		return this.getById("user", id);
-	}
+  }
+  
+  getTriggerById(id)  {
+    return this.getById("device_trigger", id);
+  }
 
 	getRepeatTimerByDeviceId(id) {
 		var q = db.prepare(
@@ -255,6 +259,9 @@ class databasehandler {
 	}
 	getUsers(limit, offset) {
 		return this.getMany("user", limit, offset);
+  }
+  getTriggers(limit, offset) {
+		return this.getMany("device_trigger", limit, offset);
 	}
 
 	getSensorReadings(limit, offset, id) {
@@ -737,7 +744,15 @@ class databasehandler {
 		return q.run(id);
 	}
 
-	deleteTriggerByDeviceId(id, callback) {
+  deleteTriggerById(id) {
+		var q = db.prepare(
+			`DELETE FROM device_trigger WHERE device_trigger_id = ?`
+		);
+
+		return q.run(id);
+  }
+
+	deleteTriggerByDeviceId(id) {
 		var q = db.prepare(
 			`DELETE FROM device_trigger WHERE device_trigger_device_id = ?`
 		);
