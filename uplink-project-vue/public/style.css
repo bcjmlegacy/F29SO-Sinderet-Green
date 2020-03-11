@@ -68,6 +68,11 @@ body {
   font-size: 1.3em;
 }
 
+#empty {
+  text-align: center;
+  font-size: 1.3em;
+}
+
 @media screen and (max-width: 750px) {
   .h1-titles {
     font-size: 2.8em;
@@ -141,8 +146,8 @@ body {
 /*############################################################*/
 
 .item {
-  margin-left: 50px;
-  margin-right: 50px;
+  margin-left: 30px;
+  margin-right: 30px;
   margin-top: 10px;
 }
 
@@ -223,7 +228,7 @@ body {
 }
 
 .room-img {
-  width: 60%;
+  width: 50%;
   padding: 10px;
 }
 
@@ -285,7 +290,34 @@ select:focus,
 
 @media screen and (max-width: 1025px) {
   #addRooms {
-    margin-top: 100px;
+    margin-top: 120px;
+  }
+  .custom-cards-addRooms {
+    width: 30%;
+  }
+}
+
+@media screen and (max-width: 750px) {
+  #addRooms {
+    margin-top: 120px;
+  }
+  .custom-cards-addRooms {
+    width: 40%;
+  }
+}
+
+@media screen and (max-width: 550px) {
+  #addRooms {
+    margin-top: 80px;
+  }
+  .custom-cards-addRooms {
+    width: 60%;
+  }
+}
+
+@media screen and (max-width: 450px) {
+  #addRooms {
+    margin-top: 80px;
   }
   .custom-cards-addRooms {
     width: 80%;
@@ -310,17 +342,13 @@ select:focus,
 .device-cont {
   margin-top: 0.5rem;
 }
-.device-img {
-  width: 40%;
-  padding: 10px;
-}
+
 .label {
   font-size: 1.5rem;
 }
 
 .custom-cards-addDevices {
   width: 22rem;
-  height: 40rem;
   padding: 20px;
   border-radius: 20px;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 1px 8px rgba(0, 0, 0, 0.22) !important;
@@ -353,8 +381,32 @@ select:focus,
 
 @media screen and (max-width: 1025px) {
   #addDevice {
-    margin-top: 100px;
+    margin-top: 120px;
   }
+  .custom-cards-addDevices {
+    width: 35%;
+  }
+}
+
+@media screen and (max-width: 812px) {
+  #addDevice {
+    margin-top: 120px;
+  }
+  .custom-cards-addDevices {
+    width: 40%;
+  }
+}
+
+@media screen and (max-width: 550px) {
+  #addDevice {
+    margin-top: 80px;
+  }
+  .custom-cards-addDevices {
+    width: 60%;
+  }
+}
+
+@media screen and (max-width: 450px) {
   .custom-cards-addDevices {
     width: 80%;
   }
@@ -381,10 +433,7 @@ select:focus,
 .device-cont {
   margin-top: 0.5rem;
 }
-.device-img {
-  width: 50%;
-  padding: 10px;
-}
+
 .label {
   font-size: 1.5rem;
 }
@@ -406,8 +455,7 @@ select:focus,
 }
 
 .custom-cards-editDevices {
-  width: 23rem;
-  height: 45rem;
+  width: 30%;
   padding: 20px;
   border-radius: 20px;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 1px 8px rgba(0, 0, 0, 0.22) !important;
@@ -419,9 +467,7 @@ select:focus,
 }
 
 .custom-cards-devicesDetails-schedule-edit {
-  width: 23rem;
-  min-height: 20rem;
-  max-height: 50rem;
+  width: 30%;
   padding: 30px;
   border-radius: 20px;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 1px 8px rgba(0, 0, 0, 0.22) !important;
@@ -467,6 +513,31 @@ select:focus,
 
 @media screen and (max-width: 1025px) {
   #editDevice {
+    margin-top: 120px;
+    margin-bottom: 100px;
+  }
+  .custom-cards-editDevices {
+    width: 40%;
+  }
+  .custom-cards-devicesDetails-schedule-edit {
+    width: 40%;
+  }
+  .img-delete {
+    width: 30%;
+  }
+}
+
+@media screen and (max-width: 750px) {
+  .custom-cards-editDevices {
+    width: 60%;
+  }
+  .custom-cards-devicesDetails-schedule-edit {
+    width: 60%;
+  }
+}
+
+@media screen and (max-width: 550px) {
+  #editDevice {
     margin-top: 80px;
     margin-bottom: 100px;
   }
@@ -475,9 +546,6 @@ select:focus,
   }
   .custom-cards-devicesDetails-schedule-edit {
     width: 80%;
-  }
-  .img-delete {
-    width: 30%;
   }
 }
 
@@ -529,10 +597,16 @@ select:focus,
   margin-bottom: 100px;
 }
 
+.device-img-details {
+  width: 50%;
+  padding: 10px;
+}
+
 .device-img {
   width: 50%;
   padding: 10px;
 }
+
 .label {
   font-size: 1.5rem;
 }
@@ -605,7 +679,7 @@ ul {
 }
 
 .custom-cards-devicesDetails-graph {
-  width: 87%;
+  width: 70%;
   padding: 30px;
   border-radius: 20px;
   border: none;
@@ -641,7 +715,7 @@ ul {
     padding: 20px;
   }
   .device-img {
-    width: 40%;
+    width: 50%;
   }
 
   .custom-cards-devicesDetails-graph {
@@ -671,7 +745,10 @@ ul {
     width: 100%;
   }
   .device-img {
-    width: 60%;
+    width: 40%;
+  }
+  .img-delete {
+    width: 20%;
   }
   .custom-cards-devicesDetails {
     min-height: 0;
@@ -1079,11 +1156,10 @@ ul {
 }
 
 .custom-cards-devices {
-  width: 11rem;
+  width: 10rem;
   max-height: 20rem;
-  padding: 1px;
+  padding: 5px;
   border-radius: 20px;
-
   border: none;
   transition: 0.2s ease-in-out all !important;
 }
@@ -1107,6 +1183,7 @@ ul {
   opacity: 0.4 !important;
   padding: 10px;
 }
+
 .img-cont-menu {
   text-align: center;
 }
@@ -1160,7 +1237,7 @@ ul {
 /*############################################################*/
 
 .card-img-top {
-  width: 100%;
+  width: 90%;
 }
 
 .card {

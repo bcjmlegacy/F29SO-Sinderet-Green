@@ -21,6 +21,9 @@ INSERT INTO device_type     (device_type_name)  VALUES ('Solar Controller');
 INSERT INTO device_type     (device_type_name)  VALUES ('Light');
 INSERT INTO device_type     (device_type_name)  VALUES ('Door lock');
 INSERT INTO device_type     (device_type_name)  VALUES ('Solar Battery');
+INSERT INTO device_type     (device_type_name)  VALUES ('Security Camera');
+INSERT INTO device_type     (device_type_name)  VALUES ('Smart TV');
+INSERT INTO device_type     (device_type_name)  VALUES ('Smart Socket');
 
 INSERT INTO device_command  (device_command_device_type, device_command_name, device_command_mqtt, device_command_value, device_command_mqtt_res, device_command_value_res) VALUES (1, 'Turn on',  'set_power', 'on',  'status', 'on');
 INSERT INTO device_command  (device_command_device_type, device_command_name, device_command_mqtt, device_command_value, device_command_mqtt_res, device_command_value_res) VALUES (1, 'Turn off', 'set_power', 'off', 'status', 'off');

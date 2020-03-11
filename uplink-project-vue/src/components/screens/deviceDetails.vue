@@ -17,14 +17,14 @@
                 <img
                   :src="require(`../../assets/${deviceImage}.png`)"
                   alt="device icon"
-                  class="device-img"
+                  class="device-img-details"
                 />
               </div>
               <div class="text-wrapper">
                 <h5 class="card-title text-center label-section">{{ deviceName }}</h5>
                 <p class="card-text text-center">{{ deviceEnergy }} Watts</p>
               </div>
-              <div class="text-center">
+              <div class="text-center" v-bind:style="{ display: isAvailable ? 'block' : 'none' }">
                 <b-form-checkbox
                   v-model="form.checked"
                   name="check-button"
@@ -38,22 +38,26 @@
               <div class="form-rows">
                 <router-link
                   :to="{
-                    name: 'editDevice',
-                    query: {
-                      deviceID: deviceID,
-                      deviceName: deviceName,
-                      deviceImage: deviceImage,
-                      deviceEnergy: deviceEnergy,
-                      deviceType:deviceType
-                    }
-                  }"
+										name: 'editDevice',
+										query: {
+											deviceID: deviceID,
+											deviceName: deviceName,
+											deviceImage: deviceImage,
+											deviceEnergy: deviceEnergy,
+											deviceType: deviceType,
+											roomID: roomID
+										}
+									}"
                 >
                   <button class="form-buttons" type="button">Edit</button>
                 </router-link>
               </div>
             </div>
           </div>
-          <div class="item-deviceDetails">
+          <div
+            class="item-deviceDetails"
+            v-bind:style="{ display: isAvailable ? 'block' : 'none' }"
+          >
             <div class="custom-cards-devicesDetails-schedule">
               <h5 class="card-title text-center label-section">Daily Schedule</h5>
               <div class="form-rows" />
@@ -64,25 +68,30 @@
                   }}
                 </li>
               </ul>
+              <div id="empty">{{ emptySchedule }}</div>
               <div class="form-rows">
                 <router-link
                   :to="{
-                    name: 'editSchedule',
-                    query: {
-                      deviceID: deviceID,
-                      deviceName: deviceName,
-                      deviceImage: deviceImage,
-                      deviceEnergy: deviceEnergy,
-                      deviceType:deviceType
-                    }
-                  }"
+										name: 'editSchedule',
+										query: {
+											deviceID: deviceID,
+											deviceName: deviceName,
+											deviceImage: deviceImage,
+											deviceEnergy: deviceEnergy,
+											deviceType: deviceType,
+											roomID: roomID
+										}
+									}"
                 >
                   <button class="form-buttons" type="button">Edit</button>
                 </router-link>
               </div>
             </div>
           </div>
-          <div class="item-deviceDetails">
+          <div
+            class="item-deviceDetails"
+            v-bind:style="{ display: isAvailable ? 'block' : 'none' }"
+          >
             <div class="custom-cards-devicesDetails-schedule">
               <h5 class="card-title text-center label-section">Automated Tasks</h5>
               <div class="form-rows" />
@@ -90,18 +99,20 @@
                 <!--List all the automated tasks that were set up like how the schedule looks
                 -->
               </ul>
+              <div id="empty">{{ emptyAutomation }}</div>
               <div class="form-rows">
                 <router-link
                   :to="{
-                    name: '',
-                    query: {
-                      deviceID: deviceID,
-                      deviceName: deviceName,
-                      deviceImage: deviceImage,
-                      deviceEnergy: deviceEnergy,
-                      deviceType:deviceType
-                    }
-                  }"
+										name: 'automate',
+										query: {
+											deviceID: deviceID,
+											deviceName: deviceName,
+											deviceImage: deviceImage,
+											deviceEnergy: deviceEnergy,
+											deviceType: deviceType,
+											roomID: roomID
+										}
+									}"
                 >
                   <button class="form-buttons" type="button">Edit</button>
                 </router-link>
@@ -143,6 +154,9 @@ export default {
       device: "",
       scheduledCommands: [],
       deviceCommands: [],
+      isAvailable: true,
+      emptySchedule: "",
+      emptyAutomation: "",
       chartD: {
         type: "line",
         data: {
@@ -188,7 +202,8 @@ export default {
     "deviceImage",
     "deviceEnergy",
     "deviceType",
-    "userToken"
+    "userToken",
+    "roomID"
   ],
   methods: {
     getDeviceCommands() {
@@ -265,11 +280,21 @@ export default {
         data: chartData.data,
         options: chartData.options
       });
+    },
+    checkDevice() {
+      if (
+        this.deviceType != 1 &&
+        this.deviceType != 4 &&
+        this.deviceType != 9
+      ) {
+        this.isAvailable = !this.isAvailable;
+      }
     }
   },
   mounted: function() {
     let url = "http://localhost:5552/getRepeatTimers?id=" + this.deviceID;
     this.chartData("chart", this.chartD);
+    this.checkDevice();
     fetch(url, {
       mode: "cors",
       method: "GET",
@@ -282,6 +307,10 @@ export default {
       })
       .then(jsonData => {
         //Some formating for finding on and off commands
+        if (jsonData.length < 1) {
+          this.emptySchedule = "Schedule is Empty";
+        }
+        this.emptyAutomation = "No Automation Added";
         for (let key in jsonData) {
           if (
             jsonData[key].timer_repeat_command === 1 ||

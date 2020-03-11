@@ -10,9 +10,6 @@ Euan Gordon
 </template>
 <script>
 export default {
-  name: "app",
-  components: {
-    //Initialise pages.
-  }
+  name: "app"
 };
 </script>
