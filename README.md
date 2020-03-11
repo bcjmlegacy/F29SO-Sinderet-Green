@@ -12,9 +12,10 @@ The purpose of this service is to communicate with and log MQTT messages on our 
 NPM packages:
 
 - `mqtt`
-- `mysql`
+- `better-sqlite3`
 - `express`
 - `cors`
+- `web-push`
 
 ### Testing:
 

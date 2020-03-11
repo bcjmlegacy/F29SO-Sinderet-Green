@@ -22,7 +22,7 @@ if (!fs.existsSync(__dirname + "/vapid.env")) {
 
 require("dotenv").config({ path: "vapid.env" });
 
-const publicVapidKey = process.env.PUBLIC_VAPID_KEY;
+const publicVapidKey  = process.env.PUBLIC_VAPID_KEY;
 const privateVapidKey = process.env.PRIVATE_VAPID_KEY;
 
 webPush.setVapidDetails(
@@ -48,21 +48,19 @@ const port = 5552;
 var client = mqtt.connect("mqtt://127.0.0.1");
 var db = new DBHandler();
 
-app.post("/subscribe", (req, res) => {
-  const subscription = req.body;
+// Web push subscription
+const subscription;
 
-  res.status(201).json({});
-
+function newPush(text)  {
   const payload = JSON.stringify({
-    title: "Push notifications with Service Workers"
+    title: "Upload",
+    body: text
   });
 
   webPush
     .sendNotification(subscription, payload)
     .catch(error => console.error(error));
-
-  console.log(`[${getWholeDate()}] > Subscribed to push notifications`);
-});
+}
 
 function getWholeDate() {
   var d = new Date();
@@ -369,6 +367,7 @@ function procWarnings() {
             3
           );
           console.log(`[${getWholeDate()}] ! Created warning for a heater`);
+          newPush("This heater has been on for over 2 hours!");
         }
       }
     }
@@ -406,6 +405,7 @@ function procWarnings() {
             3
           );
           console.log(`[${getWholeDate()}] ! Created warning for a fridge`);
+          newPush("This fridge has risen above 6 degrees!");
         }
       }
     }
@@ -541,6 +541,20 @@ app.get("/getVapidKey", (req, res) => {
 
 /* #######################################
  
+Handle new Web Push subscription.
+ 
+####################################### */
+
+app.post("/subscribe", (req, res) => {
+  subscription = req.body;
+
+  res.status(201).json({});
+
+  console.log(`[${getWholeDate()}] > Subscribed to push notifications`);
+});
+
+/* #######################################
+ 
 Execute command.
  
 ####################################### */
@@ -587,6 +601,10 @@ app.get("/getSensorById", (req, res) => {
 });
 
 app.get("/getDeviceById", (req, res) => {
+  res.send(db.getDeviceById(req.query.id));
+});
+
+app.get("/getTriggerById", (req, res) => {
   res.send(db.getDeviceById(req.query.id));
 });
 
@@ -644,6 +662,10 @@ app.get("/getSensorReadings", (req, res) => {
 
 app.get("/getDeviceReadings", (req, res) => {
   res.send(db.getDeviceReadings(req.query.limit, req.query.offset));
+});
+
+app.get("/getTriggers", (req, res) => {
+  res.send(db.getTriggers(req.query.limit, req.query.offset));
 });
 
 /* #######################################

@@ -29,6 +29,12 @@ INSERT INTO device_command  (device_command_device_type, device_command_name, de
 INSERT INTO device_command  (device_command_device_type, device_command_name, device_command_mqtt, device_command_value, device_command_mqtt_res, device_command_value_res) VALUES (1, 'Turn off', 'set_power', 'off', 'status', 'off');
 INSERT INTO device_command  (device_command_device_type, device_command_name, device_command_mqtt, device_command_value, device_command_mqtt_res, device_command_value_res) VALUES (4, 'Turn on',  'set_power', 'on',  'status', 'on');
 INSERT INTO device_command  (device_command_device_type, device_command_name, device_command_mqtt, device_command_value, device_command_mqtt_res, device_command_value_res) VALUES (4, 'Turn off', 'set_power', 'off', 'status', 'off');
+INSERT INTO device_command  (device_command_device_type, device_command_name, device_command_mqtt, device_command_value, device_command_mqtt_res, device_command_value_res) VALUES (5, 'Lock',     'set_lock',  'locked',  'status', 'locked');
+INSERT INTO device_command  (device_command_device_type, device_command_name, device_command_mqtt, device_command_value, device_command_mqtt_res, device_command_value_res) VALUES (5, 'Unlock',   'set_lock',  'unlocked', 'status', 'unlocked');
+INSERT INTO device_command  (device_command_device_type, device_command_name, device_command_mqtt, device_command_value, device_command_mqtt_res, device_command_value_res) VALUES (8, 'Turn on',  'set_power', 'on',  'status', 'on');
+INSERT INTO device_command  (device_command_device_type, device_command_name, device_command_mqtt, device_command_value, device_command_mqtt_res, device_command_value_res) VALUES (8, 'Turn off', 'set_power', 'off', 'status', 'off');
+INSERT INTO device_command  (device_command_device_type, device_command_name, device_command_mqtt, device_command_value, device_command_mqtt_res, device_command_value_res) VALUES (9, 'Turn on',  'set_power', 'on',  'status', 'on');
+INSERT INTO device_command  (device_command_device_type, device_command_name, device_command_mqtt, device_command_value, device_command_mqtt_res, device_command_value_res) VALUES (9, 'Turn off', 'set_power', 'off', 'status', 'off');
 
 INSERT INTO user (user_account_type, user_username, user_password, user_created, user_last_active, user_admin) 
 VALUES (1, 
