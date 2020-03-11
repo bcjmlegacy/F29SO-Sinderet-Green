@@ -9,169 +9,223 @@
       </div>
     </div>
     <div id="settings">
-      <div class="flex-add">
-        <div class="custom-card-settings">
-          <div class="flex-buttons">
-            <button
-              type="button"
-              class="form-buttons-settings-top"
-              v-on:click="configure"
-              v-bind:style="{ visibility: editButton ? 'visible' : 'hidden' }"
-            >Edit</button>
+      <div class="container">
+        <div class="flex-settings">
+          <div class="custom-card-settings">
+            <div class="flex-buttons">
+              <button
+                type="button"
+                class="form-buttons-settings-top"
+                v-on:click="configure"
+                v-bind:style="{ visibility: editButton ? 'visible' : 'hidden' }"
+              >Edit</button>
 
-            <h4 class="display3 text-center">Profile</h4>
-            <button type="button" class="form-buttons-settings-top logout" v-show="!logout">Logout</button>
-          </div>
-          <hr />
-          <img id="profilepic" src="../../assets/user.png" alt="Profile" class="nav-image" />
-          <div class="userDetails">
-            <b-form>
-              <hr />
-              <div class="form-rows">
-                <b-form-group id="forename-input" label="Forename:" label-for="input-forename">
-                  <b-form-input
-                    v-if="!edit"
-                    id="input-forename"
-                    v-model="form.forename"
-                    class="inputs-b"
-                    plaintext
-                  ></b-form-input>
-                  <input
-                    v-if="edit"
-                    id="input-forename"
-                    v-model="form.forename"
-                    class="form-inputboxes"
-                  />
-                </b-form-group>
-              </div>
-              <hr />
-              <div class="form-rows">
-                <b-form-group id="surname-input" label="Surname:" label-for="input-surname">
-                  <b-form-input
-                    v-if="!edit"
-                    id="input-surname"
-                    v-model="form.surname"
-                    class="inputs-b"
-                    plaintext
-                  ></b-form-input>
-                  <input
-                    v-if="edit"
-                    id="input-surname"
-                    v-model="form.surname"
-                    class="form-inputboxes"
-                  />
-                </b-form-group>
-              </div>
-              <hr />
-              <div class="form-rows">
-                <b-form-group id="email-input" label="Email:" label-for="input-email">
-                  <b-form-input
-                    v-if="!edit"
-                    id="input-email"
-                    v-model="form.email"
-                    type="email"
-                    class="inputs-b"
-                    plaintext
-                  ></b-form-input>
-                  <input
-                    v-if="edit"
-                    id="input-email"
-                    v-model="form.email"
-                    type="email"
-                    class="form-inputboxes"
-                  />
-                </b-form-group>
-              </div>
-              <hr />
-              <div class="form-rows">
-                <b-form-group id="username-input" label="Username:" label-for="input-username">
-                  <b-form-input
-                    v-if="!edit"
-                    id="input-username"
-                    v-model="form.username"
-                    type="text"
-                    class="inputs-b"
-                    plaintext
-                  ></b-form-input>
-                  <input
-                    v-if="edit"
-                    id="input-username"
-                    v-model="form.username"
-                    type="text"
-                    class="form-inputboxes"
-                  />
-                </b-form-group>
-              </div>
-              <hr />
-              <div class="form-rows">
-                <b-form-group
-                  v-show="edit"
-                  id="password-input"
-                  label="New Password:"
-                  label-for="input-password"
-                >
-                  <b-form-input
-                    v-if="!edit"
-                    id="input-password"
-                    v-model="form.password"
-                    type="password"
-                    class="inputs-b"
-                    plaintext
-                  ></b-form-input>
-                  <input
-                    v-if="edit"
-                    id="input-password"
-                    v-model="form.password"
-                    type="password"
-                    class="form-inputboxes"
-                  />
-                </b-form-group>
-              </div>
-              <div class="form-rows">
-                <b-form-group
-                  v-show="edit"
-                  id="password-input"
-                  label="Confirm New Password:"
-                  label-for="input-confirm-password"
-                >
-                  <b-form-input
-                    v-if="!edit"
-                    id="input-confirm-password"
-                    v-model="form.confirmpassword"
-                    type="password"
-                    class="inputs-b"
-                    plaintext
-                  ></b-form-input>
-                  <input
-                    v-if="edit"
-                    id="input-confirm-password"
-                    v-model="form.confirmpassword"
-                    type="password"
-                    class="form-inputboxes"
-                  />
-                </b-form-group>
-              </div>
-              <div class="form-rows">
-                <div class="flex-buttons-bottom" v-show="edit">
-                  <div class="button-cont">
-                    <button class="form-buttons-settings save-cancel">Save Changes</button>
-                  </div>
-                  <div class="button-cont">
-                    <button
-                      type="button"
-                      class="form-buttons-settings save-cancel"
-                      v-on:click="undoEdit"
-                    >Cancel</button>
+              <h4 class="display3 text-center">Profile</h4>
+              <button type="button" class="form-buttons-settings-top logout" v-show="!logout">Logout</button>
+            </div>
+            <hr />
+            <img id="profilepic" src="../../assets/user.png" alt="Profile" class="nav-image" />
+            <div class="userDetails">
+              <b-form>
+                <hr />
+                <div class="form-rows">
+                  <b-form-group id="forename-input" label="Forename:" label-for="input-forename">
+                    <b-form-input
+                      v-if="!edit"
+                      id="input-forename"
+                      v-model="form.forename"
+                      class="inputs-b"
+                      plaintext
+                    ></b-form-input>
+                    <input
+                      v-if="edit"
+                      id="input-forename"
+                      v-model="form.forename"
+                      class="form-inputboxes"
+                    />
+                  </b-form-group>
+                </div>
+                <hr />
+                <div class="form-rows">
+                  <b-form-group id="surname-input" label="Surname:" label-for="input-surname">
+                    <b-form-input
+                      v-if="!edit"
+                      id="input-surname"
+                      v-model="form.surname"
+                      class="inputs-b"
+                      plaintext
+                    ></b-form-input>
+                    <input
+                      v-if="edit"
+                      id="input-surname"
+                      v-model="form.surname"
+                      class="form-inputboxes"
+                    />
+                  </b-form-group>
+                </div>
+                <hr />
+                <div class="form-rows">
+                  <b-form-group id="email-input" label="Email:" label-for="input-email">
+                    <b-form-input
+                      v-if="!edit"
+                      id="input-email"
+                      v-model="form.email"
+                      type="email"
+                      class="inputs-b"
+                      plaintext
+                    ></b-form-input>
+                    <input
+                      v-if="edit"
+                      id="input-email"
+                      v-model="form.email"
+                      type="email"
+                      class="form-inputboxes"
+                    />
+                  </b-form-group>
+                </div>
+                <hr />
+                <div class="form-rows">
+                  <b-form-group id="username-input" label="Username:" label-for="input-username">
+                    <b-form-input
+                      v-if="!edit"
+                      id="input-username"
+                      v-model="form.username"
+                      type="text"
+                      class="inputs-b"
+                      plaintext
+                    ></b-form-input>
+                    <input
+                      v-if="edit"
+                      id="input-username"
+                      v-model="form.username"
+                      type="text"
+                      class="form-inputboxes"
+                    />
+                  </b-form-group>
+                </div>
+                <hr />
+                <div class="form-rows">
+                  <b-form-group
+                    v-show="edit"
+                    id="password-input"
+                    label="New Password:"
+                    label-for="input-password"
+                  >
+                    <b-form-input
+                      v-if="!edit"
+                      id="input-password"
+                      v-model="form.password"
+                      type="password"
+                      class="inputs-b"
+                      plaintext
+                    ></b-form-input>
+                    <input
+                      v-if="edit"
+                      id="input-password"
+                      v-model="form.password"
+                      type="password"
+                      class="form-inputboxes"
+                    />
+                    <hr />
+                  </b-form-group>
+                </div>
+                <div class="form-rows">
+                  <b-form-group
+                    v-show="edit"
+                    id="password-input"
+                    label="Confirm New Password:"
+                    label-for="input-confirm-password"
+                  >
+                    <b-form-input
+                      v-if="!edit"
+                      id="input-confirm-password"
+                      v-model="form.confirmpassword"
+                      type="password"
+                      class="inputs-b"
+                      plaintext
+                    ></b-form-input>
+                    <input
+                      v-if="edit"
+                      id="input-confirm-password"
+                      v-model="form.confirmpassword"
+                      type="password"
+                      class="form-inputboxes"
+                    />
+                    <hr />
+                  </b-form-group>
+                </div>
+                <div class="form-rows">
+                  <div class="flex-buttons-bottom" v-show="edit">
+                    <div class="button-cont">
+                      <button class="form-buttons-settings save-cancel">Save Changes</button>
+                    </div>
+                    <div class="button-cont">
+                      <button
+                        type="button"
+                        class="form-buttons-settings save-cancel"
+                        v-on:click="undoEdit"
+                      >Cancel</button>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </b-form>
+              </b-form>
+            </div>
+          </div>
+          <div class="custom-card-settings sensors">
+            <div class="flex-buttons">
+              <h4 class="display3 width-sensor">Sensors</h4>
+              <button
+                type="button"
+                class="form-buttons-settings-top"
+                v-on:click="configureSensors"
+                v-bind:style="{ visibility: editButton1 ? 'visible' : 'hidden' }"
+              >Edit</button>
+            </div>
+            <div class="form-rows" />
+            <ul class="list-schedule">
+              <li
+                class="scheduleItem"
+                v-for="sensor in displayData.sensors"
+                :key="sensor.sensor_id"
+              >
+                {{sensor.sensor_name}}
+                <img
+                  src="../../assets/close.png"
+                  alt="Delete Item"
+                  class="img-delete"
+                  @click="deleteSensorItem(sensor.sensor_id)"
+                />
+              </li>
+            </ul>
+          </div>
+          <div class="custom-card-settings">
+            <div class="flex-buttons">
+              <h4 class="display3 width-sensor">Rooms</h4>
+              <button
+                type="button"
+                class="form-buttons-settings-top"
+                v-on:click="configureRooms"
+                v-bind:style="{ visibility: editButton2 ? 'visible' : 'hidden' }"
+              >Edit</button>
+            </div>
+            <div class="form-rows" />
+            <ul class="list-schedule">
+              <li class="scheduleItem" v-for="room in displayData.rooms" :key="room.room_id">
+                {{room.room_name}}
+                <img
+                  src="../../assets/close.png"
+                  alt="Delete Item"
+                  class="img-delete"
+                  @click="deleteRoomItem(room.room_id)"
+                />
+              </li>
+            </ul>
           </div>
         </div>
-        <!--Navbar bottom *mobile and tablet view*-->
-        <NavBottom class="bottom-show" />
       </div>
+      <!--Navbar bottom *mobile and tablet view*-->
     </div>
+    <NavBottom class="bottom-show" />
   </div>
 </template>
 
@@ -197,7 +251,13 @@ export default {
 
       edit: false,
       logout: false,
-      editButton: true
+      editButton: true,
+      editButton1: true,
+      editButton2: true,
+      displayData: {
+        rooms: [],
+        sensors: []
+      }
     };
   },
   props: ["userToken"],
@@ -208,14 +268,50 @@ export default {
         this.editButton = false;
       }
     },
+    configureRooms() {},
+    configureSensors() {},
     undoEdit() {
       if (this.edit === true) {
         this.edit = false;
         this.editButton = true;
       }
+    },
+    getRooms() {
+      let url = "http://localhost:5552/getRooms";
+      fetch(url, {
+        mode: "cors",
+        method: "GET",
+        headers: {
+          Authorization: this.userToken
+        }
+      })
+        .then(response => {
+          return response.json();
+        })
+        .then(jsonData => {
+          this.displayData.rooms = jsonData;
+        });
+    },
+    getSensors() {
+      let url = "http://localhost:5552/getSensors";
+      fetch(url, {
+        mode: "cors",
+        method: "GET",
+        headers: {
+          Authorization: this.userToken
+        }
+      })
+        .then(response => {
+          return response.json();
+        })
+        .then(jsonData => {
+          this.displayData.sensors = jsonData;
+        });
     }
   },
   mounted: function() {
+    this.getRooms();
+    this.getSensors();
     fetch(url, {
       mode: "cors",
       method: "GET",
@@ -230,10 +326,19 @@ export default {
   }
 };
 </script>
+
 <style>
 #settings {
   margin-top: 120px;
   margin-bottom: 120px;
+}
+
+.flex-settings {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: flex-start;
 }
 
 #profilepic {
@@ -266,7 +371,8 @@ export default {
   align-items: center;
 }
 
-.labels {
+.width-sensor {
+  flex: 1;
   text-align: center;
 }
 
@@ -301,12 +407,16 @@ export default {
 }
 
 .custom-card-settings {
-  width: 25%;
-  height: 75%;
-  padding: 30px;
+  width: 28%;
+  padding: 20px;
   border-radius: 20px;
+  margin: 5px;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 1px 8px rgba(0, 0, 0, 0.22) !important;
   transition: 0.2s ease-in-out all !important;
+}
+
+.sensors {
+  width: 33%;
 }
 
 .siblings {
@@ -335,7 +445,8 @@ export default {
 
 @media screen and (max-width: 750px) {
   .custom-card-settings {
-    width: 90%;
+    width: 100%;
+    margin: 20px;
   }
   #profilepic {
     width: 30%;
