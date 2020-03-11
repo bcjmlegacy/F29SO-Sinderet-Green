@@ -130,7 +130,11 @@ class databasehandler {
 
 	getUserById(id) {
 		return this.getById("user", id);
-	}
+  }
+  
+  getTriggerById(id)  {
+    return this.getById("device_trigger", id);
+  }
 
 	getRepeatTimerByDeviceId(id) {
 		var q = db.prepare(
@@ -255,6 +259,9 @@ class databasehandler {
 	}
 	getUsers(limit, offset) {
 		return this.getMany("user", limit, offset);
+  }
+  getTriggers(limit, offset) {
+		return this.getMany("device_trigger", limit, offset);
 	}
 
 	getSensorReadings(limit, offset, id) {
@@ -449,7 +456,7 @@ class databasehandler {
 		email,
 		forename,
 		surname,
-		admin
+		user_admin
 	) {
 		var ts = new Date().valueOf();
 		var q = `INSERT INTO user (user_account_type, user_username, user_email, user_forename, user_surname, user_password, user_created, user_admin) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`;
@@ -463,6 +470,32 @@ class databasehandler {
 			password,
 			ts,
 			user_admin
+		);
+	}
+
+	editUser(
+    user_id,
+		account_type,
+		username,
+		password,
+		email,
+		forename,
+		surname,
+		user_admin
+	) {
+		var ts = new Date().valueOf();
+		var q = `UPDATE user SET user_account_type = ?, user_username = ?, user_email = ?, user_forename = ?, user_surname = ?, user_password = ?, user_created = ?, user_admin = ? WHERE user_id = ?`;
+
+		return q.run(
+			account_type,
+			username,
+			email,
+			forename,
+			surname,
+			password,
+			ts,
+      user_admin,
+      user_id
 		);
 	}
 
@@ -705,6 +738,11 @@ class databasehandler {
 		return this.deleteById("warning", id);
 	}
 
+	deleteAuthByToken(token) {
+    var q = db.prepare(`DELETE FROM auth WHERE auth_token = ?`);
+		return q.run(token);
+	}
+
 	deleteDeviceReadingByDeviceId(id) {
 		var q = db.prepare(
 			`DELETE FROM device_reading WHERE device_reading_device_id = ?`
@@ -737,7 +775,15 @@ class databasehandler {
 		return q.run(id);
 	}
 
-	deleteTriggerByDeviceId(id, callback) {
+  deleteTriggerById(id) {
+		var q = db.prepare(
+			`DELETE FROM device_trigger WHERE device_trigger_id = ?`
+		);
+
+		return q.run(id);
+  }
+
+	deleteTriggerByDeviceId(id) {
 		var q = db.prepare(
 			`DELETE FROM device_trigger WHERE device_trigger_device_id = ?`
 		);
