@@ -17,8 +17,9 @@
           <router-link class="links-top" :to="{name: 'dashboard'}">uplink</router-link>
         </h5>
         <router-link :to="{name: 'warnings'}" class="image-cont-nav-top">
-          <div>
+          <div class="notifications">
             <img src="../../assets/exclamation.png" alt="warnings" class="nav-image" />
+            <h5 class="warningCounter">{{warningCounter}}</h5>
           </div>
         </router-link>
         <router-link :to="{name: 'settings'}" class="image-cont-nav-top">
@@ -32,6 +33,56 @@
 </template>
 <script>
 export default {
-  name: "navbar-top"
+  name: "navbar-top",
+  data() {
+    return {
+      warningCounter: 1
+    };
+  },
+  props: ["userToken"],
+  methods: {
+    getWarningNumber() {
+      let url = "http://localhost:5552/getWarnings";
+      fetch(url, {
+        mode: "cors",
+        method: "GET",
+        headers: {
+          authorization: this.userToken
+        }
+      })
+        .then(response => {
+          return response.json();
+        })
+        .then(jsonData => {
+          this.warningCounter = jsonData.length;
+        });
+    }
+  },
+  mounted: function() {
+    this.getWarningNumber();
+  }
 };
 </script>
+<style scoped>
+.notifications {
+  display: inline-block;
+  position: relative;
+  text-decoration: none;
+}
+.notifications .warningCounter {
+  padding: 2px;
+  height: 18px;
+  min-width: 18px;
+  border-radius: 20px;
+  position: absolute;
+  top: -14px;
+  right: -3px;
+  color: white;
+  font-size: 1em;
+  background-color: #ff4a4a;
+}
+
+.warningCounter:hover {
+  background-color: #ff2f2f;
+}
+</style>

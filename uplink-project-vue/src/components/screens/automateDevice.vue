@@ -1,6 +1,6 @@
 <template>
   <div>
-    <NavbarTop class="top-show" />
+    <NavbarTop class="top-show" :userToken="userToken" />
     <div class="bottom-show">
       <div class="logo-back fixed-top">
         <h5 class="logo">
@@ -8,7 +8,7 @@
         </h5>
       </div>
     </div>
-    <div id="automate">
+    <div id="editDevice">
       <div class="container">
         <div class="flex-deviceDetails">
           <div class="card custom-cards-editDevices">
@@ -161,7 +161,7 @@
         </div>
       </div>
     </div>
-    <NavbarBottom class="bottom-show" />
+    <NavbarBottom class="bottom-show" :userToken="userToken" />
   </div>
 </template>
 
@@ -340,6 +340,7 @@ export default {
       evt.preventDefault();
     },
 
+    getTriggers() {},
     deleteAutomation() {},
 
     capitalize(text) {
@@ -364,10 +365,6 @@ export default {
 </script>
 
 <style>
-#automate {
-  margin-top: 120px;
-  margin-bottom: 120px;
-}
 .option-width {
   width: 50%;
 }

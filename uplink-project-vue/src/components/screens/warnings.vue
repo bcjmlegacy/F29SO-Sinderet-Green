@@ -1,6 +1,6 @@
 <template>
   <div id="warnings">
-    <NavTop class="top-show" />
+    <NavTop class="top-show" :userToken="userToken" />
     <div class="bottom-show">
       <div class="logo-back fixed-top">
         <h5 class="logo">
@@ -44,7 +44,7 @@
         </div>
       </div>
     </div>
-    <NavBottom class="bottom-show" />
+    <NavBottom class="bottom-show" :userToken="userToken" />
   </div>
 </template>
 
@@ -54,7 +54,32 @@ import NavBottom from "../navbars/navbar-bottom";
 import WarningCard from "../helpers/warningCard";
 export default {
   name: "warnings",
-  components: { NavTop, NavBottom, WarningCard }
+  components: { NavTop, NavBottom, WarningCard },
+  props: ["userToken"],
+  data() {
+    return {};
+  },
+  methods: {
+    getWarnings() {
+      let url = "http://localhost:5552/getWarnings";
+      fetch(url, {
+        mode: "cors",
+        method: "GET",
+        headers: {
+          authorization: this.userToken
+        }
+      })
+        .then(response => {
+          return response.json();
+        })
+        .then(jsonData => {
+          console.log(jsonData);
+        });
+    }
+  },
+  mounted: function() {
+    this.getWarnings();
+  }
 };
 </script>
 
