@@ -9,9 +9,6 @@ var fs = require("fs"),
   demo = fs.readFileSync(demoFile, "utf8"),
   cities = fs.readFileSync(cityFile, "utf-8").split("\n");
 
-const rebuild = false,
-  demoMode = false;
-
 var db;
 
 function getConn(rebuild, demoMode) {
