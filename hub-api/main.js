@@ -81,7 +81,6 @@ if(clearWarnings) {
 
 function newPush(text)  {
 
-
   // console.log(`Sending new webPush: ${text}`);
 
   try {
@@ -700,6 +699,14 @@ app.get("/getDeviceById", (req, res) => {
 
 app.get("/getTriggerById", (req, res) => {
   res.send(db.getDeviceById(req.query.id));
+});
+
+app.get("/getCityById", (req, res) => {
+  res.send(db.getCityById(req.query.id));
+});
+
+app.get("/getSimilarCities", (req, res) => {
+  res.send(db.getSimilarCities(req.query.text));
 });
 
 /* #######################################

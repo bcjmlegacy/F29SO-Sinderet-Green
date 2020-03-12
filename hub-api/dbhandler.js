@@ -146,6 +146,10 @@ class databasehandler {
     return this.getById("subscription", id);
   }
 
+  getCityById(id) {
+    return this.getById("city", id);
+  }
+
   getSubscriptionByText(text) {
     var q = db.prepare(
       `SELECT * FROM subscription WHERE subscription_text = ?`
@@ -288,6 +292,11 @@ class databasehandler {
   }
   getWarnings(limit, offset) {
     return this.getMany("warning", limit, offset);
+  }
+
+  getSimilarCities(text) {
+    var q = db.prepare(`SELECT * FROM city WHERE city_name LIKE ?`);
+    return q.all(`%${text}%`);
   }
 
   getSensorReadings(limit, offset, id) {
