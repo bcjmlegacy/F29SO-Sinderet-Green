@@ -114,6 +114,13 @@ Data tables.
 
 ####################################### */
 
+CREATE TABLE subscription (
+    subscription_id             INTEGER PRIMARY KEY AUTOINCREMENT,
+    subscription_text           TEXT,
+    subscription_user           INTEGER,
+    FOREIGN KEY (subscription_user) REFERENCES user(user_id)
+);
+
 CREATE TABLE user_permission (
     user_permission_id          INTEGER PRIMARY KEY AUTOINCREMENT,
     user_permission_user_id     INTEGER,
