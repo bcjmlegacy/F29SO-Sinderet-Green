@@ -103,6 +103,7 @@
                   />
                 </li>
               </ul>
+              <div id="empty">{{ empty.emptySchedule }}</div>
               <div class="form-rows">
                 <button
                   class="form-buttons-delete"
@@ -148,7 +149,10 @@ export default {
       },
       operations: [],
       device: "",
-      scheduledCommands: []
+      scheduledCommands: [],
+      empty: {
+        emptySchedule: ""
+      }
     };
   },
   methods: {
@@ -269,6 +273,9 @@ export default {
           })
           .then(jsonData => {
             console.log(jsonData);
+            if (jsonData.length < 1) {
+              this.empty.emptySchedule = "Schedule is Empty";
+            }
             for (let key in jsonData) {
               if (
                 jsonData[key].timer_repeat_command === 1 ||

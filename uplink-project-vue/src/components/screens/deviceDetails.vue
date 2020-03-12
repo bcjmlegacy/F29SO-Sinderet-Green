@@ -238,24 +238,6 @@ export default {
         }
       }
     },
-    getSensorType(sensorId) {
-      console.log(sensorId);
-      let url = "http://localhost:5552/getSensorById?id=" + sensorId;
-
-      fetch(url, {
-        mode: "cors",
-        method: "GET",
-        headers: {
-          Authorization: this.userToken
-        }
-      })
-        .then(response => {
-          return response.json();
-        })
-        .then(jsonData => {
-          this.sensorType = jsonData[0].sensor_type;
-        });
-    },
 
     getType(sensorType) {
       if (sensorType === 1) {
@@ -303,9 +285,6 @@ export default {
           return response.json();
         })
         .then(jsonData => {
-          if (jsonData < 1) {
-            this.empty.emptyAutomation = "No Automations";
-          }
           for (let i in this.deviceCommands) {
             for (let j in jsonData) {
               if (this.deviceID === jsonData[j].device_trigger_device_id) {
@@ -313,15 +292,32 @@ export default {
                   this.deviceCommands[i].device_command_id ===
                   jsonData[j].device_trigger_command
                 ) {
-                  this.getSensorType(jsonData[j].device_trigger_sensor_id);
-                  this.automations.push({
-                    id: jsonData[j].device_trigger_id,
-                    symbol: jsonData[j].device_trigger_gt_lt_eq,
-                    value: jsonData[j].device_trigger_sensor_value,
-                    command: this.deviceCommands[i].device_command_name,
-                    type: jsonData[j].device_trigger_sensor_id
-                  });
+                  let url1 =
+                    "http://localhost:5552/getSensorById?id=" +
+                    jsonData[j].device_trigger_sensor_id;
+
+                  fetch(url1, {
+                    mode: "cors",
+                    method: "GET",
+                    headers: {
+                      Authorization: this.userToken
+                    }
+                  })
+                    .then(response => {
+                      return response.json();
+                    })
+                    .then(jsonData1 => {
+                      this.automations.push({
+                        id: jsonData[j].device_trigger_id,
+                        symbol: jsonData[j].device_trigger_gt_lt_eq,
+                        value: jsonData[j].device_trigger_sensor_value,
+                        command: this.deviceCommands[i].device_command_name,
+                        type: jsonData1[0].sensor_type
+                      });
+                    });
                 }
+              } else {
+                this.empty.emptyAutomation = "No Automations";
               }
             }
           }
@@ -395,6 +391,7 @@ export default {
     this.checkDevice();
     this.getDeviceCommands();
     this.getAutomationData();
+
     fetch(url, {
       mode: "cors",
       method: "GET",

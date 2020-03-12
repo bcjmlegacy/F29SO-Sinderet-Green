@@ -156,7 +156,21 @@
           <div class="card custom-cards-devicesDetails-schedule-edit">
             <h5 class="card-title text-center label-section">Delete Automations</h5>
             <div class="form-rows" />
-            <ul class="list-schedule"></ul>
+            <ul class="list-schedule">
+              <li class="scheduleItem" v-for="automation in automations" :key="automation.id">
+                {{automation.command}} when the {{getType(automation.type)}} is {{translateSymbol(automation.symbol)}} &nbsp; {{automation.value}}{{getUnits(automation.type)}}
+                <br />
+                <span class="delete" @click="deleteAutomationItem(automation.id)">Delete</span>
+              </li>
+            </ul>
+            <div id="empty">{{ empty.emptySchedule }}</div>
+            <div class="form-rows">
+              <button
+                class="form-buttons-delete"
+                type="button"
+                @click="deleteAllAutomations"
+              >Delete All Automations</button>
+            </div>
           </div>
         </div>
       </div>
@@ -205,7 +219,11 @@ export default {
       sensorTypeName: "",
       sensorTypes: [],
       sensorAvailable: [],
-      operations: []
+      operations: [],
+      automations: [],
+      empty: {
+        emptyAutomation: ""
+      }
     };
   },
   methods: {
@@ -336,12 +354,144 @@ export default {
         })
         .then(jsonData => {
           console.log(jsonData);
+          location.reload();
         });
       evt.preventDefault();
     },
 
-    getTriggers() {},
-    deleteAutomation() {},
+    getType(sensorType) {
+      if (sensorType === 1) {
+        return "temperature";
+      }
+      if (sensorType === 2) {
+        return "humidity";
+      }
+      return null;
+    },
+
+    translateSymbol(sym) {
+      if (sym === "<") {
+        return "lower than";
+      }
+      if (sym === ">") {
+        return "higher than";
+      }
+      return null;
+    },
+    ascii(a) {
+      return String.fromCharCode(a);
+    },
+    getUnits(unit) {
+      if (unit === 1) {
+        unit = this.ascii(176) + "c";
+        return unit;
+      }
+      if (unit === 2) {
+        return "%";
+      }
+      return "";
+    },
+
+    getAutomationData() {
+      let url = "http://localhost:5552/getTriggers";
+      fetch(url, {
+        mode: "cors",
+        method: "GET",
+        headers: {
+          Authorization: this.userToken
+        }
+      })
+        .then(response => {
+          return response.json();
+        })
+        .then(jsonData => {
+          for (let i in this.operations) {
+            for (let j in jsonData) {
+              if (this.deviceID === jsonData[j].device_trigger_device_id) {
+                if (
+                  this.operations[i].device_command_id ===
+                  jsonData[j].device_trigger_command
+                ) {
+                  let url1 =
+                    "http://localhost:5552/getSensorById?id=" +
+                    jsonData[j].device_trigger_sensor_id;
+
+                  fetch(url1, {
+                    mode: "cors",
+                    method: "GET",
+                    headers: {
+                      Authorization: this.userToken
+                    }
+                  })
+                    .then(response => {
+                      return response.json();
+                    })
+                    .then(jsonData1 => {
+                      this.automations.push({
+                        id: jsonData[j].device_trigger_id,
+                        symbol: jsonData[j].device_trigger_gt_lt_eq,
+                        value: jsonData[j].device_trigger_sensor_value,
+                        command: this.operations[i].device_command_name,
+                        type: jsonData1[0].sensor_type
+                      });
+                    });
+                }
+              } else {
+                this.empty.emptyAutomation = "No Automations";
+              }
+            }
+          }
+
+          console.log(this.automations);
+        });
+    },
+
+    deleteAutomationItem(id) {
+      if (!confirm("Do really want to delete this automated event?")) {
+        return false;
+      }
+      let url = "http://localhost:5552/deleteDeviceTrigger?id=" + id;
+      fetch(url, {
+        mode: "cors",
+        method: "GET",
+        headers: {
+          authorization: this.userToken
+        }
+      })
+        .then(response => {
+          return response.json();
+        })
+        .then(jsonData => {
+          console.log(jsonData);
+          location.reload();
+        });
+    },
+
+    deleteAllAutomations() {
+      if (!confirm("Do really want to delete the entire schedule?")) {
+        return false;
+      }
+      //loops through the schedule and deletes each schedule item one by one using the id
+      for (let i in this.automations) {
+        let url =
+          "http://localhost:5552/deleteDeviceTrigger?id=" +
+          this.automations[i].id;
+        fetch(url, {
+          mode: "cors",
+          method: "GET",
+          headers: {
+            Authorization: this.userToken
+          }
+        })
+          .then(response => {
+            return response.json();
+          })
+          .then(jsonData => {
+            console.log(jsonData);
+            location.reload();
+          });
+      }
+    },
 
     capitalize(text) {
       return text.charAt(0).toUpperCase() + text.slice(1);
@@ -360,6 +510,7 @@ export default {
   mounted: function() {
     this.getSensorType();
     this.getDeviceOperations();
+    this.getAutomationData();
   }
 };
 </script>

@@ -51,6 +51,7 @@ import NavbarBottom from "../navbars/navbar-bottom";
 
 export default {
   name: "addPage",
+  props: ["userToken"],
   components: {
     NavbarTop,
     NavbarBottom
