@@ -41,7 +41,7 @@ if (!fs.existsSync(__dirname + "/vapid.env")) {
 
 require("dotenv").config({ path: "vapid.env" });
 
-const publicVapidKey  = process.env.PUBLIC_VAPID_KEY;
+const publicVapidKey = process.env.PUBLIC_VAPID_KEY;
 const privateVapidKey = process.env.PRIVATE_VAPID_KEY;
 
 webPush.setVapidDetails(
@@ -80,6 +80,7 @@ if(clearWarnings) {
 // var subscription;
 
 function newPush(text)  {
+
 
   // console.log(`Sending new webPush: ${text}`);
 
@@ -759,6 +760,10 @@ app.get("/getDeviceReadings", (req, res) => {
 
 app.get("/getTriggers", (req, res) => {
   res.send(db.getTriggers(req.query.limit, req.query.offset));
+});
+
+app.get("/getWarnings", (req, res) => {
+  res.send(db.getWarnings(req.query.limit, req.query.offset));
 });
 
 /* #######################################

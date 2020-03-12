@@ -60,8 +60,10 @@ function getWholeDate() {
 }
 
 class databasehandler {
+
   constructor(rebuild, demoMode) {
     db = getConn(rebuild, demoMode);
+
     console.log(`[${getWholeDate()}] > DB connector created`);
   }
 
@@ -242,6 +244,7 @@ class databasehandler {
                     
                     ####################################### */
 
+
   getMany(table, limit, offset) {
     if (limit && offset) {
       var q = db.prepare(`SELECT * FROM ${table} LIMIT ? OFFSET ?`);
@@ -279,6 +282,7 @@ class databasehandler {
   getTriggers(limit, offset) {
     return this.getMany("device_trigger", limit, offset);
   }
+
   getSubscriptions(limit, offset) {
     return this.getMany("subscription", limit, offset);
   }
@@ -471,6 +475,7 @@ class databasehandler {
                                   
                                   ####################################### */
 
+
   insertUser(
     account_type,
     username,
@@ -481,7 +486,9 @@ class databasehandler {
     user_admin
   ) {
     var ts = new Date().valueOf();
+
     var q = db.prepare(`INSERT INTO user (user_account_type, user_username, user_email, user_forename, user_surname, user_password, user_created, user_admin) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`);
+
 
     return q.run(
       account_type,
@@ -506,6 +513,7 @@ class databasehandler {
     user_admin
   ) {
     var ts = new Date().valueOf();
+
     var q = db.prepare(`UPDATE user SET user_account_type = ?, user_username = ?, user_email = ?, user_forename = ?, user_surname = ?, user_password = ?, user_created = ?, user_admin = ? WHERE user_id = ?`);
 
     return q.run(
@@ -521,11 +529,13 @@ class databasehandler {
     );
   }
 
+
   insertSubscription(text, user_id) {
     var q = db.prepare(`INSERT INTO subscription (subscription_text, subscription_user) VALUES (?, ?)`);
 
     return q.run(text, user_id);
   }
+
 
   generateId() {
     console.log("> Generating new device / sensor id...");
@@ -607,7 +617,7 @@ class databasehandler {
   }
 
   /* #######################################
-                                                          
+  
   Inserting readings.
 
   ####################################### */
@@ -641,7 +651,7 @@ class databasehandler {
                         timer_repeat_command,
                         timer_repeat_last_run) 
                         VALUES (?, ?, ?, ?, ?, ?, ?, 0)`);
-
+    
     return q.run(type, month, day, hour, minute, device_id, command);
   }
 
@@ -652,6 +662,7 @@ class databasehandler {
                         timer_oneshot_device_id,
                         timer_oneshot_command)
                         VALUES (?, ?, ?)`);
+
 
     return q.run(trigger, device_id, command);
   }
@@ -765,6 +776,7 @@ class databasehandler {
   deleteWarning(id) {
     return this.deleteById("warning", id);
   }
+
   deleteSubscription(id) {
     return this.deleteById("subscription", id);
   }

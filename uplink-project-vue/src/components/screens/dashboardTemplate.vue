@@ -2,7 +2,7 @@
   <!--Dashboard - main screen/page -->
   <div id="dash">
     <!--Navbar top *web view*-->
-    <NavTop class="top-show" />
+    <NavTop class="top-show" :userToken="userToken" />
     <div class="bottom-show">
       <div class="logo-back fixed-top">
         <h5 class="logo">
@@ -43,7 +43,7 @@
       </div>
     </div>
     <!--Navbar bottom *mobile and tablet view*-->
-    <NavBottom class="bottom-show" />
+    <NavBottom class="bottom-show" :userToken="userToken" />
   </div>
 </template>
 
