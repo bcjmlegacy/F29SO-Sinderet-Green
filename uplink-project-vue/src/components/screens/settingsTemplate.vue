@@ -189,13 +189,8 @@
                 :key="sensor.sensor_id"
               >
                 {{sensor.sensor_name}}
-                <img
-                  src="../../assets/close.png"
-                  alt="Delete Item"
-                  class="img-delete"
-                  v-show="edit1"
-                  @click="deleteSensorItem(sensor.sensor_id)"
-                />
+                <br />
+                <span class="delete" @click="deleteSensorItem(sensor.sensor_id)">Delete</span>
               </li>
             </ul>
             <div class="button-cont" v-show="edit1">
@@ -333,6 +328,9 @@ export default {
     },
 
     deleteSensorItem(id) {
+      if (!confirm("Do really want to delete this sensor?")) {
+        return false;
+      }
       let url = "http://localhost:5552/deleteSensor?id=" + id;
       fetch(url, {
         mode: "cors",
@@ -346,6 +344,7 @@ export default {
         })
         .then(jsonData => {
           console.log(jsonData);
+          location.reload();
         });
     }
     /*

@@ -163,7 +163,7 @@
                 <span class="delete" @click="deleteAutomationItem(automation.id)">Delete</span>
               </li>
             </ul>
-            <div id="empty">{{ empty.emptySchedule }}</div>
+            <div id="empty">{{ empty.emptyAutomation }}</div>
             <div class="form-rows">
               <button
                 class="form-buttons-delete"

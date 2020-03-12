@@ -9,8 +9,8 @@ var fs = require("fs"),
   demo = fs.readFileSync(demoFile, "utf8"),
   cities = fs.readFileSync(cityFile, "utf-8").split("\n");
 
-const rebuild = false,
-  demoMode = false;
+const rebuild = true,
+  demoMode = true;
 
 var db;
 
