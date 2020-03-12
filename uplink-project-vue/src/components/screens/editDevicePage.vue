@@ -95,12 +95,8 @@
                   {{ command.command }} at {{ command.hour }}:{{
                   command.minutes
                   }}
-                  <img
-                    src="../../assets/close.png"
-                    alt="Delete Item"
-                    class="img-delete"
-                    @click="deleteScheduleItem(command.id)"
-                  />
+                  <br />
+                  <span class="delete" @click="deleteScheduleItem(command.id)">Delete</span>
                 </li>
               </ul>
               <div id="empty">{{ empty.emptySchedule }}</div>

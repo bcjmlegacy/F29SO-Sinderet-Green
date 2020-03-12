@@ -17,29 +17,17 @@
       <div class="warnings-tree">
         <div class="flex-warnings">
           <WarningCard
-            deviceName="lights"
-            warningMessage="On for too long"
-            warningClarified="Turn off"
-          />
-          <WarningCard
-            deviceName="lights"
-            warningMessage="On for too long"
-            warningClarified="Turn off"
-          />
-          <WarningCard
-            deviceName="lights"
-            warningMessage="On for too long"
-            warningClarified="Turn off"
-          />
-          <WarningCard
-            deviceName="lights"
-            warningMessage="On for too long"
-            warningClarified="Turn off"
-          />
-          <WarningCard
-            deviceName="lights"
-            warningMessage="On for too long"
-            warningClarified="Turn off"
+            v-for="warning in warnings"
+            :key="warning.id"
+            :deviceID="warning.deviceID"
+            :deviceName="warning.deviceName"
+            :deviceImage="warning.deviceImage"
+            :deviceEnergy="warning.deviceEnergy"
+            :deviceType="warning.deviceType"
+            :roomID="warning.roomID"
+            :message="warning.message"
+            :warningID="warning.id"
+            :userToken="userToken"
           />
         </div>
       </div>
@@ -57,9 +45,29 @@ export default {
   components: { NavTop, NavBottom, WarningCard },
   props: ["userToken"],
   data() {
-    return {};
+    return {
+      warnings: [],
+      devices: []
+    };
   },
   methods: {
+    getDevices() {
+      let url = "http://localhost:5552/getDevices";
+      fetch(url, {
+        mode: "cors",
+        method: "GET",
+        headers: {
+          authorization: this.userToken
+        }
+      })
+        .then(response => {
+          return response.json();
+        })
+        .then(jsonData => {
+          this.devices = jsonData;
+          console.log(this.devices);
+        });
+    },
     getWarnings() {
       let url = "http://localhost:5552/getWarnings";
       fetch(url, {
@@ -74,13 +82,80 @@ export default {
         })
         .then(jsonData => {
           console.log(jsonData);
+          for (let i in jsonData) {
+            for (let j in this.devices) {
+              if (jsonData[i].warning_device_id === this.devices[j].device_id) {
+                this.warnings.push({
+                  id: jsonData[i].warning_id,
+                  message: jsonData[i].warning_message,
+                  deviceID: this.devices[j].device_id,
+                  deviceName: this.devices[j].device_name,
+                  deviceImage: pairImg(this.devices[j].device_name),
+                  deviceEnergy: this.devices[j].device_wattage,
+                  deviceType: this.devices[j].device_type,
+                  roomID: this.devices[j].device_room
+                });
+              }
+            }
+          }
+          console.log(this.warnings);
         });
     }
   },
   mounted: function() {
+    this.getDevices();
     this.getWarnings();
   }
 };
+
+function pairImg(device) {
+  if (
+    device.includes("heater") ||
+    device.includes("Heater") ||
+    device.includes("heating")
+  ) {
+    return "heating";
+  } else if (device.includes("light") || device.includes("Light")) {
+    return "light-bulb";
+  } else if (device.includes("fridge") || device.includes("Fridge")) {
+    return "fridge";
+  } else if (device.includes("Solar") || device.includes("solar")) {
+    return "solarpanel";
+  } else if (
+    device.includes("camera") ||
+    device.includes("Camera") ||
+    device.includes("Security") ||
+    device.includes("security") ||
+    device.includes("CCTV") ||
+    device.includes("cctv")
+  ) {
+    return "security-camera";
+  } else if (
+    device.includes("Bell") ||
+    device.includes("bell") ||
+    device.includes("Door") ||
+    device.includes("door")
+  ) {
+    return "doorbell";
+  } else if (
+    device.includes("socket") ||
+    device.includes("plug") ||
+    device.includes("Plug") ||
+    device.includes("Socket")
+  ) {
+    return "plug";
+  } else if (
+    device.includes("TV") ||
+    device.includes("Television") ||
+    device.includes("tv") ||
+    device.includes("television") ||
+    device.includes("Tv")
+  ) {
+    return "tv";
+  } else {
+    return "question";
+  }
+}
 </script>
 
 <style>
@@ -100,8 +175,8 @@ export default {
 .flex-warnings {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
+  justify-content: space-evenly;
+  align-items: flex-start;
   flex-direction: row;
 }
 

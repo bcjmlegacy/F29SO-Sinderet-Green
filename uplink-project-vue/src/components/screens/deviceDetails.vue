@@ -407,7 +407,7 @@ export default {
         if (jsonData.length < 1) {
           this.empty.emptySchedule = "Schedule is Empty";
         }
-        this.emptyAutomation = "No Automation Added";
+
         for (let key in jsonData) {
           if (
             jsonData[key].timer_repeat_command === 1 ||

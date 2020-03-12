@@ -1,15 +1,38 @@
 <template>
   <div class="col-width-warnings">
     <div class="custom-cards-warnings">
-      <div class="img-cont-summary">
-        <img src="../../assets/sun.png" class="img-warning" alt="Energy Usage" />
+      <div class="img-cont-warnings">
+        <img class="img-warnings" src="../../assets/close.png" @click="deleteWarning" />
       </div>
-      <!--Energy card area for data-->
-      <div class="card-body text-center">
-        <h3 class="card-title">{{deviceName}}</h3>
-        <h5 class="card-text tip">{{warningMessage}}</h5>
-        <h5 class="card-text tip">{{warningClarified}}</h5>
-      </div>
+      <router-link
+        class="links"
+        :to="{
+				name: 'device',
+				query: {
+					deviceID: deviceID,
+					deviceName: deviceName,
+					deviceImage: deviceImage,
+					deviceEnergy: deviceEnergy,
+					deviceType: deviceType,
+					roomID: roomID
+				}
+			}"
+      >
+        <div class="img-cont-summary">
+          <img
+            :src="require(`../../assets/${deviceImage}.png`)"
+            class="img-warning"
+            alt="Energy Usage"
+          />
+        </div>
+        <!--Energy card area for data-->
+        <div class="card-body text-center">
+          <h2 class="card-title">{{deviceName}}</h2>
+          <br />
+          <h4 class="warning">Warning:</h4>
+          <h5 class="card-text tip">{{message}}</h5>
+        </div>
+      </router-link>
     </div>
   </div>
 </template>
@@ -22,43 +45,82 @@ export default {
     "deviceName",
     "deviceImage",
     "deviceEnergy",
-    "warningClarified",
-    "warningMessage"
-  ]
+    "deviceType",
+    "roomID",
+    "message",
+    "warningID",
+    "userToken"
+  ],
+  methods: {
+    deleteWarning() {
+      if (!confirm("Do really want to delete the warning?")) {
+        return false;
+      }
+      let url = "http://localhost:5552/deleteWarning?id=" + this.warningID;
+      fetch(url, {
+        mode: "cors",
+        method: "GET",
+        headers: {
+          authorization: this.userToken
+        }
+      })
+        .then(response => {
+          return response.json();
+        })
+        .then(jsonData => {
+          console.log(jsonData);
+        });
+    }
+  }
 };
 </script>
 
 <style scoped>
 .col-width-warnings {
-  width: 25%;
+  width: 40%;
   padding: 10px;
 }
 
 .img-warning {
-  width: 30%;
+  width: 25%;
 }
 
-.tip {
-  font-weight: bold;
+.img-warnings {
+  width: 10%;
 }
+
+.img-cont-warnings {
+  text-align: right;
+  padding: 10px;
+  opacity: 0.8;
+  z-index: 10;
+}
+
+.img-cont-warnings:hover {
+  opacity: 1;
+  cursor: pointer;
+}
+
+.warning {
+  color: #e30000;
+}
+
 .custom-cards-warnings {
   width: 100%;
   padding: 10px;
   border-radius: 20px;
-
   transition: 0.2s ease-in-out all !important;
-  border: 2px solid #aa0000;
+  border: 1px solid grey;
 }
 
 .custom-cards-warnings:hover {
   box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22) !important;
-  cursor: pointer !important;
 }
 
 @media screen and (max-width: 1025px) {
   .col-width-warnings {
-    width: 50%;
-    padding: 10;
+    width: 80%;
+    margin: 5px;
   }
 }
 </style>

@@ -11,8 +11,7 @@ var fs = require("fs"),
 
 var db;
 
-function getConn(rebuild, demoMode)  {
-
+function getConn(rebuild, demoMode) {
   if (rebuild) {
     console.log(`[${getWholeDate()}] > [REBUILD] Rebuilding database...`);
 
@@ -49,7 +48,6 @@ function getConn(rebuild, demoMode)  {
   } else {
     return new bs3(dbFile);
   }
-
 }
 
 function getWholeDate() {
@@ -60,7 +58,6 @@ function getWholeDate() {
 }
 
 class databasehandler {
-
   constructor(rebuild, demoMode) {
     db = getConn(rebuild, demoMode);
 
@@ -248,7 +245,6 @@ class databasehandler {
                     
                     ####################################### */
 
-
   getMany(table, limit, offset) {
     if (limit && offset) {
       var q = db.prepare(`SELECT * FROM ${table} LIMIT ? OFFSET ?`);
@@ -383,7 +379,9 @@ class databasehandler {
   }
 
   updateRepeatTimerLastRun(last_run, id) {
-    var q = db.prepare(`UPDATE timer_repeat SET timer_repeat_last_run = ? WHERE timer_repeat_id = ?`);
+    var q = db.prepare(
+      `UPDATE timer_repeat SET timer_repeat_last_run = ? WHERE timer_repeat_id = ?`
+    );
 
     return q.run(last_run, id);
   }
@@ -484,7 +482,6 @@ class databasehandler {
                                   
                                   ####################################### */
 
-
   insertUser(
     account_type,
     username,
@@ -496,8 +493,9 @@ class databasehandler {
   ) {
     var ts = new Date().valueOf();
 
-    var q = db.prepare(`INSERT INTO user (user_account_type, user_username, user_email, user_forename, user_surname, user_password, user_created, user_admin) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`);
-
+    var q = db.prepare(
+      `INSERT INTO user (user_account_type, user_username, user_email, user_forename, user_surname, user_password, user_created, user_admin) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`
+    );
 
     return q.run(
       account_type,
@@ -523,7 +521,9 @@ class databasehandler {
   ) {
     var ts = new Date().valueOf();
 
-    var q = db.prepare(`UPDATE user SET user_account_type = ?, user_username = ?, user_email = ?, user_forename = ?, user_surname = ?, user_password = ?, user_created = ?, user_admin = ? WHERE user_id = ?`);
+    var q = db.prepare(
+      `UPDATE user SET user_account_type = ?, user_username = ?, user_email = ?, user_forename = ?, user_surname = ?, user_password = ?, user_created = ?, user_admin = ? WHERE user_id = ?`
+    );
 
     return q.run(
       account_type,
@@ -538,13 +538,13 @@ class databasehandler {
     );
   }
 
-
   insertSubscription(text, user_id) {
-    var q = db.prepare(`INSERT INTO subscription (subscription_text, subscription_user) VALUES (?, ?)`);
+    var q = db.prepare(
+      `INSERT INTO subscription (subscription_text, subscription_user) VALUES (?, ?)`
+    );
 
     return q.run(text, user_id);
   }
-
 
   generateId() {
     console.log("> Generating new device / sensor id...");
@@ -660,7 +660,7 @@ class databasehandler {
                         timer_repeat_command,
                         timer_repeat_last_run) 
                         VALUES (?, ?, ?, ?, ?, ?, ?, 0)`);
-    
+
     return q.run(type, month, day, hour, minute, device_id, command);
   }
 
@@ -671,7 +671,6 @@ class databasehandler {
                         timer_oneshot_device_id,
                         timer_oneshot_command)
                         VALUES (?, ?, ?)`);
-
 
     return q.run(trigger, device_id, command);
   }
@@ -791,33 +790,25 @@ class databasehandler {
   }
 
   deleteSubscriptionByText(text) {
-    var q = db.prepare(
-      `DELETE FROM subscription WHERE subscription_text = ?`
-    );
+    var q = db.prepare(`DELETE FROM subscription WHERE subscription_text = ?`);
 
     return q.run(text);
   }
 
   deleteSubscriptionByUserId(id) {
-    var q = db.prepare(
-      `DELETE FROM subscription WHERE subscription_user = ?`
-    );
+    var q = db.prepare(`DELETE FROM subscription WHERE subscription_user = ?`);
 
     return q.run(id);
   }
 
   deleteAllSubscriptions() {
-    var q = db.prepare(
-      `DELETE FROM subscription`
-    );
+    var q = db.prepare(`DELETE FROM subscription`);
 
     return q.run();
   }
 
   deleteAllWarnings() {
-    var q = db.prepare(
-      `DELETE FROM warning`
-    );
+    var q = db.prepare(`DELETE FROM warning`);
 
     return q.run();
   }
