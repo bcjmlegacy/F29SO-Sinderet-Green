@@ -9,44 +9,47 @@ var fs = require("fs"),
   demo = fs.readFileSync(demoFile, "utf8"),
   cities = fs.readFileSync(cityFile, "utf-8").split("\n");
 
-const rebuild = false,
-  demoMode = false;
-
 var db;
 
-if (rebuild) {
-  console.log(`[${getWholeDate()}] > Rebuilding database...`);
+function getConn(rebuild, demoMode)  {
 
-  if (fs.existsSync(dbFile)) {
-    fs.unlinkSync(dbFile);
+  if (rebuild) {
+    console.log(`[${getWholeDate()}] > [REBUILD] Rebuilding database...`);
+
+    if (fs.existsSync(dbFile)) {
+      fs.unlinkSync(dbFile);
+    }
+
+    if (fs.existsSync(dbJFile)) {
+      fs.unlinkSync(dbJFile);
+    }
+
+    var db = new bs3(dbFile);
+    console.log(`[${getWholeDate()}] > [REBUILD] Building schema...`);
+    db.exec(schema);
+
+    console.log(`[${getWholeDate()}] > [REBUILD] Adding city data...`);
+
+    var cityCount = 0;
+    for (x in cities) {
+      cityCount++;
+      db.exec(cities[x]);
+      process.stdout.write(
+        `[${getWholeDate()}] > [REBUILD] Importing cities: ${cityCount}/15494\r`
+      );
+    }
+    console.log("");
+
+    if (demoMode) {
+      console.log(`[${getWholeDate()}] > [REBUILD] Adding demo data...`);
+      db.exec(demo);
+    }
+
+    return db;
+  } else {
+    return new bs3(dbFile);
   }
 
-  if (fs.existsSync(dbJFile)) {
-    fs.unlinkSync(dbJFile);
-  }
-
-  var db = new bs3(dbFile);
-  console.log(`[${getWholeDate()}] > Building schema...`);
-  db.exec(schema);
-
-  console.log(`[${getWholeDate()}] > Adding city data...`);
-
-  var cityCount = 0;
-  for (x in cities) {
-    cityCount++;
-    db.exec(cities[x]);
-    process.stdout.write(
-      `[${getWholeDate()}] > Importing cities: ${cityCount}/15494\r`
-    );
-  }
-  console.log("");
-
-  if (demoMode) {
-    console.log(`[${getWholeDate()}] > Adding demo data...`);
-    db.exec(demo);
-  }
-} else {
-  db = new bs3(dbFile);
 }
 
 function getWholeDate() {
@@ -57,7 +60,10 @@ function getWholeDate() {
 }
 
 class databasehandler {
-  constructor() {
+
+  constructor(rebuild, demoMode) {
+    db = getConn(rebuild, demoMode);
+
     console.log(`[${getWholeDate()}] > DB connector created`);
   }
 
@@ -92,9 +98,9 @@ class databasehandler {
 
   /* #######################################
           
-  Get by ID.
-  
-  ####################################### */
+          Get by ID.
+          
+          ####################################### */
 
   getById(table, id) {
     var q = db.prepare(`SELECT * FROM ${table} WHERE ${table}_id = ?`);
@@ -134,6 +140,22 @@ class databasehandler {
 
   getTriggerById(id) {
     return this.getById("device_trigger", id);
+  }
+
+  getSubscriptionById(id) {
+    return this.getById("subscription", id);
+  }
+
+  getCityById(id) {
+    return this.getById("city", id);
+  }
+
+  getSubscriptionByText(text) {
+    var q = db.prepare(
+      `SELECT * FROM subscription WHERE subscription_text = ?`
+    );
+
+    return q.all(text);
   }
 
   getRepeatTimerByDeviceId(id) {
@@ -190,10 +212,10 @@ class databasehandler {
   }
 
   /* #######################################
-          
-  Get by room.
-  
-  ####################################### */
+                    
+                    Get by room.
+                    
+                    ####################################### */
 
   getByRoom(table, roomId, callback) {
     var q = db.prepare(`SELECT * FROM ${table} WHERE ${table}_room = ?`);
@@ -209,10 +231,10 @@ class databasehandler {
   }
 
   /* #######################################
-          
-  Get by device type.
-  
-  ####################################### */
+                    
+                    Get by device type.
+                    
+                    ####################################### */
 
   getDeviceByType(device_type_id) {
     var q = db.prepare(`SELECT * FROM device WHERE device_type = ?`);
@@ -221,10 +243,11 @@ class databasehandler {
   }
 
   /* #######################################
-          
-  Get all of something with limits.
-  
-  ####################################### */
+                    
+                    Get all of something with limits.
+                    
+                    ####################################### */
+
 
   getMany(table, limit, offset) {
     if (limit && offset) {
@@ -263,8 +286,17 @@ class databasehandler {
   getTriggers(limit, offset) {
     return this.getMany("device_trigger", limit, offset);
   }
+
+  getSubscriptions(limit, offset) {
+    return this.getMany("subscription", limit, offset);
+  }
   getWarnings(limit, offset) {
     return this.getMany("warning", limit, offset);
+  }
+
+  getSimilarCities(text) {
+    var q = db.prepare(`SELECT * FROM city WHERE city_name LIKE ?`);
+    return q.all(`%${text}%`);
   }
 
   getSensorReadings(limit, offset, id) {
@@ -342,54 +374,54 @@ class databasehandler {
 
   getRepeatTimers() {
     var q = db.prepare(`SELECT * FROM timer_repeat
-             INNER JOIN device         ON timer_repeat.timer_repeat_device_id = device.device_id
-             INNER JOIN device_type    ON device.device_type                  = device_type.device_type_id
-             INNER JOIN device_command ON timer_repeat.timer_repeat_command   = device_command.device_command_id
-             INNER JOIN room           ON device.device_room                  = room.room_id`);
+                                    INNER JOIN device         ON timer_repeat.timer_repeat_device_id = device.device_id
+                                    INNER JOIN device_type    ON device.device_type                  = device_type.device_type_id
+                                    INNER JOIN device_command ON timer_repeat.timer_repeat_command   = device_command.device_command_id
+                                    INNER JOIN room           ON device.device_room                  = room.room_id`);
 
     return q.all();
   }
 
   updateRepeatTimerLastRun(last_run, id) {
-    var q = `UPDATE timer_repeat SET timer_repeat_last_run = ? WHERE timer_repeat_id = ?`;
+    var q = db.prepare(`UPDATE timer_repeat SET timer_repeat_last_run = ? WHERE timer_repeat_id = ?`);
 
     return q.run(last_run, id);
   }
 
   getOneshotTimers() {
     var q = db.prepare(`SELECT * FROM timer_oneshot
-             INNER JOIN device         ON timer_oneshot.timer_oneshot_device_id = device.device_id
-             INNER JOIN device_type    ON device.device_type                    = device_type.device_type_id
-             INNER JOIN device_command ON timer_oneshot.timer_oneshot_command   = device_command.device_command_id
-             INNER JOIN room           ON device.device_room                    = room.room_id`);
+                                    INNER JOIN device         ON timer_oneshot.timer_oneshot_device_id = device.device_id
+                                    INNER JOIN device_type    ON device.device_type                    = device_type.device_type_id
+                                    INNER JOIN device_command ON timer_oneshot.timer_oneshot_command   = device_command.device_command_id
+                                    INNER JOIN room           ON device.device_room                    = room.room_id`);
 
     return q.all();
   }
 
   getDeviceTriggers() {
     var q = db.prepare(`SELECT * FROM device_trigger
-             INNER JOIN device         ON device_trigger.device_trigger_device_id = device.device_id
-             INNER JOIN sensor         ON device_trigger.device_trigger_sensor_id = sensor.sensor_id
-             INNER JOIN device_type    ON device.device_type                      = device_type.device_type_id
-             INNER JOIN device_command ON device_trigger.device_trigger_command   = device_command.device_command_id
-             INNER JOIN room           ON device.device_room                      = room.room_id`);
+                                    INNER JOIN device         ON device_trigger.device_trigger_device_id = device.device_id
+                                    INNER JOIN sensor         ON device_trigger.device_trigger_sensor_id = sensor.sensor_id
+                                    INNER JOIN device_type    ON device.device_type                      = device_type.device_type_id
+                                    INNER JOIN device_command ON device_trigger.device_trigger_command   = device_command.device_command_id
+                                    INNER JOIN room           ON device.device_room                      = room.room_id`);
 
     return q.all();
   }
 
   /* #######################################
-          
-  Get sensor data by filters.
-  
-  ####################################### */
+                                  
+                                  Get sensor data by filters.
+                                  
+                                  ####################################### */
 
   getSensorReadingsByTimeframe(id, start, end) {
     if (!end) {
       end = new Date().valueOf();
     }
     var q = db.prepare(`SELECT * FROM sensor_reading WHERE sensor_reading_sensor_id = ?
-            AND sensor_reading_timestamp > ?
-            AND sensor_reading_timestamp < ? `);
+                                    AND sensor_reading_timestamp > ?
+                                    AND sensor_reading_timestamp < ? `);
 
     return q.all(id, start, end);
   }
@@ -399,31 +431,31 @@ class databasehandler {
       end = new Date().valueOf();
     }
     var q = db.prepare(`SELECT * FROM device_reading WHERE device_reading_sensor_id = ?
-            AND device_reading_timestamp > ?
-            AND device_reading_timestamp < ? `);
+                                    AND device_reading_timestamp > ?
+                                    AND device_reading_timestamp < ? `);
 
     return q.all(id, start, end);
   }
 
   /* #######################################
-          
-  Device command functions.
-  
-  ####################################### */
+                                  
+                                  Device command functions.
+                                  
+                                  ####################################### */
 
   getCommandsByDevice(device_type_id) {
     var q = db.prepare(`SELECT * FROM device_command
-            INNER JOIN device_type ON device_type.device_type_id = device_command.device_command_device_type
-            WHERE device_type.device_type_id = ?`);
+                                    INNER JOIN device_type ON device_type.device_type_id = device_command.device_command_device_type
+                                    WHERE device_type.device_type_id = ?`);
 
     return q.all(device_type_id);
   }
 
   /* #######################################
-          
-  Inserting auxiliary data.
-  
-  ####################################### */
+                                  
+                                  Inserting auxiliary data.
+                                  
+                                  ####################################### */
 
   insertOne(table, val) {
     var q = db.prepare(`INSERT INTO ${table} (${table}_name) VALUES (?)`);
@@ -447,10 +479,11 @@ class databasehandler {
   }
 
   /* #######################################
-            
-  Inserting larger records.
-  
-  ####################################### */
+                                  
+                                  Inserting larger records.
+                                  
+                                  ####################################### */
+
 
   insertUser(
     account_type,
@@ -462,7 +495,9 @@ class databasehandler {
     user_admin
   ) {
     var ts = new Date().valueOf();
-    var q = `INSERT INTO user (user_account_type, user_username, user_email, user_forename, user_surname, user_password, user_created, user_admin) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`;
+
+    var q = db.prepare(`INSERT INTO user (user_account_type, user_username, user_email, user_forename, user_surname, user_password, user_created, user_admin) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`);
+
 
     return q.run(
       account_type,
@@ -487,7 +522,8 @@ class databasehandler {
     user_admin
   ) {
     var ts = new Date().valueOf();
-    var q = `UPDATE user SET user_account_type = ?, user_username = ?, user_email = ?, user_forename = ?, user_surname = ?, user_password = ?, user_created = ?, user_admin = ? WHERE user_id = ?`;
+
+    var q = db.prepare(`UPDATE user SET user_account_type = ?, user_username = ?, user_email = ?, user_forename = ?, user_surname = ?, user_password = ?, user_created = ?, user_admin = ? WHERE user_id = ?`);
 
     return q.run(
       account_type,
@@ -501,6 +537,14 @@ class databasehandler {
       user_id
     );
   }
+
+
+  insertSubscription(text, user_id) {
+    var q = db.prepare(`INSERT INTO subscription (subscription_text, subscription_user) VALUES (?, ?)`);
+
+    return q.run(text, user_id);
+  }
+
 
   generateId() {
     console.log("> Generating new device / sensor id...");
@@ -582,7 +626,7 @@ class databasehandler {
   }
 
   /* #######################################
-                                    
+  
   Inserting readings.
 
   ####################################### */
@@ -607,26 +651,27 @@ class databasehandler {
 
   insertRepeatTimer(type, month, day, hour, minute, device_id, command) {
     var q = db.prepare(`INSERT INTO timer_repeat (
-              timer_repeat_type,
-              timer_repeat_month,
-              timer_repeat_day,
-              timer_repeat_hour,
-              timer_repeat_minute,
-              timer_repeat_device_id,
-              timer_repeat_command,
-              timer_repeat_last_run) 
-             VALUES (?, ?, ?, ?, ?, ?, ?, 0)`);
-
+                        timer_repeat_type,
+                        timer_repeat_month,
+                        timer_repeat_day,
+                        timer_repeat_hour,
+                        timer_repeat_minute,
+                        timer_repeat_device_id,
+                        timer_repeat_command,
+                        timer_repeat_last_run) 
+                        VALUES (?, ?, ?, ?, ?, ?, ?, 0)`);
+    
     return q.run(type, month, day, hour, minute, device_id, command);
   }
 
   insertOneshotTimer(trigger, device_id, command) {
     var ts = new Date().valueOf();
     var q = db.prepare(`INSERT INTO timer_oneshot (
-              timer_oneshot_trigger,
-              timer_oneshot_device_id,
-              timer_oneshot_command)
-             VALUES (?, ?, ?)`);
+                        timer_oneshot_trigger,
+                        timer_oneshot_device_id,
+                        timer_oneshot_command)
+                        VALUES (?, ?, ?)`);
+
 
     return q.run(trigger, device_id, command);
   }
@@ -634,13 +679,13 @@ class databasehandler {
   insertWarning(device_id, sensor_id, message, severity) {
     var ts = new Date().valueOf();
     var q = db.prepare(`INSERT INTO warning (
-              warning_timestamp,
-              warning_last_updated_ts,
-              warning_device_id,
-              warning_sensor_id,
-              warning_message,
-              warning_severity)
-             VALUES (?, ?, ?, ?, ?, ?)`);
+                        warning_timestamp,
+                        warning_last_updated_ts,
+                        warning_device_id,
+                        warning_sensor_id,
+                        warning_message,
+                        warning_severity)
+                        VALUES (?, ?, ?, ?, ?, ?)`);
 
     if (!sensor_id) sensor_id = null;
     if (!device_id) device_id = null;
@@ -670,10 +715,10 @@ class databasehandler {
 
   insertUserPermission(user_id, device_id, sensor_id) {
     var q = db.prepare(`INSERT INTO user_permission (
-      user_permission_user_id,
-      user_permission_device_id,
-      user_permission_sensor_id)
-     VALUES (?, ?, ?)`);
+                        user_permission_user_id,
+                        user_permission_device_id,
+                        user_permission_sensor_id)
+                        VALUES (?, ?, ?)`);
 
     if (!sensor_id) sensor_id = null;
     if (!device_id) device_id = null;
@@ -682,9 +727,9 @@ class databasehandler {
   }
 
   /* #######################################
-                                    
+                                                                            
   Deleting things.
-
+  
   ####################################### */
 
   deleteById(table, id) {
@@ -739,6 +784,42 @@ class databasehandler {
   }
   deleteWarning(id) {
     return this.deleteById("warning", id);
+  }
+
+  deleteSubscription(id) {
+    return this.deleteById("subscription", id);
+  }
+
+  deleteSubscriptionByText(text) {
+    var q = db.prepare(
+      `DELETE FROM subscription WHERE subscription_text = ?`
+    );
+
+    return q.run(text);
+  }
+
+  deleteSubscriptionByUserId(id) {
+    var q = db.prepare(
+      `DELETE FROM subscription WHERE subscription_user = ?`
+    );
+
+    return q.run(id);
+  }
+
+  deleteAllSubscriptions() {
+    var q = db.prepare(
+      `DELETE FROM subscription`
+    );
+
+    return q.run();
+  }
+
+  deleteAllWarnings() {
+    var q = db.prepare(
+      `DELETE FROM warning`
+    );
+
+    return q.run();
   }
 
   deleteAuthByToken(token) {
