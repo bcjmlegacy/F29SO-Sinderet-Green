@@ -7,6 +7,25 @@ const express = require("express"),
   cors = require("cors"),
   webPush = require("web-push");
 
+var rebuild = false, demoMode = false, clearSubs = false, clearWarnings = false;
+
+for(x in process.argv)  {
+  if(process.argv[x] == "-r" || process.argv[x] == "--rebuild")  {
+    rebuild = true;
+    console.log(`[${getWholeDate()}] > [REBUILD] Connected to MQTT server`);
+  }
+  if(process.argv[x] == "-d" || process.argv[x] == "--demo")  {
+    demoMode = true;
+    console.log(`[${getWholeDate()}] > [DEMO] Running in demo mode...`);
+  }
+  if(process.argv[x] == "-cs" || process.argv[x] == "--clear-subs")  {
+    clearSubs = true;
+  }
+  if(process.argv[x] == "-cw" || process.argv[x] == "--clear-warnings")  {
+    clearWarnings = true;
+  }
+}
+
 if (!fs.existsSync(__dirname + "/vapid.env")) {
   console.log("Generating new VAPID keys...");
   const vapidKeys = webPush.generateVAPIDKeys();
@@ -46,20 +65,46 @@ app.use(function(req, res, next) {
 
 const port = 5552;
 var client = mqtt.connect("mqtt://127.0.0.1");
-var db = new DBHandler();
+var db = new DBHandler(rebuild, demoMode);
+
+if(clearSubs) {
+  console.log(`[${getWholeDate()}] > [DEL] Deleting existing web-push subs...`);
+  db.deleteAllSubscriptions();
+}
+if(clearWarnings) {
+  console.log(`[${getWholeDate()}] > [DEL] Deleting existing warnings...`);
+  db.deleteAllWarnings();
+}
 
 // Web push subscription
-var subscription;
+// var subscription;
 
-function newPush(text) {
-  const payload = JSON.stringify({
-    title: "Upload",
-    body: text
-  });
+function newPush(text)  {
 
-  webPush
-    .sendNotification(subscription, payload)
-    .catch(error => console.error(error));
+
+  // console.log(`Sending new webPush: ${text}`);
+
+  try {
+
+    subscriptions = db.getSubscriptions();
+
+    for(x in subscriptions) {
+      var sub = JSON.parse(subscriptions[x]["subscription_text"]);
+
+      const payload = JSON.stringify({
+        title: "Uplink",
+        body: text
+      });
+    
+      webPush
+        .sendNotification(sub, payload)
+        .catch(error => console.error(error));
+    }
+
+  } catch(e)  {
+    console.log(`[${getWholeDate()}] ! Error sending push: `);
+    console.log(`[${getWholeDate()}] ! ${e}`);
+  }
 }
 
 function getWholeDate() {
@@ -413,7 +458,7 @@ function procWarnings() {
 }
 
 setInterval(procTimersAndTriggers, 60000);
-setInterval(procWarnings, 60000);
+setInterval(procWarnings, 6000);
 
 //
 // Define API
@@ -546,11 +591,60 @@ Handle new Web Push subscription.
 ####################################### */
 
 app.post("/subscribe", (req, res) => {
-  subscription = req.body;
 
-  res.status(201).json({});
+  try {
+    sub = JSON.stringify(req.body);
+  
+    // var hash = crypto.createHash("sha512");
+    // var sub = (hash.update(str).digest("hex"));
 
-  console.log(`[${getWholeDate()}] > Subscribed to push notifications`);
+    var subExists = db.getSubscriptionByText(sub);
+    if(subExists.length == 0)  {
+      db.insertSubscription(sub, req._user_id);
+    
+      // res.status(201).json({});
+    
+      console.log(`[${getWholeDate()}] > Subscribed UUID ${req._user_id} to push notifications`);
+    }
+    // res.send({ status: "success" })
+  } catch(e)  {
+    // res.send({ status: "failed", error: e })
+  }
+ 
+});
+
+app.post("/unsubscribe", (req, res) => {
+
+  try {
+
+    sub = JSON.stringify(req.body);
+
+    db.deleteSubscriptionByText(sub);
+  
+    res.status(201).json({});
+    
+    console.log(`[${getWholeDate()}] > Unsubscribed UUID ${req._user_id} from push notifications`);
+    // res.send({ status: "success" })
+  } catch(e)  {
+    // res.send({ status: "failed", error: e })
+  }
+ 
+});
+
+app.post("/unsubscribeAll", (req, res) => {
+
+  try {
+
+    db.deleteSubscriptionByUserId(req._user_id);
+  
+    res.status(201).json({});
+    
+    console.log(`[${getWholeDate()}] > Unsubscribed UUID ${req._user_id} from push notifications`);
+    // res.send({ status: "success" })
+  } catch(e)  {
+    // res.send({ status: "failed", error: e })
+  }
+ 
 });
 
 /* #######################################
