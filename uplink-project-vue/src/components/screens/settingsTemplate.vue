@@ -228,7 +228,7 @@
                 type="button"
                 class="form-buttons-settings save-cancel"
                 v-on:click="undoEdit1"
-              >Cancel</button>
+              >Finish</button>
             </div>
           </div>
         </div>
@@ -296,6 +296,7 @@ export default {
       if (this.edit1 === true) {
         this.edit1 = false;
         this.editButton1 = true;
+        location.reload();
       }
     },
     getRooms() {
@@ -348,7 +349,10 @@ export default {
         })
         .then(jsonData => {
           console.log(jsonData);
-          location.reload();
+        })
+        .catch(err => {
+          console.log(err);
+          alert("This Sensor is being used");
         });
     }
     /*
