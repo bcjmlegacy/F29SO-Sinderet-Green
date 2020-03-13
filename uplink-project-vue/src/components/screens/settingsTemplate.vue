@@ -178,7 +178,7 @@
               <button
                 type="button"
                 class="form-buttons-settings-top"
-                v-on:click="configureRooms"
+                v-on:click="configureUsers"
                 v-bind:style="{ visibility: editButton2 ? 'visible' : 'hidden' }"
               >Edit</button>
             </div>
@@ -187,9 +187,20 @@
               <li class="scheduleItem" v-for="user in displayData.users" :key="user.user_id">
                 {{user.user_username}}
                 <br />
-                <span class="delete" @click="deleteSensorItem(sensor.sensor_id)">Delete</span>
+                <span
+                  class="delete"
+                  v-show="edit2"
+                  @click="deleteSensorItem(sensor.sensor_id)"
+                >Delete</span>
               </li>
             </ul>
+            <div class="button-cont" v-show="edit2">
+              <button
+                type="button"
+                class="form-buttons-settings save-cancel"
+                v-on:click="undoEdit2"
+              >Finish</button>
+            </div>
           </div>
 
           <div class="custom-card-settings sensors">
@@ -261,6 +272,7 @@ export default {
 
       edit: false,
       edit1: false,
+      edit2: false,
       logout: false,
       editButton: true,
       editButton1: true,
@@ -279,7 +291,12 @@ export default {
         this.editButton = false;
       }
     },
-    configureRooms() {},
+    configureUsers() {
+      if (this.edit2 === false) {
+        this.edit2 = true;
+        this.editButton2 = false;
+      }
+    },
     configureSensors() {
       if (this.edit1 === false) {
         this.edit1 = true;
@@ -296,6 +313,13 @@ export default {
       if (this.edit1 === true) {
         this.edit1 = false;
         this.editButton1 = true;
+        location.reload();
+      }
+    },
+    undoEdit2() {
+      if (this.edit2 === true) {
+        this.edit2 = false;
+        this.editButton2 = true;
         location.reload();
       }
     },
@@ -472,7 +496,7 @@ export default {
 }
 
 .custom-card-settings {
-  width: 28%;
+  width: 30%;
   padding: 20px;
   border-radius: 20px;
   margin: 5px;
@@ -481,7 +505,7 @@ export default {
 }
 
 .sensors {
-  width: 33%;
+  width: 30%;
 }
 
 .siblings {
