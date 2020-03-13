@@ -20,7 +20,7 @@
                 v-bind:style="{ visibility: editButton ? 'visible' : 'hidden' }"
               >Edit</button>
 
-              <h4 class="display3 text-center">Profile</h4>
+              <h1 class="text-center">Profile</h1>
               <button type="button" class="form-buttons-settings-top logout" v-show="!logout">Logout</button>
             </div>
             <hr />
@@ -171,9 +171,30 @@
               </b-form>
             </div>
           </div>
+
+          <div class="custom-card-settings">
+            <div class="flex-buttons">
+              <h1 class="width-sensor">Accounts</h1>
+              <button
+                type="button"
+                class="form-buttons-settings-top"
+                v-on:click="configureRooms"
+                v-bind:style="{ visibility: editButton2 ? 'visible' : 'hidden' }"
+              >Edit</button>
+            </div>
+            <div class="form-rows" />
+            <ul class="list-schedule">
+              <li class="scheduleItem" v-for="user in displayData.users" :key="user.user_id">
+                {{user.user_username}}
+                <br />
+                <span class="delete" @click="deleteSensorItem(sensor.sensor_id)">Delete</span>
+              </li>
+            </ul>
+          </div>
+
           <div class="custom-card-settings sensors">
             <div class="flex-buttons">
-              <h4 class="display3 width-sensor">Sensors</h4>
+              <h1 class="display3 width-sensor">Sensors</h1>
               <button
                 type="button"
                 class="form-buttons-settings-top"
@@ -190,43 +211,26 @@
               >
                 {{sensor.sensor_name}}
                 <br />
-                <span class="delete" @click="deleteSensorItem(sensor.sensor_id)">Delete</span>
+                <span
+                  class="delete"
+                  v-show="edit1"
+                  @click="deleteSensorItem(sensor.sensor_id)"
+                >Delete</span>
               </li>
             </ul>
+            <div class="button-cont" v-show="edit1">
+              <router-link :to="{name: 'addSensor'}" class="links">
+                <button type="button" class="form-buttons-settings save-cancel">Add Sensors</button>
+              </router-link>
+            </div>
             <div class="button-cont" v-show="edit1">
               <button
                 type="button"
                 class="form-buttons-settings save-cancel"
                 v-on:click="undoEdit1"
-              >Finish</button>
+              >Cancel</button>
             </div>
           </div>
-          <!--
-          <div class="custom-card-settings">
-            <div class="flex-buttons">
-              <h4 class="display3 width-sensor">Rooms</h4>
-              <button
-                type="button"
-                class="form-buttons-settings-top"
-                v-on:click="configureRooms"
-                v-bind:style="{ visibility: editButton2 ? 'visible' : 'hidden' }"
-              >Edit</button>
-            </div>
-            <div class="form-rows" />
-            <ul class="list-schedule">
-              <li class="scheduleItem" v-for="room in displayData.rooms" :key="room.room_id">
-                {{room.room_name}}
-                <img
-                  src="../../assets/close.png"
-                  alt="Delete Item"
-                  class="img-delete"
-                  @click="deleteRoomItem(room.room_id)"
-                />
-              </li>
-            </ul>
-            
-          </div>
-          -->
         </div>
       </div>
       <!--Navbar bottom *mobile and tablet view*-->
@@ -262,7 +266,7 @@ export default {
       editButton1: true,
       editButton2: true,
       displayData: {
-        rooms: [],
+        users: [],
         sensors: []
       }
     };
@@ -295,7 +299,7 @@ export default {
       }
     },
     getRooms() {
-      let url = "http://localhost:5552/getRooms";
+      let url = "http://localhost:5552/getUsers";
       fetch(url, {
         mode: "cors",
         method: "GET",
@@ -307,7 +311,7 @@ export default {
           return response.json();
         })
         .then(jsonData => {
-          this.displayData.rooms = jsonData;
+          this.displayData.users = jsonData;
         });
     },
     getSensors() {
