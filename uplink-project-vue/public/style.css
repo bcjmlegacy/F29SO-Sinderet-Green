@@ -900,27 +900,19 @@ ul {
   }
 }
 
-@media screen and (max-width: 812px) {
-  .labels {
-    float: left !important;
-  }
-  .but {
-    float: none;
-  }
-}
-
 /*############################################################*/
 /*Register Template CSS*/
 /*############################################################*/
 
 #register {
-  margin-top: 80px;
+  margin-top: 120px;
+  margin-bottom: 120px;
 }
 
 .custom-cards-Register {
-  width: 25rem;
-  height: 58rem;
+  width: 30%;
   padding: 20px;
+  border-radius: 20px;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 1px 8px rgba(0, 0, 0, 0.22) !important;
   transition: 0.2s ease-in-out all !important;
 }
@@ -929,12 +921,12 @@ ul {
   box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22) !important;
 }
 
-@media screen and (max-width: 1024px) {
+@media screen and (max-width: 1025px) {
   #register {
-    margin-top: 70px;
+    margin-top: 80px;
   }
   .custom-cards-Register {
-    width: 20rem;
+    width: 60%;
   }
 }
 
@@ -942,9 +934,14 @@ ul {
   .labels {
     float: left !important;
   }
+  .custom-cards-Register {
+    width: 80%;
+  }
+}
 
-  .but {
-    float: none;
+@media screen and (max-width: 812px) {
+  .custom-cards-Register {
+    width: 100%;
   }
 }
 

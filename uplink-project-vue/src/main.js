@@ -17,7 +17,7 @@ import AddRoom from "./components/screens/addRoom";
 import AddDevices from "./components/screens/addDevices";
 import AddSensor from "./components/screens/addSensors";
 import Login from "./components/screens/loginTemplate";
-//import Register from "./components/registerTemplate";
+import Register from "./components/screens/registerTemplate";
 import AddDeviceMetrics from "./components/screens/addDeviceMetrics";
 import EditSchedule from "./components/screens/editDevicePage";
 import deviceDetails from "./components/screens/deviceDetails";
@@ -72,6 +72,20 @@ const router = new VueRouter({
       name: "login",
       path: "/login",
       component: Login
+    },
+    {
+      name: "register",
+      path: "/register",
+      component: Register,
+      props: true,
+      beforeEnter: (to, from, next) => {
+        let token = Vue.$cookies.get("token");
+        if (token == null) {
+          next({ name: "login" });
+        } else {
+          next();
+        }
+      }
     },
     {
       name: "room",

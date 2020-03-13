@@ -896,12 +896,14 @@ app.post("/insertUser", (req, res) => {
     req.body.surname &&
     req.body.admin
   ) {
+    var hash = crypto.createHash("sha512");
+    var hpasswd = hash.update(req.body.password).digest("hex");
     var authed = db.checkAuth(req._user_id, null, null);
     if (authed) {
       var info = db.insertUser(
         req.body.account_type,
         req.body.username,
-        req.body.password,
+        hpasswd,
         req.body.email,
         req.body.forename,
         req.body.surname,

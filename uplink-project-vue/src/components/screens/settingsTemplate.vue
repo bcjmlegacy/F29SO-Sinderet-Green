@@ -25,7 +25,7 @@
                 <button
                   type="button"
                   class="form-buttons-settings-top logout"
-                  v-show="!logout"
+                  @click="logout"
                 >Logout</button>
               </div>
               <hr />
@@ -198,6 +198,11 @@
                 </li>
               </ul>
               <div class="button-cont" v-show="edit2">
+                <router-link :to="{name: 'register'}" class="links">
+                  <button type="button" class="form-buttons-settings save-cancel">Add Accounts</button>
+                </router-link>
+              </div>
+              <div class="button-cont" v-show="edit2">
                 <button
                   type="button"
                   class="form-buttons-settings save-cancel"
@@ -280,7 +285,7 @@
               </div>
             </div>
 
-            <div class="custom-card-settings sensors">
+            <div class="custom-card-settings">
               <div class="flex-buttons">
                 <h1 class="display3 width-sensor">Sensors</h1>
                 <button
@@ -353,7 +358,6 @@ export default {
       edit2: false,
       edit3: false,
       edit4: false,
-      logout: false,
       editButton: true,
       editButton1: true,
       editButton2: true,
@@ -611,6 +615,14 @@ export default {
           console.log(err);
           alert("This user cannot be deleted right now");
         });
+    },
+
+    logout() {
+      if (!confirm("Do really want to logout?")) {
+        return false;
+      }
+      this.$cookies.remove("token");
+      this.$router.push({ name: "login" });
     }
   },
 
