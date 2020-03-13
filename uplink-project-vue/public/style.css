@@ -608,7 +608,7 @@ select:focus,
 }
 
 .device-img-details {
-  width: 50%;
+  width: 40%;
   padding: 10px;
 }
 
@@ -733,10 +733,10 @@ ul {
     width: 100%;
   }
   .custom-cards-devicesDetails {
-    padding: 40px;
+    padding: 20px;
   }
   .custom-cards-devicesDetails-schedule {
-    padding: 40px;
+    padding: 20px;
   }
 }
 

@@ -15,7 +15,7 @@
           <div class="flex-add">
             <div class="card custom-cards-addRooms">
               <div class="img-cont">
-                <img src="../../assets/room.png" alt="device icon" class="room-img" />
+                <img src="../../assets/switch.png" alt="device icon" class="room-img" />
               </div>
               <div class="cont">
                 <b-form @submit="insertSensor">
