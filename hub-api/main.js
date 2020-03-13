@@ -922,7 +922,6 @@ app.post("/insertUser", (req, res) => {
 });
 
 app.post("/insertSensor", (req, res) => {
-  console.log("im here");
   if (req.body.room && req.body.type && req.body.name) {
     var authed = db.checkAuth(req._user_id, null, null);
     if (authed) {
