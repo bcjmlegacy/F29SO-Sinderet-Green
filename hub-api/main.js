@@ -7,21 +7,24 @@ const express = require("express"),
   cors = require("cors"),
   webPush = require("web-push");
 
-var rebuild = false, demoMode = false, clearSubs = false, clearWarnings = false;
+var rebuild = false,
+  demoMode = false,
+  clearSubs = false,
+  clearWarnings = false;
 
-for(x in process.argv)  {
-  if(process.argv[x] == "-r" || process.argv[x] == "--rebuild")  {
+for (x in process.argv) {
+  if (process.argv[x] == "-r" || process.argv[x] == "--rebuild") {
     rebuild = true;
     console.log(`[${getWholeDate()}] > [REBUILD] Connected to MQTT server`);
   }
-  if(process.argv[x] == "-d" || process.argv[x] == "--demo")  {
+  if (process.argv[x] == "-d" || process.argv[x] == "--demo") {
     demoMode = true;
     console.log(`[${getWholeDate()}] > [DEMO] Running in demo mode...`);
   }
-  if(process.argv[x] == "-cs" || process.argv[x] == "--clear-subs")  {
+  if (process.argv[x] == "-cs" || process.argv[x] == "--clear-subs") {
     clearSubs = true;
   }
-  if(process.argv[x] == "-cw" || process.argv[x] == "--clear-warnings")  {
+  if (process.argv[x] == "-cw" || process.argv[x] == "--clear-warnings") {
     clearWarnings = true;
   }
 }
@@ -67,11 +70,11 @@ const port = 5552;
 var client = mqtt.connect("mqtt://127.0.0.1");
 var db = new DBHandler(rebuild, demoMode);
 
-if(clearSubs) {
+if (clearSubs) {
   console.log(`[${getWholeDate()}] > [DEL] Deleting existing web-push subs...`);
   db.deleteAllSubscriptions();
 }
-if(clearWarnings) {
+if (clearWarnings) {
   console.log(`[${getWholeDate()}] > [DEL] Deleting existing warnings...`);
   db.deleteAllWarnings();
 }
@@ -79,28 +82,25 @@ if(clearWarnings) {
 // Web push subscription
 // var subscription;
 
-function newPush(text)  {
-
+function newPush(text) {
   // console.log(`Sending new webPush: ${text}`);
 
   try {
-
     subscriptions = db.getSubscriptions();
 
-    for(x in subscriptions) {
+    for (x in subscriptions) {
       var sub = JSON.parse(subscriptions[x]["subscription_text"]);
 
       const payload = JSON.stringify({
         title: "Uplink",
         body: text
       });
-    
+
       webPush
         .sendNotification(sub, payload)
         .catch(error => console.error(error));
     }
-
-  } catch(e)  {
+  } catch (e) {
     console.log(`[${getWholeDate()}] ! Error sending push: `);
     console.log(`[${getWholeDate()}] ! ${e}`);
   }
@@ -590,60 +590,64 @@ Handle new Web Push subscription.
 ####################################### */
 
 app.post("/subscribe", (req, res) => {
-
   try {
     sub = JSON.stringify(req.body);
-  
+
     // var hash = crypto.createHash("sha512");
     // var sub = (hash.update(str).digest("hex"));
 
     var subExists = db.getSubscriptionByText(sub);
-    if(subExists.length == 0)  {
+    if (subExists.length == 0) {
       db.insertSubscription(sub, req._user_id);
-    
+
       // res.status(201).json({});
-    
-      console.log(`[${getWholeDate()}] > Subscribed UUID ${req._user_id} to push notifications`);
+
+      console.log(
+        `[${getWholeDate()}] > Subscribed UUID ${
+          req._user_id
+        } to push notifications`
+      );
     }
     // res.send({ status: "success" })
-  } catch(e)  {
+  } catch (e) {
     // res.send({ status: "failed", error: e })
   }
- 
 });
 
 app.post("/unsubscribe", (req, res) => {
-
   try {
-
     sub = JSON.stringify(req.body);
 
     db.deleteSubscriptionByText(sub);
-  
+
     res.status(201).json({});
-    
-    console.log(`[${getWholeDate()}] > Unsubscribed UUID ${req._user_id} from push notifications`);
+
+    console.log(
+      `[${getWholeDate()}] > Unsubscribed UUID ${
+        req._user_id
+      } from push notifications`
+    );
     // res.send({ status: "success" })
-  } catch(e)  {
+  } catch (e) {
     // res.send({ status: "failed", error: e })
   }
- 
 });
 
 app.post("/unsubscribeAll", (req, res) => {
-
   try {
-
     db.deleteSubscriptionByUserId(req._user_id);
-  
+
     res.status(201).json({});
-    
-    console.log(`[${getWholeDate()}] > Unsubscribed UUID ${req._user_id} from push notifications`);
+
+    console.log(
+      `[${getWholeDate()}] > Unsubscribed UUID ${
+        req._user_id
+      } from push notifications`
+    );
     // res.send({ status: "success" })
-  } catch(e)  {
+  } catch (e) {
     // res.send({ status: "failed", error: e })
   }
- 
 });
 
 /* #######################################
@@ -892,12 +896,14 @@ app.post("/insertUser", (req, res) => {
     req.body.surname &&
     req.body.admin
   ) {
+    var hash = crypto.createHash("sha512");
+    var hpasswd = hash.update(req.body.password).digest("hex");
     var authed = db.checkAuth(req._user_id, null, null);
     if (authed) {
       var info = db.insertUser(
         req.body.account_type,
         req.body.username,
-        req.body.password,
+        hpasswd,
         req.body.email,
         req.body.forename,
         req.body.surname,

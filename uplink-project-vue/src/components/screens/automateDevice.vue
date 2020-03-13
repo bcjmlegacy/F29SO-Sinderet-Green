@@ -121,7 +121,7 @@
                           @input="finalStage"
                         >
                           <option disabled value>Value</option>
-                          <option v-for="t in range(15, 30)" :key="t" :value="t">{{ t }}&#x2103;</option>
+                          <option v-for="t in range(15, 31)" :key="t" :value="t">{{ t }}&#x2103;</option>
                         </select>
                       </div>
                       <div
@@ -184,7 +184,7 @@ import NavbarTop from "../navbars/navbar-top";
 import NavbarBottom from "../navbars/navbar-bottom";
 
 export default {
-  name: "automate",
+  name: "automatePage",
   props: [
     "deviceID",
     "deviceName",

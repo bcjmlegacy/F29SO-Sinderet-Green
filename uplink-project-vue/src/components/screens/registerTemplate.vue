@@ -1,127 +1,150 @@
 <template>
-  <!--Register Page-->
-  <div id="register">
-    <b-container>
-      <div class="flex-add">
-        <div class="card custom-cards-Register">
-          <h1 class="form-title">Sign Up</h1>
+  <div>
+    <!--Register Page-->
+    <NavTop :userToken="userToken" class="top-show" />
+    <div class="bottom-show">
+      <div class="logo-back fixed-top">
+        <h5 class="logo">
+          <router-link class="links-top" :to="{ name: 'dashboard' }">uplink</router-link>
+        </h5>
+      </div>
+    </div>
+    <div id="register">
+      <b-container>
+        <div class="flex-add">
+          <div class="custom-cards-Register">
+            <h1 class="form-title">Add Account</h1>
+            <hr />
+            <div id="form">
+              <b-form @submit="checkPasswords">
+                <div class="col-sm-12">
+                  <label for="input-email" class="label">Email</label>
+                </div>
+                <!--v-model is a vue.js thing that will store the value gained from the input-->
+                <div class="col-sm-12">
+                  <input
+                    id="input-email"
+                    placeholder="example@domain.com"
+                    required="required"
+                    v-model="form.email"
+                    type="email"
+                    class="form-inputboxes"
+                    size="md"
+                  />
+                </div>
 
-          <div id="form">
-            <b-form @submit="go">
-              <div class="col-sm-12">
-                <label for="input-email" class="label">Email</label>
-              </div>
-              <!--v-model is a vue.js thing that will store the value gained from the input-->
-              <div class="col-sm-12">
-                <input
-                  id="input-email"
-                  placeholder="example@domain.com"
-                  required="required"
-                  v-model="form.email"
-                  type="email"
-                  class="form-inputboxes"
-                  size="md"
-                />
-              </div>
-              <div class="form-rows">
-                <div class="col-sm-12">
-                  <label for="input-username" class="label">Username</label>
+                <div class="form-rows">
+                  <div class="col-sm-12">
+                    <label for="input-firstname" class="label">First Name</label>
+                  </div>
+                  <div class="col-sm-12">
+                    <input
+                      id="input-firstname"
+                      class="form-inputboxes"
+                      type="text"
+                      size="md"
+                      required="required"
+                      placeholder="Euan"
+                      v-model="form.firstname"
+                    />
+                  </div>
                 </div>
-                <div class="col-sm-12">
-                  <input
-                    id="input-username"
-                    placeholder="MadLad123"
-                    type="text"
-                    size="md"
-                    required="required"
-                    class="form-inputboxes"
-                    v-model="form.username"
-                  />
+                <div class="form-rows">
+                  <div class="col-sm-12">
+                    <label for="input-surname" class="label">Surname</label>
+                  </div>
+                  <div class="col-sm-12">
+                    <input
+                      id="input-surname"
+                      class="form-inputboxes"
+                      type="text"
+                      size="md"
+                      required="required"
+                      placeholder="Gordon"
+                      v-model="form.surname"
+                    />
+                  </div>
                 </div>
-              </div>
-              <div class="form-rows">
-                <div class="col-sm-12">
-                  <label for="input-firstname" class="label">First Name</label>
+                <div class="form-rows">
+                  <div class="col-sm-12">
+                    <label for="input-username" class="label">Username</label>
+                  </div>
+                  <div class="col-sm-12">
+                    <input
+                      id="input-username"
+                      placeholder="MadLad123"
+                      type="text"
+                      size="md"
+                      required="required"
+                      class="form-inputboxes"
+                      v-model="form.username"
+                      autocomplete="new-username"
+                    />
+                  </div>
                 </div>
-                <div class="col-sm-12">
-                  <input
-                    id="input-firstname"
-                    class="form-inputboxes"
-                    type="text"
-                    size="md"
-                    required="required"
-                    placeholder="Euan"
-                    v-model="form.firstname"
-                  />
+                <div class="form-rows">
+                  <div class="col-sm-12">
+                    <label for="input-password" class="label">Password</label>
+                  </div>
+                  <div id="err">{{ errorLength }}</div>
+                  <div class="col-sm-12">
+                    <input
+                      id="input-password"
+                      class="form-inputboxes"
+                      type="password"
+                      size="md"
+                      required="required"
+                      placeholder="******"
+                      v-model="form.password"
+                      autocomplete="new-password"
+                      v-on:keyup="checkPasswordLength"
+                    />
+                  </div>
                 </div>
-              </div>
-              <div class="form-rows">
-                <div class="col-sm-12">
-                  <label for="input-surname" class="label">Surname</label>
+                <div class="form-rows">
+                  <div class="col-sm-12">
+                    <label for="input-confirm-password" class="label">Confirm Password</label>
+                  </div>
+                  <div id="err">{{errorConfirm}}</div>
+                  <div class="col-sm-12">
+                    <input
+                      id="input-confirm-password"
+                      class="form-inputboxes"
+                      type="password"
+                      size="md"
+                      required="required"
+                      placeholder="******"
+                      v-model="form.cPassword"
+                      autocomplete="new-password"
+                    />
+                  </div>
                 </div>
-                <div class="col-sm-12">
-                  <input
-                    id="input-surname"
-                    class="form-inputboxes"
-                    type="text"
-                    size="md"
-                    required="required"
-                    placeholder="Gordon"
-                    v-model="form.surname"
-                  />
+                <div class="form-rows">
+                  <div class="col-sm-12">
+                    <hr />
+                    <button class="form-buttons" type="submit">Sign Up</button>
+                  </div>
                 </div>
-              </div>
-              <div class="form-rows">
-                <div class="col-sm-12">
-                  <label for="input-password" class="label">Password</label>
-                </div>
-                <div class="col-sm-12">
-                  <input
-                    id="input-password"
-                    class="form-inputboxes"
-                    type="password"
-                    size="md"
-                    required="required"
-                    placeholder="******"
-                    v-model="form.password"
-                  />
-                </div>
-              </div>
-              <div class="form-rows">
-                <div class="col-sm-12">
-                  <label for="input-confirm-password" class="label"
-                    >Confirm Password</label
-                  >
-                </div>
-                <div class="col-sm-12">
-                  <input
-                    id="input-confirm-password"
-                    class="form-inputboxes"
-                    type="password"
-                    size="md"
-                    required="required"
-                    placeholder="******"
-                    v-model="form.cPassword"
-                  />
-                </div>
-              </div>
-              <div class="form-rows">
-                <div class="col-sm-12">
-                  <button class="form-buttons" type="submit">Sign Up</button>
-                </div>
-              </div>
-            </b-form>
+              </b-form>
+            </div>
           </div>
         </div>
-      </div>
-    </b-container>
+      </b-container>
+    </div>
+    <NavBottom class="bottom-show" :userToken="userToken" />
   </div>
 </template>
 <script>
-//API URL for POST request that will register a user.
-let url = "http://localhost:5552/insertUser";
-
+import NavTop from "../navbars/navbar-top";
+import NavBottom from "../navbars/navbar-bottom";
 export default {
+  name: "registerPage",
+  props: ["userToken"],
+  components: {
+    NavTop,
+    NavBottom
+  },
+
   data() {
     return {
       form: {
@@ -133,50 +156,59 @@ export default {
         surname: "",
         password: "",
         cPassword: "",
-        acceptTerms: ""
-      }
+        admin: "1"
+      },
+      errorLength: "",
+      errorConfirm: ""
     };
   },
   methods: {
-    go(evt) {
-      //Fetch request to send the data to the API and Database for storing uses CORS
+    checkPasswordLength() {
+      if (this.form.password.length < 8) {
+        this.errorLength = "Password must be longer than 8 characters long";
+      } else if (this.form.password.length >= 8) {
+        this.errorLength = "";
+      }
+    },
+
+    checkPasswords(evt) {
+      evt.preventDefault();
+      if (this.form.password === this.form.cPassword) {
+        if (this.form.password.length >= 8) {
+          this.go();
+        } else {
+          this.form.cPassword = "";
+          this.form.password = "";
+        }
+      } else {
+        this.errorConfirm = "Passwords Do Not Match";
+        this.form.cPassword = "";
+      }
+    },
+
+    go() {
+      let url = "http://localhost:5552/insertUser";
       fetch(url, {
         mode: "cors",
         method: "POST",
-
         headers: {
+          authorization: this.userToken,
           Accept: "application/json",
-          "Content-Type": "application/json",
-          Authorization: "MTpSMmM1blZkVlJZWTVKTWFPRlpiSQ=="
+          "Content-Type": "application/json"
         },
         body: JSON.stringify({
-          //Data sent to the API goes here.
           account_type: this.form.accountType,
-          username: this.form.username,
-          password: this.form.password,
-          email: this.form.email,
           forename: this.form.firstname,
-          surname: this.form.surname
+          surname: this.form.surname,
+          password: this.form.password,
+          username: this.form.username,
+          admin: this.form.admin,
+          email: this.form.email
         })
-      })
-        .then(function(response) {
-          return response;
-        })
-        .then(function(text) {
-          console.log("Request successful", text);
-        })
-        .catch(function(error) {
-          console.log("Request failed", error);
-        });
-      //Checks that the data entered is registered
-      //Data entered is stored in a JSON Ready to be sent to the server
-      evt.preventDefault();
-      console.log(this.form);
-      if (this.form.acceptTerms === "false") {
-        console.log("Not Accepted");
-      } else {
-        console.log("accepted");
-      }
+      }).then(response => {
+        this.$router.push({ name: "settings" });
+        return response.json();
+      });
     }
   }
 };

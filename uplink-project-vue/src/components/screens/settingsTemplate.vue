@@ -11,222 +11,320 @@
     <div id="settings">
       <div class="container">
         <div class="flex-settings">
-          <div class="custom-card-settings">
-            <div class="flex-buttons">
-              <button
-                type="button"
-                class="form-buttons-settings-top"
-                v-on:click="configure"
-                v-bind:style="{ visibility: editButton ? 'visible' : 'hidden' }"
-              >Edit</button>
+          <div class="item-deviceDetails item-padding">
+            <div class="custom-card-settings">
+              <div class="flex-buttons">
+                <button
+                  type="button"
+                  class="form-buttons-settings-top"
+                  v-on:click="configure"
+                  v-bind:style="{ visibility: editButton ? 'visible' : 'hidden' }"
+                >Edit</button>
 
-              <h4 class="display3 text-center">Profile</h4>
-              <button type="button" class="form-buttons-settings-top logout" v-show="!logout">Logout</button>
-            </div>
-            <hr />
-            <img id="profilepic" src="../../assets/user.png" alt="Profile" class="nav-image" />
-            <div class="userDetails">
-              <b-form>
-                <hr />
-                <div class="form-rows">
-                  <b-form-group id="forename-input" label="Forename:" label-for="input-forename">
-                    <b-form-input
-                      v-if="!edit"
-                      id="input-forename"
-                      v-model="form.forename"
-                      class="inputs-b"
-                      plaintext
-                    ></b-form-input>
-                    <input
-                      v-if="edit"
-                      id="input-forename"
-                      v-model="form.forename"
-                      class="form-inputboxes"
-                    />
-                  </b-form-group>
-                </div>
-                <hr />
-                <div class="form-rows">
-                  <b-form-group id="surname-input" label="Surname:" label-for="input-surname">
-                    <b-form-input
-                      v-if="!edit"
-                      id="input-surname"
-                      v-model="form.surname"
-                      class="inputs-b"
-                      plaintext
-                    ></b-form-input>
-                    <input
-                      v-if="edit"
-                      id="input-surname"
-                      v-model="form.surname"
-                      class="form-inputboxes"
-                    />
-                  </b-form-group>
-                </div>
-                <hr />
-                <div class="form-rows">
-                  <b-form-group id="email-input" label="Email:" label-for="input-email">
-                    <b-form-input
-                      v-if="!edit"
-                      id="input-email"
-                      v-model="form.email"
-                      type="email"
-                      class="inputs-b"
-                      plaintext
-                    ></b-form-input>
-                    <input
-                      v-if="edit"
-                      id="input-email"
-                      v-model="form.email"
-                      type="email"
-                      class="form-inputboxes"
-                    />
-                  </b-form-group>
-                </div>
-                <hr />
-                <div class="form-rows">
-                  <b-form-group id="username-input" label="Username:" label-for="input-username">
-                    <b-form-input
-                      v-if="!edit"
-                      id="input-username"
-                      v-model="form.username"
-                      type="text"
-                      class="inputs-b"
-                      plaintext
-                    ></b-form-input>
-                    <input
-                      v-if="edit"
-                      id="input-username"
-                      v-model="form.username"
-                      type="text"
-                      class="form-inputboxes"
-                    />
-                  </b-form-group>
-                </div>
-                <hr />
-                <div class="form-rows">
-                  <b-form-group
-                    v-show="edit"
-                    id="password-input"
-                    label="New Password:"
-                    label-for="input-password"
-                  >
-                    <b-form-input
-                      v-if="!edit"
-                      id="input-password"
-                      v-model="form.password"
-                      type="password"
-                      class="inputs-b"
-                      plaintext
-                    ></b-form-input>
-                    <input
-                      v-if="edit"
-                      id="input-password"
-                      v-model="form.password"
-                      type="password"
-                      class="form-inputboxes"
-                    />
-                    <hr />
-                  </b-form-group>
-                </div>
-                <div class="form-rows">
-                  <b-form-group
-                    v-show="edit"
-                    id="password-input"
-                    label="Confirm New Password:"
-                    label-for="input-confirm-password"
-                  >
-                    <b-form-input
-                      v-if="!edit"
-                      id="input-confirm-password"
-                      v-model="form.confirmpassword"
-                      type="password"
-                      class="inputs-b"
-                      plaintext
-                    ></b-form-input>
-                    <input
-                      v-if="edit"
-                      id="input-confirm-password"
-                      v-model="form.confirmpassword"
-                      type="password"
-                      class="form-inputboxes"
-                    />
-                    <hr />
-                  </b-form-group>
-                </div>
-                <div class="form-rows">
-                  <div class="flex-buttons-bottom" v-show="edit">
-                    <div class="button-cont">
-                      <button class="form-buttons-settings save-cancel">Save Changes</button>
-                    </div>
-                    <div class="button-cont">
-                      <button
-                        type="button"
-                        class="form-buttons-settings save-cancel"
-                        v-on:click="undoEdit"
-                      >Cancel</button>
+                <h1 class="text-center">Profile</h1>
+                <button
+                  type="button"
+                  class="form-buttons-settings-top logout"
+                  @click="logout"
+                >Logout</button>
+              </div>
+              <hr />
+              <img id="profilepic" src="../../assets/user.png" alt="Profile" class="nav-image" />
+              <div class="userDetails">
+                <b-form>
+                  <hr />
+                  <div class="form-rows">
+                    <b-form-group id="forename-input" label="Forename:" label-for="input-forename">
+                      <b-form-input
+                        v-if="!edit"
+                        id="input-forename"
+                        v-model="form.forename"
+                        class="inputs-b"
+                        plaintext
+                      ></b-form-input>
+                      <input
+                        v-if="edit"
+                        id="input-forename"
+                        v-model="form.forename"
+                        class="form-inputboxes"
+                      />
+                    </b-form-group>
+                  </div>
+                  <hr />
+                  <div class="form-rows">
+                    <b-form-group id="surname-input" label="Surname:" label-for="input-surname">
+                      <b-form-input
+                        v-if="!edit"
+                        id="input-surname"
+                        v-model="form.surname"
+                        class="inputs-b"
+                        plaintext
+                      ></b-form-input>
+                      <input
+                        v-if="edit"
+                        id="input-surname"
+                        v-model="form.surname"
+                        class="form-inputboxes"
+                      />
+                    </b-form-group>
+                  </div>
+                  <hr />
+                  <div class="form-rows">
+                    <b-form-group id="email-input" label="Email:" label-for="input-email">
+                      <b-form-input
+                        v-if="!edit"
+                        id="input-email"
+                        v-model="form.email"
+                        type="email"
+                        class="inputs-b"
+                        plaintext
+                      ></b-form-input>
+                      <input
+                        v-if="edit"
+                        id="input-email"
+                        v-model="form.email"
+                        type="email"
+                        class="form-inputboxes"
+                      />
+                    </b-form-group>
+                  </div>
+                  <hr />
+                  <div class="form-rows">
+                    <b-form-group id="username-input" label="Username:" label-for="input-username">
+                      <b-form-input
+                        v-if="!edit"
+                        id="input-username"
+                        v-model="form.username"
+                        type="text"
+                        class="inputs-b"
+                        plaintext
+                      ></b-form-input>
+                      <input
+                        v-if="edit"
+                        id="input-username"
+                        v-model="form.username"
+                        type="text"
+                        class="form-inputboxes"
+                      />
+                    </b-form-group>
+                  </div>
+                  <hr />
+                  <div class="form-rows">
+                    <b-form-group
+                      v-show="edit"
+                      id="password-input"
+                      label="New Password:"
+                      label-for="input-password"
+                    >
+                      <b-form-input
+                        v-if="!edit"
+                        id="input-password"
+                        v-model="form.password"
+                        type="password"
+                        class="inputs-b"
+                        plaintext
+                      ></b-form-input>
+                      <input
+                        v-if="edit"
+                        id="input-password"
+                        v-model="form.password"
+                        type="password"
+                        class="form-inputboxes"
+                      />
+                      <hr />
+                    </b-form-group>
+                  </div>
+                  <div class="form-rows">
+                    <b-form-group
+                      v-show="edit"
+                      id="password-input"
+                      label="Confirm New Password:"
+                      label-for="input-confirm-password"
+                    >
+                      <b-form-input
+                        v-if="!edit"
+                        id="input-confirm-password"
+                        v-model="form.confirmpassword"
+                        type="password"
+                        class="inputs-b"
+                        plaintext
+                      ></b-form-input>
+                      <input
+                        v-if="edit"
+                        id="input-confirm-password"
+                        v-model="form.confirmpassword"
+                        type="password"
+                        class="form-inputboxes"
+                      />
+                      <hr />
+                    </b-form-group>
+                  </div>
+                  <div class="form-rows">
+                    <div class="flex-buttons-bottom" v-show="edit">
+                      <div class="button-cont">
+                        <button class="form-buttons-settings save-cancel">Save Changes</button>
+                      </div>
+                      <div class="button-cont">
+                        <button
+                          type="button"
+                          class="form-buttons-settings save-cancel"
+                          v-on:click="undoEdit"
+                        >Cancel</button>
+                      </div>
                     </div>
                   </div>
-                </div>
-              </b-form>
+                </b-form>
+              </div>
             </div>
           </div>
-          <div class="custom-card-settings sensors">
-            <div class="flex-buttons">
-              <h4 class="display3 width-sensor">Sensors</h4>
-              <button
-                type="button"
-                class="form-buttons-settings-top"
-                v-on:click="configureSensors"
-                v-bind:style="{ visibility: editButton1 ? 'visible' : 'hidden' }"
-              >Edit</button>
+
+          <div class="item-deviceDetails item-padding">
+            <div class="custom-card-settings">
+              <div class="flex-buttons">
+                <h1 class="width-sensor">Accounts</h1>
+                <button
+                  type="button"
+                  class="form-buttons-settings-top"
+                  v-on:click="configureUsers"
+                  v-bind:style="{ visibility: editButton2 ? 'visible' : 'hidden' }"
+                >Edit</button>
+              </div>
+              <div class="form-rows" />
+              <ul class="list-schedule">
+                <li class="scheduleItem" v-for="user in displayData.users" :key="user.user_id">
+                  {{user.user_username}}
+                  <br />
+                  <span class="delete" v-show="edit2" @click="deleteUser(user.user_id)">Delete</span>
+                </li>
+              </ul>
+              <div class="button-cont" v-show="edit2">
+                <router-link :to="{name: 'register'}" class="links">
+                  <button type="button" class="form-buttons-settings save-cancel">Add Accounts</button>
+                </router-link>
+              </div>
+              <div class="button-cont" v-show="edit2">
+                <button
+                  type="button"
+                  class="form-buttons-settings save-cancel"
+                  v-on:click="undoEdit2"
+                >Finish</button>
+              </div>
             </div>
-            <div class="form-rows" />
-            <ul class="list-schedule">
-              <li
-                class="scheduleItem"
-                v-for="sensor in displayData.sensors"
-                :key="sensor.sensor_id"
-              >
-                {{sensor.sensor_name}}
-                <br />
-                <span class="delete" @click="deleteSensorItem(sensor.sensor_id)">Delete</span>
-              </li>
-            </ul>
-            <div class="button-cont" v-show="edit1">
-              <button
-                type="button"
-                class="form-buttons-settings save-cancel"
-                v-on:click="undoEdit1"
-              >Finish</button>
+
+            <div class="custom-card-settings">
+              <div class="flex-buttons">
+                <h1 class="width-sensor">Rooms</h1>
+                <button
+                  type="button"
+                  class="form-buttons-settings-top"
+                  v-on:click="configureRooms"
+                  v-bind:style="{ visibility: editButton3 ? 'visible' : 'hidden' }"
+                >Edit</button>
+              </div>
+              <div class="form-rows" />
+              <ul class="list-schedule">
+                <li class="scheduleItem" v-for="room in displayData.rooms" :key="room.room_id">
+                  {{room.room_name}}
+                  <br />
+                  <span class="delete" v-show="edit3" @click="deleteRoom(room.room_id)">Delete</span>
+                </li>
+              </ul>
+              <div class="button-cont" v-show="edit3">
+                <router-link :to="{name: 'addRoom'}" class="links">
+                  <button type="button" class="form-buttons-settings save-cancel">Add Rooms</button>
+                </router-link>
+              </div>
+              <div class="button-cont" v-show="edit3">
+                <button
+                  type="button"
+                  class="form-buttons-settings save-cancel"
+                  v-on:click="undoEdit3"
+                >Finish</button>
+              </div>
             </div>
           </div>
-          <!--
-          <div class="custom-card-settings">
-            <div class="flex-buttons">
-              <h4 class="display3 width-sensor">Rooms</h4>
-              <button
-                type="button"
-                class="form-buttons-settings-top"
-                v-on:click="configureRooms"
-                v-bind:style="{ visibility: editButton2 ? 'visible' : 'hidden' }"
-              >Edit</button>
+
+          <div class="item-deviceDetails item-padding">
+            <div class="custom-card-settings">
+              <div class="flex-buttons">
+                <h1 class="width-sensor">Devices</h1>
+                <button
+                  type="button"
+                  class="form-buttons-settings-top"
+                  v-on:click="configureDevices"
+                  v-bind:style="{ visibility: editButton4 ? 'visible' : 'hidden' }"
+                >Edit</button>
+              </div>
+              <div class="form-rows" />
+              <ul class="list-schedule">
+                <li
+                  class="scheduleItem"
+                  v-for="device in displayData.devices"
+                  :key="device.device_id"
+                >
+                  {{device.device_name}}
+                  <br />
+                  <span
+                    class="delete"
+                    v-show="edit4"
+                    @click="deleteDevices(device.device_id)"
+                  >Delete</span>
+                </li>
+              </ul>
+              <div class="button-cont" v-show="edit4">
+                <router-link :to="{name: 'addDevice'}" class="links">
+                  <button type="button" class="form-buttons-settings save-cancel">Add Devices</button>
+                </router-link>
+              </div>
+              <div class="button-cont" v-show="edit4">
+                <button
+                  type="button"
+                  class="form-buttons-settings save-cancel"
+                  v-on:click="undoEdit4"
+                >Finish</button>
+              </div>
             </div>
-            <div class="form-rows" />
-            <ul class="list-schedule">
-              <li class="scheduleItem" v-for="room in displayData.rooms" :key="room.room_id">
-                {{room.room_name}}
-                <img
-                  src="../../assets/close.png"
-                  alt="Delete Item"
-                  class="img-delete"
-                  @click="deleteRoomItem(room.room_id)"
-                />
-              </li>
-            </ul>
-            
+
+            <div class="custom-card-settings">
+              <div class="flex-buttons">
+                <h1 class="display3 width-sensor">Sensors</h1>
+                <button
+                  type="button"
+                  class="form-buttons-settings-top"
+                  v-on:click="configureSensors"
+                  v-bind:style="{ visibility: editButton1 ? 'visible' : 'hidden' }"
+                >Edit</button>
+              </div>
+              <div class="form-rows" />
+              <ul class="list-schedule">
+                <li
+                  class="scheduleItem"
+                  v-for="sensor in displayData.sensors"
+                  :key="sensor.sensor_id"
+                >
+                  {{sensor.sensor_name}}
+                  <br />
+                  <span
+                    class="delete"
+                    v-show="edit1"
+                    @click="deleteSensorItem(sensor.sensor_id)"
+                  >Delete</span>
+                </li>
+              </ul>
+              <div class="button-cont" v-show="edit1">
+                <router-link :to="{name: 'addSensor'}" class="links">
+                  <button type="button" class="form-buttons-settings save-cancel">Add Sensors</button>
+                </router-link>
+              </div>
+              <div class="button-cont" v-show="edit1">
+                <button
+                  type="button"
+                  class="form-buttons-settings save-cancel"
+                  v-on:click="undoEdit1"
+                >Finish</button>
+              </div>
+            </div>
           </div>
-          -->
         </div>
       </div>
       <!--Navbar bottom *mobile and tablet view*-->
@@ -257,13 +355,19 @@ export default {
 
       edit: false,
       edit1: false,
-      logout: false,
+      edit2: false,
+      edit3: false,
+      edit4: false,
       editButton: true,
       editButton1: true,
       editButton2: true,
+      editButton3: true,
+      editButton4: true,
       displayData: {
+        users: [],
+        sensors: [],
         rooms: [],
-        sensors: []
+        devices: []
       }
     };
   },
@@ -275,29 +379,95 @@ export default {
         this.editButton = false;
       }
     },
-    configureRooms() {},
+
+    configureUsers() {
+      if (this.edit2 === false) {
+        this.edit2 = true;
+        this.editButton2 = false;
+      }
+    },
+
     configureSensors() {
       if (this.edit1 === false) {
         this.edit1 = true;
         this.editButton1 = false;
       }
     },
+
+    configureRooms() {
+      if (this.edit3 === false) {
+        this.edit3 = true;
+        this.editButton3 = false;
+      }
+    },
+
+    configureDevices() {
+      if (this.edit4 === false) {
+        this.edit4 = true;
+        this.editButton4 = false;
+      }
+    },
+
     undoEdit() {
       if (this.edit === true) {
         this.edit = false;
         this.editButton = true;
       }
     },
+
     undoEdit1() {
       if (this.edit1 === true) {
         this.edit1 = false;
         this.editButton1 = true;
+        location.reload();
       }
     },
+
+    undoEdit2() {
+      if (this.edit2 === true) {
+        this.edit2 = false;
+        this.editButton2 = true;
+        location.reload();
+      }
+    },
+
+    undoEdit3() {
+      if (this.edit3 === true) {
+        this.edit3 = false;
+        this.editButton3 = true;
+        location.reload();
+      }
+    },
+
+    undoEdit4() {
+      if (this.edit4 === true) {
+        this.edit4 = false;
+        this.editButton4 = true;
+        location.reload();
+      }
+    },
+
+    getUsers() {
+      let url = "http://localhost:5552/getUsers";
+      fetch(url, {
+        mode: "cors",
+        method: "GET",
+        headers: {
+          Authorization: this.userToken
+        }
+      })
+        .then(response => {
+          return response.json();
+        })
+        .then(jsonData => {
+          this.displayData.users = jsonData;
+        });
+    },
+
     getRooms() {
       let url = "http://localhost:5552/getRooms";
       fetch(url, {
-        mode: "cors",
+        modE: "cors",
         method: "GET",
         headers: {
           Authorization: this.userToken
@@ -310,6 +480,7 @@ export default {
           this.displayData.rooms = jsonData;
         });
     },
+
     getSensors() {
       let url = "http://localhost:5552/getSensors";
       fetch(url, {
@@ -324,6 +495,23 @@ export default {
         })
         .then(jsonData => {
           this.displayData.sensors = jsonData;
+        });
+    },
+
+    getDevices() {
+      let url = "http://localhost:5552/getDevices";
+      fetch(url, {
+        mode: "cors",
+        method: "GET",
+        headers: {
+          Authorization: this.userToken
+        }
+      })
+        .then(response => {
+          return response.json();
+        })
+        .then(jsonData => {
+          this.displayData.devices = jsonData;
         });
     },
 
@@ -344,11 +532,17 @@ export default {
         })
         .then(jsonData => {
           console.log(jsonData);
-          location.reload();
+        })
+        .catch(err => {
+          console.log(err);
+          alert("This Sensor is being used");
         });
-    }
-    /*
-    deleteRoomItem(id) {
+    },
+
+    deleteRoom(id) {
+      if (!confirm("Do really want to delete this room?")) {
+        return false;
+      }
       let url = "http://localhost:5552/deleteRoom?id=" + id;
       fetch(url, {
         mode: "cors",
@@ -362,13 +556,81 @@ export default {
         })
         .then(jsonData => {
           console.log(jsonData);
+        })
+        .catch(err => {
+          console.log(err);
+          alert(
+            "This room is being used. Please edit or delete all items releated to the room "
+          );
         });
+    },
+
+    deleteUser(id) {
+      if (!confirm("Do really want to delete this user?")) {
+        return false;
+      }
+      if (id === 1) {
+        alert("You cannot delete the Admin Account");
+        return false;
+      }
+      let url = "http://localhost:5552/deleteUser?id=" + id;
+      fetch(url, {
+        mode: "cors",
+        method: "GET",
+        headers: {
+          Authorization: this.userToken
+        }
+      })
+        .then(response => {
+          return response.json();
+        })
+        .then(jsonData => {
+          console.log(jsonData);
+        })
+        .catch(err => {
+          console.log(err);
+          alert("This user cannot be deleted right now");
+        });
+    },
+
+    deleteDevices(id) {
+      if (!confirm("Do really want to delete this device?")) {
+        return false;
+      }
+      let url = "http://localhost:5552/deleteDevice?id=" + id;
+      fetch(url, {
+        mode: "cors",
+        method: "GET",
+        headers: {
+          Authorization: this.userToken
+        }
+      })
+        .then(response => {
+          return response.json();
+        })
+        .then(jsonData => {
+          console.log(jsonData);
+        })
+        .catch(err => {
+          console.log(err);
+          alert("This user cannot be deleted right now");
+        });
+    },
+
+    logout() {
+      if (!confirm("Do really want to logout?")) {
+        return false;
+      }
+      this.$cookies.remove("token");
+      this.$router.push({ name: "login" });
     }
-    */
   },
+
   mounted: function() {
-    this.getRooms();
+    this.getUsers();
     this.getSensors();
+    this.getRooms();
+    this.getDevices();
     fetch(url, {
       mode: "cors",
       method: "GET",
@@ -394,8 +656,12 @@ export default {
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: center;
   align-items: flex-start;
+}
+
+.item-padding {
+  padding: 10px;
 }
 
 #profilepic {
@@ -464,16 +730,16 @@ export default {
 }
 
 .custom-card-settings {
-  width: 28%;
+  width: 100%;
   padding: 20px;
+  margin-bottom: 30px;
   border-radius: 20px;
-  margin: 5px;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 1px 8px rgba(0, 0, 0, 0.22) !important;
   transition: 0.2s ease-in-out all !important;
 }
 
 .sensors {
-  width: 33%;
+  width: 100%;
 }
 
 .siblings {
@@ -492,21 +758,18 @@ export default {
   #settings {
     margin-top: 120px;
   }
-  .custom-card-settings {
-    width: 60%;
-  }
+
   #profilepic {
     width: 20%;
   }
 }
 
 @media screen and (max-width: 750px) {
-  .custom-card-settings {
-    width: 100%;
-    margin: 20px;
-  }
   #profilepic {
     width: 30%;
+  }
+  .item-padding {
+    padding: 0;
   }
 }
 
