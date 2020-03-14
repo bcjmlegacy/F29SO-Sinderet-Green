@@ -941,21 +941,26 @@ app.post("/editUser", (req, res) => {
     var hash = crypto.createHash("sha512");
     var hpasswd = hash.update(req.body.password).digest("hex");
     var authed = db.checkAuth(req._user_id, null, null);
-    if (authed) {
-      var info = db.editUser(
-        req.body.id,
-        req.body.account_type,
-        req.body.username,
-        hpasswd,
-        req.body.email,
-        req.body.forename,
-        req.body.surname,
-        req.body.admin
-      );
-      if (info) {
-        res.send({ rowId: info.lastInsertRowid });
-      } else {
-        res.send({ Error: "There was an error" });
+    var user = db.getUserByIdAndPassword(req.body.id, hpasswd);
+    if (!user) {
+      res.send({ error: "Details incorrect" });
+    } else {
+      if (authed) {
+        var info = db.editUser(
+          req.body.id,
+          req.body.account_type,
+          req.body.username,
+          hpasswd,
+          req.body.email,
+          req.body.forename,
+          req.body.surname,
+          req.body.admin
+        );
+        if (info) {
+          res.send({ rowId: info.lastInsertRowid });
+        } else {
+          res.send({ Error: "There was an error" });
+        }
       }
     }
   } else {

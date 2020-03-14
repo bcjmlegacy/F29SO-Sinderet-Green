@@ -31,7 +31,7 @@
               <hr />
               <img id="profilepic" src="../../assets/user.png" alt="Profile" class="nav-image" />
               <div class="userDetails">
-                <b-form class="text-center">
+                <b-form class="text-center" @submit="editUserDetails">
                   <hr />
 
                   <div class="form-rows">
@@ -53,6 +53,7 @@
                         id="input-forename"
                         v-model="form.forename"
                         class="form-inputboxes center-inputs"
+                        required="required"
                       />
                     </b-form-group>
                   </div>
@@ -78,6 +79,7 @@
                         id="input-surname"
                         v-model="form.surname"
                         class="form-inputboxes center-inputs"
+                        required="required"
                       />
                     </b-form-group>
                   </div>
@@ -105,6 +107,7 @@
                         v-model="form.email"
                         type="email"
                         class="form-inputboxes center-inputs"
+                        required="required"
                       />
                     </b-form-group>
                   </div>
@@ -134,6 +137,7 @@
                         type="text"
                         class="form-inputboxes center-inputs"
                         autocomplete="new-username"
+                        required="required"
                       />
                     </b-form-group>
                   </div>
@@ -148,6 +152,7 @@
                       label-for="input-password"
                       class="label"
                     >
+                      <div id="err">{{error}}</div>
                       <b-form-input
                         v-if="!edit"
                         id="input-password"
@@ -164,6 +169,7 @@
                         type="password"
                         class="form-inputboxes center-inputs"
                         autocomplete="new-password"
+                        required="required"
                       />
                       <hr />
                     </b-form-group>
@@ -385,8 +391,6 @@
 import NavTop from "../navbars/navbar-top";
 import NavBottom from "../navbars/navbar-bottom";
 
-let url = "http://localhost:5552/getUsers";
-
 export default {
   name: "settings-components",
   components: { NavTop, NavBottom },
@@ -398,7 +402,9 @@ export default {
         email: "",
         forename: "",
         surname: "",
-        confirmpassword: ""
+        id: "",
+        admin: "",
+        accountType: ""
       },
 
       edit: false,
@@ -416,7 +422,8 @@ export default {
         sensors: [],
         rooms: [],
         devices: []
-      }
+      },
+      error: ""
     };
   },
   props: ["userToken"],
@@ -686,7 +693,6 @@ export default {
           return response.json();
         })
         .then(jsonData => {
-          console.log(jsonData[0].auth_token);
           for (let i in this.displayData.users) {
             if (
               this.displayData.users[i].user_id === jsonData[0].auth_user_id
@@ -695,12 +701,47 @@ export default {
               this.form.surname = this.displayData.users[i].user_surname;
               this.form.email = this.displayData.users[i].user_email;
               this.form.username = this.displayData.users[i].user_username;
+              this.form.id = this.displayData.users[i].user_id;
+              this.form.admin = this.displayData.users[i].user_admin;
+              this.form.accountType = this.displayData.users[
+                i
+              ].user_account_type;
             }
           }
         });
     },
 
-    editUserDetails() {}
+    editUserDetails(evt) {
+      evt.preventDefault();
+      let url = "http://localhost:5552/editUser";
+      fetch(url, {
+        mode: "cors",
+        method: "POST",
+        headers: {
+          Authorization: this.userToken,
+          Accept: "application/json",
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          id: this.form.id,
+          account_type: this.form.accountType,
+          username: this.form.username,
+          password: this.form.password,
+          forename: this.form.forename,
+          surname: this.form.surname,
+          admin: this.form.admin,
+          email: this.form.email
+        })
+      })
+        .then(response => {
+          return response.json();
+        })
+        .then(jsonData => {
+          if (jsonData.error === "Details incorrect")
+            this.error = "Incorrect Username or Password";
+          else location.reload();
+        });
+    }
   },
 
   mounted: function() {
@@ -709,17 +750,6 @@ export default {
     this.getRooms();
     this.getDevices();
     this.getUserLoggedIn();
-    fetch(url, {
-      mode: "cors",
-      method: "GET",
-      headers: { Authorization: this.userToken }
-    }) //Fetch Command to get data from API - CORS enabled.
-      .then(response => {
-        return response.json();
-      })
-      .then(jsonData => {
-        console.log(jsonData);
-      });
   }
 };
 </script>
