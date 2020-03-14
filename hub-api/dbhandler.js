@@ -147,6 +147,11 @@ class databasehandler {
     return this.getById("city", id);
   }
 
+  getAuthByToken(text) {
+    var q = db.prepare(`SELECT * FROM auth WHERE auth_token = ?`);
+    return q.all(text);
+  }
+
   getSubscriptionByText(text) {
     var q = db.prepare(
       `SELECT * FROM subscription WHERE subscription_text = ?`
