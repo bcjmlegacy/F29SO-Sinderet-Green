@@ -120,8 +120,21 @@ export default {
 
 @media screen and (max-width: 1025px) {
   .col-width-warnings {
-    width: 80%;
+    width: 40%;
     margin: 5px;
+  }
+}
+
+@media screen and (max-width: 750px) {
+  .col-width-warnings {
+    width: 60%;
+    margin: 5px;
+  }
+}
+
+@media screen and (max-width: 750px) {
+  .col-width-warnings {
+    width: 100%;
   }
 }
 </style>

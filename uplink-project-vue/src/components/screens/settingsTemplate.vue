@@ -875,7 +875,7 @@ export default {
   }
 
   #profilepic {
-    width: 20%;
+    width: 40%;
   }
 }
 
@@ -894,6 +894,9 @@ export default {
 @media screen and (max-width: 550px) {
   #settings {
     margin-top: 80px;
+  }
+  #profilepic {
+    width: 35%;
   }
 }
 </style>
