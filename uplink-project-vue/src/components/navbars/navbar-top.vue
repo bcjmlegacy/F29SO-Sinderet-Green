@@ -70,9 +70,8 @@ export default {
   text-decoration: none;
 }
 .notifications .warningCounter {
-  padding: 2px;
-  height: 18px;
-  min-width: 18px;
+  height: 20px;
+  min-width: 20px;
   border-radius: 20px;
   position: absolute;
   top: -14px;

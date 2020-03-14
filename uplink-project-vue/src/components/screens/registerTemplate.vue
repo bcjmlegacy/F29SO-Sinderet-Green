@@ -10,11 +10,11 @@
       </div>
     </div>
     <div id="register">
+      <h2 class="form-title">Add Account</h2>
       <b-container>
         <div class="flex-add">
           <div class="custom-cards-Register">
-            <h1 class="form-title">Add Account</h1>
-            <hr />
+            <img id="profilepic" src="../../assets/user.png" alt="Profile" class="nav-image" />
             <div id="form">
               <b-form @submit="checkPasswords">
                 <div class="col-sm-12">

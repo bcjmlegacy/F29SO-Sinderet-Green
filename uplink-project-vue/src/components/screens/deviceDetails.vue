@@ -316,8 +316,6 @@ export default {
                       });
                     });
                 }
-              } else {
-                this.empty.emptyAutomation = "No Automations";
               }
             }
           }
