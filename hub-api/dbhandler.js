@@ -78,6 +78,14 @@ class databasehandler {
     return q.get(username, password);
   }
 
+  getUserByIdAndPassword(id, password) {
+    var q = db.prepare(
+      `SELECT user_id FROM user WHERE user_id = ? AND user_password = ?`
+    );
+
+    return q.get(id, password);
+  }
+
   insertNewAuthToken(user_id, token, expires) {
     var q = db.prepare(
       `INSERT INTO auth (auth_token, auth_user_id, auth_created, auth_expires) VALUES (?, ?, ?, ?)`
@@ -145,6 +153,11 @@ class databasehandler {
 
   getCityById(id) {
     return this.getById("city", id);
+  }
+
+  getAuthByToken(text) {
+    var q = db.prepare(`SELECT * FROM auth WHERE auth_token = ?`);
+    return q.all(text);
   }
 
   getSubscriptionByText(text) {

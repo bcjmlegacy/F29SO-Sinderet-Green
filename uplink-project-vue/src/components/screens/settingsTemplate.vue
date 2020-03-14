@@ -31,52 +31,74 @@
               <hr />
               <img id="profilepic" src="../../assets/user.png" alt="Profile" class="nav-image" />
               <div class="userDetails">
-                <b-form>
+                <b-form class="text-center" @submit="editUserDetails">
                   <hr />
+
                   <div class="form-rows">
-                    <b-form-group id="forename-input" label="Forename:" label-for="input-forename">
+                    <b-form-group
+                      id="forename-input"
+                      label="Firstname"
+                      label-for="input-forename"
+                      class="label"
+                    >
                       <b-form-input
                         v-if="!edit"
                         id="input-forename"
                         v-model="form.forename"
-                        class="inputs-b"
+                        class="inputs-b center-inputs"
                         plaintext
                       ></b-form-input>
                       <input
                         v-if="edit"
                         id="input-forename"
                         v-model="form.forename"
-                        class="form-inputboxes"
+                        class="form-inputboxes center-inputs"
+                        required="required"
                       />
                     </b-form-group>
                   </div>
+
                   <hr />
+
                   <div class="form-rows">
-                    <b-form-group id="surname-input" label="Surname:" label-for="input-surname">
+                    <b-form-group
+                      id="surname-input"
+                      label="Surname"
+                      label-for="input-surname"
+                      class="label"
+                    >
                       <b-form-input
                         v-if="!edit"
                         id="input-surname"
                         v-model="form.surname"
-                        class="inputs-b"
+                        class="inputs-b center-inputs"
                         plaintext
                       ></b-form-input>
                       <input
                         v-if="edit"
                         id="input-surname"
                         v-model="form.surname"
-                        class="form-inputboxes"
+                        class="form-inputboxes center-inputs"
+                        required="required"
                       />
                     </b-form-group>
                   </div>
+
                   <hr />
+
                   <div class="form-rows">
-                    <b-form-group id="email-input" label="Email:" label-for="input-email">
+                    <b-form-group
+                      id="email-input"
+                      label="Email"
+                      label-for="input-email"
+                      class="label"
+                    >
                       <b-form-input
                         v-if="!edit"
                         id="input-email"
                         v-model="form.email"
                         type="email"
-                        class="inputs-b"
+                        class="inputs-b center-inputs"
                         plaintext
                       ></b-form-input>
                       <input
@@ -84,19 +106,28 @@
                         id="input-email"
                         v-model="form.email"
                         type="email"
-                        class="form-inputboxes"
+                        class="form-inputboxes center-inputs"
+                        required="required"
                       />
                     </b-form-group>
                   </div>
+
                   <hr />
+
                   <div class="form-rows">
-                    <b-form-group id="username-input" label="Username:" label-for="input-username">
+                    <b-form-group
+                      id="username-input"
+                      label="Username"
+                      label-for="input-username"
+                      class="label"
+                    >
                       <b-form-input
                         v-if="!edit"
                         id="input-username"
                         v-model="form.username"
                         type="text"
-                        class="inputs-b"
+                        class="inputs-b center-inputs"
+                        autocomplete="new-username"
                         plaintext
                       ></b-form-input>
                       <input
@@ -104,24 +135,31 @@
                         id="input-username"
                         v-model="form.username"
                         type="text"
-                        class="form-inputboxes"
+                        class="form-inputboxes center-inputs"
+                        autocomplete="new-username"
+                        required="required"
                       />
                     </b-form-group>
                   </div>
+
                   <hr />
+
                   <div class="form-rows">
                     <b-form-group
                       v-show="edit"
                       id="password-input"
-                      label="New Password:"
+                      label="Password"
                       label-for="input-password"
+                      class="label"
                     >
+                      <div id="err">{{error}}</div>
                       <b-form-input
                         v-if="!edit"
                         id="input-password"
                         v-model="form.password"
                         type="password"
-                        class="inputs-b"
+                        class="inputs-b center-inputs"
+                        autocomplete="new-password"
                         plaintext
                       ></b-form-input>
                       <input
@@ -129,24 +167,29 @@
                         id="input-password"
                         v-model="form.password"
                         type="password"
-                        class="form-inputboxes"
+                        class="form-inputboxes center-inputs"
+                        autocomplete="new-password"
+                        required="required"
                       />
                       <hr />
                     </b-form-group>
                   </div>
-                  <div class="form-rows">
+
+                  <!--<div class="form-rows">
                     <b-form-group
                       v-show="edit"
                       id="password-input"
-                      label="Confirm New Password:"
+                      label="Confirm New Password"
                       label-for="input-confirm-password"
+                      class="label"
                     >
                       <b-form-input
                         v-if="!edit"
                         id="input-confirm-password"
                         v-model="form.confirmpassword"
                         type="password"
-                        class="inputs-b"
+                        class="inputs-b center-inputs"
+                        autocomplete="new-confirm-password"
                         plaintext
                       ></b-form-input>
                       <input
@@ -154,11 +197,13 @@
                         id="input-confirm-password"
                         v-model="form.confirmpassword"
                         type="password"
-                        class="form-inputboxes"
+                        class="form-inputboxes center-inputs"
+                        autocomplete="new-confirm-password"
                       />
                       <hr />
                     </b-form-group>
-                  </div>
+                  </div>-->
+
                   <div class="form-rows">
                     <div class="flex-buttons-bottom" v-show="edit">
                       <div class="button-cont">
@@ -182,6 +227,7 @@
             <div class="custom-card-settings">
               <div class="flex-buttons">
                 <h1 class="width-sensor">Accounts</h1>
+
                 <button
                   type="button"
                   class="form-buttons-settings-top"
@@ -189,6 +235,7 @@
                   v-bind:style="{ visibility: editButton2 ? 'visible' : 'hidden' }"
                 >Edit</button>
               </div>
+              <hr />
               <div class="form-rows" />
               <ul class="list-schedule">
                 <li class="scheduleItem" v-for="user in displayData.users" :key="user.user_id">
@@ -197,6 +244,7 @@
                   <span class="delete" v-show="edit2" @click="deleteUser(user.user_id)">Delete</span>
                 </li>
               </ul>
+              <hr />
               <div class="button-cont" v-show="edit2">
                 <router-link :to="{name: 'register'}" class="links">
                   <button type="button" class="form-buttons-settings save-cancel">Add Accounts</button>
@@ -221,6 +269,7 @@
                   v-bind:style="{ visibility: editButton3 ? 'visible' : 'hidden' }"
                 >Edit</button>
               </div>
+              <hr />
               <div class="form-rows" />
               <ul class="list-schedule">
                 <li class="scheduleItem" v-for="room in displayData.rooms" :key="room.room_id">
@@ -229,6 +278,7 @@
                   <span class="delete" v-show="edit3" @click="deleteRoom(room.room_id)">Delete</span>
                 </li>
               </ul>
+              <hr />
               <div class="button-cont" v-show="edit3">
                 <router-link :to="{name: 'addRoom'}" class="links">
                   <button type="button" class="form-buttons-settings save-cancel">Add Rooms</button>
@@ -255,6 +305,7 @@
                   v-bind:style="{ visibility: editButton4 ? 'visible' : 'hidden' }"
                 >Edit</button>
               </div>
+              <hr />
               <div class="form-rows" />
               <ul class="list-schedule">
                 <li
@@ -271,6 +322,7 @@
                   >Delete</span>
                 </li>
               </ul>
+              <hr />
               <div class="button-cont" v-show="edit4">
                 <router-link :to="{name: 'addDevice'}" class="links">
                   <button type="button" class="form-buttons-settings save-cancel">Add Devices</button>
@@ -295,6 +347,7 @@
                   v-bind:style="{ visibility: editButton1 ? 'visible' : 'hidden' }"
                 >Edit</button>
               </div>
+              <hr />
               <div class="form-rows" />
               <ul class="list-schedule">
                 <li
@@ -311,6 +364,7 @@
                   >Delete</span>
                 </li>
               </ul>
+              <hr />
               <div class="button-cont" v-show="edit1">
                 <router-link :to="{name: 'addSensor'}" class="links">
                   <button type="button" class="form-buttons-settings save-cancel">Add Sensors</button>
@@ -337,8 +391,6 @@
 import NavTop from "../navbars/navbar-top";
 import NavBottom from "../navbars/navbar-bottom";
 
-let url = "http://localhost:5552/getUsers";
-
 export default {
   name: "settings-components",
   components: { NavTop, NavBottom },
@@ -346,11 +398,13 @@ export default {
     return {
       form: {
         username: "",
-        password: "********",
-        email: "test@test.com",
-        forename: "test_forename",
-        surname: "test_surname",
-        confirmpassword: ""
+        password: "",
+        email: "",
+        forename: "",
+        surname: "",
+        id: "",
+        admin: "",
+        accountType: ""
       },
 
       edit: false,
@@ -368,7 +422,8 @@ export default {
         sensors: [],
         rooms: [],
         devices: []
-      }
+      },
+      error: ""
     };
   },
   props: ["userToken"],
@@ -516,7 +571,7 @@ export default {
     },
 
     deleteSensorItem(id) {
-      if (!confirm("Do really want to delete this sensor?")) {
+      if (!confirm("Are you sure you want to delete this sensor?")) {
         return false;
       }
       let url = "http://localhost:5552/deleteSensor?id=" + id;
@@ -540,7 +595,7 @@ export default {
     },
 
     deleteRoom(id) {
-      if (!confirm("Do really want to delete this room?")) {
+      if (!confirm("Are you sure you want to delete this room?")) {
         return false;
       }
       let url = "http://localhost:5552/deleteRoom?id=" + id;
@@ -566,7 +621,7 @@ export default {
     },
 
     deleteUser(id) {
-      if (!confirm("Do really want to delete this user?")) {
+      if (!confirm("Are you sure you want to delete this user?")) {
         return false;
       }
       if (id === 1) {
@@ -594,7 +649,7 @@ export default {
     },
 
     deleteDevices(id) {
-      if (!confirm("Do really want to delete this device?")) {
+      if (!confirm("Are you sure you want to delete this device?")) {
         return false;
       }
       let url = "http://localhost:5552/deleteDevice?id=" + id;
@@ -618,11 +673,74 @@ export default {
     },
 
     logout() {
-      if (!confirm("Do really want to logout?")) {
+      if (!confirm("Are you sure you want to logout?")) {
         return false;
       }
       this.$cookies.remove("token");
       this.$router.push({ name: "login" });
+    },
+
+    getUserLoggedIn() {
+      let url = "http://localhost:5552/getAuthByToken?id=" + this.userToken;
+      fetch(url, {
+        mode: "cors",
+        method: "GET",
+        headers: {
+          Authorization: this.userToken
+        }
+      })
+        .then(response => {
+          return response.json();
+        })
+        .then(jsonData => {
+          for (let i in this.displayData.users) {
+            if (
+              this.displayData.users[i].user_id === jsonData[0].auth_user_id
+            ) {
+              this.form.forename = this.displayData.users[i].user_forename;
+              this.form.surname = this.displayData.users[i].user_surname;
+              this.form.email = this.displayData.users[i].user_email;
+              this.form.username = this.displayData.users[i].user_username;
+              this.form.id = this.displayData.users[i].user_id;
+              this.form.admin = this.displayData.users[i].user_admin;
+              this.form.accountType = this.displayData.users[
+                i
+              ].user_account_type;
+            }
+          }
+        });
+    },
+
+    editUserDetails(evt) {
+      evt.preventDefault();
+      let url = "http://localhost:5552/editUser";
+      fetch(url, {
+        mode: "cors",
+        method: "POST",
+        headers: {
+          Authorization: this.userToken,
+          Accept: "application/json",
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          id: this.form.id,
+          account_type: this.form.accountType,
+          username: this.form.username,
+          password: this.form.password,
+          forename: this.form.forename,
+          surname: this.form.surname,
+          admin: this.form.admin,
+          email: this.form.email
+        })
+      })
+        .then(response => {
+          return response.json();
+        })
+        .then(jsonData => {
+          if (jsonData.error === "Details incorrect")
+            this.error = "Incorrect Username or Password";
+          else location.reload();
+        });
     }
   },
 
@@ -631,17 +749,7 @@ export default {
     this.getSensors();
     this.getRooms();
     this.getDevices();
-    fetch(url, {
-      mode: "cors",
-      method: "GET",
-      headers: { Authorization: this.userToken }
-    }) //Fetch Command to get data from API - CORS enabled.
-      .then(response => {
-        return response.json();
-      })
-      .then(jsonData => {
-        console.log(jsonData);
-      });
+    this.getUserLoggedIn();
   }
 };
 </script>
@@ -650,6 +758,10 @@ export default {
 #settings {
   margin-top: 120px;
   margin-bottom: 120px;
+}
+
+.center-inputs {
+  text-align: center;
 }
 
 .flex-settings {
@@ -674,6 +786,7 @@ export default {
 }
 
 .inputs-b {
+  font-size: 0.8em;
   color: white !important;
   outline: none;
 }
