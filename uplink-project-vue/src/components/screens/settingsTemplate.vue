@@ -21,7 +21,7 @@
                   v-bind:style="{ visibility: editButton ? 'visible' : 'hidden' }"
                 >Edit</button>
 
-                <h1 class="text-center">Profile</h1>
+                <h2 class="text-center">Profile</h2>
                 <button
                   type="button"
                   class="form-buttons-settings-top logout"
@@ -226,7 +226,7 @@
           <div class="item-deviceDetails item-padding">
             <div class="custom-card-settings">
               <div class="flex-buttons">
-                <h1 class="width-sensor">Accounts</h1>
+                <h2 class="width-sensor">Accounts</h2>
 
                 <button
                   type="button"
@@ -261,7 +261,7 @@
 
             <div class="custom-card-settings">
               <div class="flex-buttons">
-                <h1 class="width-sensor">Rooms</h1>
+                <h2 class="width-sensor">Rooms</h2>
                 <button
                   type="button"
                   class="form-buttons-settings-top"
@@ -297,7 +297,7 @@
           <div class="item-deviceDetails item-padding">
             <div class="custom-card-settings">
               <div class="flex-buttons">
-                <h1 class="width-sensor">Devices</h1>
+                <h2 class="width-sensor">Devices</h2>
                 <button
                   type="button"
                   class="form-buttons-settings-top"
@@ -337,9 +337,9 @@
               </div>
             </div>
 
-            <div class="custom-card-settings">
+            <div class="custom-card-settings sensors">
               <div class="flex-buttons">
-                <h1 class="display3 width-sensor">Sensors</h1>
+                <h2 class="width-sensor">Sensors</h2>
                 <button
                   type="button"
                   class="form-buttons-settings-top"
@@ -829,7 +829,7 @@ export default {
 }
 
 .form-buttons-settings-top {
-  width: 30%;
+  width: 28%;
   height: 2.5rem;
   border-radius: 20px;
   border: none;
@@ -853,6 +853,8 @@ export default {
 
 .sensors {
   width: 100%;
+  padding-right: 15px;
+  padding-left: 10px;
 }
 
 .siblings {
@@ -882,7 +884,10 @@ export default {
     width: 30%;
   }
   .item-padding {
-    padding: 0;
+    padding: 10px;
+  }
+  .sensors {
+    padding: 20px;
   }
 }
 

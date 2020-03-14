@@ -12,7 +12,7 @@
       <div class="container">
         <div id="form-addDevice">
           <div class="flex-add">
-            <div class="card custom-cards-editDevices-adv">
+            <div class="custom-cards-editDevices-adv">
               <div class="img-cont">
                 <img
                   :src="require(`../../assets/${deviceImage}.png`)"

@@ -90,8 +90,6 @@ export default {
 
   methods: {
     insertSensor(evt) {
-      console.log("cool");
-
       let url = "http://localhost:5552/insertSensor";
       fetch(url, {
         mode: "cors",
@@ -115,6 +113,7 @@ export default {
         })
         .then(jsonData => {
           console.log(jsonData);
+          this.$router.push({ name: "settings" });
         });
       evt.preventDefault();
     },
@@ -192,7 +191,9 @@ export default {
           break;
         }
       }
-      return roomName + " " + senType + " sensor " + sensorCounter;
+      return (
+        roomName + " " + senType.toLowerCase() + " sensor " + sensorCounter
+      );
     }
   },
   mounted: function() {

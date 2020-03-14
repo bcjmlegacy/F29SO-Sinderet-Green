@@ -69,6 +69,7 @@ export default {
         })
         .then(jsonData => {
           console.log(jsonData);
+          location.reload();
         });
     }
   }

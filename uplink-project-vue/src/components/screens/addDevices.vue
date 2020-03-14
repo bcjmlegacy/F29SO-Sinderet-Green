@@ -14,7 +14,12 @@
           <h3 class="h1-titles text-center">Connect a Device</h3>
         </div>
         <div class="flex-rooms">
-          <AddDeviceCard deviceName="Phillips Hue Bulb" deviceImage="light-bulb" deviceEnergy="10" />
+          <AddDeviceCard
+            deviceName="Phillips Hue Bulb"
+            deviceImage="light-bulb"
+            deviceEnergy="10"
+            deviceType="4"
+          />
           <AddDeviceCard
             deviceName="Ring Door Bell"
             deviceImage="doorbell"
