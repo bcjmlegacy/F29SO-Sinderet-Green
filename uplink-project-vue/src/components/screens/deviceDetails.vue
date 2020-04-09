@@ -167,14 +167,14 @@ export default {
       chartD: {
         type: "line",
         data: {
-          labels: ["January", "February", "March", "April", "May", "june"],
+          labels: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
           datasets: [
             {
               label: "Energy Use",
               backgroundColor: "rgba(25, 143, 202, 0.1)",
               borderColor: "rgba(25, 143, 202, 1)",
               borderWidth: 0.7,
-              data: [65, 59, 80, 81, 56, 90]
+              data: [65, 59, 80, 81, 56, 90, 65]
             }
           ]
         },
