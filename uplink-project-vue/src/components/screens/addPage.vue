@@ -10,7 +10,7 @@
     </div>
     <div id="Add">
       <div class="container">
-        <h3 class="h1-titles text-center">Add Devices or Rooms</h3>
+        <h3 class="h1-titles text-center">Add</h3>
         <hr />
         <div class="flex-cont">
           <div class="flex-add">
