@@ -37,7 +37,7 @@
                   <div class="form-rows">
                     <b-form-group
                       id="forename-input"
-                      label="Firstname"
+                      label="Forename"
                       label-for="input-forename"
                       class="label"
                     >
