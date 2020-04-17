@@ -117,7 +117,7 @@
                         <select
                           v-model="form.value"
                           class="form-dropdown time-width"
-                          required="required"
+                   
                           @input="finalStage"
                         >
                           <option disabled value>Value</option>
@@ -130,7 +130,7 @@
                         <select
                           v-model="form.value"
                           class="form-dropdown time-width"
-                          required="required"
+                          
                           @input="finalStage"
                         >
                           <option disabled value>Value</option>

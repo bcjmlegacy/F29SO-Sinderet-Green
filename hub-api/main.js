@@ -1296,20 +1296,20 @@ app.get("/deleteAuth", (req, res) => {
 });
 
 app.get("/deleteSensor", (req, res) => {
-  db.deleteSensor(req.query.id);
+  
   db.deleteTriggerBySensorId(req.query.id);
   if (req.query.data == "true") db.deleteSensorReadingBySensorId(req.query.id);
-
+  db.deleteSensor(req.query.id);
   res.send({ status: "success" });
 });
 
 app.get("/deleteDevice", (req, res) => {
-  db.deleteDevice(req.query.id);
+  
   db.deleteRepeatTimerByDeviceId(req.query.id);
   db.deleteOneshotTimerByDeviceId(req.query.id);
   db.deleteTriggerByDeviceId(req.query.id);
   if (req.query.data == "true") db.deleteDeviceReading(req.query.id);
-
+  db.deleteDevice(req.query.id);
   res.send({ status: "success" });
 });
 
