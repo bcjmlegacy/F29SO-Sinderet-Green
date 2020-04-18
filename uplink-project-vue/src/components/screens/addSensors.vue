@@ -167,7 +167,7 @@ export default {
         });
     },
     sensorNameGenerator(type, roomID) {
-      let sensorCounter = 0;
+      let sensorCounter = 1;
       for (let i in this.currentSensors) {
         if (this.currentSensors[i].sensor_room === roomID) {
           sensorCounter++;

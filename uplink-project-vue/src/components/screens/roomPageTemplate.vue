@@ -120,7 +120,7 @@ export default {
                   //generate a JSON of the device name and icon and store in roomDevices array
                   deviceID: this.devices[key].device_id,
                   deviceName: this.devices[key].device_name,
-                  deviceImage: pairImg(this.devices[key].device_name),
+                  deviceImage: pairImg(this.devices[key].device_type),
                   deviceWattage: this.devices[key].device_wattage,
                   deviceType: this.devices[key].device_type
                 });
@@ -132,53 +132,33 @@ export default {
 };
 
 //picks image name for a select device.
-//Messy Image selector - will iuse regex later on
-function pairImg(device) {
-  if (
-    device.includes("heater") ||
-    device.includes("Heater") ||
-    device.includes("heating")
-  ) {
+function pairImg(deviceType) {
+  if (deviceType == 1) {
     return "heating";
-  } else if (device.includes("light") || device.includes("Light")) {
-    return "light-bulb";
-  } else if (device.includes("fridge") || device.includes("Fridge")) {
+  }
+  if (deviceType == 2) {
     return "fridge";
-  } else if (device.includes("Solar") || device.includes("solar")) {
+  }
+  if (deviceType == 3) {
     return "solarpanel";
-  } else if (
-    device.includes("camera") ||
-    device.includes("Camera") ||
-    device.includes("Security") ||
-    device.includes("security") ||
-    device.includes("CCTV") ||
-    device.includes("cctv")
-  ) {
-    return "security-camera";
-  } else if (
-    device.includes("Bell") ||
-    device.includes("bell") ||
-    device.includes("Door") ||
-    device.includes("door")
-  ) {
+  }
+  if (deviceType == 4) {
+    return "light-bulb";
+  }
+  if (deviceType == 5) {
     return "doorbell";
-  } else if (
-    device.includes("socket") ||
-    device.includes("plug") ||
-    device.includes("Plug") ||
-    device.includes("Socket")
-  ) {
-    return "plug";
-  } else if (
-    device.includes("TV") ||
-    device.includes("Television") ||
-    device.includes("tv") ||
-    device.includes("television") ||
-    device.includes("Tv")
-  ) {
+  }
+  if (deviceType == 6) {
+    return "solarpanel";
+  }
+  if (deviceType == 7) {
+    return "security-camera";
+  }
+  if (deviceType == 8) {
     return "tv";
-  } else {
-    return "question";
+  }
+  if (deviceType == 9) {
+    return "plug";
   }
 }
 </script>

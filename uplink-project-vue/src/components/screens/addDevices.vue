@@ -15,7 +15,7 @@
         </div>
         <div class="flex-rooms">
           <AddDeviceCard
-            deviceName="Phillips Hue Bulb"
+            deviceName="Philips Hue Bulb"
             deviceImage="light-bulb"
             deviceEnergy="10"
             deviceType="4"
@@ -57,7 +57,7 @@
             deviceType="7"
           />
           <AddDeviceCard
-            deviceName="Phillips Hue Bulb"
+            deviceName="Philips Hue Bulb"
             deviceImage="light-bulb"
             deviceEnergy="10"
             deviceType="4"

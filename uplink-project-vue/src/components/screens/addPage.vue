@@ -10,7 +10,7 @@
     </div>
     <div id="Add">
       <div class="container">
-        <h3 class="h1-titles text-center">Add Devices or Rooms</h3>
+        <h3 class="h1-titles text-center">Add</h3>
         <hr />
         <div class="flex-cont">
           <div class="flex-add">
@@ -34,6 +34,18 @@
                   </div>
                   <div class="card-body">
                     <h5 class="card-title text-center">Add Device</h5>
+                  </div>
+                </div>
+              </router-link>
+            </div>
+            <div>
+              <router-link class="links" :to="{name:'addSensor'}">
+                <div class="card custom-cards-rooms">
+                  <div class="img-cont">
+                    <img class="card-img-top" src="../../assets/switch.png" alt="Add Room" />
+                  </div>
+                  <div class="card-body">
+                    <h5 class="card-title text-center">Add Sensor</h5>
                   </div>
                 </div>
               </router-link>

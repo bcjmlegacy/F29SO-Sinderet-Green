@@ -90,7 +90,7 @@ export default {
                   message: jsonData[i].warning_message,
                   deviceID: this.devices[j].device_id,
                   deviceName: this.devices[j].device_name,
-                  deviceImage: pairImg(this.devices[j].device_name),
+                  deviceImage: pairImg(this.devices[j].device_type),
                   deviceEnergy: this.devices[j].device_wattage,
                   deviceType: this.devices[j].device_type,
                   roomID: this.devices[j].device_room
@@ -108,52 +108,33 @@ export default {
   }
 };
 
-function pairImg(device) {
-  if (
-    device.includes("heater") ||
-    device.includes("Heater") ||
-    device.includes("heating")
-  ) {
+function pairImg(deviceType) {
+  if (deviceType == 1) {
     return "heating";
-  } else if (device.includes("light") || device.includes("Light")) {
-    return "light-bulb";
-  } else if (device.includes("fridge") || device.includes("Fridge")) {
+  }
+  if (deviceType == 2) {
     return "fridge";
-  } else if (device.includes("Solar") || device.includes("solar")) {
+  }
+  if (deviceType == 3) {
     return "solarpanel";
-  } else if (
-    device.includes("camera") ||
-    device.includes("Camera") ||
-    device.includes("Security") ||
-    device.includes("security") ||
-    device.includes("CCTV") ||
-    device.includes("cctv")
-  ) {
-    return "security-camera";
-  } else if (
-    device.includes("Bell") ||
-    device.includes("bell") ||
-    device.includes("Door") ||
-    device.includes("door")
-  ) {
+  }
+  if (deviceType == 4) {
+    return "light-bulb";
+  }
+  if (deviceType == 5) {
     return "doorbell";
-  } else if (
-    device.includes("socket") ||
-    device.includes("plug") ||
-    device.includes("Plug") ||
-    device.includes("Socket")
-  ) {
-    return "plug";
-  } else if (
-    device.includes("TV") ||
-    device.includes("Television") ||
-    device.includes("tv") ||
-    device.includes("television") ||
-    device.includes("Tv")
-  ) {
+  }
+  if (deviceType == 6) {
+    return "solarpanel";
+  }
+  if (deviceType == 7) {
+    return "security-camera";
+  }
+  if (deviceType == 8) {
     return "tv";
-  } else {
-    return "question";
+  }
+  if (deviceType == 9) {
+    return "plug";
   }
 }
 </script>

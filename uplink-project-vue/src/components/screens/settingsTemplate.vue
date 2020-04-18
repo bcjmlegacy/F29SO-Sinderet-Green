@@ -37,7 +37,7 @@
                   <div class="form-rows">
                     <b-form-group
                       id="forename-input"
-                      label="Firstname"
+                      label="Forename"
                       label-for="input-forename"
                       class="label"
                     >
@@ -668,7 +668,7 @@ export default {
         })
         .catch(err => {
           console.log(err);
-          alert("This user cannot be deleted right now");
+          alert("This device cannot be deleted right now. Its being used!");
         });
     },
 
