@@ -75,6 +75,8 @@
   </div>
 </template>
 <script>
+
+//Imports for the Navbars and the card component for the Devices that are visibile to the U-Hub
 import NavbarTop from "../navbars/navbar-top";
 import NavbarBottom from "../navbars/navbar-bottom";
 import AddDeviceCard from "../helpers/addDeviceCard";

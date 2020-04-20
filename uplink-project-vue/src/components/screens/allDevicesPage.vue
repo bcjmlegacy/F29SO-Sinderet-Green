@@ -30,10 +30,15 @@
 </template>
 
 <script>
+
+//Imports the navbars and the device card component.
+
 import NavTop from "../navbars/navbar-top";
 import NavBottom from "../navbars/navbar-bottom";
 import Device from "../helpers/deviceCard";
 
+
+//Url to get all the devices stored in the database.
 let url = "http://localhost:5552/getDevices";
 export default {
   name: "AllDevices",
@@ -49,6 +54,8 @@ export default {
     };
   },
   mounted: function() {
+    //This will get the all the device details for all the devices stored in the database. 
+    //This will be presented using the array 'devices' and the 'devicecard' on the this page.
     fetch(url, {
       mode: "cors",
       method: "GET",

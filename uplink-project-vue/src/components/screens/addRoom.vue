@@ -48,6 +48,7 @@
   </div>
 </template>
 <script>
+//Imports for the navigation bars.
 import NavbarTop from "../navbars/navbar-top";
 import NavbarBottom from "../navbars/navbar-bottom";
 
@@ -57,13 +58,16 @@ export default {
   components: { NavbarTop, NavbarBottom },
   data() {
     return {
-      form: {
+      form: {//Form data
         roomName: ""
       }
     };
   },
   props: ["userToken"],
   methods: {
+    //Method that happens on submit of the form.
+    //Will send the room name to the database and create a new room.
+    //Sends the user back to the dashboard when the room is added to the database. 
     go(evt) {
       fetch(url, {
         method: "POST",

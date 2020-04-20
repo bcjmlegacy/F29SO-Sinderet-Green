@@ -70,8 +70,12 @@
   </div>
 </template>
 <script>
+//Imports for the Navigation bars
+
 import NavbarTop from "../navbars/navbar-top";
 import NavbarBottom from "../navbars/navbar-bottom";
+
+//API url calls for getting rooms and inserting devices.
 
 let url = "http://localhost:5552/insertDevice";
 let url1 = "http://localhost:5552/getRooms";
@@ -92,7 +96,7 @@ export default {
   ],
   data() {
     return {
-      form: {
+      form: { //data from the form
         name: "",
         room: "",
         wattage: this.deviceEnergy,
@@ -102,6 +106,7 @@ export default {
     };
   },
   methods: {
+    //Submit method for the form. Once the device has been inserted then return to the dashboard page.
     go(evt) {
       console.log(this.form);
       fetch(url, {
@@ -131,6 +136,8 @@ export default {
     }
   },
   mounted: function() {
+    //Function that will get called on the page load.
+    //This will call all the rooms from the database. This will get used for the dropdown to pick a room.
     fetch(url1, {
       mode: "cors",
       method: "GET",

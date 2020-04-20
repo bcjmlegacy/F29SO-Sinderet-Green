@@ -103,10 +103,14 @@
   </div>
 </template>
 <script>
+
+//import the navigation bar. 
 import NavbarTop from "../navbars/navbar-top";
 import NavbarBottom from "../navbars/navbar-bottom";
 
+//URL for the API call to get all the rooms.
 let url = "http://localhost:5552/getRooms";
+
 export default {
   name: "addDevice",
   components: {
@@ -133,7 +137,10 @@ export default {
     "userToken"
   ],
   methods: {
-    deleteDevice() {
+    //This method deletes a device. 
+    deleteDevice() { 
+      //This will ask the user if they want to delete a device before the device is deleted from the server
+      //This will stop the user from accidentally deletes an item
       if (!confirm("Do really want to delete " + this.deviceName + "?")) {
         return false;
       }
@@ -162,7 +169,8 @@ export default {
       }
       return null;
     },
-
+    //This function will update the devices name and room
+    //Once the device has been updated the user will be redirected to the room page they chose to place the device.
     updateDevice(evt) {
       let url = "http://localhost:5552/editDevice";
       fetch(url, {
@@ -196,6 +204,8 @@ export default {
     }
   },
   mounted: function() {
+    //Method will be called when the page loads.
+    //This will fetch the the current devices details and will match it with the room the device is currently in.
     fetch(url, {
       mode: "cors",
       method: "GET",

@@ -58,6 +58,8 @@
   </div>
 </template>
 <script>
+
+//imports for the Navigation bars.
 import NavbarTop from "../navbars/navbar-top";
 import NavbarBottom from "../navbars/navbar-bottom";
 

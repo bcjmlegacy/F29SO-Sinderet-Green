@@ -66,6 +66,7 @@
 </template>
 
 <script>
+//Imports for the navigation bars.
 import NavbarBottom from "../navbars/navbar-bottom";
 import NavbarTop from "../navbars/navbar-top";
 
@@ -78,17 +79,20 @@ export default {
   },
   data() {
     return {
-      form: {
+      form: { //form data
         sensorType: "",
         sensorRoom: ""
       },
-      sensorTypes: [],
+      sensorTypes: [], //Sets of data that will be taken from the API database.
       currentSensors: [],
       rooms: []
     };
   },
 
   methods: {
+    //Method that will be called when the form is submitted.
+    //This will redirect the user to the settings page.
+    //This form will send the sensor data to the database.
     insertSensor(evt) {
       let url = "http://localhost:5552/insertSensor";
       fetch(url, {
@@ -117,7 +121,7 @@ export default {
         });
       evt.preventDefault();
     },
-
+    //Method will get the sensor types available to the user.
     getSensorTypes() {
       let url = "http://localhost:5552/getSensorTypes";
       fetch(url, {
@@ -134,6 +138,7 @@ export default {
           this.sensorTypes = jsonData;
         });
     },
+    //Method will get the current sensors stored on the database. This is used to generate the name of the sensor.
     getCurrentSensors() {
       let url = "http://localhost:5552/getSensors";
       fetch(url, {
@@ -150,6 +155,7 @@ export default {
           this.currentSensors = jsonData;
         });
     },
+    //Method will get all the rooms stored in the database.
     getRooms() {
       let url = "http://localhost:5552/getRooms";
       fetch(url, {
@@ -166,6 +172,7 @@ export default {
           this.rooms = jsonData;
         });
     },
+    //Method to make a sensor name for the form. This will be a generic name that will have the Room Sensor then sensor number for that room.
     sensorNameGenerator(type, roomID) {
       let sensorCounter = 1;
       for (let i in this.currentSensors) {
@@ -197,6 +204,7 @@ export default {
     }
   },
   mounted: function() {
+    //functions to be called when the app loads.
     this.getSensorTypes();
     this.getCurrentSensors();
     this.getRooms();

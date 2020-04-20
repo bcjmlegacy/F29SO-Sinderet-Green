@@ -180,6 +180,8 @@
 </template>
 
 <script>
+
+//Import the navbars.
 import NavbarTop from "../navbars/navbar-top";
 import NavbarBottom from "../navbars/navbar-bottom";
 
@@ -198,9 +200,10 @@ export default {
     NavbarTop,
     NavbarBottom
   },
+  //Data system for the automation page
   data() {
     return {
-      form: {
+      form: { //form data
         deviceID: this.deviceID,
         type: "",
         sensor: "",
@@ -227,6 +230,7 @@ export default {
     };
   },
   methods: {
+    //method to display all the sensor types
     getSensorType() {
       let url = "http://localhost:5552/getSensorTypes";
       fetch(url, {
