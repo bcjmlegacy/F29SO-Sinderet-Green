@@ -150,11 +150,13 @@ export default {
     NavbarBottom
   },
   data() {
+    //below is all the data that is stored for this page.
+    //This contains the chart data.
     return {
-      form: {
+      form: { //data from the form
         checked: "on"
       },
-      device: "",
+      device: "", 
       scheduledCommands: [],
       deviceCommands: [],
       sensorType: "",
@@ -213,6 +215,7 @@ export default {
     "roomID"
   ],
   methods: {
+    //method will get all the device commands for this device.
     getDeviceCommands() {
       let url =
         "http://localhost:5552/getCommandsByDevice?id=" + this.deviceType;
@@ -231,6 +234,9 @@ export default {
           console.log(this.deviceCommands);
         });
     },
+
+
+    //Method will take an english command and convert to an id.
     mapCommands(textCommand) {
       for (let i in this.deviceCommands) {
         if (this.deviceCommands[i].device_command_value === textCommand) {
@@ -239,6 +245,7 @@ export default {
       }
     },
 
+    //Method will take a sensortype and give it a plain english name.
     getType(sensorType) {
       if (sensorType === 1) {
         return "temperature";
@@ -249,6 +256,7 @@ export default {
       return null;
     },
 
+    //Method will translate symbols to english.
     translateSymbol(sym) {
       if (sym === "<") {
         return "lower than";
@@ -258,9 +266,13 @@ export default {
       }
       return null;
     },
+
+    //Method will get ascii characters
     ascii(a) {
       return String.fromCharCode(a);
     },
+
+    //Method will get units depending on the sensor type.
     getUnits(unit) {
       if (unit === 1) {
         unit = this.ascii(176) + "c";
@@ -272,6 +284,7 @@ export default {
       return "";
     },
 
+    //Get the current Automations for the device.
     getAutomationData() {
       let url = "http://localhost:5552/getTriggers";
       fetch(url, {
@@ -323,6 +336,8 @@ export default {
           console.log(this.automations);
         });
     },
+
+    //Async function to turn on the device via the switch.
     async turnOn() {
       await this.$nextTick();
       let url = "http://localhost:5552/insertOneshotTimer";
@@ -347,6 +362,9 @@ export default {
           console.log(jsonData);
         });
     },
+
+
+    //method will check if the device is on or off.
     checkDeviceActivity() {
       let url = "http://localhost:5552/getOneshotTimers?id=" + this.deviceID;
       let result = null;
@@ -365,6 +383,8 @@ export default {
           this.form.checked = swap(map(result));
         });
     },
+
+    //Method will generate a chart.
     chartData(chartId, chartData) {
       const ctx = document.getElementById(chartId);
       new Chart(ctx, {
@@ -373,6 +393,8 @@ export default {
         options: chartData.options
       });
     },
+
+    //Method will check if the device can make use of the schedule, automation and on and off 
     checkDevice() {
       if (
         this.deviceType != 1 &&
@@ -383,7 +405,10 @@ export default {
       }
     }
   },
+
+
   mounted: function() {
+    //Methods are called on page load.
     let url = "http://localhost:5552/getRepeatTimers?id=" + this.deviceID;
     this.chartData("chart", this.chartD);
     this.checkDevice();

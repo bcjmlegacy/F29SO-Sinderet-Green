@@ -230,7 +230,7 @@ export default {
     };
   },
   methods: {
-    //method to display all the sensor types
+    //method to display all the sensor types available.
     getSensorType() {
       let url = "http://localhost:5552/getSensorTypes";
       fetch(url, {
@@ -252,6 +252,7 @@ export default {
         });
     },
 
+    //Async class to display all the sensors for the available sensor type that was chosen by the user.
     async displaySensors() {
       await this.$nextTick();
       this.formStages.isAvailable0 = true;
@@ -301,21 +302,25 @@ export default {
         });
     },
 
+    //Shows the next stage of the form for the user with the correct details.
     async sensorStage() {
       await this.$nextTick();
       this.formStages.isAvailable1 = true;
     },
 
+    //Shows the command stage of the form to show commands the device can do.
     async commandStage() {
       await this.$nextTick();
       this.formStages.isAvailable2 = true;
     },
 
+    //Shows the final stage to the form which will show the units and the more than or less than values.
     async finalStage() {
       await this.$nextTick();
       this.formStages.isAvailable3 = true;
     },
 
+    //Gets all the device opertations for that device type
     getDeviceOperations() {
       let url =
         "http://localhost:5552/getCommandsByDevice?id=" + this.deviceType;
@@ -335,6 +340,7 @@ export default {
         });
     },
 
+    //method is called on submit of the form. Will insert the trigger into the database.
     sendAutomation(evt) {
       let url = "http://localhost:5552/insertTrigger";
       fetch(url, {
@@ -363,6 +369,8 @@ export default {
       evt.preventDefault();
     },
 
+    //Following methods format data from the database to be presented in plain english
+    //Gets the sensor type and converts to english
     getType(sensorType) {
       if (sensorType === 1) {
         return "temperature";
@@ -373,6 +381,7 @@ export default {
       return null;
     },
 
+    //Converts the symbol from the database to english
     translateSymbol(sym) {
       if (sym === "<") {
         return "lower than";
@@ -382,9 +391,14 @@ export default {
       }
       return null;
     },
+
+
+    //Gets an ascii character from a character code.
     ascii(a) {
       return String.fromCharCode(a);
     },
+
+    //get the correct units depending on the sensor type.
     getUnits(unit) {
       if (unit === 1) {
         unit = this.ascii(176) + "c";
@@ -396,6 +410,7 @@ export default {
       return "";
     },
 
+    //get the currently stored automations for the current device
     getAutomationData() {
       let url = "http://localhost:5552/getTriggers";
       fetch(url, {
@@ -431,7 +446,7 @@ export default {
                       return response.json();
                     })
                     .then(jsonData1 => {
-                      this.automations.push({
+                      this.automations.push({ //Pushes a JSON to the array to store all the this data. This data will get looped and formatted to plain english.
                         id: jsonData[j].device_trigger_id,
                         symbol: jsonData[j].device_trigger_gt_lt_eq,
                         value: jsonData[j].device_trigger_sensor_value,
@@ -448,6 +463,8 @@ export default {
         });
     },
 
+    //Method will delete an automation depending on the id that is used.
+    //Will check with the user before the automation is deleted.
     deleteAutomationItem(id) {
       if (!confirm("Do really want to delete this automated event?")) {
         return false;
@@ -469,6 +486,9 @@ export default {
         });
     },
 
+
+    //Method will delete all the automations for the device. 
+    //Will check with the user before the automation is deleted.
     deleteAllAutomations() {
       if (!confirm("Do really want to delete the entire schedule?")) {
         return false;
@@ -495,10 +515,13 @@ export default {
       }
     },
 
+    //Will capitalise a string
     capitalize(text) {
       return text.charAt(0).toUpperCase() + text.slice(1);
     },
 
+
+    //Will get the range of numbers between two values.
     range(min, max) {
       let array = [],
         j = 0;
@@ -509,7 +532,10 @@ export default {
       return array;
     }
   },
+
+
   mounted: function() {
+    //Methods that will get called when the page loads.
     this.getSensorType();
     this.getDeviceOperations();
     this.getAutomationData();

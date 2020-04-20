@@ -395,8 +395,9 @@ export default {
   name: "settings-components",
   components: { NavTop, NavBottom },
   data() {
+    //this is all the variables that will be used for the settings page.
     return {
-      form: {
+      form: {//This is all the form data
         username: "",
         password: "",
         email: "",
@@ -407,6 +408,7 @@ export default {
         accountType: ""
       },
 
+      //This is all the form controllers.
       edit: false,
       edit1: false,
       edit2: false,
@@ -417,17 +419,21 @@ export default {
       editButton2: true,
       editButton3: true,
       editButton4: true,
+      //This is the data sets that we display on the page.
       displayData: {
         users: [],
         sensors: [],
         rooms: [],
         devices: []
       },
+      //Error text variable
       error: ""
     };
   },
   props: ["userToken"],
   methods: {
+    //Below will allow certain cards to become editable.
+
     configure() {
       if (this.edit === false) {
         this.edit = true;
@@ -462,6 +468,8 @@ export default {
         this.editButton4 = false;
       }
     },
+
+    //Below are methods to disable certain cards editable state.
 
     undoEdit() {
       if (this.edit === true) {
@@ -502,6 +510,7 @@ export default {
       }
     },
 
+    //Method to get all the users in the database.
     getUsers() {
       let url = "http://localhost:5552/getUsers";
       fetch(url, {
@@ -519,6 +528,7 @@ export default {
         });
     },
 
+    //Method to get all the rooms in the database.
     getRooms() {
       let url = "http://localhost:5552/getRooms";
       fetch(url, {
@@ -536,6 +546,8 @@ export default {
         });
     },
 
+
+    //Method to get all the sensors in the database.
     getSensors() {
       let url = "http://localhost:5552/getSensors";
       fetch(url, {
@@ -553,6 +565,8 @@ export default {
         });
     },
 
+
+    //Method to get all the devices in the database
     getDevices() {
       let url = "http://localhost:5552/getDevices";
       fetch(url, {
@@ -570,6 +584,9 @@ export default {
         });
     },
 
+
+    //Method to delete a sensor by a certain id
+    //Method will check before the user actually deletes the item
     deleteSensorItem(id) {
       if (!confirm("Are you sure you want to delete this sensor?")) {
         return false;
@@ -594,6 +611,8 @@ export default {
         });
     },
 
+    //Method will delete a room by an id
+    //Method will check before the user actually deletes the item
     deleteRoom(id) {
       if (!confirm("Are you sure you want to delete this room?")) {
         return false;
@@ -620,6 +639,9 @@ export default {
         });
     },
 
+
+    //Method will delete a user by an id
+    //Method will check before the user actually deletes the item
     deleteUser(id) {
       if (!confirm("Are you sure you want to delete this user?")) {
         return false;
@@ -648,6 +670,8 @@ export default {
         });
     },
 
+    //Method will delete a device by an id
+    //Method will check before the user actually deletes the item
     deleteDevices(id) {
       if (!confirm("Are you sure you want to delete this device?")) {
         return false;
@@ -672,6 +696,8 @@ export default {
         });
     },
 
+
+    //Method will logout the user by deletng the cookie.
     logout() {
       if (!confirm("Are you sure you want to logout?")) {
         return false;
@@ -680,6 +706,7 @@ export default {
       this.$router.push({ name: "login" });
     },
 
+    //Method will get the data for the logged in user.
     getUserLoggedIn() {
       let url = "http://localhost:5552/getAuthByToken?id=" + this.userToken;
       fetch(url, {
@@ -711,6 +738,8 @@ export default {
         });
     },
 
+    //Method will edit the users data
+    //Method is called when the form is submitted.
     editUserDetails(evt) {
       evt.preventDefault();
       let url = "http://localhost:5552/editUser";
@@ -745,6 +774,7 @@ export default {
   },
 
   mounted: function() {
+    //Method will call these methods when the page loads.
     this.getUsers();
     this.getSensors();
     this.getRooms();

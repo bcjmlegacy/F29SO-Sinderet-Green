@@ -47,6 +47,8 @@
 </template>
 
 <script>
+
+//Import the navbars and the chart instance
 import NavbarTop from "../navbars/navbar-top";
 import NavbarBottom from "../navbars/navbar-bottom";
 import Chart from "chart.js";
@@ -58,6 +60,7 @@ export default {
   },
   data() {
     return {
+      //Chart data
       chartD: {
         type: "line",
         data: {
@@ -113,6 +116,7 @@ export default {
     };
   },
   methods: {
+    //Method will create a chart
     chartData(chartId, chartData) {
       const ctx = document.getElementById(chartId);
       new Chart(ctx, {
@@ -123,6 +127,7 @@ export default {
     }
   },
   mounted: function() {
+    //Will create the chart on page load.
     this.chartData("chart", this.chartD);
   }
 };

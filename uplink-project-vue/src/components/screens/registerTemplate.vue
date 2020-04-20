@@ -163,6 +163,8 @@ export default {
     };
   },
   methods: {
+
+    //Method to check password length. Is activated on every keypress in the form inputbox
     checkPasswordLength() {
       if (this.form.password.length < 8) {
         this.errorLength = "Password must be longer than 8 characters long";
@@ -171,6 +173,7 @@ export default {
       }
     },
 
+    //Method will check if the password and confirm password are the same before the form is submitted.
     checkPasswords(evt) {
       evt.preventDefault();
       if (this.form.password === this.form.cPassword) {
@@ -186,6 +189,9 @@ export default {
       }
     },
 
+    //Method will be called when the form is submitted.
+    //Method will insert the user into the database.
+    //Method will redirect the user to the settings page after the form is completed.
     go() {
       let url = "http://localhost:5552/insertUser";
       fetch(url, {

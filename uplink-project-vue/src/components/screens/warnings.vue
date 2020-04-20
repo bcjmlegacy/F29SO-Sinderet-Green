@@ -37,6 +37,8 @@
 </template>
 
 <script>
+
+//import all the navbars and the warning card
 import NavTop from "../navbars/navbar-top";
 import NavBottom from "../navbars/navbar-bottom";
 import WarningCard from "../helpers/warningCard";
@@ -45,12 +47,13 @@ export default {
   components: { NavTop, NavBottom, WarningCard },
   props: ["userToken"],
   data() {
-    return {
+    return { //Lists for warnings and devices
       warnings: [],
       devices: []
     };
   },
   methods: {
+    //Get all the devices
     getDevices() {
       let url = "http://localhost:5552/getDevices";
       fetch(url, {
@@ -68,6 +71,8 @@ export default {
           console.log(this.devices);
         });
     },
+
+    //Get all the warnings
     getWarnings() {
       let url = "http://localhost:5552/getWarnings";
       fetch(url, {
@@ -102,7 +107,9 @@ export default {
         });
     }
   },
+
   mounted: function() {
+    //Method will call when the page loads.
     this.getDevices();
     this.getWarnings();
   }
