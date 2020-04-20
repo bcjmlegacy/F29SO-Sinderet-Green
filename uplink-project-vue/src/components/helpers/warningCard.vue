@@ -52,6 +52,7 @@ export default {
     "userToken"
   ],
   methods: {
+    //Method will delete the warning selected 
     deleteWarning() {
       if (!confirm("Do really want to delete the warning?")) {
         return false;

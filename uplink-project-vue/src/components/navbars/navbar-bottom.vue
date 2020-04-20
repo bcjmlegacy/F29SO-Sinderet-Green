@@ -40,7 +40,7 @@ export default {
   },
   props: ["userToken"],
   methods: {
-    getWarningNumber() {
+    getWarningNumber() { //This will get the number of warnings (notfications)
       let url = "http://localhost:5552/getWarnings";
       fetch(url, {
         mode: "cors",
@@ -58,6 +58,7 @@ export default {
     }
   },
   mounted: function() {
+    //Method will get called on page load
     this.getWarningNumber();
   }
 };

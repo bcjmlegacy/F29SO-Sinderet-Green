@@ -53,6 +53,7 @@ export default {
   },
   props: ["userToken", "sumTitle", "energy", "temperature", "solar"],
   methods: {
+    //Method will change the icon depending onn the type of day.
     getIcon() {
       let hours = new Date().getHours();
       let mins = new Date().getMinutes();
